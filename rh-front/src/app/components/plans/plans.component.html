@@ -1,0 +1,95 @@
+<app-dashboard></app-dashboard>
+
+<!-- main -->
+<main class="mt-5 pt-3">
+    <div class="container">
+        <div class="row mb-5 mt-3">
+            <div class="col-md-6 fw-bold fs-3">Plans</div>
+            <div class="col-md-6 ">
+                <button type="button" class="btn btn-primary float-end btn-lg" data-bs-toggle="modal" data-bs-target="#addPlan">
+                    Add Plan
+                </button>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        Data Tables
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Plan Name</th>
+                                        <th>Plan Date</th>
+                                        <th>responsable Name</th>
+                                        <th>Formations</th>                                        
+                                        <th>Plan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let plan of plans;let i = index">
+                                        <td>{{ plan.name }}</td>
+                                        <td>{{ plan.planDate }}</td>
+                                        <td>{{ plan.responsable.user.nom }} {{ plan.responsable.user.prenom }}</td>
+                                        <td><button class="btn btn-success me-2">Show Formations</button></td>
+                                        <td>
+                                            <div class="me-auto d-flex">
+                                                <button class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- main -->
+
+<!-- Add formation Modal -->
+<div class="modal fade" id="addPlan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Add Formation</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <input type="text" required placeholder="Formation Name" name="formationName" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" required placeholder="Duration" name="duration" class="form-control">
+                        </div>                        
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <input type="date" required placeholder="Start Date" name="startDate" class="form-control">
+                        </div>
+                    </div>                    
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="exampleFormControlTextarea1" class="form-label">Objective</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add formation Modal -->

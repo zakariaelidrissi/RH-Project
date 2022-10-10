@@ -1,0 +1,208 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+            aria-controls="offcanvasExample">
+            <span class="navbar-toggler-icon" data-bs-target="#offcanvasExample"></span>
+        </button>
+        <a class="navbar-brand fw-bold text-uppercase me-auto" href="#">RH Project</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- <form class="d-flex ms-auto my-3 my-lg-0">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username"
+                        aria-describedby="basic-addon2">
+                    <button class="btn btn-primary" type="button"><i class="bi bi-search"></i></button>
+                </div>
+            </form> -->
+            <div class="d-flex ms-auto my-3 my-lg-0">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <!-- Notifications -->
+                    <li class="nav-item dropdown">
+                        <a class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-bell text-white"></i>
+                            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="#">Some news</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Another news</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- profile -->
+                    <li class="nav-item dropdown" >
+                        <!-- <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="bi bi-person-fill"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Log Out</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Setting</a>
+                        </div> -->
+                        <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
+                                alt="Black and White Portrait of a Man" loading="lazy" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                            <li>
+                                <a class="dropdown-item" href="#">My profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Settings</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Navbar -->
+
+<!-- OffCanvas -->
+<div class="offcanvas offcanvas-start bg-dark text-white sidebar-nav" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-body p-0">
+        <nav class="navbar-dark">
+            <ul class="navbar-nav">
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3">core</div>
+                </li>
+                <li>
+                    <a routerLink="/" class="nav-link px-3 active">
+                        <span class="me-2 ">
+                            <i class="bi bi-speedometer2"></i>
+                        </span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#formationPlan" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span>Formations & Plans</span>
+                        <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
+                    </a>
+                    <div class="collapse" id="formationPlan">
+                        <div>
+                            <ul class="navbar-nav ps-3">
+                                <li>
+                                    <a routerLink="/formations" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-file-text-fill"></i></span>
+                                        <span>Formations</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="/plans" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Plans</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#absence" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span>Absence</span>
+                        <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
+                    </a>
+                    <div class="collapse" id="absence">
+                        <div>
+                            <ul class="navbar-nav ps-3">
+                                <li>
+                                    <a routerLink="/employe/absence" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Employer</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="/demande/absence" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Demande</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="/stagiaire/absence" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Stagiaires</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collaborateur" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span>Collaborateur</span>
+                        <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
+                    </a>
+                    <div class="collapse" id="collaborateur">
+                        <div>
+                            <ul class="navbar-nav ps-3">
+                                <li>
+                                    <a routerLink="/gestion-employer" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Employer</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Stagiaires</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="my-4">
+                    <hr>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3">Interface</div>
+                </li>
+                <li>
+                    <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span>Layouts</span>
+                        <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        <div>
+                            <ul class="navbar-nav ps-3">
+                                <li>
+                                    <a href="#" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Nested Link</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- OffCanvas -->
