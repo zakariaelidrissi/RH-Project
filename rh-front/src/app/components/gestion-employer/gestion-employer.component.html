@@ -53,12 +53,12 @@
                                         <td>{{employer.poste}}</td>
                                         <td>
                                             <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2" (click)="editEmployer(employer)"
+                                                <button class="btn btn-warning me-2" (click)="editEmploye(employer)"
                                                     data-bs-toggle="modal" data-bs-target="#updateEmployer">
                                                     Edit
                                                 </button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmploye"
-                                                  (click)="confirmDeleteFormation(employer.id, i)">
+                                                  (click)="confirmDeleteEmploye(employer.id, i)">
                                                     Delete
                                                 </button>
                                             </div>
@@ -91,50 +91,50 @@
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Employee Name</label>
                             <input type="text" required placeholder="Employee Name" name="nom" 
-                             [(ngModel)]="newEmployer.nom" class="form-control">
+                             [(ngModel)]="newEmploye.nom" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Employee Cin</label>
                             <input type="text" required placeholder="Employee Cin" name="cin" 
-                             [(ngModel)]="newEmployer.cin" class="form-control">
+                             [(ngModel)]="newEmploye.cin" class="form-control">
                         </div>                                               
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
                             <input type="text" required placeholder="email" name="email" 
-                             [(ngModel)]="newEmployer.email" class="form-control">
+                             [(ngModel)]="newEmploye.email" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Departement</label>
                             <input type="text" required placeholder="Departement" name="departement" 
-                             [(ngModel)]="newEmployer.departement" class="form-control">
+                             [(ngModel)]="newEmploye.departement" class="form-control">
                         </div>                                               
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de Naissance</label>
                             <input type="date" required placeholder="naissance" name="naissance"
-                            [(ngModel)]="newEmployer.naissance" class="form-control">
+                            [(ngModel)]="newEmploye.naissance" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de debut d'ambauche</label>
                             <input type="date" required placeholder="date de debut d'ambauche" name="debutAmbauche"
-                            [(ngModel)]="newEmployer.debutAmbauche" class="form-control">
+                            [(ngModel)]="newEmploye.debutAmbauche" class="form-control">
                         </div>
                     </div>                    
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Poste</label>
                             <input type="text" required placeholder="Poste" name="poste"
-                            [(ngModel)]="newEmployer.poste" class="form-control">
+                            [(ngModel)]="newEmploye.poste" class="form-control">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="addEmployer()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="addEmploye()">Save</button>
             </div>
         </div>
     </div>
@@ -157,43 +157,43 @@
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Employee Name</label>
                             <input type="text" required placeholder="Employee Name" name="nom" 
-                             [(ngModel)]="updateEmployer.nom" class="form-control">
+                             [(ngModel)]="updateEmploye.nom" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Employee Cin</label>
                             <input type="text" required placeholder="Employee Cin" name="cin" 
-                             [(ngModel)]="updateEmployer.cin" class="form-control">
+                             [(ngModel)]="updateEmploye.cin" class="form-control">
                         </div>                                               
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
                             <input type="text" required placeholder="email" name="email" 
-                             [(ngModel)]="updateEmployer.email" class="form-control">
+                             [(ngModel)]="updateEmploye.email" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Departement</label>
                             <input type="text" required placeholder="Departement" name="departement" 
-                             [(ngModel)]="updateEmployer.departement" class="form-control">
+                             [(ngModel)]="updateEmploye.departement" class="form-control">
                         </div>                                               
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de naissance</label>
                             <input type="date" required placeholder="naissance" name="naissance"
-                            [(ngModel)]="updateEmployer.naissance" class="form-control">
+                            [(ngModel)]="updateEmploye.naissance" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de debut d'mbauche</label>
                             <input type="date" required placeholder="date de debut d'mbauche" name="debutAmbauche"
-                            [(ngModel)]="updateEmployer.debutAmbauche" class="form-control">
+                            [(ngModel)]="updateEmploye.debutAmbauche" class="form-control">
                         </div>
                     </div>                    
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Poste</label>
                             <input type="text" required placeholder="Poste" name="poste"
-                            [(ngModel)]="updateEmployer.poste" class="form-control">
+                            [(ngModel)]="updateEmploye.poste" class="form-control">
                         </div>
                     </div>
                 </form>
@@ -222,7 +222,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" (click)="deleteEmployer(deleteEmployeId, index)">Yes</button>
+                <button type="button" class="btn btn-primary" (click)="deleteEmploye(deleteEmployeId, index)">Yes</button>
             </div>
         </div>
     </div>

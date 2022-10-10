@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { FormationService } from './services/formation/formation.service';
 import { PlansComponent } from './components/plans/plans.component';
 import { GestionEmployerComponent } from './components/gestion-employer/gestion-employer.component';
-import { GestionEmployerService } from './services/gestion-employer/gestion-employer.service';
+import { GestionEmployeService } from './services/gestion-employe/gestion-employe.service';
 import { ErrorComponent } from './components/error/error.component';
 import { EmployeComponent } from './components/absence/employe/employe.component';
 import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
@@ -46,7 +46,7 @@ import { DemandeAbsenceComponent } from './components/absence/demande-absence/de
     HttpClientModule,
     FormsModule
   ],
-  providers: [FormationService, GestionEmployerService],
+  providers: [FormationService, GestionEmployeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

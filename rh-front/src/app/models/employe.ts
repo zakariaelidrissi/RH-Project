@@ -1,4 +1,4 @@
-export class Employer {
+export class Employe {
     id : number;
     nom : string;
     cin : string;

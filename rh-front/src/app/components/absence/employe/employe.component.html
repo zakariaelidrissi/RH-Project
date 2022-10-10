@@ -58,7 +58,7 @@
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr>-->
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -72,7 +72,7 @@
 
 <!-- Add Absence Modal -->
 <div class="modal fade" id="addAbsence" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Add Absence</h5>
@@ -83,24 +83,28 @@
             <div class="modal-body">
                 <form method="post">
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped data-table">
+                        <table class="table table-striped data-table absence">
                             <thead>
                                 <tr>
                                     <th>Employee Name</th>
-                                    <th>Date Absence</th>
-                                    <th>Nature Of Absence</th>
-                                    <th>Duration</th>                                        
-                                    <th>Justificatif</th>
+                                    <th>Cin</th>
+                                    <th>Email</th>
+                                    <th>Date of Birth</th>                                        
+                                    <th>Start Date</th>
+                                    <th>Departement</th>
+                                    <th>Poste</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr *ngFor="let emp of employes; let i = index">
+                                    <td>{{emp.nom}}</td>
+                                    <td>{{emp.cin}}</td>
+                                    <td>{{emp.email}}</td>
+                                    <td>{{emp.naissance}}</td>
+                                    <td>{{emp.debutAmbauche}}</td>
+                                    <td>{{emp.departement}}</td>
+                                    <td>{{emp.poste}}</td>
                                     <td>
                                         <div class="form-check ms-3">
                                             <input type="checkbox" class="form-check-input" name="abs">

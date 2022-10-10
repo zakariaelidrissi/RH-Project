@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Employer } from 'src/app/models/employer';
-import { GestionEmployerService } from 'src/app/services/gestion-employer/gestion-employer.service';
+import { Employe } from 'src/app/models/employe';
+import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
 
 declare const $: any;
 
@@ -12,16 +12,16 @@ declare const $: any;
 })
 export class GestionEmployerComponent implements OnInit {
 
-  employes : Employer[] = [];
+  employes : Employe[] = [];
   
-  newEmployer : Employer = new Employer();
-  updateEmployer : Employer = new Employer();
+  newEmploye : Employe = new Employe();
+  updateEmploye : Employe = new Employe();
 
   message : string = '';
   deleteEmployeId : number = 0;
   index : number = 0;
 
-  constructor(private employerService : GestionEmployerService, private router: Router) { }
+  constructor(private employerService : GestionEmployeService, private router: Router) { }
 
   ngOnInit(): void {    
 
@@ -29,7 +29,7 @@ export class GestionEmployerComponent implements OnInit {
   }
 
   getAllEmployer() : void{
-    this.employerService.getAllEmployer().subscribe((response: Employer[]) => {
+    this.employerService.getAllEmploye().subscribe((response: Employe[]) => {
       this.employes = response;
       console.log(this.employes);
     }, err => {
@@ -37,8 +37,8 @@ export class GestionEmployerComponent implements OnInit {
     });
   }
 
-  addEmployer(){
-    this.employerService.addEmployer(this.newEmployer).subscribe((Response)=>{
+  addEmploye(){
+    this.employerService.addEmploye(this.newEmploye).subscribe((Response)=>{
       this.message = "This Employer well be added successfuly!";
       $('#addEmployer').modal("hide");
       this.getAllEmployer();
@@ -47,12 +47,12 @@ export class GestionEmployerComponent implements OnInit {
     });
   }
 
-  editEmployer(empolyer : Employer){
-    this.updateEmployer = empolyer;
+  editEmploye(empolye : Employe){
+    this.updateEmploye = empolye;
   }
 
   updateEmployes(){
-    this.employerService.updateEmployer(this.updateEmployer).subscribe((Response)=>{
+    this.employerService.updateEmploye(this.updateEmploye).subscribe((Response)=>{
       this.message = "This Employer well be updated successfuly!";
       $('#updateEmployer').modal("hide");
       this.router.navigate(['/gestion-employer']);
@@ -61,14 +61,14 @@ export class GestionEmployerComponent implements OnInit {
     });
   }
 
-  confirmDeleteFormation(employeID : number, i : number){
+  confirmDeleteEmploye(employeID : number, i : number){
     this.deleteEmployeId = employeID;
     this.index = i;
     $('#deleteEmploye').modal("hide");
   }
 
-  deleteEmployer(employerID : number, index : number) {
-    this.employerService.deleteEmployer(employerID).subscribe((Response)=>{
+  deleteEmploye(employerID : number, index : number) {
+    this.employerService.deleteEmploye(employerID).subscribe((Response)=>{
       this.message = "This Employer well be deleted successfuly!";
       this.employes.splice(index, 1);
       this.router.navigate(['/gestion-employer']);
