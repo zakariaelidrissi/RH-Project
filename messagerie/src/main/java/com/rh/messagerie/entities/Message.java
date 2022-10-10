@@ -20,5 +20,6 @@ public class Message {
     Long sender;
     Date date;
     Long receiver;
+    boolean seen;
 }
 

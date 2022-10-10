@@ -13,4 +13,5 @@ public class MessageResponse {
     Long sender;
     Date date;
     Long receiver;
+    boolean seen;
 }
