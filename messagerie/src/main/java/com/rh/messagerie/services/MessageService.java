@@ -58,7 +58,9 @@ public class MessageService {
                     toAllMessageResponse.getText(),
                     toAllMessageResponse.getSender(),
                     toAllMessageResponse.getDate(),
-                    receiverId
+                    receiverId,
+                    // TODO
+                    false
             );
         }).collect(Collectors.toList());
     }
@@ -77,6 +79,10 @@ public class MessageService {
 
     public List<MessageResponse> getAllBySender(long senderId) {
         return this.mapMessages(this.repo.findBySender(senderId));
+    }
+
+    public List<MessageResponse> getAllUnseenMessages(long senderId) {
+        return this.mapMessages(this.repo.findBySeenAndReceiver(false, senderId));
     }
     /*
     public void delete(MessageRequest req) {
