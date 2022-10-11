@@ -40,9 +40,9 @@ export class FormationsComponent implements OnInit {
   saveFormation() {
     this.newFormation.duree += ' ' + this.dr;
     console.log(this.newFormation);      
-    this.formationService.addFormation(this.newFormation).subscribe((Response)=>{
+    this.formationService.addFormation(this.newFormation).subscribe((response)=>{
       this.message = "This Formation well be added successfuly!";
-      console.log(Response);
+      console.log(response);
       $('#addFormation').modal("hide");
       this.router.navigate(['/formations']);
     }, err => {
@@ -55,7 +55,7 @@ export class FormationsComponent implements OnInit {
   }  
 
   updateFormation() {
-    this.formationService.updateFormation(this.updFormation).subscribe((Response)=>{
+    this.formationService.updateFormation(this.updFormation).subscribe((response)=>{
       this.message = "This Formation well be updated successfuly!";
       $('#updateFormation').modal("hide");
       this.router.navigate(['/formations']);
@@ -71,7 +71,7 @@ export class FormationsComponent implements OnInit {
   }
 
   deleteFormation(FormationID : number, index : number) {
-    this.formationService.deleteFormation(FormationID).subscribe((Response)=>{
+    this.formationService.deleteFormation(FormationID).subscribe((response)=>{
       this.message = "This Formation well be deleted successfuly!";
       this.formations.splice(index, 1);
       this.router.navigate(['/formations']);

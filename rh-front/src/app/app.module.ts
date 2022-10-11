@@ -21,6 +21,9 @@ import { EmployeComponent } from './components/absence/employe/employe.component
 import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
 import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestion-stagiaire.component';
 import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+// import { SelectDropdownModule } from 'select-dropdown';
+import { CollService } from './services/collaborateur/coll.service';
 
 @NgModule({
   declarations: [
@@ -44,9 +47,10 @@ import { DemandeAbsenceComponent } from './components/absence/demande-absence/de
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot(),
     FormsModule
   ],
-  providers: [FormationService, GestionEmployeService],
+  providers: [FormationService, GestionEmployeService, CollService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

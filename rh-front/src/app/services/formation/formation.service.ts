@@ -63,7 +63,7 @@ export class FormationService {
   // **************** Add Formation To Plan ********************
 
   addFormationToPlan(newFormationToPlan : AddById) : Observable<AddById> {
-    return this.httpClient.post<AddById>(this.url + "addPlan", newFormationToPlan);
+    return this.httpClient.post<AddById>(this.url + "addFormationToPlan", newFormationToPlan);
   }
   
 }
