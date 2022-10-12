@@ -15,6 +15,7 @@ public class Employe {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String nom;
+    @Column(unique = true)
     String cin;
     String email;
     @Temporal(TemporalType.DATE)

@@ -3,6 +3,7 @@ package com.rh.gestionemploye.web;
 
 import com.rh.gestionemploye.dto.EmployeRequest;
 import com.rh.gestionemploye.dto.EmployeResponse;
+import com.rh.gestionemploye.entities.Employe;
 import com.rh.gestionemploye.services.EmployeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -54,5 +55,10 @@ public class EmployeController {
             default:
                 throw new Exception("key: "+key+" invalid");
         }
+    }
+
+    @GetMapping("/employes/cin/{cin}")
+    public Employe getEmployeByCin(@PathVariable String cin){
+        return service.getEmployeByCin(cin);
     }
 }

@@ -4,10 +4,7 @@ import com.example.formationservice.entities.Collaborateur;
 import com.example.formationservice.entities.Formation;
 import com.example.formationservice.entities.Plan;
 import com.example.formationservice.feign.EmployeRestClient;
-import com.example.formationservice.models.AddById;
-import com.example.formationservice.models.Employe;
-import com.example.formationservice.models.FormationRequest;
-import com.example.formationservice.models.PlanRequest;
+import com.example.formationservice.models.*;
 import com.example.formationservice.repositories.CollaborateurRepository;
 import com.example.formationservice.repositories.PlanRepository;
 import com.example.formationservice.service.FormationService;
@@ -104,7 +101,7 @@ public class FormationController {
     }
 
     @GetMapping(path = "/getEmploye/{id}")
-    Employe getEmploye(@PathVariable Long id){
+    public Employe getEmploye(@PathVariable Long id){
         return employeRestClient.getEmployeById(id);
     }
 
@@ -121,52 +118,68 @@ public class FormationController {
     }*/
 
     @PostMapping(path = "/addFormation")
-    void addFormation(@RequestBody FormationRequest formation){
+    public void addFormation(@RequestBody FormationRequest formation){
         formationService.addNewFormation(formation);
     }
 
     @PostMapping(path = "/addPlan")
-    void addPlan(@RequestBody PlanRequest plan){
+    public void addPlan(@RequestBody PlanRequest plan){
         formationService.addNewPlan(plan);
     }
 
     @PostMapping(path = "/addFormationToPlan")
-    void addFormationToPlan(@RequestBody AddById add) {
+    public void addFormationToPlan(@RequestBody AddById add) {
         formationService.addFormationToPlan(add);
     }
 
-    @PostMapping(path = "addCollaborateur")
-    void addCollaborateur(@RequestBody Collaborateur collaborateur){formationService.addNewCollaborateur(collaborateur);}
+    @PostMapping(path = "/addCollaborateur")
+    public void addCollaborateur(@RequestBody CollaborateurRequest collaborateur){formationService.addNewCollaborateur(collaborateur);}
 
     @PostMapping(path = "/addCollToFormation")
-    void addCollaborateurToFormation(@RequestBody AddById add){
+    public void addCollaborateurToFormation(@RequestBody AddById add){
         formationService.addCollaborateurToFormation(add);
     }
 
     @PostMapping(path = "/addDemande")
-    void addDemande(@RequestBody AddById add){
+    public void addDemande(@RequestBody AddById add){
         formationService.addDemande(add);
     }
 
     // ********************** PUT ***************************************
-    @PutMapping(path = "/addFormation")
-    void updateFormation(@RequestBody FormationRequest formation){
-        formationService.addNewFormation(formation);
+    @PutMapping(path = "/updateFormation/{id}")
+    public void updateFormation(@RequestBody FormationRequest formation, @PathVariable Long id){
+        formationService.updateFormation(formation, id);
     }
 
-    @PutMapping(path = "/addPlan")
-    void updatePlan(@RequestBody PlanRequest plan){
-        formationService.addNewPlan(plan);
+    @PutMapping(path = "/updatePlan/{id}")
+    public void updatePlan(@RequestBody PlanRequest plan, @PathVariable Long id){
+        //formationService.addNewPlan(plan);
+        formationService.updatePlan(plan, id);
     }
 
     // ********************** DELETE ***************************************
     @DeleteMapping(path = "/deleteFormation/{id}")
-    void deleteFormatio(@PathVariable Long id){
+    public void deleteFormatio(@PathVariable Long id){
         formationService.deleteFormation(id);
     }
 
     @DeleteMapping(path = "/deletePlan/{id}")
-    void deletePlan(@PathVariable Long id){
+    public void deletePlan(@PathVariable Long id){
         formationService.deletePlan(id);
+    }
+
+    @DeleteMapping(path = "/deleteFormationFromPlan/{formationId}/{planId}")
+    public void deleteFormationToPlan(@PathVariable Long formationId, @PathVariable Long planId){
+        formationService.deleteFormationFromPlan(formationId, planId);
+    }
+
+    @DeleteMapping(path = "/deleteCollFromFormation/{collId}/{formationId}")
+    public void deleteCollFromFormation(@PathVariable Long collId, @PathVariable Long formationId){
+        formationService.deleteCollFromFormation(collId, formationId);
+    }
+
+    @DeleteMapping(path = "/deleteColl/{id}")
+    public void deleteCollaborateur(@PathVariable Long id){
+        formationService.deleteCollaborateur(id);
     }
 }

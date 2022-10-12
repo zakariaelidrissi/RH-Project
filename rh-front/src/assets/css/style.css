@@ -33,7 +33,8 @@ body, button {
         display: none;
     }
     main {
-        margin-left: 270px;
+        margin-left: 290px;
+        margin-right: 25px;
     }
     .sidebar-nav {
         transform: none;

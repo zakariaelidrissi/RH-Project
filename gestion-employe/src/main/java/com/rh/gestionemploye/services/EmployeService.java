@@ -55,4 +55,8 @@ public class EmployeService {
     public List<EmployeResponse> getAllByPoste(String value) {
         return mapEmployes(repo.findAllByPoste(value));
     }
+
+    public Employe getEmployeByCin(String cin){
+        return repo.findEmployeByCin(cin);
+    }
 }

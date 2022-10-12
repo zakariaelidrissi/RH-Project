@@ -27,7 +27,7 @@ export class FormationService {
   }
 
   updateFormation(updateFormation:Formation): Observable<Formation>{
-    return this.httpClient.put<Formation>(this.url + "addFormation", updateFormation);
+    return this.httpClient.put<Formation>(this.url + "updateFormation/" + updateFormation.id, updateFormation);
   }
 
   deleteFormation(formationID:number): Observable<any>{
@@ -49,7 +49,7 @@ export class FormationService {
   }
 
   updatePlan(updatePlan:PlanRequest): Observable<PlanRequest>{
-    return this.httpClient.put<PlanRequest>(this.url + "addPlan", updatePlan);
+    return this.httpClient.put<PlanRequest>(this.url + "updatePlan/" + updatePlan.id, updatePlan);
   }
 
   deletePlan(planID:number): Observable<any>{
@@ -64,6 +64,10 @@ export class FormationService {
 
   addFormationToPlan(newFormationToPlan : AddById) : Observable<AddById> {
     return this.httpClient.post<AddById>(this.url + "addFormationToPlan", newFormationToPlan);
+  }
+
+  deleteFormationFromPlan(formationId : Number, planId : number) : Observable<any> {
+    return this.httpClient.delete<any>(this.url + "deleteFormationFromPlan/" + formationId + "/" + planId);
   }
   
 }

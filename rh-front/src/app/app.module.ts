@@ -8,7 +8,6 @@ import { FormationsComponent } from './components/formations/formations.componen
 import { DashBodyComponent } from './components/dash-body/dash-body.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { FormationDetailsComponent } from './components/formation-details/formation-details.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -22,8 +21,8 @@ import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.com
 import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestion-stagiaire.component';
 import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
-// import { SelectDropdownModule } from 'select-dropdown';
 import { CollService } from './services/collaborateur/coll.service';
+import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,6 @@ import { CollService } from './services/collaborateur/coll.service';
     DashBodyComponent,
     HomeComponent,
     NavbarComponent,
-    FormationDetailsComponent,
     FooterComponent,
     PlansComponent,
     GestionEmployerComponent,
@@ -50,7 +48,14 @@ import { CollService } from './services/collaborateur/coll.service';
     NgMultiSelectDropDownModule.forRoot(),
     FormsModule
   ],
-  providers: [FormationService, GestionEmployeService, CollService],
-  bootstrap: [AppComponent]
+  providers: [
+    FormationService, 
+    GestionEmployeService, 
+    CollService, 
+    StagiaireService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

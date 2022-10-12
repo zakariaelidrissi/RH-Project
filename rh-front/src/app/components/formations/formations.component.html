@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row mb-5 mt-3">
             <div class="col-md-6 fw-bold fs-3">Formations List</div>
-            <div class="col-md-6 ">
-                <button type="button" class="btn btn-primary float-end btn-lg" data-bs-toggle="modal" data-bs-target="#addFormation">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addFormation">
                     Add Formation
                 </button>
             </div>
@@ -24,7 +24,7 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header fw-bold">
                         Data Tables
                     </div>
                     <div class="card-body">
@@ -111,8 +111,7 @@
                     </div>                    
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Objective</label>
-                            <!-- <label for="exampleFormControlTextarea1" class="form-label">Objective</label> -->
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Objective</label>                            
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="objectif"
                              [(ngModel)]="newFormation.objectif"></textarea>
                         </div>

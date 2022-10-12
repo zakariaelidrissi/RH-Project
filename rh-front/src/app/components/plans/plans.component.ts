@@ -7,6 +7,7 @@ import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { FormationService } from 'src/app/services/formation/formation.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Formation } from 'src/app/models/formation';
+import { AddById } from 'src/app/models/addById';
 
 declare const $: any;
 
@@ -21,17 +22,20 @@ export class PlansComponent implements OnInit {
   Collaborateurs : Collaborateur[] = [];
   newPlan : PlanRequest = new PlanRequest();
   updPlan : PlanRequest = new PlanRequest();
-  formations : Formation[] = []
+  formations : Formation[] = [];
+  showFormation : Formation[] = [];
   
   deletePlanId : number = 0;
+  deleteFormationToPlanId : number = 0;
   index : number = 0;
+  planId : number = 0;
 
   message : string = '';
 
   dropdownListFormation : Formation[] = [];
   dropdownListPlan : PlanResponse[] = [];
   selectedItems : any = [];
-  selectedItem : any = [];
+  selectedItem : number = 0;
   dropdownFormationSettings:IDropdownSettings = {};
   dropdownPlanSettings:IDropdownSettings = {};
 
@@ -43,9 +47,9 @@ export class PlansComponent implements OnInit {
     this.getPlans();
     this.getCollaborateur();
     this.dropDownFormation();
-    this.dropDownPlan();
+    // this.dropDownPlan();
   }
-
+ 
   getCollaborateur() : void {
     this.collService.getCollaborateur().subscribe((response : Collaborateur[]) => {
       this.Collaborateurs = response;
@@ -76,28 +80,32 @@ export class PlansComponent implements OnInit {
     this.formationService.addPlan(this.newPlan).subscribe((response)=>{
       this.message = "This Plan well be added successfuly!";
       $('#addPlan').modal("hide");
-      this.router.navigate(['/plans']);
+      this.getPlans();
     }, (err) => {
       console.log(err);
     });    
   }
 
-  editFormation(planId : number){    
-    this.formationService.getPlanById(planId).subscribe((response)=>{
-      this.updPlan.id = response.id;
-      this.updPlan.name = response.name;
-      this.updPlan.planDate = response.planDate;
-      this.updPlan.responsableID = response.responsable.id;
-    }, (err) => {
-      console.log(err);
-    })
+  editPlan(plan : PlanResponse){    
+    // this.formationService.getPlanById(planId).subscribe((response)=>{
+    //   this.updPlan.id = response.id;
+    //   this.updPlan.name = response.name;
+    //   this.updPlan.planDate = response.planDate;
+    //   this.updPlan.responsableID = response.responsable.id;
+    // }, (err) => {
+    //   console.log(err);
+    // })
+    this.updPlan.id = plan.id;
+    this.updPlan.name = plan.name;
+    this.updPlan.planDate = plan.planDate;
+    this.updPlan.responsableID = plan.responsable.id;
   }
 
   updatePlan() {
     this.formationService.updatePlan(this.updPlan).subscribe((response)=>{
       this.message = "This Plan well be updated successfuly!";
       $('#updatePlan').modal("hide");
-      this.router.navigate(['/Plans']);
+      this.getPlans();
     }, (err) => {
       console.log(err);
     });
@@ -105,15 +113,14 @@ export class PlansComponent implements OnInit {
 
   confirmDeletePlan(planID : number, i : number){
     this.deletePlanId = planID;
-    this.index = i;
-    $('#deletePlan').modal("hide");
+    this.index = i;    
   }
 
   deletePlan(planID : number, index : number) {
     this.formationService.deletePlan(planID).subscribe((response)=>{
       this.message = "This Plan well be deleted successfuly!";
       this.plans.splice(index, 1);
-      this.router.navigate(['/plans']);
+      $('#deletePlan').modal("hide");
     }, (err) => {
       console.log(err);
     })
@@ -136,22 +143,22 @@ export class PlansComponent implements OnInit {
     };
   }
 
-  dropDownPlan(){
+  // dropDownPlan(){
     
-    this.getPlans();
+  //   this.getPlans();
 
-    this.selectedItem = [];
+  //   this.selectedItem = [];
 
-    this.dropdownPlanSettings = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'name',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      allowSearchFilter: true
-    };
-  }
+  //   this.dropdownPlanSettings = {
+  //     singleSelection: true,
+  //     idField: 'id',
+  //     textField: 'name',
+  //     selectAllText: 'Select All',
+  //     unSelectAllText: 'UnSelect All',
+  //     itemsShowLimit: 5,
+  //     allowSearchFilter: true
+  //   };
+  // }
 
   onItemSelect(item: any) {
     console.log(item);
@@ -160,12 +167,40 @@ export class PlansComponent implements OnInit {
     console.log(items);
   }
 
-  addFormatonToPlan() {
+  addFormatonToPlan() {    
     for (let index = 0; index < this.selectedItems.length; index++) {
-      const element = this.selectedItems[index];
-      console.log('id : ' + element.id);
-      $('#addFormationToPlan').modal("hide");
+      const formationID = this.selectedItems[index];
+      let addById : AddById = new AddById();
+      addById.id1 = formationID.id;
+      addById.id2 = this.selectedItem;
+      this.formationService.addFormationToPlan(addById).subscribe((response) => {
+        this.message = "Successfuly!";
+        $('#addFormationToPlan').modal("hide");
+      }, (error) => {
+        console.log(error);
+      });
+      // console.log('id : ' + element.id);      
     }
+  }
+
+  showFormations(plan : PlanResponse, planID : number){
+    this.showFormation = plan.formation;
+    this.planId = planID;
+  }
+
+  confirmDeleteFToP(fTPID : number, i : number){
+    this.deleteFormationToPlanId = fTPID;
+    this.index = i;    
+  }
+
+  deleteFormatonFromPlan(formationID : number, planID : number, index : number) {        
+    this.formationService.deleteFormationFromPlan(formationID, planID).subscribe((response) => {
+      this.message = "Successfuly!";
+      this.showFormation.splice(index, 1);
+      $('#addFormationToPlan').modal("hide");
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

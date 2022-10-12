@@ -17,6 +17,10 @@ export class GestionEmployeService {
     return this.httpClient.get<Employe[]>(this.url + "s");
   }
 
+  getEmployeByCin(cin : string) : Observable<Employe> {
+    return this.httpClient.get<Employe>(this.url + "s/cin/" + cin);
+  }
+
   addEmploye(newEmploye : Employe) : Observable<Employe> {
     return this.httpClient.post<Employe>(this.url, newEmploye);
   }

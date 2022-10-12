@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CollRequest } from 'src/app/models/collRequest';
 import { Employe } from 'src/app/models/employe';
+import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
 
 declare const $: any;
@@ -13,6 +15,7 @@ declare const $: any;
 export class GestionEmployerComponent implements OnInit {
 
   employes : Employe[] = [];
+  collRequest : CollRequest = new CollRequest();
   
   newEmploye : Employe = new Employe();
   updateEmploye : Employe = new Employe();
@@ -21,7 +24,9 @@ export class GestionEmployerComponent implements OnInit {
   deleteEmployeId : number = 0;
   index : number = 0;
 
-  constructor(private employerService : GestionEmployeService, private router: Router) { }
+  constructor(private employerService : GestionEmployeService, 
+              private router: Router,
+              private collService : CollService) { }
 
   ngOnInit(): void {    
 
@@ -31,7 +36,7 @@ export class GestionEmployerComponent implements OnInit {
   getAllEmployer() : void{
     this.employerService.getAllEmploye().subscribe((response: Employe[]) => {
       this.employes = response;
-      console.log(this.employes);
+      console.log(response);
     }, err => {
       console.log(err);
     });
@@ -41,7 +46,20 @@ export class GestionEmployerComponent implements OnInit {
     this.employerService.addEmploye(this.newEmploye).subscribe((Response)=>{
       this.message = "This Employer well be added successfuly!";
       $('#addEmployer').modal("hide");
-      this.getAllEmployer();
+
+      this.employerService.getEmployeByCin(Response.cin).subscribe((response) => {
+        this.collRequest.employeId = response.id;
+
+        this.collService.addCollaborateur(this.collRequest).subscribe((response) => {          
+          this.getAllEmployer();
+        }, (error) => {
+          console.log(error);
+        });
+
+      }, (error) => {
+        console.log(error);
+      });
+
     }, err => {
       console.log(err);
     });
@@ -63,15 +81,19 @@ export class GestionEmployerComponent implements OnInit {
 
   confirmDeleteEmploye(employeID : number, i : number){
     this.deleteEmployeId = employeID;
-    this.index = i;
-    $('#deleteEmploye').modal("hide");
+    this.index = i;    
   }
 
   deleteEmploye(employerID : number, index : number) {
     this.employerService.deleteEmploye(employerID).subscribe((Response)=>{
       this.message = "This Employer well be deleted successfuly!";
       this.employes.splice(index, 1);
-      this.router.navigate(['/gestion-employer']);
+      this.collService.deleteCollaborateur(employerID).subscribe((response) => {
+        $('#deleteEmploye').modal("hide");
+        this.router.navigate(['/gestion-employer']);
+      }, (error) => {
+        console.log(error);
+      });
     }, err => {
       console.log(err);
     })

@@ -4,6 +4,7 @@ import com.example.formationservice.entities.Collaborateur;
 import com.example.formationservice.entities.Formation;
 import com.example.formationservice.entities.Plan;
 import com.example.formationservice.models.AddById;
+import com.example.formationservice.models.CollaborateurRequest;
 import com.example.formationservice.models.FormationRequest;
 import com.example.formationservice.models.PlanRequest;
 
@@ -14,12 +15,16 @@ public interface FormationService {
     // ********************** POST ***************************************
     void addNewFormation(FormationRequest formation);
     void addNewPlan(PlanRequest plan);
-    void addNewCollaborateur(Collaborateur collaborateur);
+    void addNewCollaborateur(CollaborateurRequest collaborateur);
     //void addNewModule(Module module);
     void addCollaborateurToFormation(AddById add);
     void addFormationToPlan(AddById add);
     //void addModuleToPlan(AddWithStr add);
     void addDemande(AddById add);
+
+    // ********************** PUT ***************************************
+    void updatePlan(PlanRequest planRequest, Long id);
+    void updateFormation(FormationRequest formation, Long id);
 
     // ********************** GET ***************************************
     Formation findFormationByName(String formationName);
@@ -36,4 +41,7 @@ public interface FormationService {
     // ********************** DELETE ***************************************
     void deleteFormation(Long id);
     void deletePlan(Long id);
+    void deleteFormationFromPlan(Long formationId, Long planId);
+    void deleteCollFromFormation(Long CollId, Long FormID);
+    void deleteCollaborateur(Long id);
 }

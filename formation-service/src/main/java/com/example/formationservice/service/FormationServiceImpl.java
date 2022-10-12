@@ -2,6 +2,7 @@ package com.example.formationservice.service;
 
 import com.example.formationservice.entities.*;
 import com.example.formationservice.models.AddById;
+import com.example.formationservice.models.CollaborateurRequest;
 import com.example.formationservice.models.FormationRequest;
 import com.example.formationservice.models.PlanRequest;
 import com.example.formationservice.repositories.*;
@@ -25,12 +26,12 @@ public class FormationServiceImpl implements FormationService {
 
     // ********************** POST ***************************************
     @Override
-    public void addNewFormation(FormationRequest formationModel) {
+    public void addNewFormation(FormationRequest formationRequest) {
         Formation formation = new Formation();
-        formation.setDuree(formationModel.getDuree());
-        formation.setFormationDate(formationModel.getFormationDate());
-        formation.setName(formationModel.getName());
-        formation.setObjectif(formationModel.getObjectif());
+        formation.setDuree(formationRequest.getDuree());
+        formation.setFormationDate(formationRequest.getFormationDate());
+        formation.setName(formationRequest.getName());
+        formation.setObjectif(formationRequest.getObjectif());
         formationRepository.save(formation);
     }
 
@@ -46,8 +47,10 @@ public class FormationServiceImpl implements FormationService {
     }
 
     @Override
-    public void addNewCollaborateur(Collaborateur collaborateur) {
-        collaborateurRepository.save(collaborateur);
+    public void addNewCollaborateur(CollaborateurRequest collaborateur) {
+        Collaborateur coll = new Collaborateur();
+        coll.setEmpolyeID(collaborateur.getEmployeId());
+        collaborateurRepository.save(coll);
     }
 
     /*@Override
@@ -100,6 +103,28 @@ public class FormationServiceImpl implements FormationService {
         demandeRepository.save(demande);
     }
 
+    @Override
+    public void updatePlan(PlanRequest planRequest, Long id) {
+        Plan plan = findPlanById(id);
+        Collaborateur coll = findCollaborateurById(planRequest.getResponsableID());
+
+        plan.setName(planRequest.getName());
+        plan.setPlanDate(planRequest.getPlanDate());
+        plan.setResponsable(coll);
+        planRepository.save(plan);
+
+    }
+
+    @Override
+    public void updateFormation(FormationRequest formationRequest, Long id){
+        Formation formation = findFormationById(id);
+        formation.setDuree(formationRequest.getDuree());
+        formation.setFormationDate(formationRequest.getFormationDate());
+        formation.setName(formationRequest.getName());
+        formation.setObjectif(formationRequest.getObjectif());
+        formationRepository.save(formation);
+    }
+
     // ********************** GET ***************************************
     @Override
     public Formation findFormationByName(String formationName) {
@@ -145,8 +170,8 @@ public class FormationServiceImpl implements FormationService {
     }
 
     @Override
-    public Collaborateur findCollaborateurByEmployeId(Long userId) {
-        return collaborateurRepository.findCollaborateurByEmpolyeID(userId);
+    public Collaborateur findCollaborateurByEmployeId(Long employeID) {
+        return collaborateurRepository.findCollaborateurByEmpolyeID(employeID);
     }
 
     // ********************** DELETE ***************************************
@@ -160,6 +185,32 @@ public class FormationServiceImpl implements FormationService {
         planRepository.deleteById(id);
     }
 
+    @Override
+    public void deleteFormationFromPlan(Long formationId, Long planId){
+        Formation formation = findFormationById(formationId);
+        Plan plan = findPlanById(planId);
 
+        if(plan.getFormation() != null) {
+            plan.getFormation().remove(formation);
+            formation.getPlan().remove(plan);
+        }
+    }
+
+    @Override
+    public void deleteCollFromFormation(Long CollId, Long FormID){
+        Formation formation = findFormationById(FormID);
+        Collaborateur coll = findCollaborateurById(CollId);
+
+        if (coll.getFormations() != null) {
+            coll.getFormations().remove(formation);
+            formation.getCollaborateurs().remove(coll);
+        }
+    }
+
+    @Override
+    public void deleteCollaborateur(Long id){
+        Collaborateur collaborateur = findCollaborateurByEmployeId(id);
+        collaborateurRepository.deleteCollaborateurById(collaborateur.getId());
+    }
 
 }
