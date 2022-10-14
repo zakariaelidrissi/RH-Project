@@ -10,18 +10,16 @@ import java.util.Date;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Demande {
+public class EmployeAbsence {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(TemporalType.DATE)
-    private Date dateDebut;
-    @Temporal(TemporalType.DATE)
-    private Date dateFin;
+    private Date dateAbs;
     @Enumerated(EnumType.STRING)
     private NatureAbsence natureAbsence;
-    //private Blob justificatif;
+    private boolean justificatif;
+    private String duree;
     private Long employeId;
-
     @Transient
     private Employe employe;
 }

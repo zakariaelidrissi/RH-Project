@@ -1,9 +1,13 @@
 package com.example.absenceservice.repositories;
 
-import com.example.absenceservice.entities.Absence;
+import com.example.absenceservice.entities.EmployeAbsence;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource
-public interface AbsenceRepository extends JpaRepository<Absence,Long> {
+import java.util.Date;
+import java.util.List;
+
+public interface AbsenceRepository extends JpaRepository<EmployeAbsence,Long> {
+
+    EmployeAbsence findEmployeAbsenceById(Long id);
+    List<EmployeAbsence> findEmployeAbsenceByDateAbs(Date date);
 }

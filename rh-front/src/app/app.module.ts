@@ -23,6 +23,7 @@ import { DemandeAbsenceComponent } from './components/absence/demande-absence/de
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { CollService } from './services/collaborateur/coll.service';
 import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service';
+import { AbsenceService } from './services/absence/absence.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service
     FormationService, 
     GestionEmployeService, 
     CollService, 
-    StagiaireService
+    StagiaireService,
+    AbsenceService,
   ],
   bootstrap: [
     AppComponent

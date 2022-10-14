@@ -8,20 +8,18 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Demande {
+@Entity
+public class StagiaireAbsence {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(TemporalType.DATE)
-    private Date dateDebut;
-    @Temporal(TemporalType.DATE)
-    private Date dateFin;
+    private Date dateAbs;
     @Enumerated(EnumType.STRING)
     private NatureAbsence natureAbsence;
-    //private Blob justificatif;
-    private Long employeId;
-
+    private boolean justificatif;
+    private String duree;
+    private Long stagiaireId;
     @Transient
     private Employe employe;
 }

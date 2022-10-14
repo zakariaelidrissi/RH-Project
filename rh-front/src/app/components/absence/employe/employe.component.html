@@ -41,24 +41,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr *ngFor="let formation of formations;let i = index">
-                                        <td>{{ formation.name }}</td>
-                                        <td>{{ formation.formationDate }}</td>
-                                        <td>{{ formation.duree }}</td>
-                                        <td>{{ formation.objectif }}</td>
+                                    <tr *ngFor="let absence of absences;let i = index">
+                                        <td>{{ absence.employe.nom }}</td>
+                                        <td>{{ absence.dateAbs }}</td>
+                                        <td>{{ absence.natureAbsence }}</td>
+                                        <td>{{ absence.justificatif }}</td>
+                                        <td>{{ absence.duree }}</td>
                                         <td>
                                             <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2" (click)="editFormation(formation)"
+                                                <button class="btn btn-warning me-2"
                                                     data-bs-toggle="modal" data-bs-target="#updateFormation">
                                                     Edit
                                                 </button>
-                                                <button class="btn btn-danger" (click)="confirmDeleteFormation(formation.id, i)"
+                                                <button class="btn btn-danger"
                                                     data-bs-toggle="modal" data-bs-target="#deleteFormation">
                                                     Delete
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr> -->
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
