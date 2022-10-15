@@ -52,8 +52,6 @@ public class AttestationService {
         return mapAttestations(repo.findAllByPoste(value));
     }
 
-
-
     private List<AttestationResponse> mapAttestations(List<Attestation> l){
         return l.stream().map(p->mapper.attestationToAttestationResponse(p)).collect(Collectors.toList());
     }
