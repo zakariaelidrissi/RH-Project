@@ -17,6 +17,7 @@ public class DemandeAttestation {
     Long idUser;
     //@Enumerated(EnumType.STRING)
     Attestation.AttestationType type;
+    @Temporal(TemporalType.DATE)
     Date date;
     boolean done;
 }
