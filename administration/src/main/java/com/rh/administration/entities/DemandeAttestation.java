@@ -11,24 +11,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Attestation {
+public class DemandeAttestation {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
-    String nom;
-    String cin;
-    String poste;
-    @Temporal(TemporalType.DATE)
-    Date debutPoste;
-    String etablissement;
-
-    @Enumerated(EnumType.STRING)
-    AttestationType type;
-
-    public enum AttestationType{
-        Formation,
-        Stage,
-        Travail
-    }
-
-
+    Long idUser;
+    //@Enumerated(EnumType.STRING)
+    Attestation.AttestationType type;
+    Date date;
+    boolean done;
 }
