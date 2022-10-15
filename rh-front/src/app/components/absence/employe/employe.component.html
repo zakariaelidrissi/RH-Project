@@ -4,21 +4,21 @@
 <main class="mt-5 pt-3">
     <div class="container">
         <div class="row mb-5 mt-3">
-            <div class="col-md-6 fw-bold fs-3">Absence List of Employee</div>
+            <div class="col-md-6 fw-bold fs-3">List Absence of Employee</div>
             <div class="col-md-6 ">
-                <button type="button" class="btn btn-primary float-end btn-lg" data-bs-toggle="modal" data-bs-target="#addAbsence">
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addAbsence">
                     Add Absence
                 </button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3"></div>
-            <!-- <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
                     <button type="button" class="close float-end" data-bs-dismiss="alert">x</button>                    
                 </div>
-            </div> -->
+            </div>
             <div class="col-md-3"></div>
         </div>
         <div class="row mb-3">
@@ -50,11 +50,11 @@
                                         <td>
                                             <div class="me-auto d-flex">
                                                 <button class="btn btn-warning me-2"
-                                                    data-bs-toggle="modal" data-bs-target="#updateFormation">
+                                                    data-bs-toggle="modal" data-bs-target="#updateAbsence">
                                                     Edit
                                                 </button>
                                                 <button class="btn btn-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteFormation">
+                                                    data-bs-toggle="modal" data-bs-target="#deleteAbsence">
                                                     Delete
                                                 </button>
                                             </div>
@@ -90,7 +90,6 @@
                                     <th>Employee Name</th>
                                     <th>Cin</th>
                                     <th>Email</th>
-                                    <th>Date of Birth</th>                                        
                                     <th>Start Date</th>
                                     <th>Departement</th>
                                     <th>Poste</th>
@@ -101,14 +100,14 @@
                                 <tr *ngFor="let emp of employes; let i = index">
                                     <td>{{emp.nom}}</td>
                                     <td>{{emp.cin}}</td>
-                                    <td>{{emp.email}}</td>
-                                    <td>{{emp.naissance}}</td>
+                                    <td>{{emp.email}}</td>                                    
                                     <td>{{emp.debutAmbauche}}</td>
                                     <td>{{emp.departement}}</td>
                                     <td>{{emp.poste}}</td>
                                     <td>
                                         <div class="form-check ms-3">
-                                            <input type="checkbox" class="form-check-input" name="abs">
+                                            <input type="checkbox" class="form-check-input" name="newAbs"
+                                             (change)="onChange(emp.id)">
                                         </div>
                                     </td>
                                 </tr>
@@ -119,7 +118,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" (click)="addAbsence()">Save</button>
             </div>
         </div>
     </div>

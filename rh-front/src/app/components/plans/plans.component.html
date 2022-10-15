@@ -39,7 +39,7 @@
                                         <th>Plan Name</th>
                                         <th>Plan Date</th>
                                         <th>responsable Name</th>
-                                        <th>Formations</th>                                        
+                                        <!-- <th>Formations</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -48,11 +48,12 @@
                                         <td>{{ plan.name }}</td>
                                         <td>{{ plan.planDate }}</td>
                                         <td>{{ plan.responsable.employe.nom }}</td>
-                                        <td><button class="btn btn-success me-2" (click)="showFormations(plan, plan.id)"
+                                        <!-- <td>
+                                            <button class="btn btn-success me-2" (click)="showFormations(plan, plan.id)"
                                                 data-bs-target="#showFormations" data-bs-toggle="modal">
                                                 Show Formations
                                             </button>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <div class="me-auto d-flex">
                                                 <button class="btn btn-warning me-2" (click)="editPlan(plan)"
@@ -270,7 +271,7 @@
 <!-- ******************************* SHOW ************************************ -->
 
 <!-- Show Formations Modal -->
-<div class="modal fade" id="showFormations" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<!-- <div class="modal fade" id="showFormations" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -311,5 +312,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Show Formations Modal -->

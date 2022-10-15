@@ -6,7 +6,7 @@ export class AbsenceResponse {
     natureAbsence : string;
     justificatif : boolean;
     duree : string;
-    EmployeId : number;
+    employeId : number;
     employe : Employe;
 
     constructor(){
@@ -15,7 +15,7 @@ export class AbsenceResponse {
         this.natureAbsence = '';
         this.justificatif = false;
         this.duree = '';
-        this.EmployeId = 0;
+        this.employeId = 0;
         this.employe = new Employe();
     }
 }

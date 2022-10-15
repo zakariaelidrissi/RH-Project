@@ -4,13 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
+
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Employe {
-    private Long idUser;
-    private String nom;
-    private String prenom;
-    private String email;
-    private String motDePasse;
-    private String tel;
-    private String userRole;
+    Long id;
+    String nom;
+    String cin;
+    String email;
+    @Temporal(TemporalType.DATE)
+    Date naissance;
+    @Temporal(TemporalType.DATE)
+    Date debutAmbauche;
+    String departement;
+    String poste;
 }

@@ -1,18 +1,18 @@
 import { Collaborateur } from "./collaborateur";
-import { Formation } from "./formation";
+// import { Formation } from "./formationRequest";
 
 export class PlanResponse {
     id: number;
     name: string;
     planDate: string;
     responsable: Collaborateur;
-    formation: Array<Formation>;
+    // formation: Array<Formation>;
 
     constructor() {
         this.id = 0;
         this.name = '';
         this.planDate = '';
         this.responsable = new Collaborateur();
-        this.formation = new Array<Formation>();
+        // this.formation = new Array<Formation>();
     }
 }

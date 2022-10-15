@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { AbsenceRequest } from 'src/app/models/absenceRequest';
 import { AbsenceResponse } from 'src/app/models/absenceResponse';
 import { Employe } from 'src/app/models/employe';
@@ -17,13 +18,15 @@ export class EmployeComponent implements OnInit {
 
   employes : Employe[] = [];
   absences : AbsenceResponse[] = [];
-  newAbs : AbsenceRequest[] = [];
+  newAbs : AbsenceRequest = new AbsenceRequest();
+  abs : number[] = [];
 
   message : string = '';
 
   constructor(private empolyeeServise : GestionEmployeService,
               private absService : AbsenceService,
-              private router : Router) { }
+              private router : Router,
+              private datepipe : DatePipe) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -36,11 +39,12 @@ export class EmployeComponent implements OnInit {
       });
     }, 1);
     this.getAllEmployee();
+    this.getAllAbs();
   }
 
   getAllEmployee(){
-    this.empolyeeServise.getAllEmploye().subscribe((Response) => {
-      this.employes = Response;
+    this.empolyeeServise.getAllEmploye().subscribe((response) => {
+      this.employes = response;
     }, (err) => {
       console.log(err);
     })
@@ -62,14 +66,42 @@ export class EmployeComponent implements OnInit {
     });
   }
 
-  addAbsence() {
-    for (let index = 0; index < this.newAbs.length; index++) {
-      this.absService.addEmpAbsence(this.newAbs[index]).subscribe((response) => {
-        
+  addAbsence() {    
+
+    for (let index = 0; index < this.abs.length; index++) {
+      this.newAbs.employeId = this.abs[index];      
+      this.newAbs.dateAbs = new Date();
+      this.newAbs.duree = '-';
+      this.newAbs.justificatif = false;
+      this.newAbs.natureAbsence = 'NONJUSTIFIEE';
+      
+      this.absService.addEmpAbsence(this.newAbs).subscribe((response) => {
+        this.message = "These Absences well be added successfuly!";
+        $('#addAbsence').modal('hide');
+        this.getAllAbs();
       }, (error) => {
         console.log(error);
       });
     }
+
+    
+  }
+
+  onChange(empId: number) {    
+    let k = 0;
+    for (let index = 0; index < this.abs.length; index++){
+      if (this.abs[index] === empId){
+        this.abs.splice(index, 1);        
+        k++;
+      }
+    }
+
+    if (k === 0){
+      this.abs.push(empId);
+      console.log('added ' + empId);
+      console.log(this.abs);
+    }    
+
   }
 
 }

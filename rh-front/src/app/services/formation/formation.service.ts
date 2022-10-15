@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import { Formation } from 'src/app/models/formation';
 import { PlanResponse } from 'src/app/models/planResponse';
 import { PlanRequest } from 'src/app/models/planRequest';
 import { AddById } from 'src/app/models/addById';
+import { FormationResponse } from 'src/app/models/formationResponse';
+import { FormationRequest } from 'src/app/models/formationRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -18,24 +19,24 @@ export class FormationService {
 
   // **************** Formations ********************
 
-  getFormations() : Observable<Formation[]>{
-    return this.httpClient.get<Formation[]>(this.url + "listFormations");
+  getFormations() : Observable<FormationResponse[]>{
+    return this.httpClient.get<FormationResponse[]>(this.url + "listFormations");
   }  
 
-  addFormation(newFormation : Formation) : Observable<Formation> {
-    return this.httpClient.post<Formation>(this.url + "addFormation", newFormation);
+  addFormation(newFormation : FormationRequest) : Observable<FormationRequest> {
+    return this.httpClient.post<FormationRequest>(this.url + "addFormation", newFormation);
   }
 
-  updateFormation(updateFormation:Formation): Observable<Formation>{
-    return this.httpClient.put<Formation>(this.url + "updateFormation/" + updateFormation.id, updateFormation);
+  updateFormation(updateFormation:FormationRequest): Observable<FormationRequest>{
+    return this.httpClient.put<FormationRequest>(this.url + "updateFormation/" + updateFormation.id, updateFormation);
   }
 
   deleteFormation(formationID:number): Observable<any>{
-    return this.httpClient.delete<Formation>(this.url + "deleteFormation/" + formationID);
+    return this.httpClient.delete<any>(this.url + "deleteFormation/" + formationID);
   }
 
-  findFormation(searchTerm : string): Observable<Formation>{
-    return this.httpClient.get<Formation>("" + searchTerm);
+  findFormation(searchTerm : string): Observable<FormationResponse>{
+    return this.httpClient.get<FormationResponse>("" + searchTerm);
   }
 
   // **************** Plans ********************

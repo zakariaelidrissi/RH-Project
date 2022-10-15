@@ -44,12 +44,16 @@
                                         <td>{{ formation.name }}</td>
                                         <td>{{ formation.formationDate }}</td>
                                         <td>{{ formation.duree }}</td>
-                                        <td>{{ formation.objectif }}</td>
+                                        <td>{{ (formation.objectif.length>40)? (formation.objectif | slice:0:40)+'...':(formation.objectif) }}</td>
                                         <td>
                                             <div class="me-auto d-flex">
                                                 <button class="btn btn-warning me-2" (click)="editFormation(formation)"
                                                     data-bs-toggle="modal" data-bs-target="#updateFormation">
                                                     Edit
+                                                </button>
+                                                <button class="btn btn-success me-2" (click)="showPlan(formation)"
+                                                    data-bs-toggle="modal" data-bs-target="#show">
+                                                    Show
                                                 </button>
                                                 <button class="btn btn-danger" (click)="confirmDeleteFormation(formation.id, i)"
                                                     data-bs-toggle="modal" data-bs-target="#deleteFormation">
@@ -198,3 +202,51 @@
     </div>
 </div>
 <!-- Delete formation Modal -->
+
+<!-- Show Plans Modal -->
+<div class="modal fade" id="show" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">List Plans of this formation</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped data-table">
+                            <thead>
+                                <tr>
+                                    <th>Plan Name</th>                                    
+                                    <th>Plan Date</th>
+                                    <th>Responsable</th>                                        
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let plan of plans;let i = index">
+                                    <td>{{ plan.name }}</td>
+                                    <td>{{ plan.planDate }}</td>
+                                    <td>{{ plan.responsable.employe.nom }}</td>
+                                    <!-- <td>
+                                        <button class="btn btn-danger me-2" (click)="deleteFormatonFromPlan(formation.id, planId, i)"
+                                            data-bs-target="#showFormations" data-bs-toggle="modal">
+                                            Delete
+                                        </button>
+                                    </td> -->
+                                    
+                                </tr>                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Show Plans Modal -->

@@ -24,6 +24,7 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { CollService } from './services/collaborateur/coll.service';
 import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service';
 import { AbsenceService } from './services/absence/absence.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { AbsenceService } from './services/absence/absence.service';
     CollService, 
     StagiaireService,
     AbsenceService,
+    DatePipe,
   ],
   bootstrap: [
     AppComponent

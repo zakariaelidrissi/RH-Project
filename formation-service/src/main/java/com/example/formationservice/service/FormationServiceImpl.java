@@ -1,10 +1,8 @@
 package com.example.formationservice.service;
 
 import com.example.formationservice.entities.*;
-import com.example.formationservice.models.AddById;
-import com.example.formationservice.models.CollaborateurRequest;
-import com.example.formationservice.models.FormationRequest;
-import com.example.formationservice.models.PlanRequest;
+import com.example.formationservice.feign.EmployeRestClient;
+import com.example.formationservice.models.*;
 import com.example.formationservice.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,7 @@ public class FormationServiceImpl implements FormationService {
     private CollaborateurRepository collaborateurRepository;
     //private ModuleRepository moduleRepository;
     private DemandeRepository demandeRepository;
+    private EmployeRestClient employeRestClient;
 
     // ********************** POST ***************************************
     @Override
@@ -74,9 +73,9 @@ public class FormationServiceImpl implements FormationService {
         Formation formation = findFormationById(add.getId1());
         Plan plan = findPlanById(add.getId2());
 
-        if(plan.getFormation() != null) {
-            plan.getFormation().add(formation);
+        if(formation.getPlan() != null) {
             formation.getPlan().add(plan);
+            plan.getFormation().add(formation);
         }
     }
 
@@ -139,7 +138,16 @@ public class FormationServiceImpl implements FormationService {
 
     @Override
     public List<Formation> getAllFormation() {
-        return formationRepository.findAll();
+        List<Formation> listF = formationRepository.findAll();
+
+        listF.forEach(f -> {
+            f.getPlan().forEach(p -> {
+                Employe employe = employeRestClient.getEmployeById(p.getResponsable().getEmpolyeID());
+                p.getResponsable().setEmploye(employe);
+            });
+        });
+
+        return listF;
     }
 
     @Override

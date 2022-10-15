@@ -1,12 +1,13 @@
+import { PlanResponse } from "./planResponse";
 
-export class Formation {
+export class FormationResponse {
     id: number;
     name: string;
     objectif: string;
     duree: string;
     formationDate: Date;
     // collaborateurs: Set<Collaborateur>;
-    // plan: Set<Plan>;
+    plan: PlanResponse[];
     // demandes: Array<Demande>;
 
     constructor() {
@@ -16,7 +17,7 @@ export class Formation {
         this.duree = '';
         this.formationDate = new Date();
         // this.collaborateurs = new Set<Collaborateur>();
-        // this.plan = new Set<Plan>();
+        this.plan = new Array<PlanResponse>();
         // this.demandes = new Array<Demande>();
     }
 }

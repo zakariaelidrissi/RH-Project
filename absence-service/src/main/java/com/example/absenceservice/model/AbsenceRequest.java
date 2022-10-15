@@ -13,5 +13,5 @@ public class AbsenceRequest {
     private NatureAbsence natureAbsence;
     private boolean justificatif;
     private String duree;
-    private Long EmployeId;
+    private Long employeId;
 }

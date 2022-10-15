@@ -16,6 +16,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin("*")
 public class AbsenceController {
 
     private EmployeRestClient employeRestClient;
@@ -79,11 +80,11 @@ public class AbsenceController {
     @PostMapping(path = "/absences")
     public void saveEmpAbs(@RequestBody AbsenceRequest absReq){
         EmployeAbsence abs = new EmployeAbsence();
-
+        Employe emp = employeRestClient.getEmployeById(absReq.getEmployeId());
         abs.setDateAbs(absReq.getDateAbs());
         abs.setDuree(absReq.getDuree());
         abs.setNatureAbsence(absReq.getNatureAbsence());
-        abs.setEmployeId(absReq.getEmployeId());
+        abs.setEmployeId(emp.getId());
         abs.setJustificatif(absReq.isJustificatif());
 
         absenceRepository.save(abs);

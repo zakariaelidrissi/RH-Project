@@ -4,7 +4,7 @@ export class AbsenceRequest {
     natureAbsence : string;
     justificatif : boolean;
     duree : string;
-    EmployeId : number;
+    employeId : number;
 
     constructor(){
         this.id = 0;
@@ -12,6 +12,6 @@ export class AbsenceRequest {
         this.natureAbsence = '';
         this.justificatif = false;
         this.duree = '';
-        this.EmployeId = 0;
+        this.employeId = 0;
     }
 }

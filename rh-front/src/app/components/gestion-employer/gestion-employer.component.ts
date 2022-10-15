@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { CollRequest } from 'src/app/models/collRequest';
 import { Employe } from 'src/app/models/employe';
@@ -12,7 +12,7 @@ declare const $: any;
   templateUrl: './gestion-employer.component.html',
   styleUrls: ['./gestion-employer.component.css']
 })
-export class GestionEmployerComponent implements OnInit {
+export class GestionEmployerComponent implements OnInit, AfterContentChecked {
 
   employes : Employe[] = [];
   collRequest : CollRequest = new CollRequest();
@@ -33,6 +33,10 @@ export class GestionEmployerComponent implements OnInit {
     this.getAllEmployer();
   }
 
+  ngAfterContentChecked(): void {
+    this.getAllEmployer();
+  }
+
   getAllEmployer() : void{
     this.employerService.getAllEmploye().subscribe((response: Employe[]) => {
       this.employes = response;
@@ -50,8 +54,10 @@ export class GestionEmployerComponent implements OnInit {
       this.employerService.getEmployeByCin(Response.cin).subscribe((response) => {
         this.collRequest.employeId = response.id;
 
-        this.collService.addCollaborateur(this.collRequest).subscribe((response) => {          
-          this.getAllEmployer();
+        this.collService.addCollaborateur(this.collRequest).subscribe((response) => {
+          // this.router.navigate(['/gestion-employer']);
+          // this.getAllEmployer();
+          this.newEmploye = new Employe();
         }, (error) => {
           console.log(error);
         });

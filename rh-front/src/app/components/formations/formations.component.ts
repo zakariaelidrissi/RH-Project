@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Formation } from 'src/app/models/formation';
+import { FormationRequest } from 'src/app/models/formationRequest';
+import { FormationResponse } from 'src/app/models/formationResponse';
+import { PlanResponse } from 'src/app/models/planResponse';
 import { FormationService } from 'src/app/services/formation/formation.service';
 
 declare const $: any;
@@ -12,10 +14,11 @@ declare const $: any;
 })
 export class FormationsComponent implements OnInit {
   
-  formations : Formation[] = [];
-  newFormation : Formation = new Formation();
-  updFormation : Formation = new Formation();
+  formations : FormationResponse[] = [];
+  newFormation : FormationRequest = new FormationRequest();
+  updFormation : FormationRequest = new FormationRequest();
   deleteFormationId : number = 0;
+  plans : PlanResponse[] = [];
   index : number = 0;
 
   message : string = '';
@@ -29,7 +32,7 @@ export class FormationsComponent implements OnInit {
   }
 
   getFormations(): void {
-    this.formationService.getFormations().subscribe((response: Formation[]) => {
+    this.formationService.getFormations().subscribe((response: FormationResponse[]) => {
       this.formations = response;
       console.log(response);
     }, err => {
@@ -50,7 +53,7 @@ export class FormationsComponent implements OnInit {
     });    
   }
 
-  editFormation(formation : Formation){
+  editFormation(formation : FormationResponse){
     this.updFormation = formation;
   }  
 
@@ -77,6 +80,10 @@ export class FormationsComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  }
+
+  showPlan(formation : FormationResponse) {
+    this.plans = formation.plan;
   }
 
 }

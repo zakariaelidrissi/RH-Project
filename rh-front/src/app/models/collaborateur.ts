@@ -1,12 +1,12 @@
 import { Demande } from "./Demande";
 import { Employe } from "./employe";
-import { Formation } from "./formation";
+import { FormationResponse } from "./formationResponse";
 import { PlanRequest } from "./planRequest";
 import { User } from "./user";
 
 export class Collaborateur {
     id: number;    
-    formations: Array<Formation>;
+    formations: Array<FormationResponse>;
     plans: Array<PlanRequest>;
     demandes: Array<Demande>;
     empolyeID: number;
@@ -14,7 +14,7 @@ export class Collaborateur {
 
     constructor() {
         this.id = 0;    
-        this.formations = new Array<Formation>();
+        this.formations = new Array<FormationResponse>();
         this.plans = new Array<PlanRequest>();
         this.demandes = new Array<Demande>();
         this.empolyeID = 0;

@@ -29,7 +29,7 @@ export class AbsenceService {
     return this.httpClient.get<DemandeResponse>(this.urlDm);
   }
 
-  addEmpAbsence(newAbs : AbsenceRequest) : Observable<AbsenceRequest> {
+  addEmpAbsence(newAbs : AbsenceRequest) : Observable<AbsenceRequest> {    
     return this.httpClient.post<AbsenceRequest>(this.urlAbs, newAbs);
   }
 

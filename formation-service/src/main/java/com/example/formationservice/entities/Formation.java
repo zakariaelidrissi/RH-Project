@@ -25,8 +25,7 @@ public class Formation {
     @ToString.Exclude
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Collaborateur> collaborateurs = new HashSet<>();
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "formation", fetch = FetchType.EAGER)
     private Set<Plan> plan = new HashSet<>();
     @OneToMany(mappedBy = "formation", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
