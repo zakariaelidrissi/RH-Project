@@ -15,7 +15,7 @@ public class DemandeAttestation {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
     Long idUser;
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     Attestation.AttestationType type;
     @Temporal(TemporalType.DATE)
     Date date;

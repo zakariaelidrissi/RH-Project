@@ -20,7 +20,7 @@ public class AdministrationApplication {
         SpringApplication.run(AdministrationApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner start(AttestationService att, DemandeAttestationService dem){
         return args -> {
             dem.save(new DemandeAttestationRequest(
