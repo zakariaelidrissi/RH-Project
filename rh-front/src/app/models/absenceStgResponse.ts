@@ -1,13 +1,13 @@
-import { Employe } from "./employe";
+import { Stagiaire } from "./stagiaire";
 
-export class AbsenceResponse {
+export class AbsenceStgResponse {
     id : number;
     dateAbs : Date;
     natureAbsence : string;
     justificatif : boolean;
     duree : string;
-    employeId : number;
-    employe : Employe;
+    stagiaireId : number;
+    stagiaire : Stagiaire;
 
     constructor(){
         this.id = 0;
@@ -15,7 +15,7 @@ export class AbsenceResponse {
         this.natureAbsence = '';
         this.justificatif = false;
         this.duree = '';
-        this.employeId = 0;
-        this.employe = new Employe();
+        this.stagiaireId = 0;
+        this.stagiaire = new Stagiaire();
     }
 }

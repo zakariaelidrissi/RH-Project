@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { AbsenceRequest } from 'src/app/models/absenceRequest';
-import { AbsenceResponse } from 'src/app/models/absenceResponse';
+import { AbsenceEmpRequest } from 'src/app/models/absenceEmpRequest';
+import { AbsenceEmpResponse } from 'src/app/models/absenceEmpResponse';
 import { Employe } from 'src/app/models/employe';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
@@ -17,16 +16,15 @@ declare const $ : any;
 export class EmployeComponent implements OnInit {
 
   employes : Employe[] = [];
-  absences : AbsenceResponse[] = [];
-  newAbs : AbsenceRequest = new AbsenceRequest();
+  absences : AbsenceEmpResponse[] = [];
+  newAbs : AbsenceEmpRequest = new AbsenceEmpRequest();
   abs : number[] = [];
 
   message : string = '';
 
   constructor(private empolyeeServise : GestionEmployeService,
               private absService : AbsenceService,
-              private router : Router,
-              private datepipe : DatePipe) { }
+              private router : Router) { }
 
   ngOnInit(): void {
     setTimeout(() => {

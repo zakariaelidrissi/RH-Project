@@ -1,4 +1,4 @@
-export class AbsenceRequest {
+export class AbsenceEmpRequest {
     id : number;
     dateAbs : Date;
     natureAbsence : string;

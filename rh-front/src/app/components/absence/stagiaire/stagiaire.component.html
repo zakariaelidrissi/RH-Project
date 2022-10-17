@@ -4,21 +4,21 @@
 <main class="mt-5 pt-3">
     <div class="container">
         <div class="row mb-5 mt-3">
-            <div class="col-md-6 fw-bold fs-3">Absence List of Stagiaire</div>
+            <div class="col-md-6 fw-bold fs-3">List Absence of Stagiaire</div>
             <div class="col-md-6 ">
-                <button type="button" class="btn btn-primary float-end btn-lg" data-bs-toggle="modal" data-bs-target="#addAbsence">
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addAbsence">
                     Add Absence
                 </button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3"></div>
-            <!-- <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
                     <button type="button" class="close float-end" data-bs-dismiss="alert">x</button>                    
                 </div>
-            </div> -->
+            </div>
             <div class="col-md-3"></div>
         </div>
         <div class="row mb-3">
@@ -35,24 +35,26 @@
                                         <th>Stagiaire Name</th>
                                         <th>Date Absence</th>
                                         <th>Nature Of Absence</th>
-                                        <th>Duration</th>                                     
                                         <th>Justificatif</th>
+                                        <th>Duration</th>                                        
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tr *ngFor="let absence of absences;let i = index">
+                                        <td>{{ absence.stagiaire.nom }}</td>
+                                        <td>{{ absence.dateAbs }}</td>
+                                        <td>{{ absence.natureAbsence }}</td>
+                                        <td>{{ absence.justificatif }}</td>
+                                        <td>{{ absence.duree }}</td>
                                         <td>
                                             <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2">
+                                                <button class="btn btn-warning me-2"
+                                                    data-bs-toggle="modal" data-bs-target="#updateAbsence">
                                                     Edit
                                                 </button>
-                                                <button class="btn btn-danger">
+                                                <button class="btn btn-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteAbsence">
                                                     Delete
                                                 </button>
                                             </div>
@@ -71,7 +73,7 @@
 
 <!-- Add Absence Modal -->
 <div class="modal fade" id="addAbsence" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Add Absence</h5>
@@ -82,27 +84,30 @@
             <div class="modal-body">
                 <form method="post">
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped data-table">
+                        <table class="table table-striped data-table absence">
                             <thead>
                                 <tr>
                                     <th>Stagiaire Name</th>
-                                    <th>Date Absence</th>
-                                    <th>Nature Of Absence</th>
-                                    <th>Duration</th>                                        
-                                    <th>Justificatif</th>
+                                    <th>Cin</th>
+                                    <th>Email</th>
+                                    <th>Start Date</th>
+                                    <th>Departement</th>
+                                    <th>Poste</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr *ngFor="let stg of stagiaires; let i = index">
+                                    <td>{{stg.nom}}</td>
+                                    <td>{{stg.cin}}</td>
+                                    <td>{{stg.email}}</td>                                    
+                                    <td>{{stg.dateDebut}}</td>
+                                    <td>{{stg.departement}}</td>
+                                    <td>{{stg.poste}}</td>
                                     <td>
                                         <div class="form-check ms-3">
-                                            <input type="checkbox" class="form-check-input" name="abs">
+                                            <input type="checkbox" class="form-check-input" name="newAbs"
+                                             (change)="onChange(stg.id)">
                                         </div>
                                     </td>
                                 </tr>
@@ -113,7 +118,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" (click)="addAbsence()">Save</button>
             </div>
         </div>
     </div>

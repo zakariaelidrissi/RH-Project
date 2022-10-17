@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import { Stagiaire } from 'src/app/models/stagiaire';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,20 @@ export class StagiaireService {
 
   constructor(private httpClient : HttpClient) { }
 
-  getStagiaire() : Observable<any[]> {
-    return this.httpClient.get<any[]>(this.url + "stagiaires");
+  getStagiaire() : Observable<Stagiaire[]> {
+    return this.httpClient.get<Stagiaire[]>(this.url + "stagiaires");
   }
 
-  addStagiaire(newStagiaire : any) : Observable<any> {
-    return this.httpClient.post<any>(this.url + "stagiaires", newStagiaire);
+  addStagiaire(newStagiaire : Stagiaire) : Observable<Stagiaire> {
+    return this.httpClient.post<Stagiaire>(this.url + "stagiaires", newStagiaire);
   }
 
-  updateStagiaire(updateStagiaire : any) : Observable<any> {
-    return this.httpClient.put(this.url + "stagiaires/" + "id", updateStagiaire);
+  updateStagiaire(updateStagiaire : Stagiaire) : Observable<Stagiaire> {
+    return this.httpClient.put<Stagiaire>(this.url + "stagiaires/" + updateStagiaire.id, updateStagiaire);
   }
 
   deleteStagiaire(stagiaireId : number) : Observable<any> {
-    return this.httpClient.delete(this.url + "stagiaires/" + stagiaireId);
+    return this.httpClient.delete<any>(this.url + "stagiaires/" + stagiaireId);
   }
 
 }

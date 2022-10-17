@@ -25,4 +25,8 @@ export class CollService {
     return this.httpClient.delete<any>(this.url + "deleteColl/" + employerId);
   }
 
+  getCollById(employeId : number) : Observable<Collaborateur> {
+    return this.httpClient.get<Collaborateur>(this.url + 'collaborateurs/employe/' + employeId);
+  }
+
 }

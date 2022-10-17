@@ -25,6 +25,7 @@ import { CollService } from './services/collaborateur/coll.service';
 import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service';
 import { AbsenceService } from './services/absence/absence.service';
 import { DatePipe } from '@angular/common';
+import { EmployeeComponent } from './components/employee/employee.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { DatePipe } from '@angular/common';
     StagiaireComponent,
     GestionStagiaireComponent,
     DemandeAbsenceComponent,    
+    EmployeeComponent,
   ],
   imports: [
     BrowserModule,

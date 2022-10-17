@@ -47,11 +47,11 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
   }
 
   addEmploye(){
-    this.employerService.addEmploye(this.newEmploye).subscribe((Response)=>{
+    this.employerService.addEmploye(this.newEmploye).subscribe((response)=>{
       this.message = "This Employer well be added successfuly!";
       $('#addEmployer').modal("hide");
 
-      this.employerService.getEmployeByCin(Response.cin).subscribe((response) => {
+      this.employerService.getEmployeByCin(response.cin).subscribe((response) => {
         this.collRequest.employeId = response.id;
 
         this.collService.addCollaborateur(this.collRequest).subscribe((response) => {
@@ -76,7 +76,7 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
   }
 
   updateEmployes(){
-    this.employerService.updateEmploye(this.updateEmploye).subscribe((Response)=>{
+    this.employerService.updateEmploye(this.updateEmploye).subscribe((response)=>{
       this.message = "This Employer well be updated successfuly!";
       $('#updateEmployer').modal("hide");
       this.router.navigate(['/gestion-employer']);
