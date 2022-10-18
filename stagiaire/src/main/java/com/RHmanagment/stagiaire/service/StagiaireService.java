@@ -25,15 +25,26 @@ public class StagiaireService {
     }
 
     public List<Stagiaire> getAllStagiaire() {
-        return stagiaireRepository.findAll();
+        List<Stagiaire> listStg = stagiaireRepository.findAll();
+        listStg.forEach(stg -> {
+            stg.setUser(getUserById(stg.getUserId()));
+        });
+
+        return listStg;
     }
 
     public Stagiaire getStagiaireById(Long id){
-        return stagiaireRepository.findStagiaireById(id);
+        Stagiaire stg = stagiaireRepository.findStagiaireById(id);
+        stg.setUser(getUserById(stg.getUserId()));
+
+        return  stg;
     }
 
     public Stagiaire getStagiaireByUserId(Long id) {
-        return stagiaireRepository.findStagiaireByUserId(id);
+        Stagiaire stg = stagiaireRepository.findStagiaireByUserId(id);
+        stg.setUser(getUserById(stg.getUserId()));
+
+        return stg;
     }
 
     // ************************ POST **************************
