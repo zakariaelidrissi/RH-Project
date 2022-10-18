@@ -1,6 +1,7 @@
 package com.example.absenceservice.entities;
 
 import com.example.absenceservice.model.Employe;
+import com.example.absenceservice.model.Stagiaire;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,5 @@ public class StagiaireAbsence {
     private String duree;
     private Long stagiaireId;
     @Transient
-    private Employe employe;
+    private Stagiaire stagiaire;
 }
