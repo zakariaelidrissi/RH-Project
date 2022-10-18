@@ -18,9 +18,6 @@ import java.util.List;
 public class FormationController {
 
     private FormationService formationService;
-    private PlanRepository planRepository;
-    private CollaborateurRepository collaborateurRepository;
-    private EmployeRestClient employeRestClient;
 
     // ********************** GET ***************************************
     @GetMapping("/listFormations")
@@ -40,40 +37,22 @@ public class FormationController {
 
     @GetMapping("/listPlans")
     public List<Plan> getPlans(){
-        List<Plan> plans = planRepository.findAll();
-        plans.forEach(plan->{
-            Employe employe = employeRestClient.getEmployeById(plan.getResponsable().getEmpolyeID());
-            plan.getResponsable().setEmploye(employe);
-        });
-        return plans;
+        return formationService.getAllPlans();
     }
 
     @GetMapping("/listPlans/name/{planName}")
     public Plan getPlan(@PathVariable String planName){
-        Plan plan = formationService.findPlanByName(planName);
-        Employe employe = employeRestClient.getEmployeById(plan.getResponsable().getEmpolyeID());
-        plan.getResponsable().setEmploye(employe);
-        return plan;
+        return formationService.findPlanByName(planName);
     }
 
     @GetMapping("/listPlans/{id}")
     public Plan getPlanById(@PathVariable Long id){
-        Plan plan = formationService.findPlanById(id);
-
-        Employe employe = employeRestClient.getEmployeById(plan.getResponsable().getEmpolyeID());
-        plan.getResponsable().setEmploye(employe);
-
-        return plan;
+        return formationService.findPlanById(id);
     }
 
     @GetMapping("/listCollaborateurs")
     public List<Collaborateur> getCollaborateurs(){
-        List<Collaborateur> col = collaborateurRepository.findAll();
-        col.forEach(c->{
-            c.setEmploye(employeRestClient.getEmployeById(c.getEmpolyeID()));
-        });
-
-        return col;
+        return formationService.getCollaborateurs();
     }
 
     /*@GetMapping("/collaborateurs/cin/{cin}")
@@ -86,23 +65,17 @@ public class FormationController {
 
     @GetMapping("/collaborateurs/{id}")
     public Collaborateur getCollaborateurById(@PathVariable Long id){
-        Collaborateur col = formationService.findCollaborateurById(id);
-        col.setEmploye(employeRestClient.getEmployeById(col.getEmpolyeID()));
-
-        return col;
+        return formationService.findCollaborateurById(id);
     }
 
     @GetMapping("/collaborateurs/employe/{id}")
-    public Collaborateur getCollaborateurByUserId(@PathVariable Long id){
-        Collaborateur col = formationService.findCollaborateurByEmployeId(id);
-        col.setEmploye(employeRestClient.getEmployeById(id));
-
-        return col;
+    public Collaborateur getCollaborateurByEmployeId(@PathVariable Long id){
+        return formationService.findCollaborateurByEmployeId(id);
     }
 
     @GetMapping(path = "/getEmploye/{id}")
     public Employe getEmploye(@PathVariable Long id){
-        return employeRestClient.getEmployeById(id);
+        return formationService.getEmployeById(id);
     }
 
     /*@GetMapping("/modules/{name}")

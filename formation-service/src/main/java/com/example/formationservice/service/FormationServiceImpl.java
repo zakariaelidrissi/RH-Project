@@ -151,14 +151,34 @@ public class FormationServiceImpl implements FormationService {
     }
 
     @Override
+    public List<Plan> getAllPlans() {
+        List<Plan> plans = planRepository.findAll();
+        plans.forEach(plan->{
+            Employe employe = employeRestClient.getEmployeById(plan.getResponsable().getEmpolyeID());
+            plan.getResponsable().setEmploye(employe);
+        });
+
+        return plans;
+    }
+
+    @Override
     public Plan findPlanByName(String planName) {
 
-        return planRepository.findByName(planName);
+        Plan plan = planRepository.findByName(planName);
+        Employe employe = employeRestClient.getEmployeById(plan.getResponsable().getEmpolyeID());
+        plan.getResponsable().setEmploye(employe);
+
+        return plan;
     }
 
     @Override
     public Plan findPlanById(Long id) {
-        return planRepository.findPlanById(id);
+        Plan plan = planRepository.findPlanById(id);
+
+        Employe employe = employeRestClient.getEmployeById(plan.getResponsable().getEmpolyeID());
+        plan.getResponsable().setEmploye(employe);
+
+        return plan;
     }
 
     /*@Override
@@ -173,13 +193,34 @@ public class FormationServiceImpl implements FormationService {
     }*/
 
     @Override
+    public List<Collaborateur> getCollaborateurs() {
+        List<Collaborateur> col = collaborateurRepository.findAll();
+        col.forEach(c->{
+            c.setEmploye(employeRestClient.getEmployeById(c.getEmpolyeID()));
+        });
+
+        return col;
+    }
+
+    @Override
     public Collaborateur findCollaborateurById(Long id) {
-        return collaborateurRepository.findCollaborateurById(id);
+        Collaborateur col = collaborateurRepository.findCollaborateurById(id);
+        col.setEmploye(employeRestClient.getEmployeById(col.getEmpolyeID()));
+
+        return col;
     }
 
     @Override
     public Collaborateur findCollaborateurByEmployeId(Long employeID) {
-        return collaborateurRepository.findCollaborateurByEmpolyeID(employeID);
+        Collaborateur col = collaborateurRepository.findCollaborateurByEmpolyeID(employeID);
+        col.setEmploye(employeRestClient.getEmployeById(employeID));
+
+        return col;
+    }
+
+    @Override
+    public Employe getEmployeById(Long id) {
+        return employeRestClient.getEmployeById(id);
     }
 
     // ********************** DELETE ***************************************

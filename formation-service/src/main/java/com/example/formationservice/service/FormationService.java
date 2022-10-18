@@ -3,10 +3,7 @@ package com.example.formationservice.service;
 import com.example.formationservice.entities.Collaborateur;
 import com.example.formationservice.entities.Formation;
 import com.example.formationservice.entities.Plan;
-import com.example.formationservice.models.AddById;
-import com.example.formationservice.models.CollaborateurRequest;
-import com.example.formationservice.models.FormationRequest;
-import com.example.formationservice.models.PlanRequest;
+import com.example.formationservice.models.*;
 
 import java.util.List;
 
@@ -30,12 +27,15 @@ public interface FormationService {
     Formation findFormationByName(String formationName);
     Formation findFormationById(Long id);
     List<Formation> getAllFormation();
+    List<Plan> getAllPlans();
     Plan findPlanByName(String planName);
     Plan findPlanById(Long id);
     //Module findModuleByName(String moduleName);
     //Collaborateur findCollaborateurByCin(String cin);
+    List<Collaborateur> getCollaborateurs();
     Collaborateur findCollaborateurById(Long id);
     Collaborateur findCollaborateurByEmployeId(Long userId);
+    Employe getEmployeById(Long id);
     //void addCollaborateurToFormation(String cin, String formationName);
 
     // ********************** DELETE ***************************************
