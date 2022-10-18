@@ -12,10 +12,9 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 @SpringBootApplication
 @EnableFeignClients
 public class StagiaireApplication {
+
+	public static void main(String[] args) { SpringApplication.run(StagiaireApplication.class, args); }
 /*
-	public static void main(String[] args) {
-		SpringApplication.run(StagiaireApplication.class, args);
-	}
 	@Bean
 	CommandLineRunner start(StagiaireRepository stagiaireRepository, RepositoryRestConfiguration restconfiguration){
 		return args -> {

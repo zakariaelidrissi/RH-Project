@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/RH-Project.iml" filepath="$PROJECT_DIR$/.idea/RH-Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/absence-service/absence-service.iml" filepath="$PROJECT_DIR$/absence-service/absence-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/administration/administration.iml" filepath="$PROJECT_DIR$/administration/administration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/employer-service/employer-service.iml" filepath="$PROJECT_DIR$/employer-service/employer-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eureka-discovery/eureka-discovery.iml" filepath="$PROJECT_DIR$/eureka-discovery/eureka-discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/formation-service/formation-service.iml" filepath="$PROJECT_DIR$/formation-service/formation-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gestion-employe/gestion-employe.iml" filepath="$PROJECT_DIR$/gestion-employe/gestion-employe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messagerie/messagerie.iml" filepath="$PROJECT_DIR$/messagerie/messagerie.iml" />
+      <module fileurl="file://$PROJECT_DIR$/offre_stage/offre_stage.iml" filepath="$PROJECT_DIR$/offre_stage/offre_stage.iml" />
+    </modules>
+  </component>
+</project>

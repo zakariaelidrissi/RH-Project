@@ -1,18 +1,13 @@
-package com.RHmanagment.user.Entities;
+package com.RHmanagment.user.Model;
 
-import com.RHmanagment.user.Model.OffreStage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserRequest {
+
     private Long idUser;
     private String genre;
     private String nom;
@@ -20,8 +15,5 @@ public class User {
     private String email;
     private String motDePasse;
     private String tel;
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-    @Transient
-    private OffreStage OffreStage;
+    private String userRole;
 }

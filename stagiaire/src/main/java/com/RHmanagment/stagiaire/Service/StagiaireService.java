@@ -1,4 +1,4 @@
-package com.RHmanagment.stagiaire.service;
+package com.RHmanagment.stagiaire.Service;
 
 import com.RHmanagment.stagiaire.Entities.Stagiaire;
 import com.RHmanagment.stagiaire.Feign.UserRestClient;

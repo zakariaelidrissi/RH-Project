@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="employer-service" />
+        <module name="offre_stage" />
+        <module name="formation-service" />
+        <module name="gestion-employe" />
+        <module name="absence-service" />
+        <module name="administration" />
+        <module name="eureka-discovery" />
+        <module name="gateway" />
+        <module name="messagerie" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="absence-service" target="1.5" />
+      <module name="administration" target="1.5" />
+      <module name="employer-service" target="1.5" />
+      <module name="eureka-discovery" target="1.5" />
+      <module name="formation-service" target="1.5" />
+      <module name="gateway" target="1.5" />
+      <module name="gestion-employe" target="1.5" />
+      <module name="messagerie" target="1.5" />
+      <module name="offre_stage" target="1.5" />
+      <module name="stagiaire" target="1.5" />
+      <module name="user" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
