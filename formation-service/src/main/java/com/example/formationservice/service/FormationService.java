@@ -37,6 +37,8 @@ public interface FormationService {
     Collaborateur findCollaborateurByEmployeId(Long userId);
     Employe getEmployeById(Long id);
     //void addCollaborateurToFormation(String cin, String formationName);
+    List<Collaborateur> getAllCollFromFormation(Long idForm);
+    List<Formation> getAllFormFromPlan(Long idPlan);
 
     // ********************** DELETE ***************************************
     void deleteFormation(Long id);

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -221,6 +222,37 @@ public class FormationServiceImpl implements FormationService {
     @Override
     public Employe getEmployeById(Long id) {
         return employeRestClient.getEmployeById(id);
+    }
+
+    @Override
+    public List<Collaborateur> getAllCollFromFormation(Long idForm) {
+        List<Collaborateur> listColl = collaborateurRepository.findAll();
+        List<Collaborateur> listCollFromForm = new ArrayList<Collaborateur>();
+        listColl.forEach(coll -> {
+            coll.getFormations().forEach(fr -> {
+                if (fr.getId().equals(idForm)){
+                    coll.setEmploye(employeRestClient.getEmployeById(coll.getEmpolyeID()));
+                    listCollFromForm.add(coll);
+                }
+            });
+        });
+
+        return listCollFromForm;
+    }
+
+    @Override
+    public List<Formation> getAllFormFromPlan(Long idPlan) {
+        List<Formation> listForm = formationRepository.findAll();
+        List<Formation> listFormFromPlan = new ArrayList<Formation>();
+        listForm.forEach(lf -> {
+            lf.getPlan().forEach(pl -> {
+                if (pl.getId().equals(idPlan)){
+                    listFormFromPlan.add(lf);
+                }
+            });
+        });
+
+        return listFormFromPlan;
     }
 
     // ********************** DELETE ***************************************

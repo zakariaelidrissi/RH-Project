@@ -83,6 +83,16 @@ public class FormationController {
         return formationService.findModuleByName(name);
     }*/
 
+    @GetMapping(path = "/listCollFromFomr/{idForm}")
+    public List<Collaborateur> getAllCollFromFormation(@PathVariable Long idForm){
+        return formationService.getAllCollFromFormation(idForm);
+    }
+
+    @GetMapping(path = "/listFormFromPlan/{idPlan}")
+    public List<Formation> getAllFormFromPlan(@PathVariable Long idPlan) {
+        return formationService.getAllFormFromPlan(idPlan);
+    }
+
     // ********************** POST ***************************************
 
     /*@PostMapping(path = "/addModuleToPlan")
