@@ -42,11 +42,11 @@ export class AbsenceService {
   }
 
   updateEmpAbs(updAbs : AbsenceEmpRequest) : Observable<AbsenceEmpRequest> {
-    return this.httpClient.put<AbsenceEmpRequest>(this.urlAbs + "absences/" + updAbs.id, updAbs);  
+    return this.httpClient.put<AbsenceEmpRequest>(this.urlAbs + "absences", updAbs);  
   }
 
   updateDm(updDm : DemandeRequest) : Observable<DemandeRequest> {
-    return this.httpClient.put<DemandeRequest>(this.urlDm + "/" + updDm.id, updDm);
+    return this.httpClient.put<DemandeRequest>(this.urlDm, updDm);
   }
 
   deleteEmpAbs( id : number) : Observable<any> {
@@ -60,7 +60,7 @@ export class AbsenceService {
   // ************************ Stg ***************************
 
   getStgAbsences() : Observable<AbsenceStgResponse[]> {
-    return this.httpClient.get<AbsenceStgResponse[]>(this.urlAbs);
+    return this.httpClient.get<AbsenceStgResponse[]>(this.urlAbs + "absences/stg");
   }
 
   getStgAbsByDate(date : Date) : Observable<AbsenceStgResponse[]> {
@@ -72,7 +72,7 @@ export class AbsenceService {
   }
 
   updateStgAbs(updAbs : AbsenceStgRequest) : Observable<AbsenceStgRequest> {
-    return this.httpClient.put<AbsenceStgRequest>(this.urlAbs + "absences/stg/" + updAbs.id, updAbs);  
+    return this.httpClient.put<AbsenceStgRequest>(this.urlAbs + "absences/stg", updAbs);  
   }
 
   deleteStgAbs( id : number) : Observable<any> {
