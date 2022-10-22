@@ -17,11 +17,15 @@ public class User {
     private String genre;
     private String nom;
     private String prenom;
+    @Column(unique = true)
     private String email;
     private String motDePasse;
+    @Column(unique = true)
     private String tel;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @Transient
-    private OffreStage OffreStage;
+    private boolean emailVerified;
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
 }

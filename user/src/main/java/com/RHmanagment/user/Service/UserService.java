@@ -1,7 +1,7 @@
 package com.RHmanagment.user.Service;
 
 import com.RHmanagment.user.Entities.User;
-import com.RHmanagment.user.Feign.OffreStageRestClient;
+import com.RHmanagment.user.Model.Compte;
 import com.RHmanagment.user.Model.UserRequest;
 import com.RHmanagment.user.Model.OffreStage;
 import com.RHmanagment.user.Repositories.UserRepository;
@@ -17,60 +17,28 @@ import java.util.List;
 public class UserService {
 
     private UserRepository userRepository;
-    private OffreStageRestClient offrestageRestClient;
 
     // ************************ GET **************************
-    public OffreStage getOffreStageById(Long id) {
-        return offrestageRestClient.getOffreStageById(id);
-    }
-
     public List<User> getAllUsers() {
-        List<User> listUsr = userRepository.findAll();
-        listUsr.forEach(Usr -> {
-            Usr.setOffreStage(getOffreStageById(Usr.getOffreStage().getId()));
-        });
-
-        return listUsr;
+        return userRepository.findAll();
     }
 
     public User getUserById(Long id){
-        User Usr = userRepository.findUserById(id);
-        Usr.setOffreStage(getOffreStageById(Usr.getOffreStage().getId()));
-
-        return  Usr;
+        return userRepository.findUserById(id);
     }
 
-   /* public OffreStage getOffreStageByUserId(Long id) {
-        User Usr = userRepository.findUserById(id);
-        Usr.setUser(getUserById(Usr.getUserId()));
-
-        return Usr;
-    }*/
-
+    public User login(String email){
+        return userRepository.findUserByEmail(email);
+    }
     // ************************ POST **************************
-    public void addUser(UserRequest UsrReq) {
-        User Usr = new User();
+    public void addUser(User UsrReq) {
 
-        Usr.setGenre(UsrReq.getGenre());
-        Usr.setPrenom(UsrReq.getPrenom());
-        Usr.setNom(UsrReq.getNom());
-        Usr.setEmail(UsrReq.getEmail());
-        Usr.setMotDePasse(UsrReq.getMotDePasse());
-        Usr.setTel(UsrReq.getTel());
-
-        userRepository.save(Usr);
+        userRepository.save(UsrReq);
     }
 
     // ************************ PUT **************************
-    public void updateUser(UserRequest UsrReq) {
+    public void updateUser(User UsrReq) {
         User Usr = getUserById(UsrReq.getIdUser());
-
-        Usr.setGenre(UsrReq.getGenre());
-        Usr.setPrenom(UsrReq.getPrenom());
-        Usr.setNom(UsrReq.getNom());
-        Usr.setEmail(UsrReq.getEmail());
-        Usr.setMotDePasse(UsrReq.getMotDePasse());
-        Usr.setTel(UsrReq.getTel());
 
         userRepository.save(Usr);
     }
