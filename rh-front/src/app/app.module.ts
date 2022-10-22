@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -26,6 +26,8 @@ import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service
 import { AbsenceService } from './services/absence/absence.service';
 import { DatePipe } from '@angular/common';
 import { EmployeeComponent } from './components/employee/employee.component';
+import { LoginComponent } from './components/login/login.component';
+import { StagesComponent } from './components/stages/stages.component';
 
 @NgModule({
   declarations: [
@@ -43,14 +45,15 @@ import { EmployeeComponent } from './components/employee/employee.component';
     StagiaireComponent,
     GestionStagiaireComponent,
     DemandeAbsenceComponent,    
-    EmployeeComponent,
+    EmployeeComponent, LoginComponent, StagesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [
     FormationService, 
