@@ -9,7 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Data @AllArgsConstructor @NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,13 @@ public class User {
     private String genre;
     private String nom;
     private String prenom;
+    @Column(unique = true)
     private String email;
     private String motDePasse;
+    @Column(unique = true)
     private String tel;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @Transient
-    private OffreStage OffreStage;
+    private Boolean emailVerified;
+
 }

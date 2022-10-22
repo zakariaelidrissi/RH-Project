@@ -2,6 +2,7 @@ package com.RHmanagment.user.Service;
 
 import com.RHmanagment.user.Entities.User;
 import com.RHmanagment.user.Feign.OffreStageRestClient;
+import com.RHmanagment.user.Model.Compte;
 import com.RHmanagment.user.Model.UserRequest;
 import com.RHmanagment.user.Model.OffreStage;
 import com.RHmanagment.user.Repositories.UserRepository;
@@ -24,7 +25,7 @@ public class UserService {
         return offrestageRestClient.getOffreStageById(id);
     }
 
-    public List<User> getAllUsers() {
+    /*public List<User> getAllUsers() {
         List<User> listUsr = userRepository.findAll();
         listUsr.forEach(Usr -> {
             Usr.setOffreStage(getOffreStageById(Usr.getOffreStage().getId()));
@@ -38,7 +39,7 @@ public class UserService {
         Usr.setOffreStage(getOffreStageById(Usr.getOffreStage().getId()));
 
         return  Usr;
-    }
+    }*/
 
    /* public OffreStage getOffreStageByUserId(Long id) {
         User Usr = userRepository.findUserById(id);
@@ -47,6 +48,9 @@ public class UserService {
         return Usr;
     }*/
 
+    public User login(String email){
+        return userRepository.findUserByEmail(email);
+    }
     // ************************ POST **************************
     public void addUser(UserRequest UsrReq) {
         User Usr = new User();
@@ -63,7 +67,7 @@ public class UserService {
 
     // ************************ PUT **************************
     public void updateUser(UserRequest UsrReq) {
-        User Usr = getUserById(UsrReq.getIdUser());
+        User Usr = getUseById(UsrReq.getIdUser());
 
         Usr.setGenre(UsrReq.getGenre());
         Usr.setPrenom(UsrReq.getPrenom());

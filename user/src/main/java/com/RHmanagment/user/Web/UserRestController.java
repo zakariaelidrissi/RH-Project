@@ -23,9 +23,14 @@ public class UserRestController {
         return userService.getUserById(id);
     }
 
-    @GetMapping(path = "/users/user/{id}")
+    /*@GetMapping(path = "/users/user/{id}")
     public User getUserByUserId(@PathVariable Long id) {
         return userService.getUserById(id);
+    }*/
+
+    @GetMapping(path = "/users/user/{email}")
+    public User getUserByEmail(@PathVariable String email){
+        return userService.login(email);
     }
 
     // ************************ POST **************************
