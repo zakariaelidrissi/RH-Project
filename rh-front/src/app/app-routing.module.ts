@@ -9,6 +9,7 @@ import { FormationsComponent } from './components/formations/formations.componen
 import { GestionEmployerComponent } from './components/gestion-employer/gestion-employer.component';
 import { HomeComponent } from './components/home/home.component';
 import { PlansComponent } from './components/plans/plans.component';
+import { StagesComponent } from './components/stages/stages.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "home", pathMatch: "full"},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: "employe/absence", component: EmployeComponent},
   {path: "demande/absence", component: DemandeAbsenceComponent},
   {path: "stagiaire/absence", component: StagiaireComponent},
+  {path: "stages", component: StagesComponent},
   {path: "**", component: ErrorComponent}
 ];
 
