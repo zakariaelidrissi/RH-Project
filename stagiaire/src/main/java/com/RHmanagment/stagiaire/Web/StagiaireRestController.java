@@ -1,7 +1,8 @@
 package com.RHmanagment.stagiaire.Web;
 
 import com.RHmanagment.stagiaire.Entities.Stagiaire;
-import com.RHmanagment.stagiaire.Model.StagiareRequest;
+import com.RHmanagment.stagiaire.Model.StagiaireRequest;
+import com.RHmanagment.stagiaire.Model.StagiaireRequest;
 import com.RHmanagment.stagiaire.Service.StagiaireService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +32,13 @@ public class StagiaireRestController {
 
     // ************************ POST **************************
     @PostMapping(path = "/stagiaires")
-    public void addStagiaire(@RequestBody StagiareRequest stgReq) {
+    public void addStagiaire(@RequestBody StagiaireRequest stgReq) {
         stagiaireService.addStagiaire(stgReq);
     }
 
     // ************************ PUT **************************
     @PutMapping(path = "/stagiaires")
-    public void updateStagiaire(@RequestBody StagiareRequest stgReq) {
+    public void updateStagiaire(@RequestBody StagiaireRequest stgReq) {
         stagiaireService.updateStagiaire(stgReq);
     }
 

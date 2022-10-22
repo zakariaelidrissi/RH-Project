@@ -8,12 +8,13 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUser;
+    private Long id;
     private String genre;
     private String nom;
     private String prenom;

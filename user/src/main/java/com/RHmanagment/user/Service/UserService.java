@@ -38,7 +38,7 @@ public class UserService {
 
     // ************************ PUT **************************
     public void updateUser(User UsrReq) {
-        User Usr = getUserById(UsrReq.getIdUser());
+        User Usr = getUserById(UsrReq.getId());
 
         userRepository.save(Usr);
     }
