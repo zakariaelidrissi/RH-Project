@@ -49,6 +49,11 @@ public class OffreStageService {
         return offrestg;
     }
 
+    public OffreStage getOffreStagesPostulesByUserId(Long id){
+        OffreStage offrestgpostule = offrestageRepository.findOffreStagePostuleByUserId(id);
+        offrestgpostule.setUser(getUserById((offrestgpostule.getUserId())));
+    }
+
     // ************************ POST **************************
     public void addOffreStage(OffreStageRequest offrestgReq) {
         OffreStage offrestg = new OffreStage();
