@@ -1,4 +1,4 @@
-package com.RHmanagment.user.Model;
+package com.rhmanagment.user.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

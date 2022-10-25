@@ -1,9 +1,8 @@
-package com.RHmanagment.user.Model;
+package com.rhmanagment.user.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Compte {

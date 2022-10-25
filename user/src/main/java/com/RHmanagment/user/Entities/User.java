@@ -1,6 +1,5 @@
-package com.RHmanagment.user.Entities;
+package com.rhmanagment.user.Entities;
 
-import com.RHmanagment.user.Model.OffreStage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

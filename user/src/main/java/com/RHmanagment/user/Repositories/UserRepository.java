@@ -1,6 +1,6 @@
-package com.RHmanagment.user.Repositories;
+package com.rhmanagment.user.Repositories;
 
-import com.RHmanagment.user.Entities.User;
+import com.rhmanagment.user.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,Long> {

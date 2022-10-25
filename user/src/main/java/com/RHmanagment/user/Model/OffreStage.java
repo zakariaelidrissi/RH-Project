@@ -1,12 +1,13 @@
-package com.RHmanagment.user.Model;
+package com.rhmanagment.user.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
 public class OffreStage{

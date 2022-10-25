@@ -1,10 +1,7 @@
-package com.RHmanagment.user.Service;
+package com.rhmanagment.user.Service;
 
-import com.RHmanagment.user.Entities.User;
-import com.RHmanagment.user.Model.Compte;
-import com.RHmanagment.user.Model.UserRequest;
-import com.RHmanagment.user.Model.OffreStage;
-import com.RHmanagment.user.Repositories.UserRepository;
+import com.rhmanagment.user.Entities.User;
+import com.rhmanagment.user.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
