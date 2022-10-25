@@ -24,11 +24,19 @@
         <div class="d-flex">
             <div class="navbar-nav me-2">
                 <a href="#" class="nav-item nav-link text-uppercase btn btn-primary active" data-bs-toggle="modal"
-                    data-bs-target="#register">Register</a>
+                    data-bs-target="#register" *ngIf="!logged">Register</a>
             </div>
             <div class="navbar-nav">
                 <a href="#" class="nav-item nav-link text-uppercase btn btn-primary active" data-bs-toggle="modal"
-                    data-bs-target="#login">Login</a>
+                    data-bs-target="#login" *ngIf="!logged">Login</a>
+            </div>
+            <div class="navbar-nav me-2">
+                <a href="#" class="nav-item nav-link text-uppercase active" data-bs-toggle="modal"
+                    data-bs-target="#register" *ngIf="logged">{{loginUser.nom + ' ' + loginUser.prenom}}</a>
+            </div>
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link text-uppercase btn btn-primary active" data-bs-toggle="modal"
+                    data-bs-target="#login" *ngIf="logged">LogOut</a>
             </div>
         </div>
     </div>
@@ -75,8 +83,18 @@
                 <form method="post">
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label for="exampleInputEmail1">Name</label>
-                            <input type="text" required placeholder="Name" name="name" class="form-control">
+                            <label for="exampleInputEmail1">Nom</label>
+                            <input type="text" required placeholder="nom" name="nom" class="form-control">
+                        </div> 
+                        <div class="col-md-6">
+                            <label for="exampleInputEmail1">Prenom</label>
+                            <input type="text" required placeholder="prenom" name="prenom" class="form-control">
+                        </div>                                                
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="exampleInputEmail1">Telephone</label>
+                            <input type="text" required placeholder="Telephone" name="telephone" class="form-control">
                         </div> 
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Email address</label>
@@ -85,12 +103,25 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label for="exampleInputEmail1">Password</label>
-                            <input type="password" required placeholder="password" name="password" class="form-control">
+                            <label for="exampleInputEmail1">Mot De Passe</label>
+                            <input type="password" required placeholder="Mot de passe" name="motDePasse" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="exampleInputEmail1">Confirmation Password</label>
-                            <input type="password" required placeholder="Confirmation Password" name="confPassword" class="form-control">
+                            <label for="exampleInputEmail1">Confirmation Mot De Passe</label>
+                            <input type="password" required placeholder="Confirmation Mot de passe" name="confMotDePasse" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2">
+                            <label for="exampleInputEmail1">Genre : </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" required name="genre" class="form-check-input me-1" value="Male">                            
+                            <label for="exampleInputEmail1">Male</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" required name="genre" class="form-check-input me-1" value="Female">
+                            <label for="exampleInputEmail1">Female</label>                            
                         </div>
                     </div>                
                 </form>

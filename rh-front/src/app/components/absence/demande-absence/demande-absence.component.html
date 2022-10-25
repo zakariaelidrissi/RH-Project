@@ -4,60 +4,66 @@
 <main class="mt-5 pt-3">
     <div class="container">
         <div class="row mb-5 mt-3">
-            <div class="col-md-6 fw-bold fs-3">Absence List</div>
-            <div class="col-md-6 ">
-                <button type="button" class="btn btn-primary float-end btn-lg" data-bs-toggle="modal" data-bs-target="#addAbsence">
-                    Add Absence
-                </button>
-            </div>
+            <div class="col-md-6 fw-bold fs-3">List Demande Absence</div>            
         </div>
         <div class="row">
             <div class="col-md-3"></div>
-            <!-- <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
                     <button type="button" class="close float-end" data-bs-dismiss="alert">x</button>                    
                 </div>
-            </div> -->
+            </div>
             <div class="col-md-3"></div>
         </div>
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        Data Tables
+                    <div class="card-header d-flex">
+                        <div class="col-md-6">Data Tables</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <form action="" method="post" class="d-flex">                            
+                                <div class="form-group d-flex">
+                                    <input type="date" class="form-control ms-5" name="searchByDate" [(ngModel)]="searchByDate" required>
+                                    <button class="btn btn-primary" (click)="search()">Search</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="example" class="table table-striped data-table">
                                 <thead>
                                     <tr>
-                                        <th>Formation Name</th>
-                                        <th>Start Date</th>
-                                        <th>Duration</th>
-                                        <th>Objective</th>                                        
+                                        <th>Employee Name</th>
+                                        <th>Date Debut</th>
+                                        <th>Date Fin</th>
+                                        <th>Nature Of Absence</th>
+                                        <!-- <th>Justificatif</th> -->                                        
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr *ngFor="let formation of formations;let i = index">
-                                        <td>{{ formation.name }}</td>
-                                        <td>{{ formation.formationDate }}</td>
-                                        <td>{{ formation.duree }}</td>
-                                        <td>{{ formation.objectif }}</td>
+                                    <tr *ngFor="let demande of demandes;let i = index">
+                                        <td>{{ demande.employe.nom }}</td>
+                                        <td>{{ demande.dateDebut }}</td>
+                                        <td>{{ demande.dateFin }}</td>
+                                        <td>{{ demande.natureAbsence }}</td>
+                                        <!-- <td>{{ demande.justificatif }}</td> -->
                                         <td>
                                             <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2" (click)="editFormation(formation)"
-                                                    data-bs-toggle="modal" data-bs-target="#updateFormation">
-                                                    Edit
+                                                <button class="btn btn-warning me-2"
+                                                    data-bs-toggle="modal" data-bs-target="#acceptAbsence">
+                                                    Accept
                                                 </button>
-                                                <button class="btn btn-danger" (click)="confirmDeleteFormation(formation.id, i)"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteFormation">
-                                                    Delete
+                                                <button class="btn btn-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#refuseAbsence">
+                                                    Refuse
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr>                                     -->
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -68,27 +74,3 @@
     </div>
 </main>
 <!-- main -->
-
-<!-- Add Absence Modal -->
-<div class="modal fade" id="addAbsence" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add Absence</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Add Absence Modal -->

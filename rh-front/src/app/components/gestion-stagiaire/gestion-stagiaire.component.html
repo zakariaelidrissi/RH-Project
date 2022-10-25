@@ -32,10 +32,9 @@
                             <table id="example" class="table table-striped data-table">
                                 <thead>
                                     <tr>
-                                        <th>nom</th>
-                                        <th>cin</th>
+                                        <th>nom et prenom</th>                                        
                                         <th>email</th>
-                                        <th>naissance</th>                                        
+                                        <th>phone</th>                                        
                                         <th>date debut</th>
                                         <th>departement</th>
                                         <th>poste</th>
@@ -43,22 +42,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   <tr *ngFor="let stagiaire of stagiaires; let i = index">
-                                        <td>{{stagiaire.nom}}</td>
-                                        <td>{{stagiaire.cin}}</td>
-                                        <td>{{stagiaire.email}}</td>
-                                        <td>{{stagiaire.naissance}}</td>
-                                        <td>{{stagiaire.dateDebut}}</td>
-                                        <td>{{stagiaire.departement}}</td>
-                                        <td>{{stagiaire.poste}}</td>
+                                   <tr *ngFor="let stg of stagiaires; let i = index">
+                                    <td>{{stg.user.nom + ' ' + stg.user.prenom}}</td>
+                                    <td>{{stg.user.email}}</td>
+                                    <td>{{stg.user.tel}</td>                                    
+                                    <td>{{stg.niveau_etudes}}</td>
+                                    <td>{{stg.telephone}}</td>
+                                    <td>{{stg.civilite}}</td>
                                         <td>
                                             <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2" (click)="editStagiaire(stagiaire)"
+                                                <button class="btn btn-warning me-2" (click)="editStagiaire(stg)"
                                                     data-bs-toggle="modal" data-bs-target="#updateStagiaire">
                                                     Edit
                                                 </button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStagiaire"
-                                                  (click)="confirmDeleteStgiaire(stagiaire.id, i)">
+                                                  (click)="confirmDeleteStgiaire(stg.id, i)">
                                                     Delete
                                                 </button>
                                             </div>
@@ -76,7 +74,7 @@
 <!-- main -->
 
 <!-- Add Stagiaire Modal -->
-<div class="modal fade" id="addStagiaire" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<!-- <div class="modal fade" id="addStagiaire" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -91,19 +89,19 @@
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Stagiaire Name</label>
                             <input type="text" required placeholder="Employee Name" name="nom" 
-                             [(ngModel)]="newStagiaire.nom" class="form-control">
+                             [(ngModel)]="newStagiaire.user.nom" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Stagiaire Cin</label>
                             <input type="text" required placeholder="Employee Cin" name="cin" 
-                             [(ngModel)]="newStagiaire.cin" class="form-control">
+                             [(ngModel)]="newStagiaire.user.cin" class="form-control">
                         </div>                                               
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
                             <input type="text" required placeholder="email" name="email" 
-                             [(ngModel)]="newStagiaire.email" class="form-control">
+                             [(ngModel)]="newStagiaire.user.email" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Departement</label>
@@ -138,11 +136,11 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Add Stagiaire Modal -->
 
 <!-- Update Stagiaire Modal -->
-<div class="modal fade" id="updateStagiaire" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<!-- <div class="modal fade" id="updateStagiaire" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -204,7 +202,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Edit Stagiaire Modal -->
 
 <!-- Delete Stagiaire Modal -->

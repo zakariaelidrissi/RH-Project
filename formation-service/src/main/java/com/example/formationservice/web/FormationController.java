@@ -83,7 +83,7 @@ public class FormationController {
         return formationService.findModuleByName(name);
     }*/
 
-    @GetMapping(path = "/listCollFromFomr/{idForm}")
+    @GetMapping(path = "/listCollFromForm/{idForm}")
     public List<Collaborateur> getAllCollFromFormation(@PathVariable Long idForm){
         return formationService.getAllCollFromFormation(idForm);
     }
@@ -152,7 +152,7 @@ public class FormationController {
     }
 
     @DeleteMapping(path = "/deleteFormationFromPlan/{formationId}/{planId}")
-    public void deleteFormationToPlan(@PathVariable Long formationId, @PathVariable Long planId){
+    public void deleteFormationFromPlan(@PathVariable Long formationId, @PathVariable Long planId){
         formationService.deleteFormationFromPlan(formationId, planId);
     }
 
@@ -161,8 +161,8 @@ public class FormationController {
         formationService.deleteCollFromFormation(collId, formationId);
     }
 
-    @DeleteMapping(path = "/deleteColl/{id}")
-    public void deleteCollaborateur(@PathVariable Long id){
-        formationService.deleteCollaborateur(id);
+    @DeleteMapping(path = "/deleteColl/{idEmpl}")
+    public void deleteCollaborateur(@PathVariable Long idEmpl){
+        formationService.deleteCollaborateur(idEmpl);
     }
 }

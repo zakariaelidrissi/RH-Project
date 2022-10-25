@@ -4,7 +4,7 @@
 <main class="mt-5 pt-3">
     <div class="container">
         <div class="row mb-5 mt-3">
-            <div class="col-md-6 fw-bold fs-3">Plans List</div>
+            <div class="col-md-6 fw-bold fs-3">La listes des plans</div>
             <!-- <div class="col-md-1"></div> -->
             <div class="col-md-6 d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlan">
@@ -58,11 +58,15 @@
                                             <div class="me-auto d-flex">
                                                 <button class="btn btn-warning me-2" (click)="editPlan(plan)"
                                                     data-bs-toggle="modal" data-bs-target="#updatePlan">
-                                                    Edit
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <button class="btn btn-success me-2" (click)="show(plan.id)"
+                                                    data-bs-target="#show" data-bs-toggle="modal">
+                                                    <i class="bi bi-eye-fill"></i>
                                                 </button>
                                                 <button class="btn btn-danger" (click)="confirmDeletePlan(plan.id, i)"
                                                     data-bs-toggle="modal" data-bs-target="#deletePlan">
-                                                    Delete
+                                                    <i class="bi bi-trash3-fill"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -229,7 +233,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Delete Plan</h5>
+                <h5 class="modal-title fw-bold">Confirmation!</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
@@ -246,36 +250,36 @@
 </div>
 <!-- Delete Plan Modal -->
 
-<!-- Delete Formation To Plan Modal -->
-<div class="modal fade" id="deletePlan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<!-- Delete Formation From Plan Modal -->
+<div class="modal fade" id="deleteFormFromPlan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Delete Plan</h5>
+                <h5 class="modal-title fw-bold">Confirmation!</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure, you want to delete this Plan?</p>
+                <p>Are you sure, you want to delete this Formation From this Plan?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" (click)="deletePlan(deletePlanId, index)">Yes</button>
+                <button type="button" class="btn btn-primary" (click)="deleteFormatonFromPlan(formationId)">Yes</button>
             </div>
         </div>
     </div>
 </div>
-<!-- Delete Formation To Plan Modal -->
+<!-- Delete Formation From Plan Modal -->
 
 <!-- ******************************* SHOW ************************************ -->
 
-<!-- Show Formations Modal -->
-<!-- <div class="modal fade" id="showFormations" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<!-- Show Formations from Plan Modal -->
+<div class="modal fade" id="showFormations" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Formations List Of this Plan</h5>
+                <h5 class="modal-title fw-bold">La liste des formations dans un plan</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
@@ -286,8 +290,8 @@
                         <table id="example" class="table table-striped data-table">
                             <thead>
                                 <tr>
-                                    <th>Formation Name</th>                                    
-                                    <th>Objective</th>                                        
+                                    <th>Nom de la formation</th>                                    
+                                    <th>Objectife</th>                                        
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -295,9 +299,9 @@
                                 <tr *ngFor="let formation of showFormation;let i = index">
                                     <td>{{ formation.name }}</td>
                                     <td>{{ formation.objectif }}</td>
-                                    <td><button class="btn btn-danger me-2" (click)="deleteFormatonFromPlan(formation.id, planId, i)"
-                                            data-bs-target="#showFormations" data-bs-toggle="modal">
-                                            Delete
+                                    <td><button class="btn btn-danger me-2" (click)="confirmDeleteFormFromP(formation.id, i)"
+                                            data-bs-target="#deleteFormFromPlan" data-bs-toggle="modal">
+                                            <i class="bi bi-trash3-fill"></i>
                                         </button>
                                     </td>
                                     
@@ -312,5 +316,5 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 <!-- Show Formations Modal -->

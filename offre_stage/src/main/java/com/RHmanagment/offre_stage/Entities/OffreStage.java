@@ -1,6 +1,5 @@
 package com.RHmanagment.offre_stage.Entities;
 
-import com.RHmanagment.offre_stage.Model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,5 @@ public class OffreStage{
     private Boolean remuneration;
     private String diplome_demande;
     private String descriptif_mission;
-    private Long userId;
-    @Transient
-    private User user;
+
 }

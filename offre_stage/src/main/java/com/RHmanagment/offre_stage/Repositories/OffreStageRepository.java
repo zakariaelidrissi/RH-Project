@@ -6,8 +6,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface OffreStageRepository extends JpaRepository<OffreStage,Long> {
-
-    OffreStage findOffreStageById(Long id);
-    OffreStage findOffreStageByUserId(Long id);
-    OffreStage findOffreStagePostuleByUserId(Long id);
 }

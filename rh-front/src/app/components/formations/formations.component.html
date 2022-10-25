@@ -21,11 +21,11 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3">            
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header fw-bold">
-                        Data Tables
+                    <div class="card-header fw-bold d-flex">
+                        Data Tables                        
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -49,15 +49,19 @@
                                             <div class="me-auto d-flex">
                                                 <button class="btn btn-warning me-2" (click)="editFormation(formation)"
                                                     data-bs-toggle="modal" data-bs-target="#updateFormation">
-                                                    Edit
+                                                    <i class="bi bi-pencil-square"></i>
                                                 </button>
                                                 <button class="btn btn-success me-2" (click)="showPlan(formation)"
                                                     data-bs-toggle="modal" data-bs-target="#show">
-                                                    Show
+                                                    <i class="bi bi-eye-fill"></i>
+                                                </button>
+                                                <button class="btn btn-success me-2" (click)="showColl(formation.id)"
+                                                    data-bs-toggle="modal" data-bs-target="#showColl">
+                                                    <i class="bi bi-eyeglasses"></i>
                                                 </button>
                                                 <button class="btn btn-danger" (click)="confirmDeleteFormation(formation.id, i)"
                                                     data-bs-toggle="modal" data-bs-target="#deleteFormation">
-                                                    Delete
+                                                    <i class="bi bi-trash3-fill"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -186,7 +190,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Delete Formation</h5>
+                <h5 class="modal-title fw-bold">Confirmation!</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
@@ -250,3 +254,82 @@
     </div>
 </div>
 <!-- Show Plans Modal -->
+
+<!-- Show Plans Modal -->
+<div class="modal fade" id="showColl" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">La list des employes Dans cette formation</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped data-table">
+                            <thead>
+                                <tr>
+                                    <th>nom</th>
+                                    <th>cin</th>
+                                    <th>email</th>
+                                    <th>naissance</th>                                        
+                                    <th>debutAmbauche</th>
+                                    <th>departement</th>
+                                    <th>poste</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <tr *ngFor="let coll of employes; let i = index">
+                                    <td>{{coll.employe.nom}}</td>
+                                    <td>{{coll.employe.cin}}</td>
+                                    <td>{{coll.employe.email}}</td>
+                                    <td>{{coll.employe.naissance}}</td>
+                                    <td>{{coll.employe.debutAmbauche}}</td>
+                                    <td>{{coll.employe.departement}}</td>
+                                    <td>{{coll.employe.poste}}</td>
+                                    <td>
+                                        <div class="me-auto d-flex">                                            
+                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmplFromForm"
+                                              (click)="confirmDeleteEmploye(coll.id, i)">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                               </tr>                                     
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Show Plans Modal -->
+
+<!-- Delete Coll From Formation Modal -->
+<div class="modal fade" id="deleteEmplFromForm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Confirmation!</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure, you want to delete this Employe From this Formation?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" (click)="deleteEmplFromFormation(formationID)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Coll From Formation Modal -->

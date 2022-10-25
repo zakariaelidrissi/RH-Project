@@ -84,7 +84,7 @@ public class AbsenceService {
     }
 
     public StagiaireAbsence getStgAbsById(Long id) {
-        StagiaireAbsence abs = stgAbsRepository.findStagiaireAbsenceByById(id);
+        StagiaireAbsence abs = stgAbsRepository.findStagiaireAbsenceById(id);
         abs.setStagiaire(getStgById(abs.getStagiaireId()));
         return abs;
     }

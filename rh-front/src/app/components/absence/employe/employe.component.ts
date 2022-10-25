@@ -19,6 +19,7 @@ export class EmployeComponent implements OnInit {
   absences : AbsenceEmpResponse[] = [];
   newAbs : AbsenceEmpRequest = new AbsenceEmpRequest();
   abs : number[] = [];
+  searchByDate : Date = new Date();
 
   message : string = '';
 
@@ -100,6 +101,16 @@ export class EmployeComponent implements OnInit {
       console.log(this.abs);
     }    
 
+  }
+
+  search() {
+    if (this.searchByDate != null) {
+      this.absService.getEmpAbsByDate(this.searchByDate).subscribe((response) => {
+        this.absences = response;
+      }, (error) => {
+        console.log(error);
+      });
+    }
   }
 
 }

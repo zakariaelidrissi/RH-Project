@@ -6,6 +6,7 @@ import { PlanRequest } from 'src/app/models/planRequest';
 import { AddById } from 'src/app/models/addById';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { FormationRequest } from 'src/app/models/formationRequest';
+import { Collaborateur } from 'src/app/models/collaborateur';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,22 @@ export class FormationService {
 
   deleteFormationFromPlan(formationId : Number, planId : number) : Observable<any> {
     return this.httpClient.delete<any>(this.url + "deleteFormationFromPlan/" + formationId + "/" + planId);
+  }
+
+  deleteCollFromFormation(collId : number, formationId : Number) : Observable<any> {
+    return this.httpClient.delete<any>(this.url + "deleteCollFromFormation/" + collId + "/" + formationId);
+  }
+
+  // **************** Get All Formation From Plan ********************
+
+  getAllFormFromPlan(idPlan : number) : Observable<FormationResponse[]> {
+    return this.httpClient.get<FormationResponse[]>(this.url + 'listFormFromPlan/' + idPlan);
+  }
+
+  // **************** Get All Coll From Form ********************
+  
+  getAllCollFromForm(idForm : number) : Observable<Collaborateur[]> {
+    return this.httpClient.get<Collaborateur[]>(this.url + 'listCollFromForm/' + idForm);
   }
   
 }

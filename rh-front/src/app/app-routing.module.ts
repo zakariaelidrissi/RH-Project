@@ -7,6 +7,7 @@ import { DashBodyComponent } from './components/dash-body/dash-body.component';
 import { ErrorComponent } from './components/error/error.component';
 import { FormationsComponent } from './components/formations/formations.component';
 import { GestionEmployerComponent } from './components/gestion-employer/gestion-employer.component';
+import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestion-stagiaire.component';
 import { HomeComponent } from './components/home/home.component';
 import { PlansComponent } from './components/plans/plans.component';
 import { StagesComponent } from './components/stages/stages.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: "formations", component: FormationsComponent},
   {path: "plans", component: PlansComponent},
   {path: "gestion-employer", component: GestionEmployerComponent},
+  {path: "gestion-stagiaire", component: GestionStagiaireComponent},
   {path: "employe/absence", component: EmployeComponent},
   {path: "demande/absence", component: DemandeAbsenceComponent},
   {path: "stagiaire/absence", component: StagiaireComponent},

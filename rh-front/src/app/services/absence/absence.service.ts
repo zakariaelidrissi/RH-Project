@@ -19,7 +19,7 @@ export class AbsenceService {
 
   constructor(private httpClient : HttpClient) { }
 
-  // ************************ Emp ***************************
+  // ************************ Employe Absence **************************
 
   getEmpAbsences() : Observable<AbsenceEmpResponse[]> {
     return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + 'absences');
@@ -28,36 +28,38 @@ export class AbsenceService {
   getEmpAbsByDate(date : Date) : Observable<AbsenceEmpResponse[]> {
     return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + "absences/date/" + date);
   }
-
-  getDemandes() : Observable<DemandeResponse> {
-    return this.httpClient.get<DemandeResponse>(this.urlDm);
-  }
-
+  
   addEmpAbsence(newAbs : AbsenceEmpRequest) : Observable<AbsenceEmpRequest> {    
     return this.httpClient.post<AbsenceEmpRequest>(this.urlAbs+'absences', newAbs);
+  }  
+
+  updateEmpAbs(updAbs : AbsenceEmpRequest) : Observable<AbsenceEmpRequest> {
+    return this.httpClient.put<AbsenceEmpRequest>(this.urlAbs + "absences", updAbs);  
+  }  
+
+  deleteEmpAbs( id : number) : Observable<any> {
+    return this.httpClient.delete<any>(this.urlAbs + "absences/" + id);
+  }  
+
+  // *********************** Demandes Absence ****************************
+
+  getDemandes() : Observable<DemandeResponse[]> {
+    return this.httpClient.get<DemandeResponse[]>(this.urlDm);
   }
 
   addDemande(newDm : DemandeRequest) : Observable<DemandeRequest> {
     return this.httpClient.post<DemandeRequest>(this.urlDm, newDm);
   }
 
-  updateEmpAbs(updAbs : AbsenceEmpRequest) : Observable<AbsenceEmpRequest> {
-    return this.httpClient.put<AbsenceEmpRequest>(this.urlAbs + "absences", updAbs);  
-  }
-
   updateDm(updDm : DemandeRequest) : Observable<DemandeRequest> {
     return this.httpClient.put<DemandeRequest>(this.urlDm, updDm);
-  }
-
-  deleteEmpAbs( id : number) : Observable<any> {
-    return this.httpClient.delete<any>(this.urlAbs + "absences/" + id);
   }
 
   deleteDm( id : number) : Observable<any> {
     return this.httpClient.delete<any>(this.urlDm + "/" + id);
   }
 
-  // ************************ Stg ***************************
+  // ************************ Stagiaire Absence **************************
 
   getStgAbsences() : Observable<AbsenceStgResponse[]> {
     return this.httpClient.get<AbsenceStgResponse[]>(this.urlAbs + "absences/stg");

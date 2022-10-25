@@ -2,6 +2,7 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { CollRequest } from 'src/app/models/collRequest';
 import { Employe } from 'src/app/models/employe';
+import { FormationResponse } from 'src/app/models/formationResponse';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
 
@@ -16,6 +17,7 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
 
   employes : Employe[] = [];
   collRequest : CollRequest = new CollRequest();
+  formations : FormationResponse[] = [];
   
   newEmploye : Employe = new Employe();
   updateEmploye : Employe = new Employe();
@@ -23,6 +25,7 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
   message : string = '';
   deleteEmployeId : number = 0;
   index : number = 0;
+  employeName : string = '';
 
   constructor(private employerService : GestionEmployeService, 
               private router: Router,
@@ -91,7 +94,7 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
   }
 
   deleteEmploye(employerID : number, index : number) {
-    this.employerService.deleteEmploye(employerID).subscribe((Response)=>{
+    this.employerService.deleteEmploye(employerID).subscribe((response)=>{
       this.message = "This Employer well be deleted successfuly!";
       this.employes.splice(index, 1);
       this.collService.deleteCollaborateur(employerID).subscribe((response) => {
@@ -103,6 +106,15 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
     }, err => {
       console.log(err);
     })
+  }
+
+  showCollFormation(employeId : number, employeName : string){
+    this.collService.getCollById(employeId).subscribe((response) => {
+      this.formations = response.formations;
+      this.employeName = employeName;
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

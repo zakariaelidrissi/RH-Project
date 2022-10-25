@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Collaborateur } from 'src/app/models/collaborateur';
+import { Employe } from 'src/app/models/employe';
 import { FormationRequest } from 'src/app/models/formationRequest';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { PlanResponse } from 'src/app/models/planResponse';
@@ -19,7 +21,10 @@ export class FormationsComponent implements OnInit {
   updFormation : FormationRequest = new FormationRequest();
   deleteFormationId : number = 0;
   plans : PlanResponse[] = [];
+  employes : Collaborateur[] = [];
   index : number = 0;
+  formationID : number = 0;
+  employeID : number = 0;
 
   message : string = '';
   dr : string = 'Day(s)';
@@ -84,6 +89,29 @@ export class FormationsComponent implements OnInit {
 
   showPlan(formation : FormationResponse) {
     this.plans = formation.plan;
+  }
+
+  showColl(formationId : number){
+    this.formationService.getAllCollFromForm(formationId).subscribe((response) => {
+      this.employes = response;
+      this.formationID = formationId;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  confirmDeleteEmploye(employeId : number, i : number){
+    this.employeID = employeId;
+    this.index = i;
+  }
+
+  deleteEmplFromFormation(collId : number){
+    this.formationService.deleteCollFromFormation(collId, this.formationID).subscribe((response) => {
+      this.message = "Successfuly!";
+      this.employes.splice(this.index, 1);
+    }, (error) => {
+      console.log(error);      
+    });
   }
 
 }

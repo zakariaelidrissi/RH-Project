@@ -6,6 +6,7 @@ import com.RHmanagment.user.Model.UserRequest;
 import com.RHmanagment.user.Model.OffreStage;
 import com.RHmanagment.user.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,16 +31,19 @@ public class UserService {
     public User login(String email){
         return userRepository.findUserByEmail(email);
     }
+
     // ************************ POST **************************
     public void addUser(User UsrReq) {
-
+        BCryptPasswordEncoder bcp = new BCryptPasswordEncoder();
+        UsrReq.setMotDePasse(bcp.encode(UsrReq.getMotDePasse()));
         userRepository.save(UsrReq);
     }
 
     // ************************ PUT **************************
     public void updateUser(User UsrReq) {
         User Usr = getUserById(UsrReq.getId());
-
+        BCryptPasswordEncoder bcp = new BCryptPasswordEncoder();
+        UsrReq.setMotDePasse(bcp.encode(UsrReq.getMotDePasse()));
         userRepository.save(Usr);
     }
 

@@ -1,6 +1,4 @@
-import { User } from "./user";
-
-export class Stagiaire {
+export class StagiaireRequest {
     id : number;
     civilite : string;
     niveau_etudes : string;
@@ -9,7 +7,6 @@ export class Stagiaire {
     cv : string;
     LinkedIn_URL : string;
     userId : number;
-    user : User;
 
     constructor() {
         this.id = 0;
@@ -19,7 +16,7 @@ export class Stagiaire {
         this.telephone = '';
         this.cv = '';
         this.LinkedIn_URL = '';
-        this.userId = 0;
-        this.user = new User();
+        this.userId = 0;    
     }
+
 }

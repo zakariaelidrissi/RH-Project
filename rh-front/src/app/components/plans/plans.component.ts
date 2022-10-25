@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { Collaborateur } from 'src/app/models/collaborateur';
 import { PlanRequest } from 'src/app/models/planRequest';
@@ -6,7 +6,6 @@ import { PlanResponse } from 'src/app/models/planResponse';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { FormationService } from 'src/app/services/formation/formation.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-// import { Formation } from 'src/app/models/formationRequest';
 import { AddById } from 'src/app/models/addById';
 import { FormationResponse } from 'src/app/models/formationResponse';
 
@@ -17,17 +16,17 @@ declare const $: any;
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.css']
 })
-export class PlansComponent implements OnInit {
+export class PlansComponent implements OnInit, AfterContentChecked {
 
   plans: PlanResponse[] = [];
   Collaborateurs : Collaborateur[] = [];
   newPlan : PlanRequest = new PlanRequest();
   updPlan : PlanRequest = new PlanRequest();
   formations : FormationResponse[] = [];
-  // showFormation : Formation[] = [];
+  showFormation : FormationResponse[] = [];
   
   deletePlanId : number = 0;
-  deleteFormationToPlanId : number = 0;
+  formationId : number = 0;
   index : number = 0;
   planId : number = 0;
 
@@ -46,9 +45,15 @@ export class PlansComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPlans();
+    // this.getCollaborateur();
+    // this.dropDownFormation();
+    // this.dropDownPlan();
+  }
+
+  ngAfterContentChecked(): void {
     this.getCollaborateur();
     this.dropDownFormation();
-    // this.dropDownPlan();
+    this.getPlans();
   }
  
   getCollaborateur() : void {
@@ -81,7 +86,7 @@ export class PlansComponent implements OnInit {
     this.formationService.addPlan(this.newPlan).subscribe((response)=>{
       this.message = "This Plan well be added successfuly!";
       $('#addPlan').modal("hide");
-      this.getPlans();
+      // this.getPlans();
     }, (err) => {
       console.log(err);
     });    
@@ -106,7 +111,7 @@ export class PlansComponent implements OnInit {
     this.formationService.updatePlan(this.updPlan).subscribe((response)=>{
       this.message = "This Plan well be updated successfuly!";
       $('#updatePlan').modal("hide");
-      this.getPlans();
+      // this.getPlans();
     }, (err) => {
       console.log(err);
     });
@@ -144,23 +149,6 @@ export class PlansComponent implements OnInit {
     };
   }
 
-  // dropDownPlan(){
-    
-  //   this.getPlans();
-
-  //   this.selectedItem = [];
-
-  //   this.dropdownPlanSettings = {
-  //     singleSelection: true,
-  //     idField: 'id',
-  //     textField: 'name',
-  //     selectAllText: 'Select All',
-  //     unSelectAllText: 'UnSelect All',
-  //     itemsShowLimit: 5,
-  //     allowSearchFilter: true
-  //   };
-  // }
-
   onItemSelect(item: any) {
     console.log(item);
   }
@@ -179,29 +167,32 @@ export class PlansComponent implements OnInit {
         $('#addFormationToPlan').modal("hide");
       }, (error) => {
         console.log(error);
-      });
-      // console.log('id : ' + element.id);      
+      });      
     }
   }
 
-  // showFormations(plan : PlanResponse, planID : number){
-  //   this.showFormation = plan.formation;
-  //   this.planId = planID;
-  // }
-
-  confirmDeleteFToP(fTPID : number, i : number){
-    this.deleteFormationToPlanId = fTPID;
-    this.index = i;    
+  confirmDeleteFormFromP(formationID : number, i : number){
+    this.formationId = formationID;
+    this.index = i;
   }
 
-  // deleteFormatonFromPlan(formationID : number, planID : number, index : number) {        
-  //   this.formationService.deleteFormationFromPlan(formationID, planID).subscribe((response) => {
-  //     this.message = "Successfuly!";
-  //     this.showFormation.splice(index, 1);
-  //     $('#addFormationToPlan').modal("hide");
-  //   }, (error) => {
-  //     console.log(error);
-  //   });
-  // }
+  show(idPlan : number) {
+    this.formationService.getAllFormFromPlan(idPlan).subscribe((response) => {
+      this.showFormation = response;
+      this.planId = idPlan;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  deleteFormatonFromPlan(formationID : number) {        
+    this.formationService.deleteFormationFromPlan(formationID, this.planId).subscribe((response) => {
+      this.message = "Successfuly!";
+      this.showFormation.splice(this.index, 1);
+      // $('#addFormationToPlan').modal("hide");
+    }, (error) => {
+      console.log(error);
+    });
+  }
 
 }

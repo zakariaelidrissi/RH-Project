@@ -24,8 +24,17 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        Data Tables
+                    <div class="card-header d-flex">
+                        <div class="col-md-6">Data Tables</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <form action="" method="post" class="d-flex">                            
+                                <div class="form-group d-flex">
+                                    <input type="date" class="form-control ms-5" name="searchByDate" [(ngModel)]="searchByDate" required>
+                                    <button class="btn btn-primary" (click)="search()">Search</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

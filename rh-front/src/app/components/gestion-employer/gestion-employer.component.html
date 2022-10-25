@@ -4,10 +4,10 @@
 <main class="mt-5 pt-3">
     <div class="container">
         <div class="row mb-5 mt-3">
-            <div class="col-md-6 fw-bold fs-3">Gestion des employer</div>
+            <div class="col-md-6 fw-bold fs-3">Gestion des employe</div>
             <div class="col-md-6 ">
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addEmployer">
-                    Add Employer
+                    Add Employe
                 </button>
             </div>
         </div>
@@ -43,22 +43,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   <tr *ngFor="let employer of employes; let i = index">
-                                        <td>{{employer.nom}}</td>
-                                        <td>{{employer.cin}}</td>
-                                        <td>{{employer.email}}</td>
-                                        <td>{{employer.naissance}}</td>
-                                        <td>{{employer.debutAmbauche}}</td>
-                                        <td>{{employer.departement}}</td>
-                                        <td>{{employer.poste}}</td>
+                                   <tr *ngFor="let employe of employes; let i = index">
+                                        <td>{{employe.nom}}</td>
+                                        <td>{{employe.cin}}</td>
+                                        <td>{{employe.email}}</td>
+                                        <td>{{employe.naissance}}</td>
+                                        <td>{{employe.debutAmbauche}}</td>
+                                        <td>{{employe.departement}}</td>
+                                        <td>{{employe.poste}}</td>
                                         <td>
                                             <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2" (click)="editEmploye(employer)"
+                                                <!-- <button class="btn btn-warning me-2" (click)="editEmploye(employe)"
                                                     data-bs-toggle="modal" data-bs-target="#updateEmployer">
                                                     <i class="bi bi-pencil-square"></i>
+                                                </button> -->
+                                                <!-- <i class="bi bi-pencil-square" ></i> -->
+                                                <button class="btn btn-success me-2" (click)="showCollFormation(employe.id, employe.nom)"
+                                                    data-bs-toggle="modal" data-bs-target="#showCollFormation">
+                                                    <i class="bi bi-eye-fill"></i>
                                                 </button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmploye"
-                                                  (click)="confirmDeleteEmploye(employer.id, i)">
+                                                  (click)="confirmDeleteEmploye(employe.id, i)">
                                                     <i class="bi bi-trash3-fill"></i>
                                                 </button>
                                             </div>
@@ -228,3 +233,41 @@
     </div>
 </div>
 <!-- Delete Employee Modal -->
+
+<!-- Show Formations -->
+<div class="modal fade" id="showCollFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Liste des formation de {{employeName}}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="example" class="table table-striped data-table">
+                    <thead>
+                        <tr>
+                            <th>Formation Name</th>
+                            <th>Start Date</th>
+                            <th>Duration</th>
+                            <th>Objective</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let formation of formations;let i = index">
+                            <td>{{ formation.name }}</td>
+                            <td>{{ formation.formationDate }}</td>
+                            <td>{{ formation.duree }}</td>
+                            <td>{{ (formation.objectif.length>40)? (formation.objectif | slice:0:40)+'...':(formation.objectif) }}</td>                            
+                        </tr>                                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Show Formations -->

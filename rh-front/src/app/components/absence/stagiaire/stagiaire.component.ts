@@ -19,7 +19,7 @@ export class StagiaireComponent implements OnInit, AfterContentChecked {
   absences : AbsenceStgResponse[] = [];
   newAbs : AbsenceStgRequest = new AbsenceStgRequest();
   abs : number[] = [];
-
+  searchByDate : Date = new Date();
   message : string = '';
 
 
@@ -104,6 +104,16 @@ export class StagiaireComponent implements OnInit, AfterContentChecked {
       console.log(this.abs);
     }    
 
+  }
+
+  search() {
+    if (this.searchByDate != null) {
+      this.absService.getStgAbsByDate(this.searchByDate).subscribe((response) => {
+        this.absences = response;
+      }, (error) => {
+        console.log(error);
+      });
+    }
   }
 
 }

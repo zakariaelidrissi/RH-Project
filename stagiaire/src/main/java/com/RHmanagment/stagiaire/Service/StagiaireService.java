@@ -2,7 +2,7 @@ package com.RHmanagment.stagiaire.Service;
 
 import com.RHmanagment.stagiaire.Entities.Stagiaire;
 import com.RHmanagment.stagiaire.Feign.UserRestClient;
-import com.RHmanagment.stagiaire.Model.StagiaireRequest;
+import com.RHmanagment.stagiaire.Model.StagiareRequest;
 import com.RHmanagment.stagiaire.Model.User;
 import com.RHmanagment.stagiaire.Repositories.StagiaireRepository;
 import lombok.AllArgsConstructor;
@@ -48,7 +48,7 @@ public class StagiaireService {
     }
 
     // ************************ POST **************************
-    public void addStagiaire(StagiaireRequest stgReq) {
+    public void addStagiaire(StagiareRequest stgReq) {
         Stagiaire stg = new Stagiaire();
 
         stg.setCivilite(stgReq.getCivilite());
@@ -63,7 +63,7 @@ public class StagiaireService {
     }
 
     // ************************ PUT **************************
-    public void updateStagiaire(StagiaireRequest stgReq) {
+    public void updateStagiaire(StagiareRequest stgReq) {
         Stagiaire stg = getStagiaireById(stgReq.getId());
 
         stg.setCivilite(stgReq.getCivilite());

@@ -24,8 +24,17 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        Data Tables
+                    <div class="card-header d-flex">
+                        <div class="col-md-6">Data Tables</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <form action="" method="post" class="d-flex">                            
+                                <div class="form-group d-flex">
+                                    <input type="date" class="form-control ms-5" name="searchByDate" [(ngModel)]="searchByDate" required>
+                                    <button class="btn btn-primary" (click)="search()">Search</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -42,7 +51,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let absence of absences;let i = index">
-                                        <td>{{ absence.stagiaire.nom }}</td>
+                                        <td>{{ absence.stagiaire.user.nom + ' ' + absence.stagiaire.user.prenom }}</td>
                                         <td>{{ absence.dateAbs }}</td>
                                         <td>{{ absence.natureAbsence }}</td>
                                         <td>{{ absence.justificatif }}</td>
@@ -98,12 +107,12 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let stg of stagiaires; let i = index">
-                                    <td>{{stg.nom}}</td>
-                                    <td>{{stg.cin}}</td>
-                                    <td>{{stg.email}}</td>                                    
-                                    <td>{{stg.dateDebut}}</td>
-                                    <td>{{stg.departement}}</td>
-                                    <td>{{stg.poste}}</td>
+                                    <td>{{stg.user.nom}}</td>
+                                    <td>{{stg.user.prenom}}</td>
+                                    <td>{{stg.ville}}</td>                                    
+                                    <td>{{stg.niveau_etudes}}</td>
+                                    <td>{{stg.telephone}}</td>
+                                    <td>{{stg.civilite}}</td>
                                     <td>
                                         <div class="form-check ms-3">
                                             <input type="checkbox" class="form-check-input" name="newAbs"

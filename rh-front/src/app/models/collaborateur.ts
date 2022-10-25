@@ -2,7 +2,6 @@ import { Demande } from "./Demande";
 import { Employe } from "./employe";
 import { FormationResponse } from "./formationResponse";
 import { PlanRequest } from "./planRequest";
-import { User } from "./user";
 
 export class Collaborateur {
     id: number;    
