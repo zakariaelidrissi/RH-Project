@@ -10,6 +10,7 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class AttestationTravailPdf implements IPDFCreator<Attestation> {
     private final float normalTextSize = 18;
     private final float normalBoldTextSize = 22;
     private final String titre = "Attestation de travail";
-    private final String msg = "Nous soussignés _ au capital de, attestons par la présente que Monsieur:";
+    private final String msg = "Nous soussignés _ au capital de _, attestons par la présente que _:";
     private final String text1 = "Fait partie de notre personnel _ Depuis le _ en qualité de _.";
     private final String text2 = "Cette attestation est délivrée à l'intéresse sur sa demande pour servir et valoir ce que de droit.";
     final String font = FontConstants.COURIER;
@@ -42,34 +43,37 @@ public class AttestationTravailPdf implements IPDFCreator<Attestation> {
     }
 
     @Override
-    public ByteArrayInputStream createPDF(Attestation attestation) throws IOException {
-        return this.build(attestation);
+    public ByteArrayInputStream createPDF(Attestation attestation, User user) throws IOException {
+        return this.build(attestation,user);
     }
 
     @Override
-    public void buildPage(Attestation a,Document document) throws IOException {
-        String nom = "Jamal";
-        String prenom = "Qarsis";
-        String cin = "VM11111";
-        String ville = "Berkin";
+    public void buildPage(Attestation a,User user,Document document) throws IOException {
+        String nom = a.getNom();
+        String prenom = "";
+        String cin = a.getCin();
+        String ville = a.getVille();
+        String sexe = user.getSexe().getTitre();
         String date = pdfUtils.formatDate(Date.from(Instant.now()));
-        String dateNaiss = pdfUtils.formatDate(Date.from(Instant.now()));
-        String dateSignature = pdfUtils.formatDate(Date.from(Instant.now()));
-        String fonction = "Nothing";
-        String pers = "";// TODO "_"
+        String dateNaiss = pdfUtils.formatDate(user.getDateNaissanse());
+        String dateSignature = pdfUtils.formatDate(a.getDateSignature());
+        String fonction = a.getPoste().getName();
+        String pers = a.getEtablissement().getName();// TODO "_"
+
+        Map<String,String> map = new LinkedHashMap<>();
+        //Adding elements to map
+        map.put("Nom: ",nom);
+        //map.put("Prenom: ",a.getNom());
+        map.put("CIN: ",cin);
+        map.put("Né le: ",dateNaiss);
 
 
         Table table = new Table(1);
         Image logo = new Image(ImageDataFactory.create("src/main/resources/download.png"));
-        Map<String,String> map = new LinkedHashMap<>();
-        //Adding elements to map
-        map.put("Nom: ",nom);
-        map.put("Prenom: ",prenom);
-        map.put("CIN: ",cin);
-        map.put("Né le: ",dateNaiss);
+
         buildSimplePageHeader(table,logo,titre,titreFont);
         table
-                .addCell(pdfUtils.textToParagraph(msg,"_","___"))
+                .addCell(pdfUtils.textToParagraph(msg,"_","___","____",sexe))
                 .addCell(blackSpace(15))
                 .addCell(kvTable(map,font,font,20))
                 .addCell(blackSpace(20))

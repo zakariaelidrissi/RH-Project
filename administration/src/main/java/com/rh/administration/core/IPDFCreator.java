@@ -12,6 +12,7 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
+import com.rh.administration.entities.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,15 +21,15 @@ import java.net.MalformedURLException;
 import java.util.Map;
 
 public interface IPDFCreator<T> {
-    ByteArrayInputStream createPDF(T t) throws IOException;
-    void buildPage(T t,Document doc) throws IOException;
+    ByteArrayInputStream createPDF(T t,User user) throws IOException;
+    void buildPage(T t,User user,Document doc) throws IOException;
 
-    default ByteArrayInputStream build(T a) throws IOException {
+    default ByteArrayInputStream build(T a, User user) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(out);
         PdfDocument pdfDocument = new PdfDocument(writer);
         Document document = new Document(pdfDocument);
-        buildPage(a,document);
+        buildPage(a,user,document);
         // TODO
         document.close();
         pdfDocument.close();

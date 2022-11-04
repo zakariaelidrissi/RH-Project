@@ -4,7 +4,6 @@ package com.rh.administration.web;
 import com.rh.administration.dto.AttestationRequest;
 import com.rh.administration.dto.AttestationResponse;
 import com.rh.administration.entities.Attestation;
-import com.rh.administration.services.AttestationPDFService;
 import com.rh.administration.services.AttestationService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -17,16 +16,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 public class AttestationController {
     AttestationService service;
-    AttestationPDFService pdfService;
 
     // ********************** POST ***************************************
     @PostMapping(path = "/attestations")
@@ -79,11 +77,11 @@ public class AttestationController {
         }
     }
 
-    @GetMapping(path="/pdf")
+    @GetMapping(path="/pdf/{id}")
     @ResponseBody
-    public ResponseEntity<InputStreamSource> pdf(){
+    public ResponseEntity<InputStreamSource> pdf(@PathVariable Long id){
         try{
-            ByteArrayInputStream array = pdfService.getPdf();
+            ByteArrayInputStream array = service.getPdf(id);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition","inline;");
             return ResponseEntity
@@ -91,10 +89,14 @@ public class AttestationController {
                     .contentType(MediaType.APPLICATION_PDF)
                     .headers(headers)
                     .body(new InputStreamResource(array));
-        }catch(Exception e){
+        }catch(NoSuchElementException e){
             System.out.println("Something went wrong");
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Error accured when creating pdf file: "+e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No records");
+        }catch(IOException e){
+            System.out.println("Something went wrong");
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong");
         }
     }
 }

@@ -12,6 +12,7 @@ public class DemandeAttestationResponse {
     Long id;
     Long idUser;
     Attestation.AttestationType type;
+    Attestation.Etablissement etablissement;
     Date date;
     boolean done;
 }

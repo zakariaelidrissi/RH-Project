@@ -9,10 +9,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class AttestationResponse {
+    Long id;
     String nom;
     String cin;
-    String poste;
     Date debutPoste;
-    String etablissement;
+
+    Attestation.Poste poste;
+    Attestation.Etablissement etablissement;
     Attestation.AttestationType type;
 }

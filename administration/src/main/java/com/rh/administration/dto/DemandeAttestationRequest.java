@@ -11,5 +11,6 @@ import java.util.Date;
 public class DemandeAttestationRequest {
     Long idUser;
     Attestation.AttestationType type;
+    Attestation.Etablissement etablissement;
     Date date;
 }
