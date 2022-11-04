@@ -4,10 +4,21 @@ package com.rh.administration.web;
 import com.rh.administration.dto.AttestationRequest;
 import com.rh.administration.dto.AttestationResponse;
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.services.AttestationPDFService;
 import com.rh.administration.services.AttestationService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -15,6 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AttestationController {
     AttestationService service;
+    AttestationPDFService pdfService;
 
     // ********************** POST ***************************************
     @PostMapping(path = "/attestations")
@@ -64,6 +76,25 @@ public class AttestationController {
                 return Attestation.AttestationType.Travail;
             default:
                 throw new Exception("Type d'attestation invalid.");
+        }
+    }
+
+    @GetMapping(path="/pdf")
+    @ResponseBody
+    public ResponseEntity<InputStreamSource> pdf(){
+        try{
+            ByteArrayInputStream array = pdfService.getPdf();
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition","inline;");
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .headers(headers)
+                    .body(new InputStreamResource(array));
+        }catch(Exception e){
+            System.out.println("Something went wrong");
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Error accured when creating pdf file: "+e);
         }
     }
 }
