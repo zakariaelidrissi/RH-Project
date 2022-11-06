@@ -8,17 +8,17 @@ import { Employe } from 'src/app/models/employe';
 })
 export class GestionEmployeService {
 
-  url : string = "http://localhost:8084/employe";
-  // urlDiscovery : string = "http://localhost:8888/GESTION-EMPLOYE-SERVICE/";
+  url : string = "http://localhost:8082/employes";
+  // url : string = "http://localhost:8888/GESTION-EMPLOYE-SERVICE/employe";
 
   constructor(private httpClient : HttpClient) { }
 
   getAllEmploye() : Observable<Employe[]>{
-    return this.httpClient.get<Employe[]>(this.url + "s");
+    return this.httpClient.get<Employe[]>(this.url);
   }
 
   getEmployeByCin(cin : string) : Observable<Employe> {
-    return this.httpClient.get<Employe>(this.url + "s/cin/" + cin);
+    return this.httpClient.get<Employe>(this.url + "/cin/" + cin);
   }
 
   addEmploye(newEmploye : Employe) : Observable<Employe> {

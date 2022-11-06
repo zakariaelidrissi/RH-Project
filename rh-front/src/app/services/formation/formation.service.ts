@@ -13,27 +13,27 @@ import { Collaborateur } from 'src/app/models/collaborateur';
 })
 export class FormationService {
 
-  url : string = "http://localhost:8083/";
-  // urlDiscovery : string = "http://localhost:8888/FORMATION-SERVICE/";
+  url : string = "http://localhost:8085/";
+  // url : string = "http://localhost:8888/FORMATION-SERVICE/";
 
   constructor(private httpClient: HttpClient) { }
 
   // **************** Formations ********************
 
   getFormations() : Observable<FormationResponse[]>{
-    return this.httpClient.get<FormationResponse[]>(this.url + "listFormations");
+    return this.httpClient.get<FormationResponse[]>(this.url + "formations");
   }  
 
   addFormation(newFormation : FormationRequest) : Observable<FormationRequest> {
-    return this.httpClient.post<FormationRequest>(this.url + "addFormation", newFormation);
+    return this.httpClient.post<FormationRequest>(this.url + "formations", newFormation);
   }
 
   updateFormation(updateFormation:FormationRequest): Observable<FormationRequest>{
-    return this.httpClient.put<FormationRequest>(this.url + "updateFormation/" + updateFormation.id, updateFormation);
+    return this.httpClient.put<FormationRequest>(this.url + "formations/" + updateFormation.id, updateFormation);
   }
 
   deleteFormation(formationID:number): Observable<any>{
-    return this.httpClient.delete<any>(this.url + "deleteFormation/" + formationID);
+    return this.httpClient.delete<any>(this.url + "formations/" + formationID);
   }
 
   findFormation(searchTerm : string): Observable<FormationResponse>{
@@ -43,23 +43,23 @@ export class FormationService {
   // **************** Plans ********************
 
   getPlans() : Observable<PlanResponse[]>{
-    return this.httpClient.get<PlanResponse[]>(this.url + "listPlans");
+    return this.httpClient.get<PlanResponse[]>(this.url + "plans");
   }
 
   addPlan(newPlan : PlanRequest) : Observable<PlanRequest> {
-    return this.httpClient.post<PlanRequest>(this.url + "addPlan", newPlan);
+    return this.httpClient.post<PlanRequest>(this.url + "plans", newPlan);
   }
 
   updatePlan(updatePlan:PlanRequest): Observable<PlanRequest>{
-    return this.httpClient.put<PlanRequest>(this.url + "updatePlan/" + updatePlan.id, updatePlan);
+    return this.httpClient.put<PlanRequest>(this.url + "plans/" + updatePlan.id, updatePlan);
   }
 
   deletePlan(planID:number): Observable<any>{
-    return this.httpClient.delete<PlanRequest>(this.url + "deletePlan/" + planID);
+    return this.httpClient.delete<PlanRequest>(this.url + "plans/" + planID);
   }
 
   getPlanById(planID:number) : Observable<PlanResponse>{
-    return this.httpClient.get<PlanResponse>(this.url + "listPlans/" + planID);
+    return this.httpClient.get<PlanResponse>(this.url + "plans/" + planID);
   }
 
   // **************** Add Formation To Plan ********************
@@ -73,6 +73,15 @@ export class FormationService {
   }
 
   deleteCollFromFormation(collId : number, formationId : Number) : Observable<any> {
+    return this.httpClient.delete<any>(this.url + "deleteCollFromFormation/" + collId + "/" + formationId);
+  }
+
+  // **************** Add Coll To Formation ********************
+  addCollToFormation(newCollToForm : AddById) : Observable<AddById> {
+    return this.httpClient.post<AddById>(this.url + "addCollToFormation", newCollToForm);
+  }
+
+  deleteCollFromForm(collId : number, formationId : number) : Observable<any> {
     return this.httpClient.delete<any>(this.url + "deleteCollFromFormation/" + collId + "/" + formationId);
   }
 

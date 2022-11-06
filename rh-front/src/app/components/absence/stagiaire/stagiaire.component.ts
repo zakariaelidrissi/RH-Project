@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbsenceStgRequest } from 'src/app/models/absenceStgRequest';
 import { AbsenceStgResponse } from 'src/app/models/absenceStgResponse';
@@ -13,7 +13,7 @@ declare const $ : any;
   templateUrl: './stagiaire.component.html',
   styleUrls: ['./stagiaire.component.css']
 })
-export class StagiaireComponent implements OnInit, AfterContentChecked {
+export class StagiaireComponent implements OnInit {
 
   stagiaires : Stagiaire[] = [];
   absences : AbsenceStgResponse[] = [];
@@ -38,11 +38,8 @@ export class StagiaireComponent implements OnInit, AfterContentChecked {
       });
     }, 1);
     this.getAllEmployee();
-  }
-
-  ngAfterContentChecked(): void {
-    this.getAllAbs();    
-  }
+    this.getAllAbs();
+  }  
 
   getAllEmployee(){
     this.stgService.getStagiaire().subscribe((response) => {
@@ -74,7 +71,7 @@ export class StagiaireComponent implements OnInit, AfterContentChecked {
       this.newAbs.stagiaireId = this.abs[index];      
       this.newAbs.dateAbs = new Date();
       this.newAbs.duree = '-';
-      this.newAbs.justificatif = false;
+      this.newAbs.justificatif = '';
       this.newAbs.natureAbsence = 'NONJUSTIFIEE';
       
       this.absService.addStgAbsence(this.newAbs).subscribe((response) => {

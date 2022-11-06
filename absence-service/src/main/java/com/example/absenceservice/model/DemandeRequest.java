@@ -12,6 +12,6 @@ public class DemandeRequest {
     private Date dateDebut;
     private Date dateFin;
     private NatureAbsence natureAbsence;
-    //private Blob justificatif;
+    private String justificatif;
     private Long employeId;
 }

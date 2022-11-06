@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +29,12 @@ import { DatePipe } from '@angular/common';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { LoginComponent } from './components/login/login.component';
 import { StagesComponent } from './components/stages/stages.component';
+import { KeycloakSecurityService } from './services/keycloak-security/keycloak-security.service';
+import { RequestInterceptorService } from './services/keycloak-request/request-interceptor.service';
+
+export function kcFactory(kcSecurity: KeycloakSecurityService) {
+  return () => kcSecurity.init();
+}
 
 @NgModule({
   declarations: [
@@ -53,7 +60,7 @@ import { StagesComponent } from './components/stages/stages.component';
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [
     FormationService, 
@@ -62,6 +69,8 @@ import { StagesComponent } from './components/stages/stages.component';
     StagiaireService,
     AbsenceService,
     DatePipe,
+    {provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true}
   ],
   bootstrap: [
     AppComponent

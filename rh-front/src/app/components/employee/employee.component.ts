@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { FormationService } from 'src/app/services/formation/formation.service';
@@ -8,7 +8,7 @@ import { FormationService } from 'src/app/services/formation/formation.service';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
-export class EmployeeComponent implements OnInit, AfterContentChecked {
+export class EmployeeComponent implements OnInit {
 
   formations : FormationResponse[] = [];
   message : string = '';
@@ -17,10 +17,6 @@ export class EmployeeComponent implements OnInit, AfterContentChecked {
               private collService : CollService) { }
 
   ngOnInit(): void {
-  }
-
-  ngAfterContentChecked(): void {
-    
   }
 
   getFormations(empId : number) {

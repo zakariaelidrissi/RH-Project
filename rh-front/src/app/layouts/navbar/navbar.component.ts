@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { KeycloakSecurityService } from 'src/app/services/keycloak-security/keycloak-security.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 declare const $ : any;
@@ -20,46 +22,24 @@ export class NavbarComponent implements OnInit {
   errors : string = '';
   logged : boolean = false;
 
-  constructor(private userService : UserService) { }
+  constructor(private router : Router, public kcService: KeycloakSecurityService) { }
 
   ngOnInit(): void {
-    this.loginUser.nom = 'zaki';
-    this.loginUser.prenom = 'ZR7';
-  }
 
-  setNavbarOpen() {
-    this.navbarOpen = !this.navbarOpen;
   }
-
-  confirmationAdd(){
-    if(this.newUser.motDePasse === this.confPass){
-      this.addUser();
-    }
-  }
-
-  addUser() {
-    this.userService.addUser(this.newUser).subscribe((response) => {
-      this.message = 'This Account added well been Successfuly!';
-      $('#register').modal('hide');
-    }, (error) => {
-      console.log(error);
-    });
+  
+  register() {
+    this.kcService.kc.register();
   }
 
   login() {
-    this.userService.getUserByEmail(this.loginEmail).subscribe((response) => {
-      if (this.loginPass === response.motDePasse){
-        this.loginUser = response;
-        this.logged = true;
-        localStorage.setItem('user', JSON.stringify({id: response.id, role: response.userRole, login: this.logged}));
-        $('#login').modal('hide');
-      }
-      else {
-        this.errors = "this email or password does not correct!";
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.kcService.kc.login();
+    this.router.navigate(['/dash']);
+  }
+
+  logOut() {
+    this.kcService.kc.logout();
+    this.router.navigate(['/home']);
   }
 
 }

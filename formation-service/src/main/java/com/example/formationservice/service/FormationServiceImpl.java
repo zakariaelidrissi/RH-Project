@@ -20,7 +20,6 @@ public class FormationServiceImpl implements FormationService {
     private FormationRepository formationRepository;
     private PlanRepository planRepository;
     private CollaborateurRepository collaborateurRepository;
-    //private ModuleRepository moduleRepository;
     private DemandeRepository demandeRepository;
     private EmployeRestClient employeRestClient;
 
@@ -53,11 +52,6 @@ public class FormationServiceImpl implements FormationService {
         collaborateurRepository.save(coll);
     }
 
-    /*@Override
-    public void addNewModule(Module module) {
-        moduleRepository.save(module);
-    }*/
-
     @Override
     public void addCollaborateurToFormation(AddById add) {
         Collaborateur collaborateur = findCollaborateurById(add.getId1());
@@ -80,20 +74,8 @@ public class FormationServiceImpl implements FormationService {
         }
     }
 
-    /*@Override
-    public void addModuleToPlan(AddWithStr add) {
-        Module module = findModuleByName(add.getStr1());
-        Plan plan = findPlanByName(add.getStr2());
-
-        if (plan.getModules() != null){
-            plan.getModules().add(module);
-            module.getPlans().add(plan);
-        }
-    }*/
-
     @Override
     public void addDemande(AddById add) {
-        //Collaborateur collaborateur = collaborateurRepository.findCollaborateurById(add.getId());
         Collaborateur collaborateur = collaborateurRepository.findCollaborateurById(add.getId1());
         Formation formation = formationRepository.findFormationById(add.getId2());
         Demande demande = new Demande();
@@ -181,17 +163,6 @@ public class FormationServiceImpl implements FormationService {
 
         return plan;
     }
-
-    /*@Override
-    public Module findModuleByName(String moduleName) {
-
-        return moduleRepository.findByName(moduleName);
-    }*/
-
-    /*@Override
-    public Collaborateur findCollaborateurByCin(String cin) {
-        return collaborateurRepository.findByCin(cin);
-    }*/
 
     @Override
     public List<Collaborateur> getCollaborateurs() {

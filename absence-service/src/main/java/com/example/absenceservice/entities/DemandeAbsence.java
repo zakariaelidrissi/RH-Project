@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Demande {
+public class DemandeAbsence {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(TemporalType.DATE)
@@ -19,7 +19,7 @@ public class Demande {
     private Date dateFin;
     @Enumerated(EnumType.STRING)
     private NatureAbsence natureAbsence;
-    //private Blob justificatif;
+    private String justificatif;
     private Long employeId;
 
     @Transient

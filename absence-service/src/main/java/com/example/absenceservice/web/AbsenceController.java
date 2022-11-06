@@ -1,15 +1,12 @@
 package com.example.absenceservice.web;
 
 import com.example.absenceservice.entities.EmployeAbsence;
-import com.example.absenceservice.entities.Demande;
+import com.example.absenceservice.entities.DemandeAbsence;
 import com.example.absenceservice.entities.StagiaireAbsence;
-import com.example.absenceservice.feign.EmployeRestClient;
-import com.example.absenceservice.model.AbsenceRequest;
+import com.example.absenceservice.model.EmpAbsRequest;
 import com.example.absenceservice.model.DemandeRequest;
 import com.example.absenceservice.model.Employe;
-import com.example.absenceservice.model.StagiaireRequest;
-import com.example.absenceservice.repositories.AbsenceRepository;
-import com.example.absenceservice.repositories.DemandeRepository;
+import com.example.absenceservice.model.StgAbsRequest;
 import com.example.absenceservice.service.AbsenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +40,7 @@ public class AbsenceController {
 
     @GetMapping(path = "/absences/date/{date}")
     public List<EmployeAbsence> getAllAbsByDate(@PathVariable Date date){
-        return absenceService.getAllAbsByDate(date);
+        return absenceService.getAllEmpAbsByDate(date);
     }
 
     @GetMapping(path = "/absencesStg/date/{date}")
@@ -62,24 +59,24 @@ public class AbsenceController {
     }
 
     @GetMapping(path = "/demandes")
-    public List<Demande> getAllDemandes(){
+    public List<DemandeAbsence> getAllDemandes(){
         return absenceService.getAllDemandes();
     }
 
     @GetMapping(path = "/demandes/{id}")
-    public Demande getDemande(@PathVariable Long id){
+    public DemandeAbsence getDemande(@PathVariable Long id){
         return absenceService.getDemandeById(id);
     }
 
     // ************************* POST ************************
 
     @PostMapping(path = "/absences")
-    public void saveEmpAbs(@RequestBody AbsenceRequest absReq){
+    public void saveEmpAbs(@RequestBody EmpAbsRequest absReq){
         absenceService.addEmpAbs(absReq);
     }
 
     @PostMapping(path = "/absences/stg")
-    public void saveStgAbs(@RequestBody StagiaireRequest stgReq) {
+    public void saveStgAbs(@RequestBody StgAbsRequest stgReq) {
         absenceService.addStgAbs(stgReq);
     }
 
@@ -91,12 +88,12 @@ public class AbsenceController {
     // ************************* PUT *************************
 
     @PutMapping(path = "/absences")
-    public void updateEmpAbs(@RequestBody AbsenceRequest absReq){
+    public void updateEmpAbs(@RequestBody EmpAbsRequest absReq){
         absenceService.updateEmpAbs(absReq);
     }
 
     @PutMapping(path = "/absences/stg")
-    public void updateStgAbs(@RequestBody StagiaireRequest stgReq) {
+    public void updateStgAbs(@RequestBody StgAbsRequest stgReq) {
         absenceService.updateStgAbs(stgReq);
     }
 

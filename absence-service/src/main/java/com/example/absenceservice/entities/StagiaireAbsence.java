@@ -18,7 +18,7 @@ public class StagiaireAbsence {
     private Date dateAbs;
     @Enumerated(EnumType.STRING)
     private NatureAbsence natureAbsence;
-    private boolean justificatif;
+    private String justificatif;
     private String duree;
     private Long stagiaireId;
     @Transient

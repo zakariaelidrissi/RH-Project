@@ -39,7 +39,6 @@
                                         <th>Plan Name</th>
                                         <th>Plan Date</th>
                                         <th>responsable Name</th>
-                                        <!-- <th>Formations</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -47,13 +46,7 @@
                                     <tr *ngFor="let plan of plans;let i = index">
                                         <td>{{ plan.name }}</td>
                                         <td>{{ plan.planDate }}</td>
-                                        <td>{{ plan.responsable.employe.nom }}</td>
-                                        <!-- <td>
-                                            <button class="btn btn-success me-2" (click)="showFormations(plan, plan.id)"
-                                                data-bs-target="#showFormations" data-bs-toggle="modal">
-                                                Show Formations
-                                            </button>
-                                        </td> -->
+                                        <td>{{ plan.responsable.employe.nom }}</td>                                        
                                         <td>
                                             <div class="me-auto d-flex">
                                                 <button class="btn btn-warning me-2" (click)="editPlan(plan)"
@@ -61,7 +54,7 @@
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button>
                                                 <button class="btn btn-success me-2" (click)="show(plan.id)"
-                                                    data-bs-target="#show" data-bs-toggle="modal">
+                                                    data-bs-target="#showFormations" data-bs-toggle="modal">
                                                     <i class="bi bi-eye-fill"></i>
                                                 </button>
                                                 <button class="btn btn-danger" (click)="confirmDeletePlan(plan.id, i)"
@@ -184,7 +177,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add Plan</h5>
+                <h5 class="modal-title fw-bold">Update Plan</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
@@ -279,7 +272,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">La liste des formations dans un plan</h5>
+                <h5 class="modal-title fw-bold">La liste des formations dans ce plan</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
@@ -290,7 +283,9 @@
                         <table id="example" class="table table-striped data-table">
                             <thead>
                                 <tr>
-                                    <th>Nom de la formation</th>                                    
+                                    <th>Nom de la formation</th>
+                                    <th>Start Date</th>
+                                    <th>Duration</th>                                    
                                     <th>Objectife</th>                                        
                                     <th>Action</th>
                                 </tr>
@@ -298,6 +293,8 @@
                             <tbody>
                                 <tr *ngFor="let formation of showFormation;let i = index">
                                     <td>{{ formation.name }}</td>
+                                    <td>{{ formation.formationDate }}</td>
+                                    <td>{{ formation.duree }}</td>
                                     <td>{{ formation.objectif }}</td>
                                     <td><button class="btn btn-danger me-2" (click)="confirmDeleteFormFromP(formation.id, i)"
                                             data-bs-target="#deleteFormFromPlan" data-bs-toggle="modal">

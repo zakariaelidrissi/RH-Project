@@ -53,6 +53,7 @@ export class FormationsComponent implements OnInit {
       console.log(response);
       $('#addFormation').modal("hide");
       this.getFormations();
+      this.cleanData();
     }, err => {
       console.log(err);
     });    
@@ -84,7 +85,7 @@ export class FormationsComponent implements OnInit {
       $('#deleteFormation').modal("hide");      
     }, err => {
       console.log(err);
-    })
+    });
   }
 
   showPlan(formation : FormationResponse) {
@@ -112,6 +113,14 @@ export class FormationsComponent implements OnInit {
     }, (error) => {
       console.log(error);      
     });
+  }
+
+  cleanData() {
+    this.newFormation.duree = '';
+    this.newFormation.name = '';
+    this.newFormation.id = 0;
+    this.newFormation.objectif = '';
+    this.newFormation.formationDate = new Date();
   }
 
 }

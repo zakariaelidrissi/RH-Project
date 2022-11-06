@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Collaborateur } from 'src/app/models/collaborateur';
 import { PlanRequest } from 'src/app/models/planRequest';
@@ -16,7 +16,7 @@ declare const $: any;
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.css']
 })
-export class PlansComponent implements OnInit, AfterContentChecked {
+export class PlansComponent implements OnInit {
 
   plans: PlanResponse[] = [];
   Collaborateurs : Collaborateur[] = [];
@@ -37,7 +37,6 @@ export class PlansComponent implements OnInit, AfterContentChecked {
   selectedItems : any = [];
   selectedItem : number = 0;
   dropdownFormationSettings:IDropdownSettings = {};
-  dropdownPlanSettings:IDropdownSettings = {};
 
   constructor(private formationService: FormationService, 
               private router : Router,
@@ -45,16 +44,9 @@ export class PlansComponent implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this.getPlans();
-    // this.getCollaborateur();
-    // this.dropDownFormation();
-    // this.dropDownPlan();
-  }
-
-  ngAfterContentChecked(): void {
     this.getCollaborateur();
     this.dropDownFormation();
-    this.getPlans();
-  }
+  }  
  
   getCollaborateur() : void {
     this.collService.getCollaborateur().subscribe((response : Collaborateur[]) => {
@@ -68,7 +60,6 @@ export class PlansComponent implements OnInit, AfterContentChecked {
     this.formationService.getPlans().subscribe((response: PlanResponse[]) => {
       this.plans = response;
       this.dropdownListPlan = response;
-      // console.log(this.plans);
     }, err => {
       console.log(err);
     });
@@ -86,7 +77,7 @@ export class PlansComponent implements OnInit, AfterContentChecked {
     this.formationService.addPlan(this.newPlan).subscribe((response)=>{
       this.message = "This Plan well be added successfuly!";
       $('#addPlan').modal("hide");
-      // this.getPlans();
+      this.getPlans();
     }, (err) => {
       console.log(err);
     });    
@@ -111,7 +102,7 @@ export class PlansComponent implements OnInit, AfterContentChecked {
     this.formationService.updatePlan(this.updPlan).subscribe((response)=>{
       this.message = "This Plan well be updated successfuly!";
       $('#updatePlan').modal("hide");
-      // this.getPlans();
+      this.getPlans();
     }, (err) => {
       console.log(err);
     });

@@ -43,14 +43,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   <tr *ngFor="let employe of employes; let i = index">
-                                        <td>{{employe.nom}}</td>
-                                        <td>{{employe.cin}}</td>
-                                        <td>{{employe.email}}</td>
-                                        <td>{{employe.naissance}}</td>
-                                        <td>{{employe.debutAmbauche}}</td>
-                                        <td>{{employe.departement}}</td>
-                                        <td>{{employe.poste}}</td>
+                                   <tr *ngFor="let coll of employes; let i = index">
+                                        <td>{{coll.employe.nom}}</td>
+                                        <td>{{coll.employe.cin}}</td>
+                                        <td>{{coll.employe.email}}</td>
+                                        <td>{{coll.employe.naissance | date:"dd-MM-yyyy"}}</td>
+                                        <td>{{coll.employe.debutAmbauche | date:"dd-MM-yyyy"}}</td>
+                                        <td>{{coll.employe.departement}}</td>
+                                        <td>{{coll.employe.poste}}</td>
                                         <td>
                                             <div class="me-auto d-flex">
                                                 <!-- <button class="btn btn-warning me-2" (click)="editEmploye(employe)"
@@ -58,12 +58,16 @@
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button> -->
                                                 <!-- <i class="bi bi-pencil-square" ></i> -->
-                                                <button class="btn btn-success me-2" (click)="showCollFormation(employe.id, employe.nom)"
+                                                <button class="btn btn-primary me-2" (click)="dropDownFormation(coll.id, coll.formations)" 
+                                                    data-bs-target="#addCollToFormation" data-bs-toggle="modal">
+                                                    <i class="bi bi-plus-circle-fill"></i>
+                                                </button>
+                                                <button class="btn btn-success me-2" (click)="showCollFormation(coll.formations, coll.empolyeID, coll.employe.nom)"
                                                     data-bs-toggle="modal" data-bs-target="#showCollFormation">
                                                     <i class="bi bi-eye-fill"></i>
                                                 </button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmploye"
-                                                  (click)="confirmDeleteEmploye(employe.id, i)">
+                                                  (click)="confirmDeleteEmploye(coll.empolyeID, i)">
                                                     <i class="bi bi-trash3-fill"></i>
                                                 </button>
                                             </div>
@@ -146,6 +150,41 @@
 </div>
 <!-- Add Employee Modal -->
 
+<!-- Add Formation To Plan Modal -->
+<div class="modal fade" id="addCollToFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Add Employee To Formation</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                                                           
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Select Formation</label>
+                            <ng-multiselect-dropdown name="selectedItems"
+                                [placeholder]="'Select Formation'"
+                                [settings]="dropdownFormationSettings"
+                                [data]="dropdownListFormation"
+                                [(ngModel)]="selectedItems">
+                            </ng-multiselect-dropdown>                                                           
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addCollToFormaton()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Formation To Plan Modal -->
+
 <!-- Update Employee Modal -->
 <div class="modal fade" id="updateEmployer" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -217,7 +256,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Delete Employe</h5>
+                <h5 class="modal-title fw-bold">Confirmation!</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
@@ -239,7 +278,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Liste des formation de {{employeName}}</h5>
+                <h5 class="modal-title fw-bold">Liste des formation de M.{{employeName}}</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
                 </button>
