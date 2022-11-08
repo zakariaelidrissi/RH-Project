@@ -1,7 +1,9 @@
 package com.rh.administration;
 
 import com.rh.administration.dto.AttestationRequest;
+import com.rh.administration.dto.AttestationResponse;
 import com.rh.administration.dto.DemandeAttestationRequest;
+import com.rh.administration.dto.DemandeAttestationResponse;
 import com.rh.administration.entities.Attestation;
 import com.rh.administration.services.AttestationService;
 import com.rh.administration.services.DemandeAttestationService;
@@ -14,29 +16,38 @@ import java.time.Instant;
 import java.util.Date;
 
 @SpringBootApplication
+//@EnableFeignClients
 public class AdministrationApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AdministrationApplication.class, args);
     }
 
-    //@Bean
+    @Bean
     CommandLineRunner start(AttestationService att, DemandeAttestationService dem){
         return args -> {
-            dem.save(new DemandeAttestationRequest(
+            DemandeAttestationResponse res = dem.save(new DemandeAttestationRequest(
                     1L,
                     Attestation.AttestationType.Stage,
+                    Attestation.Etablissement.FaculteSciences,
                     Date.from(Instant.now())
             ));
-            att.save(
+            AttestationResponse res1 = att.save(
                     new AttestationRequest(
                             null,
-                            "otmane",
+                            res.getId(),
+                            "Otmane Khtou",
                             "D654123",
-                            "dev",
+                            "Meknès",
                             Date.from(Instant.now()),
-                            "fsMks",
-                            Attestation.AttestationType.Stage));
+                            Date.from(Instant.now()),
+                            Attestation.Poste.Doyen,
+                            Attestation.Etablissement.FaculteSciences,
+                            Attestation.AttestationType.Stage
+                    ));
+            System.out.println("----------");
+            System.out.println(res1.getId());
+            System.out.println("----------");
         };
     }
 

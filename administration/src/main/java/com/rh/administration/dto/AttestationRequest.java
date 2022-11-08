@@ -10,10 +10,14 @@ import java.util.Date;
 @Data
 public class AttestationRequest {
     Long id;
+    Long idDemande;
     String nom;
     String cin;
-    String poste;
+    String ville;
     Date debutPoste;
-    String etablissement;
+    Date dateSignature;
+
+    Attestation.Poste poste;
+    Attestation.Etablissement etablissement;
     Attestation.AttestationType type;
 }
