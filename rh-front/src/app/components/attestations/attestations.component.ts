@@ -12,31 +12,21 @@ export class AttestationsComponent implements OnInit {
 
   attestations : AttestationResponse[] = [];
   message : string = '';
-  dataLength:number;
   
   @ViewChild(DashboardComponent) 
   dashboard!:DashboardComponent;
 
   constructor(private administrationService : AdministrationService) { 
-    this.dataLength = this.load();
+    
   }
 
 
   ngOnInit(): void {
     this.getAttestations();
   }
-
-  load(){  
-    const last = localStorage.getItem("lastDataLength");
-    let dl = parseInt(last ? last : "NaN");
-    if(!isFinite(dl)) {
-      dl  = dataLength;
-    }
-    return dl;
-  }
   getAttestations=()=> {
     this.administrationService.getAttestations().subscribe((response) => {
-      this.attestations = response
+      this.attestations = response;
       this.attestations.forEach(att=>{
         this.dashboard.setItems(this.attestationToRow(att));
       })
