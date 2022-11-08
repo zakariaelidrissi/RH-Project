@@ -1,12 +1,12 @@
 package com.example.absenceservice.service;
 
-import com.example.absenceservice.entities.Demande;
+import com.example.absenceservice.entities.DemandeAbsence;
 import com.example.absenceservice.entities.EmployeAbsence;
 import com.example.absenceservice.entities.StagiaireAbsence;
 import com.example.absenceservice.feign.EmployeRestClient;
 import com.example.absenceservice.feign.StagiaireRestClient;
 import com.example.absenceservice.model.*;
-import com.example.absenceservice.repositories.AbsenceRepository;
+import com.example.absenceservice.repositories.EmpAbsRepository;
 import com.example.absenceservice.repositories.DemandeRepository;
 import com.example.absenceservice.repositories.StgAbsRepository;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class AbsenceService {
 
     private EmployeRestClient employeRestClient;
     private StagiaireRestClient stagiaireRestClient;
-    private AbsenceRepository absenceRepository;
+    private EmpAbsRepository absenceRepository;
     private StgAbsRepository stgAbsRepository;
     private DemandeRepository demandeRepository;
 
@@ -57,8 +57,8 @@ public class AbsenceService {
         return listAbs;
     }
 
-    public List<EmployeAbsence> getAllAbsByDate(Date date) {
-        List<EmployeAbsence> listAbs = absenceRepository.findEmployeAbsenceByDateAbs(date);
+    public List<EmployeAbsence> getAllEmpAbsByDate(Date date) {
+        List<EmployeAbsence> listAbs = absenceRepository.findAllByDateAbs(date);
 
         listAbs.forEach(abs -> {
             abs.setEmploye(getEmployeById(abs.getEmployeId()));
@@ -89,8 +89,8 @@ public class AbsenceService {
         return abs;
     }
 
-    public List<Demande> getAllDemandes() {
-        List<Demande> listDm = demandeRepository.findAll();
+    public List<DemandeAbsence> getAllDemandes() {
+        List<DemandeAbsence> listDm = demandeRepository.findAll();
 
         listDm.forEach(dm -> {
             dm.setEmploye(getEmployeById(dm.getEmployeId()));
@@ -99,78 +99,83 @@ public class AbsenceService {
         return listDm;
     }
 
-    public Demande getDemandeById(Long id) {
-        Demande dm = demandeRepository.findDemandeById(id);
+    public DemandeAbsence getDemandeById(Long id) {
+        DemandeAbsence dm = demandeRepository.findDemandeById(id);
         dm.setEmploye(getEmployeById(dm.getEmployeId()));
         return dm;
     }
 
     // ************************* POST ************************
 
-    public void addEmpAbs(AbsenceRequest absReq){
+    public void addEmpAbs(EmpAbsRequest absReq){
         EmployeAbsence abs = new EmployeAbsence();
         abs.setDateAbs(absReq.getDateAbs());
         abs.setDuree(absReq.getDuree());
         abs.setNatureAbsence(absReq.getNatureAbsence());
         abs.setEmployeId(absReq.getEmployeId());
-        abs.setJustificatif(absReq.isJustificatif());
+        abs.setJustificatif(absReq.getJustificatif());
+
 
         absenceRepository.save(abs);
     }
 
-    public void addStgAbs(StagiaireRequest stgReq){
+    public void addStgAbs(StgAbsRequest stgReq){
         StagiaireAbsence abs = new StagiaireAbsence();
         abs.setDateAbs(stgReq.getDateAbs());
         abs.setNatureAbsence(stgReq.getNatureAbsence());
         abs.setDuree(stgReq.getDuree());
-        abs.setJustificatif(stgReq.isJustificatif());
+        abs.setJustificatif(stgReq.getJustificatif());
         abs.setStagiaireId(stgReq.getStagiaireId());
 
         stgAbsRepository.save(abs);
     }
 
     public void addDmAbs(DemandeRequest dmReq){
-        Demande dm = new Demande();
+        DemandeAbsence dm = new DemandeAbsence();
 
         dm.setNatureAbsence(dmReq.getNatureAbsence());
         dm.setEmployeId(dmReq.getEmployeId());
         dm.setDateDebut(dmReq.getDateDebut());
+        dm.setJustificatif(dmReq.getJustificatif());
         dm.setDateFin(dmReq.getDateFin());
+        dm.setStatut(dmReq.getStatut());
 
         demandeRepository.save(dm);
     }
 
     // ************************* PUT *************************
-    public void updateEmpAbs(AbsenceRequest absReq){
+    public void updateEmpAbs(EmpAbsRequest absReq){
         EmployeAbsence abs = getEmpAbsById(absReq.getId());
 
         abs.setDateAbs(absReq.getDateAbs());
         abs.setDuree(absReq.getDuree());
         abs.setNatureAbsence(absReq.getNatureAbsence());
         abs.setEmployeId(absReq.getEmployeId());
-        abs.setJustificatif(absReq.isJustificatif());
+        abs.setJustificatif(absReq.getJustificatif());
 
         absenceRepository.save(abs);
     }
 
-    public void updateStgAbs(StagiaireRequest stgReq){
+    public void updateStgAbs(StgAbsRequest stgReq){
         StagiaireAbsence abs = getStgAbsById(stgReq.getId());
         abs.setDateAbs(stgReq.getDateAbs());
         abs.setNatureAbsence(stgReq.getNatureAbsence());
         abs.setDuree(stgReq.getDuree());
-        abs.setJustificatif(stgReq.isJustificatif());
+        abs.setJustificatif(stgReq.getJustificatif());
         abs.setStagiaireId(stgReq.getStagiaireId());
 
         stgAbsRepository.save(abs);
     }
 
     public void updateDm(DemandeRequest dmReq){
-        Demande dm = getDemandeById(dmReq.getId());
+        DemandeAbsence dm = getDemandeById(dmReq.getId());
 
         dm.setNatureAbsence(dmReq.getNatureAbsence());
         dm.setEmployeId(dmReq.getEmployeId());
         dm.setDateDebut(dmReq.getDateDebut());
+        dm.setJustificatif(dmReq.getJustificatif());
         dm.setDateFin(dmReq.getDateFin());
+        dm.setStatut(dmReq.getStatut());
 
         demandeRepository.save(dm);
     }

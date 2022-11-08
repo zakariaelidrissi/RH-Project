@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class StagiaireRequest {
+public class StgAbsRequest {
     private Long id;
     private Date dateAbs;
     private NatureAbsence natureAbsence;
-    private boolean justificatif;
+    private String justificatif;
     private String duree;
     private Long stagiaireId;
 }

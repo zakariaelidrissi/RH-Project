@@ -8,10 +8,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-5 mb-2 mb-lg-0 text-uppercase">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/stages">Stages</a>
+                    <a class="nav-link">Stages</a>
+                    <!-- routerLink="/stages" -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>
@@ -23,114 +24,22 @@
         </div>
         <div class="d-flex">
             <div class="navbar-nav me-2">
-                <a href="#" class="nav-item nav-link text-uppercase btn btn-primary active" data-bs-toggle="modal"
-                    data-bs-target="#register" *ngIf="!logged">Register</a>
+                <a class="nav-item nav-link text-uppercase btn btn-primary active" 
+                    *ngIf="!kcService.kc.authenticated" (click)="register()">Register</a>
             </div>
             <div class="navbar-nav">
-                <a href="#" class="nav-item nav-link text-uppercase btn btn-primary active" data-bs-toggle="modal"
-                    data-bs-target="#login" *ngIf="!logged">Login</a>
+                <a class="nav-item nav-link text-uppercase btn btn-primary active" 
+                    *ngIf="!kcService.kc.authenticated" (click)="login()">Login</a>
             </div>
             <div class="navbar-nav me-2">
-                <a href="#" class="nav-item nav-link text-uppercase active" data-bs-toggle="modal"
-                    data-bs-target="#register" *ngIf="logged">{{loginUser.nom + ' ' + loginUser.prenom}}</a>
+                <a routerLink="/dash" class="nav-item nav-link text-uppercase active" *ngIf="kcService.kc.authenticated">
+                    {{kcService.kc.tokenParsed.name}}
+                </a>
             </div>
             <div class="navbar-nav">
-                <a href="#" class="nav-item nav-link text-uppercase btn btn-primary active" data-bs-toggle="modal"
-                    data-bs-target="#login" *ngIf="logged">LogOut</a>
+                <a class="nav-item nav-link text-uppercase btn btn-primary active"
+                    *ngIf="kcService.kc.authenticated" (click)="logOut()">LogOut</a>
             </div>
         </div>
     </div>
 </nav>
-
-<!-- Login Modal -->
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold mx-auto text-uppercase">Login</h5>                
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <input type="email" required placeholder="email" name="email" class="form-control">
-                        </div>                                                
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <input type="password" required placeholder="password" name="password" class="form-control">
-                        </div>
-                    </div>                
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Login</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Login Modal -->
-
-<!-- Register Modal -->
-<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold mx-auto text-uppercase">Register</h5>                
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1">Nom</label>
-                            <input type="text" required placeholder="nom" name="nom" class="form-control">
-                        </div> 
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1">Prenom</label>
-                            <input type="text" required placeholder="prenom" name="prenom" class="form-control">
-                        </div>                                                
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1">Telephone</label>
-                            <input type="text" required placeholder="Telephone" name="telephone" class="form-control">
-                        </div> 
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" required placeholder="email" name="email" class="form-control">
-                        </div>                                                
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1">Mot De Passe</label>
-                            <input type="password" required placeholder="Mot de passe" name="motDePasse" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="exampleInputEmail1">Confirmation Mot De Passe</label>
-                            <input type="password" required placeholder="Confirmation Mot de passe" name="confMotDePasse" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-2">
-                            <label for="exampleInputEmail1">Genre : </label>
-                        </div>
-                        <div class="col-md-2">
-                            <input type="radio" required name="genre" class="form-check-input me-1" value="Male">                            
-                            <label for="exampleInputEmail1">Male</label>
-                        </div>
-                        <div class="col-md-2">
-                            <input type="radio" required name="genre" class="form-check-input me-1" value="Female">
-                            <label for="exampleInputEmail1">Female</label>                            
-                        </div>
-                    </div>                
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Register</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Register Modal -->

@@ -33,6 +33,7 @@ public interface FormationService {
     //Module findModuleByName(String moduleName);
     //Collaborateur findCollaborateurByCin(String cin);
     List<Collaborateur> getCollaborateurs();
+    List<Coll> getColl();
     Collaborateur findCollaborateurById(Long id);
     Collaborateur findCollaborateurByEmployeId(Long userId);
     Employe getEmployeById(Long id);

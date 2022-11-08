@@ -17,19 +17,19 @@ public class EmployeController {
     EmployeService service;
 
     // ********************** POST ***************************************
-    @PostMapping(path = "/employe")
+    @PostMapping(path = "/employes")
     public EmployeResponse add(@RequestBody EmployeRequest req){
         return service.save(req);
     }
 
     // ********************** PUT ***************************************
-    @PutMapping(path = "/employe")
+    @PutMapping(path = "/employes")
     public EmployeResponse update(@RequestBody EmployeRequest req){
         return service.save(req);
     }
 
     // ********************** DELETE ***************************************
-    @DeleteMapping(path = "/employe/{id}")
+    @DeleteMapping(path = "/employes/{id}")
     public void delete(@PathVariable Long id){
         service.delete(id);
     }

@@ -3,70 +3,79 @@
 <!-- main -->
 <main class="mt-5 pt-3">
     <div class="container">
-        <div class="row mb-5 mt-3">
-            <div class="col-md-6 fw-bold fs-3">List Demande Absence</div>            
+        <div class="pagetitle row mt-2">
+            <div class="col-md-6">
+                <h1>List Demande Absence</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                      <li class="breadcrumb-item">Absence</li>
+                      <li class="breadcrumb-item active">Demande</li>
+                    </ol>
+                </nav>
+            </div>            
         </div>
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
-                    <button type="button" class="close float-end" data-bs-dismiss="alert">x</button>                    
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>                    
                 </div>
             </div>
             <div class="col-md-3"></div>
         </div>
+        <div class="row mb-2">          
+            <div class="col-md-9"></div>
+            <div class="col-md-3 text-end">
+                <form action="" method="post" class="d-flex">                            
+                    <div class="form-group d-flex">
+                        <input type="date" class="form-control date ms-5" name="searchByDate" 
+                            [(ngModel)]="searchByDate" (change)="onChangeDate()" required>
+                        <button class="btn btn-primary btn-sm ms-4" (click)="search()">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row mb-3">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header d-flex">
-                        <div class="col-md-6">Data Tables</div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3">
-                            <form action="" method="post" class="d-flex">                            
-                                <div class="form-group d-flex">
-                                    <input type="date" class="form-control ms-5" name="searchByDate" [(ngModel)]="searchByDate" required>
-                                    <button class="btn btn-primary" (click)="search()">Search</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <div class="card">                    
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="example" class="table table-striped data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Employee Name</th>
-                                        <th>Date Debut</th>
-                                        <th>Date Fin</th>
-                                        <th>Nature Of Absence</th>
-                                        <!-- <th>Justificatif</th> -->                                        
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let demande of demandes;let i = index">
-                                        <td>{{ demande.employe.nom }}</td>
-                                        <td>{{ demande.dateDebut }}</td>
-                                        <td>{{ demande.dateFin }}</td>
-                                        <td>{{ demande.natureAbsence }}</td>
-                                        <!-- <td>{{ demande.justificatif }}</td> -->
-                                        <td>
-                                            <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2"
-                                                    data-bs-toggle="modal" data-bs-target="#acceptAbsence">
-                                                    Accept
-                                                </button>
-                                                <button class="btn btn-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#refuseAbsence">
-                                                    Refuse
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom d'employe</th>
+                                    <th scope="col">Date Début</th>
+                                    <th scope="col">Date de fin</th>
+                                    <th scope="col">Nature d'absence</th>
+                                    <!-- <th>Justificatif</th> -->
+                                    <th scope="col">Statut</th>                                        
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let demande of demandes;let i = index">
+                                    <td>{{ demande.employe.nom }}</td>
+                                    <td>{{ demande.dateDebut }}</td>
+                                    <td>{{ demande.dateFin }}</td>
+                                    <td>{{ demande.natureAbsence }}</td>
+                                    <!-- <td>{{ demande.justificatif }}</td> -->
+                                    <td>{{demande.statut}}</td>
+                                    <td>
+                                        <div class="me-auto d-flex" *ngIf="demande.statut != 'accept' && demande.statut != 'refuse'">
+                                            <button class="btn btn-success me-2 btn-sm" (click)="updateDemande(demande, 'accept')"
+                                                data-bs-toggle="modal" data-bs-target="#acceptAbsence">
+                                                Accept
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" (click)="updateDemande(demande, 'refuse')"
+                                                data-bs-toggle="modal" data-bs-target="#refuseAbsence">
+                                                Refuse
+                                            </button>
+                                        </div>                                        
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

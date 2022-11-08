@@ -19,14 +19,17 @@ public class Formation {
     private String name;
     private String objectif;
     private String duree;
+
     @Temporal(TemporalType.DATE)
     private Date formationDate;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    @ToString.Exclude
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Collaborateur> collaborateurs = new HashSet<>();
+    private List<Collaborateur> collaborateurs = new ArrayList<>();
+
     @ManyToMany(mappedBy = "formation", fetch = FetchType.EAGER)
     private Set<Plan> plan = new HashSet<>();
+
     @OneToMany(mappedBy = "formation", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<Demande> demandes;

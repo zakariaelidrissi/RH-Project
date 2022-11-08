@@ -1,10 +1,14 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Collaborateur } from 'src/app/models/collaborateur';
 import { CollRequest } from 'src/app/models/collRequest';
 import { Employe } from 'src/app/models/employe';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { FormationService } from 'src/app/services/formation/formation.service';
+import { AddById } from 'src/app/models/addById';
 
 declare const $: any;
 
@@ -13,54 +17,60 @@ declare const $: any;
   templateUrl: './gestion-employer.component.html',
   styleUrls: ['./gestion-employer.component.css']
 })
-export class GestionEmployerComponent implements OnInit, AfterContentChecked {
+export class GestionEmployerComponent implements OnInit {
 
-  employes : Employe[] = [];
+  employes : Collaborateur[] = [];
   collRequest : CollRequest = new CollRequest();
   formations : FormationResponse[] = [];
   
   newEmploye : Employe = new Employe();
-  updateEmploye : Employe = new Employe();
 
   message : string = '';
-  deleteEmployeId : number = 0;
   index : number = 0;
   employeName : string = '';
+  employeId : number = 0;
+  case : string = 'add';
+
+  dropdownListFormation : FormationResponse[] = [];
+  selectedItems : any = [];
+  selectedItem : number = 0;
+  dropdownFormationSettings:IDropdownSettings = {};
+
 
   constructor(private employerService : GestionEmployeService, 
               private router: Router,
-              private collService : CollService) { }
+              private collService : CollService,
+              private formationService : FormationService) { }
 
   ngOnInit(): void {    
 
     this.getAllEmployer();
   }
 
-  ngAfterContentChecked(): void {
-    this.getAllEmployer();
-  }
-
   getAllEmployer() : void{
-    this.employerService.getAllEmploye().subscribe((response: Employe[]) => {
+    this.collService.getCollaborateur().subscribe((response: Collaborateur[]) => {
       this.employes = response;
-      console.log(response);
     }, err => {
       console.log(err);
     });
   }
 
-  addEmploye(){
+  onAdd() {
+    this.case = 'add';
+  }
+
+  addEmploye(){    
     this.employerService.addEmploye(this.newEmploye).subscribe((response)=>{
       this.message = "This Employer well be added successfuly!";
       $('#addEmployer').modal("hide");
 
       this.employerService.getEmployeByCin(response.cin).subscribe((response) => {
         this.collRequest.employeId = response.id;
-
+        
         this.collService.addCollaborateur(this.collRequest).subscribe((response) => {
-          // this.router.navigate(['/gestion-employer']);
-          // this.getAllEmployer();
-          this.newEmploye = new Employe();
+          this.getAllEmployer();
+          this.cleanData();
+          this.router.navigate(['/gestion-employer']);
         }, (error) => {
           console.log(error);
         });
@@ -75,13 +85,15 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
   }
 
   editEmploye(empolye : Employe){
-    this.updateEmploye = empolye;
+    this.newEmploye = empolye;
+    this.case = 'update';
   }
 
   updateEmployes(){
-    this.employerService.updateEmploye(this.updateEmploye).subscribe((response)=>{
+    this.employerService.updateEmploye(this.newEmploye).subscribe((response)=>{
       this.message = "This Employer well be updated successfuly!";
-      $('#updateEmployer').modal("hide");
+      $('#addEmployer').modal("hide");
+      this.cleanData();
       this.router.navigate(['/gestion-employer']);
     }, err => {
       console.log(err);
@@ -89,7 +101,7 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
   }
 
   confirmDeleteEmploye(employeID : number, i : number){
-    this.deleteEmployeId = employeID;
+    this.employeId = employeID;
     this.index = i;    
   }
 
@@ -108,13 +120,72 @@ export class GestionEmployerComponent implements OnInit, AfterContentChecked {
     })
   }
 
-  showCollFormation(employeId : number, employeName : string){
-    this.collService.getCollById(employeId).subscribe((response) => {
-      this.formations = response.formations;
-      this.employeName = employeName;
+  showCollFormation(formations : FormationResponse[], employeId : number, employeName : string){    
+    this.formations = formations;
+    this.employeId = employeId;
+    this.employeName = employeName;
+  }
+
+  cleanData() {
+    this.newEmploye.cin = '';
+    this.newEmploye.debutAmbauche = new Date();
+    this.newEmploye.departement = '';
+    this.newEmploye.email = '';
+    this.newEmploye.naissance = new Date();
+    this.newEmploye.nom = '';
+    this.newEmploye.poste = '';    
+  }
+
+  getFormation() : void {
+    this.formationService.getFormations().subscribe((response : FormationResponse[]) => {
+      this.dropdownListFormation = response;
+      console.log(response);
     }, (error) => {
       console.log(error);
     });
   }
+
+  add(collId : number) {
+    this.selectedItem = collId;
+  }
+
+  dropDownFormation(collId : number, formation : FormationResponse[]){
+    
+    this.getFormation();
+    this.selectedItem = collId;    
+
+    this.selectedItems = [];
+
+    this.dropdownFormationSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
+  }
+
+  addCollToFormaton() {    
+    for (let index = 0; index < this.selectedItems.length; index++) {
+      const formationID = this.selectedItems[index];
+      let addById : AddById = new AddById();
+      addById.id1 = this.selectedItem;
+      addById.id2 = formationID.id;
+      this.formationService.addCollToFormation(addById).subscribe((response) => {
+        this.message = "Successfuly!";
+        $('#addCollToFormation').modal("hide");
+      }, (error) => {
+        console.log(error);
+      });      
+    }
+  }
+
+  cancelBtn1() {
+    this.cleanData();
+    this.getAllEmployer();
+  }
+
 
 }

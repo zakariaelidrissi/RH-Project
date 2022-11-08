@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbsenceStgRequest } from 'src/app/models/absenceStgRequest';
 import { AbsenceStgResponse } from 'src/app/models/absenceStgResponse';
@@ -13,13 +13,18 @@ declare const $ : any;
   templateUrl: './stagiaire.component.html',
   styleUrls: ['./stagiaire.component.css']
 })
-export class StagiaireComponent implements OnInit, AfterContentChecked {
+export class StagiaireComponent implements OnInit {
 
   stagiaires : Stagiaire[] = [];
   absences : AbsenceStgResponse[] = [];
   newAbs : AbsenceStgRequest = new AbsenceStgRequest();
+  updAbs : AbsenceStgRequest = new AbsenceStgRequest();
   abs : number[] = [];
+  stgName : string = '';
+  absenceId : number = 0;
+  index : number = 0;
   searchByDate : Date = new Date();
+  file : any;
   message : string = '';
 
 
@@ -27,21 +32,13 @@ export class StagiaireComponent implements OnInit, AfterContentChecked {
               private absService : AbsenceService,
               private router : Router) { }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      $('.absence').DataTable( {
-        pagingType : 'simple_numbers',
-        pageLength : 5,
-        processing : true,
-        lengthMenu : [5, 10, 25],
-        order : [[1, 'desc']]
-      });
-    }, 1);
+  ngOnInit(): void {    
     this.getAllEmployee();
+    this.getAllAbs();
   }
-
-  ngAfterContentChecked(): void {
-    this.getAllAbs();    
+  
+  onChangeDate() {
+    this.getAllAbs();
   }
 
   getAllEmployee(){
@@ -68,19 +65,29 @@ export class StagiaireComponent implements OnInit, AfterContentChecked {
     });
   }
 
+  getAbs(date : Date){
+    var abs : AbsenceStgResponse[] = [];
+    for (var i=0; i<this.absences.length; i++) {
+      if (this.absences[i].dateAbs === date){
+        abs.push(this.absences[i]);
+      }
+    }
+    this.absences = abs;
+  }
+
   addAbsence() {    
 
     for (let index = 0; index < this.abs.length; index++) {
       this.newAbs.stagiaireId = this.abs[index];      
       this.newAbs.dateAbs = new Date();
-      this.newAbs.duree = '-';
-      this.newAbs.justificatif = false;
+      this.newAbs.duree = '1';
+      this.newAbs.justificatif = '';
       this.newAbs.natureAbsence = 'NONJUSTIFIEE';
       
       this.absService.addStgAbsence(this.newAbs).subscribe((response) => {
         this.message = "These Absences well be added successfuly!";
         $('#addAbsence').modal('hide');
-        // this.getAllAbs();
+        this.getAllAbs();
       }, (error) => {
         console.log(error);
       });
@@ -104,6 +111,48 @@ export class StagiaireComponent implements OnInit, AfterContentChecked {
       console.log(this.abs);
     }    
 
+  }
+
+  editAbs(name : string, absence : AbsenceStgRequest) {
+    this.updAbs = absence;
+    this.stgName = name;
+  }
+
+  updateAbsence() {
+    
+
+    this.absService.updateStgAbs(this.updAbs).subscribe((response)=>{
+      this.message = "This Absence well be updated successfuly!";
+      $('#updateAbsence').modal("hide");
+      this.getAllAbs();
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  getFile(event : any) {
+    this.file = event.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(this.file);
+    reader.onload = (e:any) => {
+
+    }
+    
+  }
+
+  confirmDeleteAbs(absID : number, index : number) {
+    this.absenceId = absID;
+    this.index = index;
+  }
+
+  deleteAbsence(absenceId : number, index : number) {
+    this.absService.deleteStgAbs(absenceId).subscribe((response)=>{
+      this.message = "This Absence well be deleted successfuly!";
+      this.absences.splice(index, 1);
+      $('#deleteAbsence').modal("hide");
+    }, err => {
+      console.log(err);
+    });
   }
 
   search() {

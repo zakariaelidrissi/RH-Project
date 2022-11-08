@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Stagiaire } from 'src/app/models/stagiaire';
 import { StagiaireService } from 'src/app/services/gestion-stagiaire/stagiaire.service';
@@ -10,7 +10,7 @@ declare const $ : any;
   templateUrl: './gestion-stagiaire.component.html',
   styleUrls: ['./gestion-stagiaire.component.css']
 })
-export class GestionStagiaireComponent implements OnInit, AfterContentChecked {
+export class GestionStagiaireComponent implements OnInit {
 
   stagiaires : Stagiaire[] = [];
   newStagiaire : Stagiaire = new Stagiaire();
@@ -26,10 +26,6 @@ export class GestionStagiaireComponent implements OnInit, AfterContentChecked {
     this.getAllStagiare();
   }
 
-  ngAfterContentChecked(): void {
-    this.getAllStagiare();
-  }
-
   getAllStagiare() {
     this.stagiaireService.getStagiaire().subscribe((response) => {
       this.stagiaires = response;
@@ -41,7 +37,8 @@ export class GestionStagiaireComponent implements OnInit, AfterContentChecked {
   addStagiaire() {
     this.stagiaireService.addStagiaire(this.newStagiaire).subscribe((response) => {
       this.message = 'This Stagiaire well be added successfuly!';
-      $('#addStagiaire').modal("hide");      
+      $('#addStagiaire').modal("hide");
+      this.getAllStagiare();
     }, (error) => {
       console.log(error);
     });
@@ -55,6 +52,7 @@ export class GestionStagiaireComponent implements OnInit, AfterContentChecked {
     this.stagiaireService.updateStagiaire(this.updStagiaire).subscribe((response) => {
       this.message = 'This Stagiaire well be updated Successfuly!';
       $('#updateStagiaire').modal('hide');
+      this.getAllStagiare();
     }, (error) => {
       console.log(error);
     });
@@ -69,6 +67,7 @@ export class GestionStagiaireComponent implements OnInit, AfterContentChecked {
     this.stagiaireService.deleteStagiaire(stagiaireId).subscribe((response) => {
       this.message = 'This Stagiaire well be deleted Successfuly!';
       $('#deleteStagiaire').modal('hide');
+      this.stagiaires.splice(this.index, 1);
     }, (error) => {
       console.log(error);
     });
