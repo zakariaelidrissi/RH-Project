@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
 import { EmployeComponent } from './components/absence/employe/employe.component';
 import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
+import { AttestationsComponent } from './components/attestations/attestations.component';
 import { DashBodyComponent } from './components/dash-body/dash-body.component';
 import { ErrorComponent } from './components/error/error.component';
 import { FormationsComponent } from './components/formations/formations.component';
@@ -15,6 +16,7 @@ import { StagesComponent } from './components/stages/stages.component';
 const routes: Routes = [
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: "home", component: HomeComponent},
+  {path: "attestations", component: AttestationsComponent},
   {path: "dash", component: DashBodyComponent},
   {path: "formations", component: FormationsComponent},
   {path: "plans", component: PlansComponent},

@@ -47,6 +47,7 @@ public class Attestation {
     }
     public enum Poste{
         Doyen("Doyen");
+        //Dev("dev");
         private final String name;
         private Poste(String name) {
             this.name = name;

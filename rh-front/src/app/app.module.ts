@@ -28,6 +28,7 @@ import { DatePipe } from '@angular/common';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { LoginComponent } from './components/login/login.component';
 import { StagesComponent } from './components/stages/stages.component';
+import { AttestationsComponent } from './components/attestations/attestations.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { StagesComponent } from './components/stages/stages.component';
     StagiaireComponent,
     GestionStagiaireComponent,
     DemandeAbsenceComponent,    
-    EmployeeComponent, LoginComponent, StagesComponent,
+    EmployeeComponent, LoginComponent, StagesComponent, AttestationsComponent,
   ],
   imports: [
     BrowserModule,
