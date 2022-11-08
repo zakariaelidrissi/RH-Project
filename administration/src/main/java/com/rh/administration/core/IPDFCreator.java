@@ -21,6 +21,8 @@ import java.net.MalformedURLException;
 import java.util.Map;
 
 public interface IPDFCreator<T> {
+    String getTitre();
+
     ByteArrayInputStream createPDF(T t,User user) throws IOException;
     void buildPage(T t,User user,Document doc) throws IOException;
 

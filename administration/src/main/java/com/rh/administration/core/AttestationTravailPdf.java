@@ -18,11 +18,16 @@ import java.time.Instant;
 import java.util.*;
 
 public class AttestationTravailPdf implements IPDFCreator<Attestation> {
+    private static AttestationTravailPdf instance;
+    public static AttestationTravailPdf getInstance() throws IOException {
+        if(instance == null) instance = new AttestationTravailPdf();
+        return instance;
+    }
+
     private final PDFUtils pdfUtils;
 
     private final float normalTextSize = 18;
     private final float normalBoldTextSize = 22;
-    private final String titre = "Attestation de travail";
     private final String msg = "Nous soussignés _ au capital de _, attestons par la présente que _:";
     private final String text1 = "Fait partie de notre personnel _ Depuis le _ en qualité de _.";
     private final String text2 = "Cette attestation est délivrée à l'intéresse sur sa demande pour servir et valoir ce que de droit.";
@@ -31,15 +36,14 @@ public class AttestationTravailPdf implements IPDFCreator<Attestation> {
     final String paragraphBoldFont = FontConstants.COURIER;
     final String titreFont = FontConstants.COURIER;
 
-    private static AttestationTravailPdf instance;
 
-    private AttestationTravailPdf() throws IOException {
+    private AttestationTravailPdf() {
         pdfUtils = new PDFUtils(font,paragraphFont,paragraphBoldFont,normalTextSize,normalBoldTextSize);
     }
-    public static AttestationTravailPdf getInstance() throws IOException {
-        if(instance == null)
-            instance = new AttestationTravailPdf();
-        return instance;
+
+    @Override
+    public String getTitre() {
+        return "Attestation de travail";
     }
 
     @Override
@@ -71,7 +75,7 @@ public class AttestationTravailPdf implements IPDFCreator<Attestation> {
         Table table = new Table(1);
         Image logo = new Image(ImageDataFactory.create("src/main/resources/download.png"));
 
-        buildSimplePageHeader(table,logo,titre,titreFont);
+        buildSimplePageHeader(table,logo,getTitre(),titreFont);
         table
                 .addCell(pdfUtils.textToParagraph(msg,"_","___","____",sexe))
                 .addCell(blackSpace(15))
