@@ -21,14 +21,13 @@ export class PlansComponent implements OnInit {
   plans: PlanResponse[] = [];
   Collaborateurs : Collaborateur[] = [];
   newPlan : PlanRequest = new PlanRequest();
-  updPlan : PlanRequest = new PlanRequest();
   formations : FormationResponse[] = [];
   showFormation : FormationResponse[] = [];
   
-  deletePlanId : number = 0;
   formationId : number = 0;
   index : number = 0;
   planId : number = 0;
+  case : string = 'add';
 
   message : string = '';
 
@@ -73,43 +72,42 @@ export class PlansComponent implements OnInit {
     });
   }
 
+  onAdd() {
+    this.case = 'add';
+  }
+
   savePlan() {        
     this.formationService.addPlan(this.newPlan).subscribe((response)=>{
       this.message = "This Plan well be added successfuly!";
       $('#addPlan').modal("hide");
       this.getPlans();
+      this.cleanData();
     }, (err) => {
       console.log(err);
     });    
   }
 
-  editPlan(plan : PlanResponse){    
-    // this.formationService.getPlanById(planId).subscribe((response)=>{
-    //   this.updPlan.id = response.id;
-    //   this.updPlan.name = response.name;
-    //   this.updPlan.planDate = response.planDate;
-    //   this.updPlan.responsableID = response.responsable.id;
-    // }, (err) => {
-    //   console.log(err);
-    // })
-    this.updPlan.id = plan.id;
-    this.updPlan.name = plan.name;
-    this.updPlan.planDate = plan.planDate;
-    this.updPlan.responsableID = plan.responsable.id;
+  editPlan(plan : PlanResponse){
+    this.newPlan.id = plan.id;
+    this.newPlan.name = plan.name;
+    this.newPlan.planDate = plan.planDate;
+    this.newPlan.responsableID = plan.responsable.id;
+    this.case = 'update';
   }
 
   updatePlan() {
-    this.formationService.updatePlan(this.updPlan).subscribe((response)=>{
+    this.formationService.updatePlan(this.newPlan).subscribe((response)=>{
       this.message = "This Plan well be updated successfuly!";
-      $('#updatePlan').modal("hide");
+      $('#addPlan').modal("hide");
       this.getPlans();
+      this.cleanData();
     }, (err) => {
       console.log(err);
     });
   }
 
   confirmDeletePlan(planID : number, i : number){
-    this.deletePlanId = planID;
+    this.planId = planID;
     this.index = i;    
   }
 
@@ -177,13 +175,25 @@ export class PlansComponent implements OnInit {
   }
 
   deleteFormatonFromPlan(formationID : number) {        
-    this.formationService.deleteFormationFromPlan(formationID, this.planId).subscribe((response) => {
-      this.message = "Successfuly!";
+    this.formationService.deleteFormationFromPlan(formationID, this.planId).subscribe((response) => {      
       this.showFormation.splice(this.index, 1);
       // $('#addFormationToPlan').modal("hide");
     }, (error) => {
       console.log(error);
     });
+  }
+
+  cleanData() {
+    this.newPlan.name = '';
+    this.newPlan.id = 0;
+    this.newPlan.planDate = '';
+    this.newPlan.responsableID = 0;
+  }
+
+
+  cancelBtn1() {
+    this.cleanData();
+    this.getPlans();
   }
 
 }

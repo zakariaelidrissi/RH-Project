@@ -173,6 +173,17 @@ public class FormationServiceImpl implements FormationService {
 
         return col;
     }
+    @Override
+    public List<Coll> getColl() {
+        List<Collaborateur> col = collaborateurRepository.findAll();
+        List<Coll> coll = new ArrayList<>();
+        col.forEach(c->{
+            c.setEmploye(employeRestClient.getEmployeById(c.getEmpolyeID()));
+            coll.add(new Coll(c.getId(), c.getEmploye().getNom()));
+        });
+
+        return coll;
+    }
 
     @Override
     public Collaborateur findCollaborateurById(Long id) {

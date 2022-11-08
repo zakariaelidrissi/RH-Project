@@ -24,13 +24,12 @@ export class GestionEmployerComponent implements OnInit {
   formations : FormationResponse[] = [];
   
   newEmploye : Employe = new Employe();
-  updateEmploye : Employe = new Employe();
 
   message : string = '';
-  deleteEmployeId : number = 0;
   index : number = 0;
   employeName : string = '';
   employeId : number = 0;
+  case : string = 'add';
 
   dropdownListFormation : FormationResponse[] = [];
   selectedItems : any = [];
@@ -56,14 +55,18 @@ export class GestionEmployerComponent implements OnInit {
     });
   }
 
-  addEmploye(){
+  onAdd() {
+    this.case = 'add';
+  }
+
+  addEmploye(){    
     this.employerService.addEmploye(this.newEmploye).subscribe((response)=>{
       this.message = "This Employer well be added successfuly!";
       $('#addEmployer').modal("hide");
 
       this.employerService.getEmployeByCin(response.cin).subscribe((response) => {
         this.collRequest.employeId = response.id;
-
+        
         this.collService.addCollaborateur(this.collRequest).subscribe((response) => {
           this.getAllEmployer();
           this.cleanData();
@@ -82,13 +85,15 @@ export class GestionEmployerComponent implements OnInit {
   }
 
   editEmploye(empolye : Employe){
-    this.updateEmploye = empolye;
+    this.newEmploye = empolye;
+    this.case = 'update';
   }
 
   updateEmployes(){
-    this.employerService.updateEmploye(this.updateEmploye).subscribe((response)=>{
+    this.employerService.updateEmploye(this.newEmploye).subscribe((response)=>{
       this.message = "This Employer well be updated successfuly!";
-      $('#updateEmployer').modal("hide");
+      $('#addEmployer').modal("hide");
+      this.cleanData();
       this.router.navigate(['/gestion-employer']);
     }, err => {
       console.log(err);
@@ -96,7 +101,7 @@ export class GestionEmployerComponent implements OnInit {
   }
 
   confirmDeleteEmploye(employeID : number, i : number){
-    this.deleteEmployeId = employeID;
+    this.employeId = employeID;
     this.index = i;    
   }
 
@@ -115,13 +120,7 @@ export class GestionEmployerComponent implements OnInit {
     })
   }
 
-  showCollFormation(formations : FormationResponse[], employeId : number, employeName : string){
-    // this.collService.getCollById(employeId).subscribe((response) => {
-    //   this.formations = response.formations;
-    //   this.employeName = employeName;
-    // }, (error) => {
-    //   console.log(error);
-    // });
+  showCollFormation(formations : FormationResponse[], employeId : number, employeName : string){    
     this.formations = formations;
     this.employeId = employeId;
     this.employeName = employeName;
@@ -182,5 +181,11 @@ export class GestionEmployerComponent implements OnInit {
       });      
     }
   }
+
+  cancelBtn1() {
+    this.cleanData();
+    this.getAllEmployer();
+  }
+
 
 }

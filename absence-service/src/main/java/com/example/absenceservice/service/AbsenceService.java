@@ -138,6 +138,7 @@ public class AbsenceService {
         dm.setDateDebut(dmReq.getDateDebut());
         dm.setJustificatif(dmReq.getJustificatif());
         dm.setDateFin(dmReq.getDateFin());
+        dm.setStatut(dmReq.getStatut());
 
         demandeRepository.save(dm);
     }
@@ -174,6 +175,7 @@ public class AbsenceService {
         dm.setDateDebut(dmReq.getDateDebut());
         dm.setJustificatif(dmReq.getJustificatif());
         dm.setDateFin(dmReq.getDateFin());
+        dm.setStatut(dmReq.getStatut());
 
         demandeRepository.save(dm);
     }

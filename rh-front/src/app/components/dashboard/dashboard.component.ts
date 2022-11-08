@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common'
 import { KeycloakSecurityService } from 'src/app/services/keycloak-security/keycloak-security.service';
 declare const $: any;
 
@@ -10,7 +11,8 @@ declare const $: any;
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(public kcService: KeycloakSecurityService, private router: Router) { }
+  constructor(@Inject(DOCUMENT) private document: Document, 
+              public kcService: KeycloakSecurityService, private router: Router) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -32,6 +34,17 @@ export class DashboardComponent implements OnInit {
     this.kcService.kc.logout();
     console.log('logOut...');
     this.router.navigate(['/home']);
+  }
+
+  sidebarToggle()
+  {
+    //toggle sidebar function
+    this.document.body.classList.toggle('toggle-sidebar');
+  }
+
+  active(id:string){
+    // document.querySelector("#sidebar a.nav-link:not(.collapsed)")?.classList.add('collapsed');
+    // document.querySelector(id)?.classList.remove('collapsed');
   }
 
 }

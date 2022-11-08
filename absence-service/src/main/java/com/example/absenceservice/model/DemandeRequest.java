@@ -13,5 +13,6 @@ public class DemandeRequest {
     private Date dateFin;
     private NatureAbsence natureAbsence;
     private String justificatif;
+    private String statut;
     private Long employeId;
 }

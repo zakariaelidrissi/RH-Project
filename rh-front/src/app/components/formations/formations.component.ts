@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Collaborateur } from 'src/app/models/collaborateur';
-import { Employe } from 'src/app/models/employe';
 import { FormationRequest } from 'src/app/models/formationRequest';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { PlanResponse } from 'src/app/models/planResponse';
 import { FormationService } from 'src/app/services/formation/formation.service';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { CollService } from 'src/app/services/collaborateur/coll.service';
+import { AddById } from 'src/app/models/addById';
 
 declare const $: any;
 
@@ -18,18 +20,22 @@ export class FormationsComponent implements OnInit {
   
   formations : FormationResponse[] = [];
   newFormation : FormationRequest = new FormationRequest();
-  updFormation : FormationRequest = new FormationRequest();
-  deleteFormationId : number = 0;
   plans : PlanResponse[] = [];
   employes : Collaborateur[] = [];
   index : number = 0;
   formationID : number = 0;
   employeID : number = 0;
+  case : string = 'add';
 
   message : string = '';
-  dr : string = 'Day(s)';
 
-  constructor(private formationService: FormationService, private router: Router) { }
+  dropdownListColl : any = [];
+  // listColl : any = [];
+  selectedItems : any = [];
+  selectedItem : number = 0;
+  dropdownCollSettings:IDropdownSettings = {};
+
+  constructor(private formationService: FormationService, private router: Router, private collService : CollService) { }
 
   ngOnInit(): void {    
 
@@ -43,13 +49,16 @@ export class FormationsComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+  }  
+
+  onAdd() {
+    this.case = 'add';
   }
 
-  saveFormation() {
-    this.newFormation.duree += ' ' + this.dr;
-    console.log(this.newFormation);      
+  saveFormation() {   
+    this.case = 'add';     
     this.formationService.addFormation(this.newFormation).subscribe((response)=>{
-      this.message = "This Formation well be added successfuly!";
+      this.message = "Cette information a été ajoutée avec succès!";
       console.log(response);
       $('#addFormation').modal("hide");
       this.getFormations();
@@ -60,21 +69,23 @@ export class FormationsComponent implements OnInit {
   }
 
   editFormation(formation : FormationResponse){
-    this.updFormation = formation;
+    this.newFormation = formation;
+    this.case = 'update';
   }  
 
   updateFormation() {
-    this.formationService.updateFormation(this.updFormation).subscribe((response)=>{
+    this.formationService.updateFormation(this.newFormation).subscribe((response)=>{
       this.message = "This Formation well be updated successfuly!";
-      $('#updateFormation').modal("hide");
+      $('#addFormation').modal("hide");
       this.getFormations();
+      this.cleanData();
     }, err => {
       console.log(err);
     });
   }
 
-  confirmDeleteFormation(formationID : number, i : number){
-    this.deleteFormationId = formationID;
+  confirmDeleteFormation(formationId : number, i : number){
+    this.formationID = formationId;
     this.index = i;    
   }
 
@@ -121,6 +132,63 @@ export class FormationsComponent implements OnInit {
     this.newFormation.id = 0;
     this.newFormation.objectif = '';
     this.newFormation.formationDate = new Date();
+  }
+
+  getColl(){
+    this.collService.getColl().subscribe((response) => {      
+      this.dropdownListColl = response;            
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  dropDownFormation(formationId : number){
+    
+    this.getColl();
+    this.selectedItem = formationId;   
+
+    this.selectedItems = [];
+
+    this.dropdownCollSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: "name",
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
+  }
+
+  addCollToFormaton() {    
+    for (let index = 0; index < this.selectedItems.length; index++) {
+      const collId = this.selectedItems[index];
+      let addById : AddById = new AddById();
+      addById.id1 = collId.id;
+      addById.id2 = this.selectedItem;
+      this.formationService.addCollToFormation(addById).subscribe((response) => {
+        this.message = "Successfuly!";
+        $('#addCollToFormation').modal("hide");
+      }, (error) => {
+        console.log(error);
+      });      
+    }
+  }
+
+  addCollToForm() {    
+    console.log('formation id : ' + this.selectedItem);
+    for (let index = 0; index < this.selectedItems.length; index++) {
+      const collId = this.selectedItems[index];
+      let addById : AddById = new AddById();
+      addById.id1 = collId.id;
+      addById.id2 = this.selectedItem;
+      console.log(addById);     
+    }
+  }
+
+  cancelBtn1() {
+    this.cleanData();
+    this.getFormations();
   }
 
 }

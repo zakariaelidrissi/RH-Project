@@ -9,13 +9,18 @@ import { CollRequest } from 'src/app/models/collRequest';
 })
 export class CollService {
 
-  // url : string = "http://localhost:8083/";
-  url : string = "http://localhost:8888/FORMATION-SERVICE/collaborateurs";
+  url : string = "http://localhost:8085/collaborateurs";
+  url2 : string = "http://localhost:8085/coll";
+  // url : string = "http://localhost:8888/FORMATION-SERVICE/collaborateurs";
 
   constructor(private httpClient : HttpClient) { }
 
   getCollaborateur() : Observable<Collaborateur[]>{
     return this.httpClient.get<Collaborateur[]>(this.url);
+  }
+
+  getColl() : Observable<any[]> {
+    return this.httpClient.get<any[]>(this.url2);
   }
 
   addCollaborateur(newColl : CollRequest ) : Observable<CollRequest> {

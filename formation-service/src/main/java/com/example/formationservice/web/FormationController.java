@@ -55,6 +55,11 @@ public class FormationController {
         return formationService.getCollaborateurs();
     }
 
+    @GetMapping(path = "/coll")
+    public List<Coll> getColl() {
+        return formationService.getColl();
+    }
+
     /*@GetMapping("/collaborateurs/cin/{cin}")
     public Collaborateur getCollaborateur(@PathVariable String cin){
         Collaborateur col = formationService.findCollaborateurByCin(cin);

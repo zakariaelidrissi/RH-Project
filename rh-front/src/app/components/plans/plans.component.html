@@ -3,24 +3,34 @@
 <!-- main -->
 <main class="mt-5 pt-3">
     <div class="container">
-        <div class="row mb-5 mt-3">
-            <div class="col-md-6 fw-bold fs-3">La listes des plans</div>
+        <div class="pagetitle row mt-2">
+            <div class="col-md-6">                
+                <h1>Liste des plans</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                      <li class="breadcrumb-item active">Plans</li>
+                    </ol>
+                </nav>
+            </div>
             <!-- <div class="col-md-1"></div> -->
-            <div class="col-md-6 d-flex flex-row-reverse">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlan">
-                    Add Plan
-                </button> 
-                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addFormationToPlan">
-                    Add Formation To Plan
+            <div class="col-md-6 text-end">
+                <button type="button" class="btn btn-primary me-2 btn-sm p-1 fw-bold" data-bs-toggle="modal" data-bs-target="#addFormationToPlan">
+                    Ajouter formation au plan
                 </button>                               
+                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold" (click)="onAdd()"
+                    data-bs-toggle="modal" data-bs-target="#addPlan">
+                    Ajouter Plan
+                </button> 
             </div>            
         </div>
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
-                    <button type="button" class="close float-end" data-bs-dismiss="alert">x</button>                    
+                    <!-- <button type="button" class="close float-end" data-bs-dismiss="alert">x</button> -->
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>                    
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -28,45 +38,40 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header fw-bold">
-                        Data Tables
-                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="example" class="table table-striped data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Plan Name</th>
-                                        <th>Plan Date</th>
-                                        <th>responsable Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let plan of plans;let i = index">
-                                        <td>{{ plan.name }}</td>
-                                        <td>{{ plan.planDate }}</td>
-                                        <td>{{ plan.responsable.employe.nom }}</td>                                        
-                                        <td>
-                                            <div class="me-auto d-flex">
-                                                <button class="btn btn-warning me-2" (click)="editPlan(plan)"
-                                                    data-bs-toggle="modal" data-bs-target="#updatePlan">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
-                                                <button class="btn btn-success me-2" (click)="show(plan.id)"
-                                                    data-bs-target="#showFormations" data-bs-toggle="modal">
-                                                    <i class="bi bi-eye-fill"></i>
-                                                </button>
-                                                <button class="btn btn-danger" (click)="confirmDeletePlan(plan.id, i)"
-                                                    data-bs-toggle="modal" data-bs-target="#deletePlan">
-                                                    <i class="bi bi-trash3-fill"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>                                    
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom de plan</th>
+                                    <th scope="col">Date de plan</th>
+                                    <th scope="col">Responsable</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let plan of plans;let i = index">
+                                    <td>{{ plan.name }}</td>
+                                    <td>{{ plan.planDate }}</td>
+                                    <td>{{ plan.responsable.employe.nom }}</td>                                        
+                                    <td>
+                                        <div class="me-auto d-flex">
+                                            <button class="btn btn-warning me-2 btn-sm" (click)="editPlan(plan)"
+                                                data-bs-toggle="modal" data-bs-target="#addPlan">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button class="btn btn-success me-2 btn-sm" (click)="show(plan.id)"
+                                                data-bs-target="#showFormations" data-bs-toggle="modal">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" (click)="confirmDeletePlan(plan.id, i)"
+                                                data-bs-toggle="modal" data-bs-target="#deletePlan">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>                                    
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -75,30 +80,27 @@
 </main>
 <!-- main -->
 
-<!-- ******************************* POST ************************************ -->
-
 <!-- Add Plan Modal -->
 <div class="modal fade" id="addPlan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add Plan</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
+                <h5 class="modal-title fw-bold" *ngIf="case == 'add'">Ajouter plan</h5>
+                <h5 class="modal-title fw-bold" *ngIf="case == 'update'">Modifier plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelBtn1()"></button>
             </div>
             <div class="modal-body">
                 <form method="post">
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Plan Name</label>
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom de plan</label>
                             <input type="text" required placeholder="Plan Name" name="name" class="form-control"
                                 [(ngModel)]="newPlan.name">
                         </div>                                                
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Plan Date</label>
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de plan</label>
                             <input type="date" required placeholder="Date" name="planDate" class="form-control"
                                 [(ngModel)]="newPlan.planDate">
                         </div>
@@ -108,7 +110,7 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Responsable</label>
                             <select class="form-select" title="Select one responsable" aria-label="Default select example"
                             name="responsableID" [(ngModel)]="newPlan.responsableID">
-                                <option selected>Select responsable</option>
+                                <option value="">Choisir Responsable</option>                                
                                 <option *ngFor="let coll of Collaborateurs" value="{{coll.id}}">{{coll.employe.nom + ' | ' + coll.employe.cin}} </option>                                
                               </select>
                         </div>
@@ -116,8 +118,10 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="savePlan()">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" *ngIf="case == 'add'">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="savePlan()" *ngIf="case == 'add'">Ajouter</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelBtn1()" *ngIf="case == 'update'">Fermer</button>
+                <button type="button" class="btn btn-warning" (click)="updatePlan()" *ngIf="case == 'update'">Modifier</button>
             </div>
         </div>
     </div>
@@ -129,20 +133,18 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add Formation(s) To Plan</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
+                <h5 class="modal-title fw-bold">Ajouter formation au plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post">                    
 
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Select Plan</label>
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Choisir un plan</label>
                             <select class="form-select" title="Select one Plan" aria-label="Default select example"
                                 name="responsableID" [(ngModel)]="selectedItem">
-                                <option selected>Select Plan</option>
+                                <option selected>Choisir un plan</option>
                                 <option *ngFor="let plan of plans" value="{{plan.id}}">{{plan.name }} </option>                                
                             </select>
                         </div>
@@ -150,7 +152,7 @@
                                                            
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Select Formation</label>
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">choisir formations</label>
                             <ng-multiselect-dropdown name="selectedItems"
                                 [placeholder]="'Select Formation'"
                                 [settings]="dropdownFormationSettings"
@@ -162,64 +164,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="addFormatonToPlan()">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addFormatonToPlan()">Ajouter</button>
             </div>
         </div>
     </div>
 </div>
 <!-- Add Formation To Plan Modal -->
-
-<!-- ******************************* PUT *************************************** -->
-
-<!-- Update Plan Modal -->
-<div class="modal fade" id="updatePlan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Update Plan</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Plan Name</label>
-                            <input type="text" required placeholder="Plan Name" name="name" class="form-control"
-                                [(ngModel)]="updPlan.name">
-                        </div>                                                
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Plan Date</label>
-                            <input type="date" required placeholder="Date" name="planDate" class="form-control"
-                                [(ngModel)]="updPlan.planDate">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Select Responsable</label>
-                            <select class="form-select" title="Select responsable" aria-label="Default select example"
-                            name="responsableID" [(ngModel)]="updPlan.responsableID">
-                                <option selected>Select responsable</option>
-                                <option *ngFor="let coll of Collaborateurs" value="{{coll.id}}">{{coll.employe.nom + ' | ' + coll.employe.cin}} </option>                                
-                              </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="updatePlan()">Update</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Update Plan Modal -->
-
-<!-- ******************************* DELETE ************************************ -->
 
 <!-- Delete Plan Modal -->
 <div class="modal fade" id="deletePlan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -227,16 +178,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Confirmation!</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure, you want to delete this Plan?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" (click)="deletePlan(deletePlanId, index)">Yes</button>
+                <button type="button" class="btn btn-primary" (click)="deletePlan(planId, index)">Yes</button>
             </div>
         </div>
     </div>
@@ -249,9 +198,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold">Confirmation!</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure, you want to delete this Formation From this Plan?</p>
@@ -265,28 +212,24 @@
 </div>
 <!-- Delete Formation From Plan Modal -->
 
-<!-- ******************************* SHOW ************************************ -->
-
 <!-- Show Formations from Plan Modal -->
 <div class="modal fade" id="showFormations" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold">La liste des formations dans ce plan</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
-                </button>
+                <h5 class="modal-title fw-bold">Liste des formations dans ce plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post">
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped data-table">
+                        <table class="table table-striped data-table">
                             <thead>
                                 <tr>
-                                    <th>Nom de la formation</th>
-                                    <th>Start Date</th>
-                                    <th>Duration</th>                                    
-                                    <th>Objectife</th>                                        
+                                    <th>Nom de formation</th>
+                                    <th>Date début</th>
+                                    <th>Durée/jour</th>                                    
+                                    <th>Objectif</th>                                        
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -296,7 +239,7 @@
                                     <td>{{ formation.formationDate }}</td>
                                     <td>{{ formation.duree }}</td>
                                     <td>{{ formation.objectif }}</td>
-                                    <td><button class="btn btn-danger me-2" (click)="confirmDeleteFormFromP(formation.id, i)"
+                                    <td><button class="btn btn-danger me-2 btn-sm" (click)="confirmDeleteFormFromP(formation.id, i)"
                                             data-bs-target="#deleteFormFromPlan" data-bs-toggle="modal">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>
@@ -309,7 +252,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>

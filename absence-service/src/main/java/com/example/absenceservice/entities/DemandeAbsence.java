@@ -20,6 +20,7 @@ public class DemandeAbsence {
     @Enumerated(EnumType.STRING)
     private NatureAbsence natureAbsence;
     private String justificatif;
+    private String statut;
     private Long employeId;
 
     @Transient

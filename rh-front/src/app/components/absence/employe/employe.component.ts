@@ -31,21 +31,11 @@ export class EmployeComponent implements OnInit {
 
   constructor(private empolyeeServise : GestionEmployeService,
               private absService : AbsenceService,
-              private router : Router,
-              private http : HttpClient) { }
+              private router : Router) { }
 
   ngOnInit(): void {
     this.getAllEmployee();
-    this.getAllAbs();
-    setTimeout(() => {
-      $('.absence').DataTable( {
-        pagingType : 'simple_numbers',
-        pageLength : 5,
-        processing : true,
-        lengthMenu : [5, 10, 25],
-        order : [[1, 'desc']]
-      });
-    }, 1);    
+    this.getAllAbs();      
   }
 
   onChangeDate() {
@@ -91,7 +81,7 @@ export class EmployeComponent implements OnInit {
     for (let index = 0; index < this.abs.length; index++) {
       this.newAbs.employeId = this.abs[index];      
       this.newAbs.dateAbs = new Date();
-      this.newAbs.duree = '-';
+      this.newAbs.duree = '1';
       this.newAbs.justificatif = '';
       this.newAbs.natureAbsence = 'NONJUSTIFIEE';
       
