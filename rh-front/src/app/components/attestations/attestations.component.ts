@@ -8,33 +8,35 @@ const dataLength = 6;
   templateUrl: './attestations.component.html',
   styleUrls: ['./attestations.component.css']
 })
+
 export class AttestationsComponent implements OnInit {
 
   attestations : AttestationResponse[] = [];
   message : string = '';
   
-  @ViewChild(DashboardComponent) 
-  dashboard!:DashboardComponent;
-
   constructor(private administrationService : AdministrationService) { 
     
   }
-
-
+  
   ngOnInit(): void {
     this.getAttestations();
   }
   getAttestations=()=> {
     this.administrationService.getAttestations().subscribe((response) => {
       this.attestations = response;
-      this.attestations.forEach(att=>{
-        this.dashboard.setItems(this.attestationToRow(att));
-      })
+      this.setItems();
     }, (error) => {
       console.log(error);
     })
   }
-  attestationToRow(att:AttestationResponse){
+
+  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
+  setItems():void{
+    this.attestations.forEach(att=>{
+      this.dashboard.setItems(this.itemToRow(att));
+    })
+  }
+  itemToRow(att:AttestationResponse){
     return [att.nom,att.cin,att.poste,att.etablissement];
   }
 }
