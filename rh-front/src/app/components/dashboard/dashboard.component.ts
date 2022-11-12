@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common'
 import { KeycloakSecurityService } from 'src/app/services/keycloak-security/keycloak-security.service';
 declare const $: any;
-
+const dataLength = 6;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,18 +11,24 @@ declare const $: any;
 })
 export class DashboardComponent implements OnInit {
   
-  @Input()
-  dataLength! : number;
   obj :any;
   
   constructor(@Inject(DOCUMENT) private document: Document, 
               public kcService: KeycloakSecurityService, private router: Router) { }
 
-
+  load(){  
+    const last = localStorage.getItem("lastDataLength");
+    let dl = parseInt(last ? last : "NaN");
+    if(!isFinite(dl)) {
+      dl  = dataLength;
+    }
+    return dl;
+  }
   ngOnInit(): void {
+    const dataLength = this.load();
     const obj = $('#example').DataTable({
       pagingType : 'simple_numbers',
-      pageLength : this.dataLength,
+      pageLength : dataLength,
       processing : true,
       lengthMenu : [5, 10, 25],
       order : [[1, 'desc']]
@@ -41,6 +47,9 @@ export class DashboardComponent implements OnInit {
     //   });
     //   this.obj = obj;
     // }, 1);
+  }
+  Settings() {
+    this.kcService.kc.accountManagement();
   }
   
   setItems=(arr:String[])=>{
@@ -71,6 +80,10 @@ export class DashboardComponent implements OnInit {
 
   clear=()=> {
     this.obj.row.clear().draw();
+  }
+
+  clear(){
+    this.obj.clear().draw();
   }
 
 }

@@ -12,7 +12,6 @@ export class AttestationsComponent implements OnInit {
 
   attestations : AttestationResponse[] = [];
   message : string = '';
-  dataLength:number;
   
   @ViewChild(DashboardComponent) 
   dashboard!:DashboardComponent;
@@ -24,15 +23,6 @@ export class AttestationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAttestations();
-  }
-
-  load(){  
-    const last = localStorage.getItem("lastDataLength");
-    let dl = parseInt(last ? last : "NaN");
-    if(!isFinite(dl)) {
-      dl  = dataLength;
-    }
-    return dl;
   }
   
   getAttestations=()=> {
@@ -47,6 +37,13 @@ export class AttestationsComponent implements OnInit {
   }
 
   attestationToRow(att:AttestationResponse){
+
+  setItems():void{
+    this.attestations.forEach(att=>{
+      this.dashboard.setItems(this.itemToRow(att));
+    })
+  }
+  itemToRow(att:AttestationResponse){
     return [att.nom,att.cin,att.poste,att.etablissement];
   }
 }
