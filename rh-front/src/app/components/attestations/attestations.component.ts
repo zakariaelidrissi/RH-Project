@@ -34,6 +34,7 @@ export class AttestationsComponent implements OnInit {
     }
     return dl;
   }
+  
   getAttestations=()=> {
     this.administrationService.getAttestations().subscribe((response) => {
       this.attestations = response
@@ -44,6 +45,7 @@ export class AttestationsComponent implements OnInit {
       console.log(error);
     })
   }
+
   attestationToRow(att:AttestationResponse){
     return [att.nom,att.cin,att.poste,att.etablissement];
   }

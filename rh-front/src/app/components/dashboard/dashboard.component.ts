@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked,Input,Output ,EventEmitter,Inject} from '@angular/core';
+import { Component, OnInit,Input, Inject} from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common'
 import { KeycloakSecurityService } from 'src/app/services/keycloak-security/keycloak-security.service';
@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   @Input()
   dataLength! : number;
   obj :any;
+  
   constructor(@Inject(DOCUMENT) private document: Document, 
               public kcService: KeycloakSecurityService, private router: Router) { }
 
@@ -43,8 +44,12 @@ export class DashboardComponent implements OnInit {
   }
   
   setItems=(arr:String[])=>{
-    console
+    // console.log(arr);
     this.obj.row.add(arr).draw(false);
+  }
+  
+  updateItems=(arr:String[], index: number)=>{
+    this.obj.row(index).update(arr).draw(false);
   }
 
   logOut() {
@@ -62,6 +67,10 @@ export class DashboardComponent implements OnInit {
   active(id:string){
     // document.querySelector("#sidebar a.nav-link:not(.collapsed)")?.classList.add('collapsed');
     // document.querySelector(id)?.classList.remove('collapsed');
+  }
+
+  clear=()=> {
+    this.obj.row.clear().draw();
   }
 
 }

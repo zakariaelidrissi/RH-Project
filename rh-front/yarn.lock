@@ -156,7 +156,7 @@
     "uuid" "8.3.2"
     "yargs" "17.5.1"
 
-"@angular/common@^14", "@angular/common@^14.0.0", "@angular/common@^14.1.0", "@angular/common@>=13.0.0", "@angular/common@>=2.0.0", "@angular/common@14.2.4":
+"@angular/common@^14.0.0", "@angular/common@^14.1.0", "@angular/common@>=13.0.0", "@angular/common@>=2.0.0", "@angular/common@14.2.4":
   "integrity" "sha512-nzmRUhdyKomgsf1vUdx7KOXS7OXkvdpF/1CSagqsIGYVLbL8cGZ6ROrdEuxkSsE9GUt/OAIkC4How4/LLPut1A=="
   "resolved" "https://registry.npmjs.org/@angular/common/-/common-14.2.4.tgz"
   "version" "14.2.4"
@@ -186,7 +186,7 @@
   dependencies:
     "tslib" "^2.3.0"
 
-"@angular/core@^14", "@angular/core@^14.0.0", "@angular/core@^14.1.0", "@angular/core@>=13.0.0", "@angular/core@>=2.0.0", "@angular/core@14.2.4":
+"@angular/core@^14.0.0", "@angular/core@^14.1.0", "@angular/core@>=13.0.0", "@angular/core@>=2.0.0", "@angular/core@14.2.4":
   "integrity" "sha512-wB19wKmZE+X07mLbxYyqeg3v1JXy8m0+ShZD2oY3dmgk1mXOf5XVQxRZohGTrbPw83EdSWwx3vz+jjylGunVZQ=="
   "resolved" "https://registry.npmjs.org/@angular/core/-/core-14.2.4.tgz"
   "version" "14.2.4"
@@ -223,7 +223,7 @@
   dependencies:
     "tslib" "^2.3.0"
 
-"@angular/router@^14", "@angular/router@^14.0.0":
+"@angular/router@^14.0.0":
   "integrity" "sha512-zjsiy/1zrZfZnfIbo2vVgZ+UhCo3okabVr43eIvJhBwcNKzM8Zv17oN9FFlWvSzKKkbsoNIgJkTI85L1YsKtjg=="
   "resolved" "https://registry.npmjs.org/@angular/router/-/router-14.2.4.tgz"
   "version" "14.2.4"
@@ -1528,6 +1528,13 @@
   "resolved" "https://registry.npmjs.org/@types/cors/-/cors-2.8.12.tgz"
   "version" "2.8.12"
 
+"@types/datatables.net@^1.10.24":
+  "integrity" "sha512-Qb82/7Gn0bU36YLiv0MdaqKzhTLfRO9qPvFdkW0miQ6ATMG47aoPn2r//zTvGd3oPSt+Lzp1HSsjP6rZRuki8g=="
+  "resolved" "https://registry.npmjs.org/@types/datatables.net/-/datatables.net-1.10.24.tgz"
+  "version" "1.10.24"
+  dependencies:
+    "@types/jquery" "*"
+
 "@types/eslint-scope@^3.7.3":
   "integrity" "sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA=="
   "resolved" "https://registry.npmjs.org/@types/eslint-scope/-/eslint-scope-3.7.4.tgz"
@@ -1580,6 +1587,13 @@
   "resolved" "https://registry.npmjs.org/@types/jasmine/-/jasmine-4.0.3.tgz"
   "version" "4.0.3"
 
+"@types/jquery@*", "@types/jquery@^3.5.14":
+  "integrity" "sha512-X1gtMRMbziVQkErhTQmSe2jFwwENA/Zr+PprCkF63vFq+Yt5PZ4AlKqgmeNlwgn7dhsXEK888eIW2520EpC+xg=="
+  "resolved" "https://registry.npmjs.org/@types/jquery/-/jquery-3.5.14.tgz"
+  "version" "3.5.14"
+  dependencies:
+    "@types/sizzle" "*"
+
 "@types/json-schema@*", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.8", "@types/json-schema@^7.0.9":
   "integrity" "sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ=="
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.11.tgz"
@@ -1629,6 +1643,11 @@
   dependencies:
     "@types/mime" "*"
     "@types/node" "*"
+
+"@types/sizzle@*":
+  "integrity" "sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ=="
+  "resolved" "https://registry.npmjs.org/@types/sizzle/-/sizzle-2.3.3.tgz"
+  "version" "2.3.3"
 
 "@types/sockjs@^0.3.33":
   "integrity" "sha512-f0KEEe05NvUnat+boPTZ0dgaLZ4SfSouXUgv5noUiefG2ajgKjmETo9ZJyuqsl7dfl2aHlLJUiki6B4ZYldiiw=="
@@ -3940,14 +3959,7 @@
     "ua-parser-js" "^0.7.30"
     "yargs" "^16.1.1"
 
-"keycloak-angular@^12.1.0":
-  "integrity" "sha512-ykEoEC4hRMlKLNLJd3kSGr0DHYX1NYeHcNj9NEaPLKwhbz95Bf5cwzYwoqn0oo07OqB3e9r5ZzgXsiQRKwMebg=="
-  "resolved" "https://registry.npmjs.org/keycloak-angular/-/keycloak-angular-12.1.0.tgz"
-  "version" "12.1.0"
-  dependencies:
-    "tslib" "^2.3.0"
-
-"keycloak-js@^12.0.4", "keycloak-js@^18 || ^19":
+"keycloak-js@^12.0.4":
   "integrity" "sha512-O/BHtyiDrZrUnKBrVF8POojqd3gmhuiDw4FiI+FbnB14nu7G5jKFrKYZa9Q0JYKIZXHJOBzSaKQcMp2WUI+zmA=="
   "resolved" "https://registry.npmjs.org/keycloak-js/-/keycloak-js-12.0.4.tgz"
   "version" "12.0.4"

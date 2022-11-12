@@ -1,4 +1,4 @@
-<app-dashboard></app-dashboard>
+<app-dashboard [dataLength]=dataLength></app-dashboard>
 
 <!-- main -->
 <main class="mt-5 pt-3">
@@ -39,7 +39,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table datatable">
+                        <table id="example" class="table datatable">
                             <thead>
                                 <tr>
                                     <th scope="col">Nom de plan</th>
@@ -49,7 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let plan of plans;let i = index">
+                                <!-- <tr *ngFor="let plan of plans;let i = index">
                                     <td>{{ plan.name }}</td>
                                     <td>{{ plan.planDate }}</td>
                                     <td>{{ plan.responsable.employe.nom }}</td>                                        
@@ -69,7 +69,7 @@
                                             </button>
                                         </div>
                                     </td>
-                                </tr>                                    
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -87,7 +87,7 @@
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" *ngIf="case == 'add'">Ajouter plan</h5>
                 <h5 class="modal-title fw-bold" *ngIf="case == 'update'">Modifier plan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelBtn1()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post">
@@ -120,7 +120,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" *ngIf="case == 'add'">Fermer</button>
                 <button type="button" class="btn btn-primary" (click)="savePlan()" *ngIf="case == 'add'">Ajouter</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelBtn1()" *ngIf="case == 'update'">Fermer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" *ngIf="case == 'update'">Fermer</button>
                 <button type="button" class="btn btn-warning" (click)="updatePlan()" *ngIf="case == 'update'">Modifier</button>
             </div>
         </div>
@@ -223,14 +223,14 @@
             <div class="modal-body">
                 <form method="post">
                     <div class="table-responsive">
-                        <table class="table table-striped data-table">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>Nom de formation</th>
-                                    <th>Date début</th>
-                                    <th>Durée/jour</th>                                    
-                                    <th>Objectif</th>                                        
-                                    <th>Action</th>
+                                    <th scope="col">Nom de formation</th>
+                                    <th scope="col">Date début</th>
+                                    <th scope="col">Durée/jour</th>                                    
+                                    <th scope="col">Objectif</th>                                        
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -243,8 +243,7 @@
                                             data-bs-target="#deleteFormFromPlan" data-bs-toggle="modal">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>
-                                    </td>
-                                    
+                                    </td>                                    
                                 </tr>                                    
                             </tbody>
                         </table>
