@@ -73,4 +73,8 @@ export class DashboardComponent implements OnInit {
     // document.querySelector(id)?.classList.remove('collapsed');
   }
 
+  clear(){
+    this.obj.clear().draw();
+  }
+
 }
