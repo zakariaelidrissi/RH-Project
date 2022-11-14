@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Collaborateur } from 'src/app/models/collaborateur';
 import { FormationRequest } from 'src/app/models/formationRequest';
@@ -8,8 +8,11 @@ import { FormationService } from 'src/app/services/formation/formation.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { AddById } from 'src/app/models/addById';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 declare const $: any;
+const dataLength = 6;
 
 @Component({
   selector: 'app-formations',
@@ -35,25 +38,105 @@ export class FormationsComponent implements OnInit {
   selectedItem : number = 0;
   dropdownCollSettings:IDropdownSettings = {};
 
-  constructor(private formationService: FormationService, private router: Router, private collService : CollService) { }
+  dataLength:number;
+
+  // newForm : FormGroup = null;
+
+  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
+
+  constructor(private formationService: FormationService, 
+              private router: Router, 
+              private collService : CollService,
+              ) {
+    this.dataLength = this.load();
+   }
 
   ngOnInit(): void {    
 
     this.getFormations();
+    // this.addFormation();
+  }
+
+  load(){  
+    const last = localStorage.getItem("lastDataLength");
+    let dl = parseInt(last ? last : "NaN");
+    if(!isFinite(dl)) {
+      dl  = dataLength;
+    }
+    return dl;
+  }
+
+  actions(formationId : number, index: number) {
+    return '<div id_='+formationId+' index_='+index+' class="me-auto d-flex">'+
+              '<button  type_="dropDown" class="btn btn-primary me-2 btn-sm"'+
+                  'data-bs-toggle="modal" data-bs-target="#addCollToFormation">'+
+                  '<i class="bi bi-plus-circle-fill"></i>'+
+              '</button>'+
+              '<button type_="editFormation" class="btn btn-warning me-2 btn-sm"'+
+                  'data-bs-toggle="modal" data-bs-target="#addFormation">'+
+                  '<i class="bi bi-pencil-square"></i>'+
+              ' </button>'+
+              '<button type_="showPlan" class="btn btn-success me-2 btn-sm"'+
+                '   data-bs-toggle="modal" data-bs-target="#show">'+
+                  '<i class="bi bi-eye-fill"></i>'+
+              '</button>'+
+              '<button type_="showColl" class="btn btn-primary me-2 btn-sm"'+
+                  ' data-bs-toggle="modal" data-bs-target="#showColl">'+
+                  '<i class="bi bi-eyeglasses"></i>'+
+              '</button>'+
+              '<button type_="confirmDeleteFormation" class="btn btn-danger btn-sm"'+
+                  ' data-bs-toggle="modal" data-bs-target="#deleteFormation">'+
+                  '<i class="bi bi-trash3-fill"></i>'+
+              '</button>'+
+            '</div>';
   }
 
   getFormations(): void {
     this.formationService.getFormations().subscribe((response: FormationResponse[]) => {
       this.formations = response;
+      const handleButons = this.handleButons;
+      this.formations.forEach((form,index) => {
+        var dt : Date = new Date(form.formationDate);
+        // console.log(index);
+        this.dashboard.setItems([form.name, dt.toLocaleDateString(), form.duree, form.objectif, this.actions(form.id, index)]);
+      });
+      $('#example tbody').on('click', 'button', function (this:any,event:any) {
+        handleButons(this);
+      } );
       console.log(response);
     }, err => {
       console.log(err);
     });
   }  
 
+  handleButons=(button:any)=>{
+    const type = button.getAttribute("type_");
+    const id_ = button.parentNode.getAttribute("id_");
+    const index_ = button.parentNode.getAttribute("index_");
+    console.log(type,id_)
+    if(type === "dropDown"){
+      this.dropDownFormation(id_);
+    }else if(type === "editFormation"){
+      this.editFormation(this.formations.find(f=>f.id == id_) as FormationResponse, index_);
+    }else if(type === "showPlan"){
+      this.showPlan(this.formations.find(f=>f.id == id_) as FormationResponse);
+    }else if(type === "showColl"){
+      this.showColl(id_);
+    }else if(type === "confirmDeleteFormation"){
+      this.confirmDeleteFormation(id_, index_);
+    }
+  }
+
   onAdd() {
     this.case = 'add';
+    this.cleanData();
   }
+
+  // addFormation() {
+  //   this.newForm = this.fb.group({
+  //     name: ['', Validators.required]
+  //   });
+  // }
 
   saveFormation() {   
     this.case = 'add';     
@@ -61,15 +144,19 @@ export class FormationsComponent implements OnInit {
       this.message = "Cette information a été ajoutée avec succès!";
       console.log(response);
       $('#addFormation').modal("hide");
-      this.getFormations();
-      this.cleanData();
+      // this.getFormations();
+      var dt : Date = new Date(this.newFormation.formationDate);
+      this.dashboard.setItems([this.newFormation.name, dt.toLocaleDateString(), this.newFormation.duree, 
+        this.newFormation.objectif, this.actions(this.newFormation.id, 0)]);
+      // this.cleanData();
     }, err => {
       console.log(err);
     });    
   }
 
-  editFormation(formation : FormationResponse){
+  editFormation=(formation : FormationResponse, index : number)=>{
     this.newFormation = formation;
+    this.index = index;
     this.case = 'update';
   }  
 
@@ -77,8 +164,11 @@ export class FormationsComponent implements OnInit {
     this.formationService.updateFormation(this.newFormation).subscribe((response)=>{
       this.message = "This Formation well be updated successfuly!";
       $('#addFormation').modal("hide");
-      this.getFormations();
-      this.cleanData();
+      // this.getFormations();
+      var dt : Date = new Date(this.newFormation.formationDate);
+      this.dashboard.updateItems([this.newFormation.name, dt.toLocaleDateString(), this.newFormation.duree, 
+        this.newFormation.objectif, this.actions(this.newFormation.id, this.index)], this.index);
+      // this.cleanData();            
     }, err => {
       console.log(err);
     });
@@ -93,6 +183,8 @@ export class FormationsComponent implements OnInit {
     this.formationService.deleteFormation(FormationID).subscribe((response)=>{
       this.message = "This Formation well be deleted successfuly!";
       this.formations.splice(index, 1);
+      
+      // this.getFormations();
       $('#deleteFormation').modal("hide");      
     }, err => {
       console.log(err);
@@ -142,7 +234,7 @@ export class FormationsComponent implements OnInit {
     });
   }
 
-  dropDownFormation(formationId : number){
+  dropDownFormation=(formationId : number)=>{
     
     this.getColl();
     this.selectedItem = formationId;   
@@ -188,7 +280,7 @@ export class FormationsComponent implements OnInit {
 
   cancelBtn1() {
     this.cleanData();
-    this.getFormations();
+    // this.getFormations();
   }
 
 }

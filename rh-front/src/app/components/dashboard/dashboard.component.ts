@@ -51,10 +51,20 @@ export class DashboardComponent implements OnInit {
   Settings() {
     this.kcService.kc.accountManagement();
   }
+<<<<<<< HEAD
 
   setItems = (arr: String[]) => {
     console
+=======
+
+  setItems=(arr:String[])=>{
+    // console.log(arr);
+>>>>>>> 517e1ad5fe18bc3ebac366d4c4cad1dd4fd367e6
     this.obj.row.add(arr).draw(false);
+  }
+
+  updateItems = (arr: String[], index: number) => {
+    this.obj.row(index).update(arr).draw(false);
   }
 
   logOut() {
@@ -73,7 +83,15 @@ export class DashboardComponent implements OnInit {
     // document.querySelector(id)?.classList.remove('collapsed');
   }
 
+<<<<<<< HEAD
   clear() {
+=======
+  clear=()=> {
+    this.obj.row.clear().draw();
+  }
+
+  clear(){
+>>>>>>> 517e1ad5fe18bc3ebac366d4c4cad1dd4fd367e6
     this.obj.clear().draw();
   }
 

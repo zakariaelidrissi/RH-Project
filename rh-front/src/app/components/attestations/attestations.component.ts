@@ -8,29 +8,36 @@ const dataLength = 6;
   templateUrl: './attestations.component.html',
   styleUrls: ['./attestations.component.css']
 })
-
 export class AttestationsComponent implements OnInit {
 
   attestations : AttestationResponse[] = [];
   message : string = '';
   
+  @ViewChild(DashboardComponent) 
+  dashboard!:DashboardComponent;
+
   constructor(private administrationService : AdministrationService) { 
-    
+    this.dataLength = this.load();
   }
-  
+
+
   ngOnInit(): void {
     this.getAttestations();
   }
+  
   getAttestations=()=> {
     this.administrationService.getAttestations().subscribe((response) => {
-      this.attestations = response;
-      this.setItems();
+      this.attestations = response
+      this.attestations.forEach(att=>{
+        this.dashboard.setItems(this.attestationToRow(att));
+      })
     }, (error) => {
       console.log(error);
     })
   }
 
-  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
+  attestationToRow(att:AttestationResponse){
+
   setItems():void{
     this.attestations.forEach(att=>{
       this.dashboard.setItems(this.itemToRow(att));

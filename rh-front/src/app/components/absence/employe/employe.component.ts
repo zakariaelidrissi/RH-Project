@@ -5,7 +5,6 @@ import { AbsenceEmpResponse } from 'src/app/models/absenceEmpResponse';
 import { Employe } from 'src/app/models/employe';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
-import {HttpClient} from '@angular/common/http';
 
 declare const $ : any;
 
@@ -82,7 +81,7 @@ export class EmployeComponent implements OnInit {
       this.newAbs.employeId = this.abs[index];      
       this.newAbs.dateAbs = new Date();
       this.newAbs.duree = '1';
-      this.newAbs.justificatif = '';
+      this.newAbs.justificatif = '---';
       this.newAbs.natureAbsence = 'NONJUSTIFIEE';
       
       this.absService.addEmpAbsence(this.newAbs).subscribe((response) => {
@@ -92,9 +91,7 @@ export class EmployeComponent implements OnInit {
       }, (error) => {
         console.log(error);
       });
-    }
-
-    
+    }    
   }
 
   onChange(empId: number) {    
@@ -130,27 +127,22 @@ export class EmployeComponent implements OnInit {
     this.empName = name;
   }
 
-  updateAbsence() {
-    
+  getFile(event : any) {
+    this.file = event.target.files[0];        
+  }
 
+  updateAbsence() {
+    this.updAbs = this.file.name;
+    console.log(this.updAbs);
     this.absService.updateEmpAbs(this.updAbs).subscribe((response)=>{
       this.message = "This Absence well be updated successfuly!";
+      localStorage.setItem('justificatif', JSON.stringify(this.file));
       $('#updateAbsence').modal("hide");
       this.getAllAbs();
     }, err => {
       console.log(err);
     });
-  }
-
-  getFile(event : any) {
-    this.file = event.target.files[0];
-    var reader = new FileReader();
-    reader.readAsDataURL(this.file);
-    reader.onload = (e:any) => {
-
-    }
-    
-  }
+  }  
 
   confirmDeleteAbs(absID : number, index : number) {
     this.absenceId = absID;
@@ -165,6 +157,10 @@ export class EmployeComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+  }
+
+  downloadJustificative(justificatif : string) {
+    return JSON.parse(localStorage.getItem('justificatif') || '')
   }
 
 }

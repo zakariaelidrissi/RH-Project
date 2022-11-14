@@ -62,7 +62,9 @@
                                     <td>{{ absence.employe.nom }}</td>
                                     <td>{{ absence.dateAbs }}</td>
                                     <td>{{ absence.natureAbsence }}</td>
-                                    <td>{{ absence.justificatif }}</td>
+                                    <td>                                        
+                                        <button (click)="downloadJustificative(absence.justificatif)" class="bg-transparent border-0 text-primary">{{ absence.justificatif }}</button>
+                                    </td>
                                     <td>{{ absence.duree }}</td>
                                     <td>
                                         <div class="me-auto d-flex">
@@ -146,7 +148,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" autocomplete="on" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data">
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom d'employe</label>
@@ -178,7 +180,7 @@
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Justificatif</label>
                             <input type="file" placeholder="Start Date" name="justificatif"
-                                class="form-control" id="file" (change)="getFile($event)">
+                                [(ngModel)]="file.name" class="form-control" id="file" (change)="getFile($event)">
                         </div>                        
                     </div>
                     <div class="row mt-3">
