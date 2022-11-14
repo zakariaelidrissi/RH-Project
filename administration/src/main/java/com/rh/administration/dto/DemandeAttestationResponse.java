@@ -13,6 +13,7 @@ public class DemandeAttestationResponse {
     Long idUser;
     Attestation.AttestationType type;
     Attestation.Etablissement etablissement;
+    Attestation.Poste poste;
     Date date;
-    boolean done;
+    Attestation.Etat etat;
 }
