@@ -5,7 +5,7 @@ import { AttestationResponse } from 'src/app/models/attestationResponse';
 import { DemandeAttestationResponse } from 'src/app/models/demandeAttestationResponse';
 
 @Injectable({
-  providedIn: 'rootwks'
+  providedIn: 'root'
 })
 export class AdministrationService {
 

@@ -12,6 +12,7 @@ const dataLength = 5;
 export class DashboardComponent implements OnInit {
   @Input()
   dashboardTableOptions: Object = {};
+  @Input() dataLength!: number;
 
   obj: any;
   constructor(@Inject(DOCUMENT) private document: Document,
@@ -51,15 +52,9 @@ export class DashboardComponent implements OnInit {
   Settings() {
     this.kcService.kc.accountManagement();
   }
-<<<<<<< HEAD
 
   setItems = (arr: String[]) => {
     console
-=======
-
-  setItems=(arr:String[])=>{
-    // console.log(arr);
->>>>>>> 517e1ad5fe18bc3ebac366d4c4cad1dd4fd367e6
     this.obj.row.add(arr).draw(false);
   }
 
@@ -83,15 +78,7 @@ export class DashboardComponent implements OnInit {
     // document.querySelector(id)?.classList.remove('collapsed');
   }
 
-<<<<<<< HEAD
   clear() {
-=======
-  clear=()=> {
-    this.obj.row.clear().draw();
-  }
-
-  clear(){
->>>>>>> 517e1ad5fe18bc3ebac366d4c4cad1dd4fd367e6
     this.obj.clear().draw();
   }
 
