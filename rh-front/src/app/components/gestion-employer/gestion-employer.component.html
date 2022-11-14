@@ -1,4 +1,4 @@
-<app-dashboard [dataLength]=dataLength></app-dashboard>
+<app-dashboard></app-dashboard>
 
 <!-- main -->
 <main class="mt-5 pt-3">
@@ -8,9 +8,9 @@
                 <h1>Gestion des employe</h1>
                 <nav>
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
-                      <li class="breadcrumb-item">Collaborateur</li>
-                      <li class="breadcrumb-item active">Employe</li>
+                        <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                        <li class="breadcrumb-item">Collaborateur</li>
+                        <li class="breadcrumb-item active">Employe</li>
                     </ol>
                 </nav>
             </div>
@@ -26,7 +26,8 @@
             <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
-                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>                 
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -41,7 +42,7 @@
                                     <th scope="col">Nom d'employe</th>
                                     <th scope="col">Cin</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Naissance</th>                                        
+                                    <th scope="col">Naissance</th>
                                     <th scope="col">Début d'embauche</th>
                                     <th scope="col">Département</th>
                                     <th scope="col">Poste</th>
@@ -102,52 +103,54 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom d'employe</label>
-                            <input type="text" required placeholder="Employee Name" name="nom" 
-                             [(ngModel)]="newEmploye.nom" class="form-control">
+                            <input type="text" required placeholder="Employee Name" name="nom"
+                                [(ngModel)]="newEmploye.nom" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Cin</label>
-                            <input type="text" required placeholder="Employee Cin" name="cin" 
-                             [(ngModel)]="newEmploye.cin" class="form-control">
-                        </div>                                               
+                            <input type="text" required placeholder="Employee Cin" name="cin"
+                                [(ngModel)]="newEmploye.cin" class="form-control">
+                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
-                            <input type="text" required placeholder="email" name="email" 
-                             [(ngModel)]="newEmploye.email" class="form-control">
+                            <input type="text" required placeholder="email" name="email" [(ngModel)]="newEmploye.email"
+                                class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Département</label>
-                            <input type="text" required placeholder="Departement" name="departement" 
-                             [(ngModel)]="newEmploye.departement" class="form-control">
-                        </div>                                               
+                            <input type="text" required placeholder="Departement" name="departement"
+                                [(ngModel)]="newEmploye.departement" class="form-control">
+                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de Naissance</label>
                             <input type="date" required placeholder="naissance" name="naissance"
-                            [(ngModel)]="newEmploye.naissance" class="form-control">
+                                [(ngModel)]="newEmploye.naissance" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début d'embauche</label>
                             <input type="date" required placeholder="date de debut d'ambauche" name="debutAmbauche"
-                            [(ngModel)]="newEmploye.debutAmbauche" class="form-control">
+                                [(ngModel)]="newEmploye.debutAmbauche" class="form-control">
                         </div>
-                    </div>                    
+                    </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Poste</label>
-                            <input type="text" required placeholder="Poste" name="poste"
-                            [(ngModel)]="newEmploye.poste" class="form-control">
+                            <input type="text" required placeholder="Poste" name="poste" [(ngModel)]="newEmploye.poste"
+                                class="form-control">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="addEmploye()" *ngIf="case == 'add'">Ajouter</button>                
-                <button type="button" class="btn btn-warning" (click)="updateEmployes()" *ngIf="case == 'update'">Modifier</button>
+                <button type="button" class="btn btn-primary" (click)="addEmploye()"
+                    *ngIf="case == 'add'">Ajouter</button>
+                <button type="button" class="btn btn-warning" (click)="updateEmployes()"
+                    *ngIf="case == 'update'">Modifier</button>
             </div>
         </div>
     </div>
@@ -155,7 +158,8 @@
 <!-- Add Employee Modal -->
 
 <!-- Add Coll To form Modal -->
-<div class="modal fade" id="addCollToFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="addCollToFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -164,16 +168,14 @@
             </div>
             <div class="modal-body">
                 <form method="post">
-                                                           
+
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Choisir une formation</label>
-                            <ng-multiselect-dropdown name="selectedItems"
-                                [placeholder]="'Choisir une formation'"
-                                [settings]="dropdownFormationSettings"
-                                [data]="dropdownListFormation"
+                            <ng-multiselect-dropdown name="selectedItems" [placeholder]="'Choisir une formation'"
+                                [settings]="dropdownFormationSettings" [data]="dropdownListFormation"
                                 [(ngModel)]="selectedItems">
-                            </ng-multiselect-dropdown>                                                           
+                            </ng-multiselect-dropdown>
                         </div>
                     </div>
                 </form>
@@ -188,7 +190,8 @@
 <!-- Add coll To form Modal -->
 
 <!-- Delete Employee Modal -->
-<div class="modal fade" id="deleteEmploye" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="deleteEmploye" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -208,7 +211,8 @@
 <!-- Delete Employee Modal -->
 
 <!-- Show Formations -->
-<div class="modal fade" id="showCollFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="showCollFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -230,13 +234,14 @@
                             <td>{{ formation.name }}</td>
                             <td>{{ formation.formationDate }}</td>
                             <td>{{ formation.duree }}</td>
-                            <td>{{ (formation.objectif.length>40)? (formation.objectif | slice:0:40)+'...':(formation.objectif) }}</td>                            
-                        </tr>                                    
+                            <td>{{ (formation.objectif.length>40)? (formation.objectif |
+                                slice:0:40)+'...':(formation.objectif) }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>

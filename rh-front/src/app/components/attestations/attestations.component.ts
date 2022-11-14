@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AttestationResponse } from 'src/app/models/attestationResponse';
 import { AdministrationService } from 'src/app/services/administration/administration.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-const dataLength = 6;
+
 @Component({
   selector: 'app-attestations',
   templateUrl: './attestations.component.html',
