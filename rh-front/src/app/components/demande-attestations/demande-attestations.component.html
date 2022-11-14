@@ -1,0 +1,101 @@
+<app-dashboard
+    [dashboardTableOptions]="dashboardTableOptions"
+></app-dashboard>
+
+<!-- main -->
+<main class="mt-5 pt-3">
+    <div class="container">
+        <div class="row mb-5 mt-4">
+            <div class="fw-bold fs-3">Liste des Demandes d'Attestation</div>
+            <!-- <div class="col-md-6">
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addFormation">
+                    Add Formation
+                </button>
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="alert alert-success" *ngIf="message != ''">
+                    {{message}}
+                    <button type="button" class="close float-end" data-bs-dismiss="alert">x</button>                    
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header fw-bold">
+                        Data Tables
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped data-table">
+                                <thead>
+                                    <tr>
+                                        <th>User Id</th>
+                                        <th>Poste</th>
+                                        <th>Etablissement</th>                                        
+                                        <th>Type De Demande</th>
+                                        <th>Date</th>
+                                        <th>Etat</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr *ngFor="let att of attestations;let i = index">
+                                        <td>{{ att.nom }}</td>
+                                        <td>{{ att.cin }}</td>
+                                        <td>{{ att.etablissement }}</td>
+                                        <td>{{ att.type }}</td>
+                                        <td>
+                                        </td>
+                                    </tr>                                     -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- main -->
+
+<div class="modal fade" id="infoDemande" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Demande d'attestation!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="user">
+                <p><strong>User Info:</strong></p>
+                <div>
+                    <h6>Id : <strong>{{user.id}}</strong></h6>
+                    <h6>Nom : <strong>{{user.nom}}</strong></h6>
+                    <h6>Prenom : <strong>{{user.prenom}}</strong></h6>
+                    <h6>Genre : <strong>{{user.genre}}</strong></h6>
+                    <h6>Nom : <strong>{{user.nom}}</strong></h6>
+                    <h6>Prenom : <strong>{{user.prenom}}</strong></h6>
+                    <h6>Email : <strong>{{user.email}}</strong></h6>
+                    <h6>Tel : <strong>{{user.tel}}</strong></h6>
+                    <h6>UserRole : <strong>{{user.userRole}}</strong></h6>
+                    <h6>EmailVerified : <strong>{{user.emailVerified}}</strong></h6>
+                    <br>
+                    <div ng-if="user.userRole === 'Stagiaire'">
+                        <h6>EmailVerified : <strong>{{user.userRole}}</strong></h6>
+                        <h6>EmailVerified : <strong>{{user.userRole}}</strong></h6>
+                        <h6>EmailVerified : <strong>{{user.userRole}}</strong></h6>
+                        <h6>EmailVerified : <strong>{{user.userRole}}</strong></h6>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -32,10 +32,11 @@ import { StagesComponent } from './components/stages/stages.component';
 import { AttestationsComponent } from './components/attestations/attestations.component';
 import { KeycloakSecurityService } from './services/keycloak-security/keycloak-security.service';
 import { RequestInterceptorService } from './services/keycloak-request/request-interceptor.service';
+import { DemandeAttestationsComponent } from './components/demande-attestations/demande-attestations.component';
 
-export function kcFactory(kcSecurity: KeycloakSecurityService) {
-  return () => kcSecurity.init();
-}
+// export function kcFactory(kcSecurity: KeycloakSecurityService) {
+//   return () => kcSecurity.init();
+// }
 
 @NgModule({
   declarations: [
@@ -53,7 +54,11 @@ export function kcFactory(kcSecurity: KeycloakSecurityService) {
     StagiaireComponent,
     GestionStagiaireComponent,
     DemandeAbsenceComponent,    
-    EmployeeComponent, LoginComponent, StagesComponent, AttestationsComponent,
+    EmployeeComponent, 
+    LoginComponent, 
+    StagesComponent, 
+    AttestationsComponent, 
+    DemandeAttestationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,8 +75,8 @@ export function kcFactory(kcSecurity: KeycloakSecurityService) {
     StagiaireService,
     AbsenceService,
     DatePipe,
-    {provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true}
+    // {provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true}
   ],
   bootstrap: [
     AppComponent
