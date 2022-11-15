@@ -1,6 +1,7 @@
 package com.rh.administration.dto;
 
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -17,4 +18,6 @@ public class AttestationResponse {
     Attestation.Poste poste;
     Attestation.Etablissement etablissement;
     Attestation.AttestationType type;
+
+    User user;
 }

@@ -6,6 +6,7 @@ import com.rh.administration.dto.DemandeAttestationRequest;
 import com.rh.administration.dto.DemandeAttestationResponse;
 import com.rh.administration.entities.Attestation;
 import com.rh.administration.entities.DemandeAttestation;
+import com.rh.administration.feign.UserService;
 import com.rh.administration.mappers.AttestationMapper;
 import com.rh.administration.mappers.DemandeAttestationMapper;
 import com.rh.administration.repos.AttestationRepo;
@@ -26,11 +27,14 @@ public class DemandeAttestationService {
 
     private DemandeAttestationRepo repo;
     private DemandeAttestationMapper mapper;
+    private UserService userService;
 
     public DemandeAttestationResponse save(DemandeAttestationRequest req) {
         DemandeAttestation d = mapper.requestToDemande(req);
         d.setEtat(Attestation.Etat.Waiting);
-        return mapper.demandeToDemandeResponse(repo.save(d));
+        DemandeAttestationResponse a = mapper.demandeToDemandeResponse(repo.save(d));
+        a.setUser(userService.getById(a.getIdUser()));
+        return a;
     }
 
     public List<DemandeAttestationResponse> getAll() {
@@ -38,7 +42,11 @@ public class DemandeAttestationService {
     }
 
     private List<DemandeAttestationResponse> mapDemandeAttestations(List<DemandeAttestation> l){
-        return l.stream().map(p->mapper.demandeToDemandeResponse(p)).collect(Collectors.toList());
+        return l.stream().map(p-> {
+            DemandeAttestationResponse a = mapper.demandeToDemandeResponse(p);
+            a.setUser(userService.getById(a.getIdUser()));
+            return a;
+        }).collect(Collectors.toList());
     }
 
     public DemandeAttestationResponse getById(Long id) {

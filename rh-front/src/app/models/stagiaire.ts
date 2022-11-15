@@ -1,15 +1,15 @@
 import { User } from "./user";
 
 export class Stagiaire {
-    id : number;
-    civilite : string;
-    niveau_etudes : string;
+    id: number;
+    civilite: string;
+    niveau_etudes: string;
     ville: string;
-    telephone : string;
-    cv : string;
-    LinkedIn_URL : string;
-    userId : number;
-    user : User;
+    telephone: string;
+    cv: string;
+    LinkedIn_URL: string;
+    userId: number;
+    user: User;
 
     constructor() {
         this.id = 0;

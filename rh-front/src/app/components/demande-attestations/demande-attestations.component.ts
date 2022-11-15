@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DemandeAttestationResponse } from 'src/app/models/demandeAttestationResponse';
+import { Employe } from 'src/app/models/employe';
+import { Stagiaire } from 'src/app/models/stagiaire';
 import { User } from 'src/app/models/user';
 import { AdministrationService } from 'src/app/services/administration/administration.service';
+import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
+import { StagiaireService } from 'src/app/services/gestion-stagiaire/stagiaire.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 declare const $: any;
 @Component({
@@ -12,25 +17,21 @@ declare const $: any;
 })
 export class DemandeAttestationsComponent implements OnInit {
   demandes: DemandeAttestationResponse[] = [];
-  user: User = this.blankUser();
-  message: string = '';
-  blankUser() {
-    const user = new User();
-    user.id = 10;
-    user.genre = 'Male'
-    user.nom = 'Khtou';
-    user.prenom = 'Othmane';
-    user.email = 'Othmane@Othmane.com';
-    user.tel = '+21222222222';
-    user.userRole = 'Stagiaire';
-    user.emailVerified = false;
 
-    return user;
-  }
+  demande!: DemandeAttestationResponse;
+  user!: User;
+
+  message: string = '';
+
   dashboardTableOptions = {
     "createdRow": this.createdRow
   }
-  constructor(private administrationService: AdministrationService, private router: Router) {
+  constructor(
+    private administrationService: AdministrationService,
+    private stagiaireService: StagiaireService,
+    private gestionEmployeService: GestionEmployeService,
+    private userService: UserService,
+  ) {
 
   }
 
@@ -59,7 +60,7 @@ export class DemandeAttestationsComponent implements OnInit {
     } if (type === "delete") {
       this.deleteDemande(id_, index_);
     } if (type === "info") {
-      // this.voirInfo(id_);
+      this.voirInfo(id_, index_);
     }
   }
   reset = () => {
@@ -69,8 +70,45 @@ export class DemandeAttestationsComponent implements OnInit {
       handleButons(this);
     });
   }
-  voirInfo(id: number) {
-    this.router.navigateByUrl('/second');
+  voirInfo(id: number, index: number) {
+    const dem = this.demandes[index];
+    this.demande = dem;
+    if (dem.type === "Stage")
+      this.user = dem.stagiaire.user;
+    else if (dem.type === "Travail")
+      this.user = dem.employe.user;
+
+    //   const idUser = dem.idUser;
+
+    //   if (dem.type === "Stage") {
+    //     if (dem.stagiaire) {
+    //       this.stagiaire = dem.stagiaire;
+    //       this.user = this.employe.user;
+    //       return;
+    //     }
+    //     this.stagiaireService.getByUserId(idUser).subscribe((res) => {
+    //       this.stagiaire = res;
+    //       this.employe = null as any;
+    //       dem.stagiaire = this.stagiaire;
+    //       this.user = this.stagiaire.user;
+    //       // this.userService.getById(idUser).subscribe((res1) => {
+    //       //   this.userContainer.user = res1;
+    //       // });
+    //     });
+    //   } else if (dem.type == "Travail") {
+    //     if (dem.employe) {
+    //       this.employe = dem.employe;
+    //       return;
+    //     }
+    //     this.gestionEmployeService.getByUserId(idUser).subscribe((res) => {
+    //       this.employe = res;
+    //       this.stagiaire = null as any;
+    //       this.user = this.employe.user;
+    //       dem.employe = this.employe;
+    //     });
+    //   } else {
+    //     console.error("Invalid type of 'dem type'", dem.type)
+    //   }
   }
   rejectDemande(id: number, index: number) {
     const dem = this.demandes.find((d) => d.id == id);
@@ -133,7 +171,7 @@ export class DemandeAttestationsComponent implements OnInit {
   }
 
   actions(id: number, index: number) {
-    return `<div id_=' + id + ' index_=' + index + ' class="me-auto d-flex">
+    return `<div id_=${id} index_=${index} class="me-auto d-flex">
               <button data-toggle="tooltip" data-placement="bottom" title="Info"
               type_="info" class="btn btn-info me-2 btn-sm" data-bs-toggle="modal" data-bs-target="#infoDemande">
                 <i class="bi bi-info-circle"></i>
