@@ -1,6 +1,5 @@
 package com.example.employerservice.feign;
 
-import com.example.employerservice.confgSecFiegn.ClientConfiguration;
 import com.example.employerservice.models.Absence;
 import com.example.employerservice.models.DemandeAbsence;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "ABSENCE-SERVICE", configuration = {ClientConfiguration.class})
+@FeignClient(name = "ABSENCE-SERVICE")
 public interface AbsenceRestClient {
 
     @PostMapping(path = "/demandes")
