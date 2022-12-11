@@ -20,9 +20,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class AttestationController {
     AttestationService service;
 

@@ -1,8 +1,8 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AttestationResponse } from 'src/app/models/attestationResponse';
 import { AdministrationService } from 'src/app/services/administration/administration.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-const dataLength = 6;
+
 @Component({
   selector: 'app-attestations',
   templateUrl: './attestations.component.html',
@@ -11,17 +11,17 @@ const dataLength = 6;
 
 export class AttestationsComponent implements OnInit {
 
-  attestations : AttestationResponse[] = [];
-  message : string = '';
-  
-  constructor(private administrationService : AdministrationService) { 
-    
+  attestations: AttestationResponse[] = [];
+  message: string = '';
+
+  constructor(private administrationService: AdministrationService) {
+
   }
-  
+
   ngOnInit(): void {
     this.getAttestations();
   }
-  getAttestations=()=> {
+  getAttestations = () => {
     this.administrationService.getAttestations().subscribe((response) => {
       this.attestations = response;
       this.setItems();
@@ -30,13 +30,13 @@ export class AttestationsComponent implements OnInit {
     })
   }
 
-  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
-  setItems():void{
-    this.attestations.forEach(att=>{
+  @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
+  setItems(): void {
+    this.attestations.forEach(att => {
       this.dashboard.setItems(this.itemToRow(att));
     })
   }
-  itemToRow(att:AttestationResponse){
-    return [att.nom,att.cin,att.poste,att.etablissement];
+  itemToRow(att: AttestationResponse) {
+    return [att.nom, att.cin, att.poste, att.etablissement];
   }
 }

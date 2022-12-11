@@ -4,10 +4,10 @@ import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class KeycloakAdapterConfig {
 
-    @Bean
+    //@Bean
     KeycloakSpringBootConfigResolver configResolver() {
         return new KeycloakSpringBootConfigResolver();
     }

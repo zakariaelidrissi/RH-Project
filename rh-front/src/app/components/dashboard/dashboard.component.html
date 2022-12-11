@@ -80,7 +80,7 @@
     <div class="offcanvas-body p-0">
         <nav class="navbar-dark">
             <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('ADMIN')"> -->
-                <ul class="navbar-nav">
+            <ul class="navbar-nav">
                 <li>
                     <div class="text-muted small fw-bold text-uppercase px-3">core</div>
                 </li>
@@ -198,12 +198,19 @@
                                         <span>Employer</span>
                                     </a>
                                 </li>
+                                <li> 
+                                    <a routerLink="/demande-attestations" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Demande Attestations</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </li>
             </ul>
-            <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('EMPLOYE')">
+            <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('EMPLOYE')"> -->
+            <ul class="navbar-nav">
                 <li class="my-4">
                     <hr>
                 </li>

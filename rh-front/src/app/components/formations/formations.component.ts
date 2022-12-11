@@ -20,33 +20,33 @@ declare const $: any;
   styleUrls: ['./formations.component.css']
 })
 export class FormationsComponent implements OnInit {
-  
-  formations : FormationResponse[] = [];
-  newFormation : FormationRequest = new FormationRequest();
-  plans : PlanResponse[] = [];
-  employes : Collaborateur[] = [];
-  index : number = 0;
-  formationID : number = 0;
-  employeID : number = 0;
-  case : string = 'add';
 
-  message : string = '';
+  formations: FormationResponse[] = [];
+  newFormation: FormationRequest = new FormationRequest();
+  plans: PlanResponse[] = [];
+  employes: Collaborateur[] = [];
+  index: number = 0;
+  formationID: number = 0;
+  employeID: number = 0;
+  case: string = 'add';
 
-  dropdownListColl : any = [];
+  message: string = '';
+
+  dropdownListColl: any = [];
   // listColl : any = [];
   selectedItems : any = [];
   selectedItem : number = 0;
   dropdownCollSettings:IDropdownSettings = {};
   errors : any = [];
 
-  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
+  @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
   constructor(private formationService: FormationService, 
               private router: Router, 
               private collService : CollService,
               private datePipe: DatePipe) {}
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
 
     this.getFormations();
     // this.addFormation();
@@ -81,34 +81,34 @@ export class FormationsComponent implements OnInit {
     this.formationService.getFormations().subscribe((response: FormationResponse[]) => {
       this.formations = response;
       const handleButons = this.handleButons;
-      this.formations.forEach((form,index) => {
-        var dt : Date = new Date(form.formationDate);
+      this.formations.forEach((form, index) => {
+        var dt: Date = new Date(form.formationDate);
         // console.log(index);
         this.dashboard.setItems([form.name, dt.toLocaleDateString(), form.duree, form.objectif, this.actions(form.id, index)]);
       });
-      $('#example tbody').on('click', 'button', function (this:any,event:any) {
+      $('#example tbody').on('click', 'button', function (this: any, event: any) {
         handleButons(this);
-      } );
+      });
       console.log(response);
     }, err => {
       console.log(err);
     });
-  }  
+  }
 
-  handleButons=(button:any)=>{
+  handleButons = (button: any) => {
     const type = button.getAttribute("type_");
     const id_ = button.parentNode.getAttribute("id_");
     const index_ = button.parentNode.getAttribute("index_");    
 
     if(type === "dropDown"){
       this.dropDownFormation(id_);
-    }else if(type === "editFormation"){
-      this.editFormation(this.formations.find(f=>f.id == id_) as FormationResponse, index_);
-    }else if(type === "showPlan"){
-      this.showPlan(this.formations.find(f=>f.id == id_) as FormationResponse);
-    }else if(type === "showColl"){
+    } else if (type === "editFormation") {
+      this.editFormation(this.formations.find(f => f.id == id_) as FormationResponse, index_);
+    } else if (type === "showPlan") {
+      this.showPlan(this.formations.find(f => f.id == id_) as FormationResponse);
+    } else if (type === "showColl") {
       this.showColl(id_);
-    }else if(type === "confirmDeleteFormation"){
+    } else if (type === "confirmDeleteFormation") {
       this.confirmDeleteFormation(id_, index_);
     }
   }
@@ -149,48 +149,48 @@ export class FormationsComponent implements OnInit {
       this.cleanData();
     }, err => {
       console.log(err);
-    });    
+    });
   }
 
-  editFormation=(formation : FormationResponse, index : number)=>{
+  editFormation = (formation: FormationResponse, index: number) => {
     this.newFormation = formation;
     this.index = index;
     this.case = 'update';
-  }  
+  }
 
   updateFormation() {
-    this.formationService.updateFormation(this.newFormation).subscribe((response)=>{
+    this.formationService.updateFormation(this.newFormation).subscribe((response) => {
       this.message = "This Formation well be updated successfuly!";
       $('#addFormation').modal("hide");
       this.dashboard.clear();
-      this.getFormations();          
+      this.getFormations();
     }, err => {
       console.log(err);
     });
   }
 
-  confirmDeleteFormation(formationId : number, i : number){
+  confirmDeleteFormation(formationId: number, i: number) {
     this.formationID = formationId;
-    this.index = i;    
+    this.index = i;
   }
 
-  deleteFormation(FormationID : number, index : number) {
-    this.formationService.deleteFormation(FormationID).subscribe((response)=>{
+  deleteFormation(FormationID: number, index: number) {
+    this.formationService.deleteFormation(FormationID).subscribe((response) => {
       this.message = "This Formation well be deleted successfuly!";
       this.formations.splice(index, 1);
       this.dashboard.clear();
       this.getFormations();
-      $('#deleteFormation').modal("hide");      
+      $('#deleteFormation').modal("hide");
     }, err => {
       console.log(err);
     });
   }
 
-  showPlan(formation : FormationResponse) {
+  showPlan(formation: FormationResponse) {
     this.plans = formation.plan;
   }
 
-  showColl(formationId : number){
+  showColl(formationId: number) {
     this.formationService.getAllCollFromForm(formationId).subscribe((response) => {
       this.employes = response;
       this.formationID = formationId;
@@ -199,17 +199,17 @@ export class FormationsComponent implements OnInit {
     });
   }
 
-  confirmDeleteEmploye(employeId : number, i : number){
+  confirmDeleteEmploye(employeId: number, i: number) {
     this.employeID = employeId;
     this.index = i;
   }
 
-  deleteEmplFromFormation(collId : number){
+  deleteEmplFromFormation(collId: number) {
     this.formationService.deleteCollFromFormation(collId, this.formationID).subscribe((response) => {
       this.message = "Successfuly!";
       this.employes.splice(this.index, 1);
     }, (error) => {
-      console.log(error);      
+      console.log(error);
     });
   }
 
@@ -221,18 +221,18 @@ export class FormationsComponent implements OnInit {
     this.newFormation.formationDate = new Date();
   }
 
-  getColl(){
-    this.collService.getColl().subscribe((response) => {      
-      this.dropdownListColl = response;            
+  getColl() {
+    this.collService.getColl().subscribe((response) => {
+      this.dropdownListColl = response;
     }, (error) => {
       console.log(error);
     });
   }
 
-  dropDownFormation=(formationId : number)=>{
-    
+  dropDownFormation = (formationId: number) => {
+
     this.getColl();
-    this.selectedItem = formationId;   
+    this.selectedItem = formationId;
 
     this.selectedItems = [];
 
@@ -247,10 +247,10 @@ export class FormationsComponent implements OnInit {
     };
   }
 
-  addCollToFormaton() {    
+  addCollToFormaton() {
     for (let index = 0; index < this.selectedItems.length; index++) {
       const collId = this.selectedItems[index];
-      let addById : AddById = new AddById();
+      let addById: AddById = new AddById();
       addById.id1 = collId.id;
       addById.id2 = this.selectedItem;
       this.formationService.addCollToFormation(addById).subscribe((response) => {
@@ -258,18 +258,18 @@ export class FormationsComponent implements OnInit {
         $('#addCollToFormation').modal("hide");
       }, (error) => {
         console.log(error);
-      });      
+      });
     }
   }
 
-  addCollToForm() {    
+  addCollToForm() {
     console.log('formation id : ' + this.selectedItem);
     for (let index = 0; index < this.selectedItems.length; index++) {
       const collId = this.selectedItems[index];
-      let addById : AddById = new AddById();
+      let addById: AddById = new AddById();
       addById.id1 = collId.id;
       addById.id2 = this.selectedItem;
-      console.log(addById);     
+      console.log(addById);
     }
   }
   

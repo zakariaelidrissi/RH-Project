@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { Employe } from 'src/app/models/employe';
 
 @Injectable({
@@ -8,29 +8,37 @@ import { Employe } from 'src/app/models/employe';
 })
 export class GestionEmployeService {
 
-  url : string = "http://localhost:8082/employes";
+  url: string = "http://localhost:8082/employes";
   // url : string = "http://localhost:8888/GESTION-EMPLOYE-SERVICE/employe";
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getAllEmploye() : Observable<Employe[]>{
+  getAllEmploye(): Observable<Employe[]> {
     return this.httpClient.get<Employe[]>(this.url);
   }
 
-  getEmployeByCin(cin : string) : Observable<Employe> {
+  getEmployeByCin(cin: string): Observable<Employe> {
     return this.httpClient.get<Employe>(this.url + "/cin/" + cin);
   }
 
-  addEmploye(newEmploye : Employe) : Observable<Employe> {
+  getEmployeByUserId(userId: number): Observable<Employe> {
+    return this.httpClient.get<Employe>(this.url + "/user/" + userId);
+  }
+
+  addEmploye(newEmploye: Employe): Observable<Employe> {
     return this.httpClient.post<Employe>(this.url, newEmploye);
   }
 
-  updateEmploye(updateEmploye:Employe): Observable<Employe>{
+  updateEmploye(updateEmploye: Employe): Observable<Employe> {
     return this.httpClient.put<Employe>(this.url, updateEmploye);
   }
 
-  deleteEmploye(employeID:number): Observable<any>{
-    return this.httpClient.delete<Employe>(this.url + "/"+ employeID);
+  deleteEmploye(employeID: number): Observable<any> {
+    return this.httpClient.delete<Employe>(this.url + "/" + employeID);
+  }
+
+  getByUserId(userId: number): Observable<Employe> {
+    return this.httpClient.get<Employe>(this.url + "/user/" + userId);
   }
 
 }

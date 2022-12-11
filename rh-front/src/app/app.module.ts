@@ -35,10 +35,11 @@ import { EmployeFormationsComponent } from './components/employes/employe-format
 import { EmployeAbsencesComponent } from './components/employes/employe-absences/employe-absences.component';
 import { DemandeFormationComponent } from './components/employes/demande-formation/demande-formation.component';
 import { EmployeAbsComponent } from './components/absence/employe-abs/employe-abs.component';
+import { DemandeAttestationsComponent } from './components/demande-attestations/demande-attestations.component';
 
-export function kcFactory(kcSecurity: KeycloakSecurityService) {
-  return () => kcSecurity.init();
-}
+// export function kcFactory(kcSecurity: KeycloakSecurityService) {
+//   return () => kcSecurity.init();
+// }
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ export function kcFactory(kcSecurity: KeycloakSecurityService) {
     GestionEmployerComponent, ErrorComponent, EmployeComponent,
     GestionStagiaireComponent, DemandeAbsenceComponent, StagiaireComponent,   
     LoginComponent, StagesComponent, AttestationsComponent, EmployeFormationsComponent, EmployeAbsencesComponent, DemandeFormationComponent, EmployeAbsComponent,
+    DemandeAttestationsComponent,
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule,
@@ -54,10 +56,14 @@ export function kcFactory(kcSecurity: KeycloakSecurityService) {
     NgxPaginationModule
   ],
   providers: [
-    FormationService, GestionEmployeService, CollService, StagiaireService,
-    AbsenceService, DatePipe,
-    {provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true}
+    FormationService,
+    GestionEmployeService,
+    CollService,
+    StagiaireService,
+    AbsenceService,
+    DatePipe,
+    // {provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true}
   ],
   bootstrap: [
     AppComponent

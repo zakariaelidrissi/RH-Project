@@ -12,7 +12,6 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { formatDate } from '@angular/common';
 
 declare const $: any;
-const dataLength = 6;
 
 @Component({
   selector: 'app-plans',
@@ -22,17 +21,17 @@ const dataLength = 6;
 export class PlansComponent implements OnInit {
 
   plans: PlanResponse[] = [];
-  Collaborateurs : Collaborateur[] = [];
-  newPlan : PlanRequest = new PlanRequest();
-  formations : FormationResponse[] = [];
-  showFormation : FormationResponse[] = [];
-  
-  formationId : number = 0;
-  index : number = 0;
-  planId : number = 0;
-  case : string = 'add';
+  Collaborateurs: Collaborateur[] = [];
+  newPlan: PlanRequest = new PlanRequest();
+  formations: FormationResponse[] = [];
+  showFormation: FormationResponse[] = [];
 
-  message : string = '';
+  formationId: number = 0;
+  index: number = 0;
+  planId: number = 0;
+  case: string = 'add';
+
+  message: string = '';
 
   dropdownListFormation : FormationResponse[] = [];
   dropdownListPlan : PlanResponse[] = [];
@@ -41,11 +40,12 @@ export class PlansComponent implements OnInit {
   dropdownFormationSettings:IDropdownSettings = {};
   errors : any = [];
 
-  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
 
-  constructor(private formationService: FormationService, 
-              private router : Router,
-              private collService : CollService) { }
+  @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
+
+  constructor(private formationService: FormationService,
+    private router: Router,
+    private collService: CollService) { }
 
   ngOnInit(): void {
     this.getPlans();
@@ -78,39 +78,39 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  getPlans() : void {
+  getPlans(): void {
     this.formationService.getPlans().subscribe((response: PlanResponse[]) => {
       this.plans = response;
       this.dropdownListPlan = response;
       const handleButons = this.handleButons;
-      this.plans.forEach((plan,index) => {
-        var dt : Date = new Date(plan.planDate);
+      this.plans.forEach((plan, index) => {
+        var dt: Date = new Date(plan.planDate);
         this.dashboard.setItems([plan.name, dt.toLocaleDateString(), plan.responsable.employe.nom, this.actions(plan.id, index)]);
       });
-      $('#example tbody').on('click', 'button', function (this:any,event:any) {
+      $('#example tbody').on('click', 'button', function (this: any, event: any) {
         handleButons(this);
-      } );
+      });
     }, err => {
       console.log(err);
     });
   }
 
-  handleButons=(button:any)=>{
+  handleButons = (button: any) => {
     const type = button.getAttribute("type_");
     const id_ = button.parentNode.getAttribute("id_");
     const index_ = button.parentNode.getAttribute("index_");
-    console.log(type,id_)
-    if(type === "editPlan"){
-      this.editPlan(this.plans.find(f=>f.id == id_) as PlanResponse);
-    }else if(type === "show"){
+    console.log(type, id_)
+    if (type === "editPlan") {
+      this.editPlan(this.plans.find(f => f.id == id_) as PlanResponse);
+    } else if (type === "show") {
       this.show(id_);
-    }else if(type === "confirmDeletePlan"){
+    } else if (type === "confirmDeletePlan") {
       this.confirmDeletePlan(id_, index_);
     }
   }
 
-  getFormation() : void {
-    this.formationService.getFormations().subscribe((response : FormationResponse[]) => {
+  getFormation(): void {
+    this.formationService.getFormations().subscribe((response: FormationResponse[]) => {
       this.dropdownListFormation = response;
     }, (error) => {
       console.log(error);
@@ -145,10 +145,10 @@ export class PlansComponent implements OnInit {
       this.cleanData();
     }, (err) => {
       console.log(err);
-    });    
+    });
   }
 
-  editPlan(plan : PlanResponse){
+  editPlan(plan: PlanResponse) {
     this.newPlan.id = plan.id;
     this.newPlan.name = plan.name;
     this.newPlan.planDate = plan.planDate;
@@ -157,7 +157,7 @@ export class PlansComponent implements OnInit {
   }
 
   updatePlan() {
-    this.formationService.updatePlan(this.newPlan).subscribe((response)=>{
+    this.formationService.updatePlan(this.newPlan).subscribe((response) => {
       this.message = "This Plan well be updated successfuly!";
       $('#addPlan').modal("hide");
       this.dashboard.clear();
@@ -167,13 +167,13 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  confirmDeletePlan(planID : number, i : number){
+  confirmDeletePlan(planID: number, i: number) {
     this.planId = planID;
-    this.index = i;    
+    this.index = i;
   }
 
-  deletePlan(planID : number, index : number) {
-    this.formationService.deletePlan(planID).subscribe((response)=>{
+  deletePlan(planID: number, index: number) {
+    this.formationService.deletePlan(planID).subscribe((response) => {
       this.message = "This Plan well be deleted successfuly!";
       this.plans.splice(index, 1);
       this.dashboard.clear();
@@ -184,8 +184,8 @@ export class PlansComponent implements OnInit {
     })
   }
 
-  dropDownFormation(){
-    
+  dropDownFormation() {
+
     this.getFormation();
 
     this.selectedItems = [];
@@ -208,10 +208,10 @@ export class PlansComponent implements OnInit {
     console.log(items);
   }
 
-  addFormatonToPlan() {    
+  addFormatonToPlan() {
     for (let index = 0; index < this.selectedItems.length; index++) {
       const formationID = this.selectedItems[index];
-      let addById : AddById = new AddById();
+      let addById: AddById = new AddById();
       addById.id1 = formationID.id;
       addById.id2 = this.selectedItem;
       this.formationService.addFormationToPlan(addById).subscribe((response) => {
@@ -219,16 +219,16 @@ export class PlansComponent implements OnInit {
         $('#addFormationToPlan').modal("hide");
       }, (error) => {
         console.log(error);
-      });      
+      });
     }
   }
 
-  confirmDeleteFormFromP(formationID : number, i : number){
+  confirmDeleteFormFromP(formationID: number, i: number) {
     this.formationId = formationID;
     this.index = i;
   }
 
-  show(idPlan : number) {
+  show(idPlan: number) {
     this.formationService.getAllFormFromPlan(idPlan).subscribe((response) => {
       this.showFormation = response;
       this.planId = idPlan;
@@ -237,8 +237,8 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  deleteFormatonFromPlan(formationID : number) {        
-    this.formationService.deleteFormationFromPlan(formationID, this.planId).subscribe((response) => {      
+  deleteFormatonFromPlan(formationID: number) {
+    this.formationService.deleteFormationFromPlan(formationID, this.planId).subscribe((response) => {
       this.showFormation.splice(this.index, 1);
     }, (error) => {
       console.log(error);

@@ -13,11 +13,13 @@ import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestio
 import { HomeComponent } from './components/home/home.component';
 import { PlansComponent } from './components/plans/plans.component';
 import { StagesComponent } from './components/stages/stages.component';
+import { DemandeAttestationsComponent } from './components/demande-attestations/demande-attestations.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: "home", component: HomeComponent},
   {path: "attestations", component: AttestationsComponent},
+  {path: "demande-attestations", component: DemandeAttestationsComponent},
   {path: "dash", component: DashBodyComponent},
   {path: "formations", component: FormationsComponent},
   {path: "plans", component: PlansComponent},

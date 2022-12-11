@@ -8,8 +8,8 @@
                 <h1>Liste des formations</h1>
                 <nav>
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
-                      <li class="breadcrumb-item active">Formations</li>
+                        <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Formations</li>
                     </ol>
                 </nav>
             </div>
@@ -25,14 +25,15 @@
             <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
-                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
                 </div>
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div class="row mb-3">            
+        <div class="row mb-3">
             <div class="col-md-12">
-                <div class="card">                    
+                <div class="card">
                     <div class="card-body">
                         <table id="example" class="table">
                             <thead>
@@ -40,7 +41,7 @@
                                     <th scope="col">Nom de formation</th>
                                     <th scope="col">Date de début</th>
                                     <th scope="col">Durée/jour</th>
-                                    <th scope="col">Objectif</th>                                        
+                                    <th scope="col">Objectif</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -99,16 +100,16 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom de formation</label>
-                            <input type="text" required placeholder="Formation Name" name="name" 
-                             [(ngModel)]="newFormation.name" class="form-control">                             
-                        </div>                                           
+                            <input type="text" required placeholder="Formation Name" name="name"
+                                [(ngModel)]="newFormation.name" class="form-control">
+                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Durée/jours</label>
                             <input type="text" required placeholder="Duration" name="duree"
-                             [(ngModel)]="newFormation.duree" class="form-control">
-                        </div>                                               
+                                [(ngModel)]="newFormation.duree" class="form-control">
+                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
@@ -117,12 +118,12 @@
                             [(ngModel)]="newFormation.formationDate" class="form-control">
                             <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small>
                         </div>
-                    </div>                    
+                    </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Objectif</label>                            
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Objectif</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="objectif"
-                             [(ngModel)]="newFormation.objectif"></textarea>
+                                [(ngModel)]="newFormation.objectif"></textarea>
                         </div>
                     </div>
                 </form>
@@ -142,7 +143,8 @@
 <!-- Add formation Modal -->
 
 <!-- Add Coll To form Modal -->
-<div class="modal fade" id="addCollToFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="addCollToFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -152,16 +154,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post">                                                           
+                <form method="post">
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Choisir un collaborateur</label>
-                            <ng-multiselect-dropdown name="selectedItems"
-                                [placeholder]="'Choisir un collaborateur'"
-                                [settings]="dropdownCollSettings"
-                                [data]="dropdownListColl"
-                                [(ngModel)]="selectedItems">
-                            </ng-multiselect-dropdown>                                                           
+                            <ng-multiselect-dropdown name="selectedItems" [placeholder]="'Choisir un collaborateur'"
+                                [settings]="dropdownCollSettings" [data]="dropdownListColl" [(ngModel)]="selectedItems">
+                            </ng-multiselect-dropdown>
                         </div>
                     </div>
                 </form>
@@ -176,7 +175,8 @@
 <!-- Add coll To form Modal -->
 
 <!-- Delete formation Modal -->
-<div class="modal fade" id="deleteFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="deleteFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -208,9 +208,9 @@
                     <table class="table datatable">
                         <thead>
                             <tr>
-                                <th>Nom de plan</th>                                    
+                                <th>Nom de plan</th>
                                 <th>Date de plan</th>
-                                <th>Responsable</th>                                        
+                                <th>Responsable</th>
                                 <!-- <th>Action</th> -->
                             </tr>
                         </thead>
@@ -225,8 +225,8 @@
                                         Delete
                                     </button>
                                 </td> -->
-                                
-                            </tr>                                    
+
+                            </tr>
                         </tbody>
                     </table>
                 </form>
@@ -257,7 +257,7 @@
                                         <th scope="col">Nom d'employe</th>
                                         <th scope="col">Cin</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Naissance</th>                                        
+                                        <th scope="col">Naissance</th>
                                         <th scope="col">Début Embauche</th>
                                         <th scope="col">Département</th>
                                         <th scope="col">Poste</th>
@@ -274,18 +274,19 @@
                                         <td>{{coll.employe.departement}}</td>
                                         <td>{{coll.employe.poste}}</td>
                                         <td>
-                                            <div class="me-auto d-flex">                                            
-                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteEmplFromForm"
+                                            <div class="me-auto d-flex">
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteEmplFromForm"
                                                     (click)="confirmDeleteEmploye(coll.id, i)">
                                                     <i class="bi bi-trash3-fill"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr>                                     
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -297,7 +298,8 @@
 <!-- Show Coll Modal -->
 
 <!-- Delete Coll From Formation Modal -->
-<div class="modal fade" id="deleteEmplFromForm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="deleteEmplFromForm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -309,7 +311,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" (click)="deleteEmplFromFormation(formationID)">Yes</button>
+                <button type="button" class="btn btn-primary"
+                    (click)="deleteEmplFromFormation(formationID)">Yes</button>
             </div>
         </div>
     </div>
