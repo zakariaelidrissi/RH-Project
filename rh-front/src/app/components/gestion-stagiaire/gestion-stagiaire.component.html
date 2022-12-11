@@ -14,13 +14,13 @@
                     </ol>
                 </nav>
             </div>
-            <div class="col-md-6 text-end">
+            <!-- <div class="col-md-6 text-end">
                 <button type="button" class="btn btn-primary btn-sm p-1 fw-bold" data-bs-toggle="modal" data-bs-target="#addStagiaire">
                     Ajouter Stagiaire
                 </button>
-            </div>
+            </div> -->
         </div>
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
@@ -34,20 +34,20 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table datatable">
+                        <table id="example" class="table datatable">
                             <thead>
                                 <tr>
                                     <th scope="col">Nom de stagiaire</th>                                        
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>                                        
-                                    <th scope="col">Date début</th>
-                                    <th scope="col">Département</th>
-                                    <th scope="col">Poste</th>
+                                    <th scope="col">Niveau d'etude</th>
+                                    <th scope="col">Ville</th>
+                                    <th scope="col">Civilite</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>                            
                             <tbody>
-                                <tr *ngFor="let stg of stagiaires; let i = index">
+                                <!-- <tr *ngFor="let stg of stagiaires; let i = index">
                                     <td>{{stg.user.nom + ' ' + stg.user.prenom}}</td>
                                     <td>{{stg.user.email}}</td>
                                     <td>{{stg.user.tel}}</td>
@@ -66,7 +66,7 @@
                                             </button>
                                         </div>
                                     </td>
-                                </tr>                                     
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

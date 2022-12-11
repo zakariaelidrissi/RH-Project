@@ -1,6 +1,7 @@
 package com.rhmanagment.user.Service;
 
 import com.rhmanagment.user.Entities.User;
+import com.rhmanagment.user.Model.ChangePassword;
 import com.rhmanagment.user.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,6 +43,13 @@ public class UserService {
         BCryptPasswordEncoder bcp = new BCryptPasswordEncoder();
         UsrReq.setMotDePasse(bcp.encode(UsrReq.getMotDePasse()));
         userRepository.save(Usr);
+    }
+
+    public void changePassword(ChangePassword change){
+        User user = getUserById(change.getId());
+        BCryptPasswordEncoder bcp = new BCryptPasswordEncoder();
+        user.setMotDePasse(bcp.encode(change.getPassword()));
+        userRepository.save(user);
     }
 
     // ************************ DELETE **************************

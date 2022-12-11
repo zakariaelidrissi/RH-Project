@@ -34,6 +34,7 @@ public class Attestation {
         Stage,
         Travail
     }
+
     public enum Etablissement{
         FaculteSciences("Faculté des Sciences"),
         Ensam("ENSAM");
@@ -45,6 +46,7 @@ public class Attestation {
             return name;
         }
     }
+
     public enum Poste{
         Doyen("Doyen");
         //Dev("dev");

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbsenceStgRequest } from 'src/app/models/absenceStgRequest';
 import { AbsenceStgResponse } from 'src/app/models/absenceStgResponse';
 import { Stagiaire } from 'src/app/models/stagiaire';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
 import { StagiaireService } from 'src/app/services/gestion-stagiaire/stagiaire.service';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 declare const $ : any;
 
@@ -27,6 +28,7 @@ export class StagiaireComponent implements OnInit {
   file : any;
   message : string = '';
 
+  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
 
   constructor(private stgService : StagiaireService,
               private absService : AbsenceService,
@@ -36,6 +38,31 @@ export class StagiaireComponent implements OnInit {
     this.getAllEmployee();
     this.getAllAbs();
   }
+
+  actions(absId : number, index: number) {
+    return '<div id_='+absId+' index_='+index+' class="me-auto d-flex">'+
+              '<button type_="editAbs" class="btn btn-warning me-2 btn-sm"'+
+                  'data-bs-toggle="modal" data-bs-target="#updateAbsence" (click)="editAbs(absence.employe.nom, absence)">'+
+                  '<i class="bi bi-pencil-square"></i>'+
+              '</button>'+
+              '<button type_="confirmDeleteAbs" class="btn btn-danger btn-sm"'+
+                  'data-bs-toggle="modal" data-bs-target="#deleteAbsence" (click)="confirmDeleteAbs(absence.id, i)">'+
+                  '<i class="bi bi-trash3-fill"></i>'+
+              '</button>'+
+          '</div>';
+  }
+
+  // handleButons=(button:any)=>{
+  //   const type = button.getAttribute("type_");
+  //   const id_ = button.parentNode.getAttribute("id_");
+  //   const index_ = button.parentNode.getAttribute("index_");
+
+  //   if(type === "editAbs"){
+  //     this.editAbs(this.absences.find(f=>f.id == id_)!.employe.nom, this.absences.find(f=>f.id == id_) as AbsenceEmpResponse);
+  //   }else if(type === "dropDownFormation"){
+  //     this.confirmDeleteAbs(id_, index_);
+  //   }
+  // }
   
   onChangeDate() {
     this.getAllAbs();

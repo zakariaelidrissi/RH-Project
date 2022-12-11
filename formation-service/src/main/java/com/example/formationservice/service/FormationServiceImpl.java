@@ -80,8 +80,9 @@ public class FormationServiceImpl implements FormationService {
         Formation formation = formationRepository.findFormationById(add.getId2());
         Demande demande = new Demande();
         demande.setCollaborateur(collaborateur);
-        demande.setFormation(formation);
         demande.setDateDemande(new Date());
+        demande.setFormation(formation);
+        demande.setStatus("encore...");
         demandeRepository.save(demande);
     }
 
@@ -105,6 +106,13 @@ public class FormationServiceImpl implements FormationService {
         formation.setName(formationRequest.getName());
         formation.setObjectif(formationRequest.getObjectif());
         formationRepository.save(formation);
+    }
+
+    @Override
+    public void updateDemande(Long id, String status) {
+        Demande demande = demandeRepository.findDemandeById(id);
+        demande.setStatus(status);
+        demandeRepository.save(demande);
     }
 
     // ********************** GET ***************************************
@@ -194,6 +202,17 @@ public class FormationServiceImpl implements FormationService {
     }
 
     @Override
+    public Demande findDemandeById(Long id) {
+        Demande demande = demandeRepository.findDemandeById(id);
+        return demande;
+    }
+
+    @Override
+    public List<Demande> getAllDemande() {
+        return demandeRepository.findAll();
+    }
+
+    @Override
     public Collaborateur findCollaborateurByEmployeId(Long employeID) {
         Collaborateur col = collaborateurRepository.findCollaborateurByEmpolyeID(employeID);
         col.setEmploye(employeRestClient.getEmployeById(employeID));
@@ -237,6 +256,18 @@ public class FormationServiceImpl implements FormationService {
         return listFormFromPlan;
     }
 
+    @Override
+    public List<Demande> getAllCollDemandes(Long idColl) {
+        List<Demande> demandes = demandeRepository.findAll();
+        List<Demande> dms = new ArrayList<>();
+        demandes.forEach(demande -> {
+            if (demande.getCollaborateur().getId().equals(idColl)){
+                dms.add(demande);
+            }
+        });
+        return dms;
+    }
+
     // ********************** DELETE ***************************************
     @Override
     public void deleteFormation(Long id) {
@@ -274,6 +305,11 @@ public class FormationServiceImpl implements FormationService {
     public void deleteCollaborateur(Long id){
         Collaborateur collaborateur = findCollaborateurByEmployeId(id);
         collaborateurRepository.deleteCollaborateurById(collaborateur.getId());
+    }
+
+    @Override
+    public void deleteDemande(Long id) {
+        demandeRepository.deleteById(id);
     }
 
 }

@@ -26,7 +26,7 @@ public class KeycloakSpringSecurityConfig extends KeycloakWebSecurityConfigurerA
         super.configure(http);
         //http.authorizeRequests().antMatchers("/users/**").authenticated();
         http.authorizeRequests()
-                .antMatchers("/absences/**", "/absencesStg/**", "/demandes")
+                .antMatchers("/absences/**", "/absencesStg/**", "/demandes/**")
                 .hasAuthority("ADMIN");
         http.csrf().disable();
     }

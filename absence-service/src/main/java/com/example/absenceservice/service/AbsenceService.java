@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,20 @@ public class AbsenceService {
         return listAbs;
     }
 
+    public List<EmpAbsRequest> getAllEmpAbsById(Long idEmp){
+        List<EmployeAbsence> absences = absenceRepository.findAll();
+        List<EmpAbsRequest> abs = new ArrayList<>();
+
+        absences.forEach(absence -> {
+            if (absence.getEmployeId().equals(idEmp)){
+                abs.add(new EmpAbsRequest(absence.getId(), absence.getDateAbs(), absence.getNatureAbsence(), absence.getJustificatif(),
+                        absence.getDuree(), absence.getEmployeId()));
+            }
+        });
+
+        return abs;
+    }
+
     public List<StagiaireAbsence> getAllStgAbs() {
         List<StagiaireAbsence> listAbs = stgAbsRepository.findAll();
 
@@ -57,14 +72,26 @@ public class AbsenceService {
         return listAbs;
     }
 
-    public List<EmployeAbsence> getAllEmpAbsByDate(Date date) {
+    public List<Absence> getAllEmpAbsByDate(Date date) {
         List<EmployeAbsence> listAbs = absenceRepository.findAllByDateAbs(date);
+        List<Employe> allEmp = employeRestClient.getAllEmp();
+        List<Absence> allAbs = new ArrayList<>();
 
-        listAbs.forEach(abs -> {
-            abs.setEmploye(getEmployeById(abs.getEmployeId()));
+        allEmp.forEach(emp -> {
+            final int[] count = {0};
+            listAbs.forEach(abs -> {
+                if (emp.getId().equals(abs.getEmployeId())){
+                    allAbs.add(new Absence(abs.getId(),abs.getDateAbs(),abs.getNatureAbsence(),
+                            abs.getJustificatif(),abs.getDuree(),"yes",emp.getId(),emp.getNom()));
+                }else count[0]++;
+            });
+            if (count[0] == 0 ){
+                allAbs.add(new Absence(null,null,null,
+                        null,null,"no", emp.getId(),emp.getNom()));
+            }
         });
 
-        return listAbs;
+        return allAbs;
     }
 
     public List<StagiaireAbsence> getAllStgAbsByDate(Date date) {

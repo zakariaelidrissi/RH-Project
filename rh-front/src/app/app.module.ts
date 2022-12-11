@@ -18,7 +18,6 @@ import { GestionEmployerComponent } from './components/gestion-employer/gestion-
 import { GestionEmployeService } from './services/gestion-employe/gestion-employe.service';
 import { ErrorComponent } from './components/error/error.component';
 import { EmployeComponent } from './components/absence/employe/employe.component';
-import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
 import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestion-stagiaire.component';
 import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
@@ -26,12 +25,16 @@ import { CollService } from './services/collaborateur/coll.service';
 import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service';
 import { AbsenceService } from './services/absence/absence.service';
 import { DatePipe } from '@angular/common';
-import { EmployeeComponent } from './components/employee/employee.component';
 import { LoginComponent } from './components/login/login.component';
 import { StagesComponent } from './components/stages/stages.component';
 import { AttestationsComponent } from './components/attestations/attestations.component';
+import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
 import { KeycloakSecurityService } from './services/keycloak-security/keycloak-security.service';
 import { RequestInterceptorService } from './services/keycloak-request/request-interceptor.service';
+import { EmployeFormationsComponent } from './components/employes/employe-formations/employe-formations.component';
+import { EmployeAbsencesComponent } from './components/employes/employe-absences/employe-absences.component';
+import { DemandeFormationComponent } from './components/employes/demande-formation/demande-formation.component';
+import { EmployeAbsComponent } from './components/absence/employe-abs/employe-abs.component';
 
 export function kcFactory(kcSecurity: KeycloakSecurityService) {
   return () => kcSecurity.init();
@@ -42,13 +45,13 @@ export function kcFactory(kcSecurity: KeycloakSecurityService) {
     AppComponent, DashboardComponent, FormationsComponent, DashBodyComponent,
     HomeComponent, NavbarComponent, FooterComponent, PlansComponent,
     GestionEmployerComponent, ErrorComponent, EmployeComponent,
-    StagiaireComponent, GestionStagiaireComponent, DemandeAbsenceComponent,    
-    EmployeeComponent, LoginComponent, StagesComponent, AttestationsComponent,
+    GestionStagiaireComponent, DemandeAbsenceComponent, StagiaireComponent,   
+    LoginComponent, StagesComponent, AttestationsComponent, EmployeFormationsComponent, EmployeAbsencesComponent, DemandeFormationComponent, EmployeAbsComponent,
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(), FormsModule,
-    NgxPaginationModule,
+    NgxPaginationModule
   ],
   providers: [
     FormationService, GestionEmployeService, CollService, StagiaireService,

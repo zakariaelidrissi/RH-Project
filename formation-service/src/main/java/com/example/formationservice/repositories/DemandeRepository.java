@@ -7,4 +7,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 public interface DemandeRepository extends JpaRepository<Demande,Long> {
 
+    Demande findDemandeById(Long id);
+
 }

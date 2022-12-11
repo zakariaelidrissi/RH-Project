@@ -1,0 +1,224 @@
+<app-dashboard></app-dashboard>
+
+<!-- main -->
+<main class="mt-5 pt-3">
+    <div class="container">
+        <div class="pagetitle row mt-2">
+            <div class="col-md-6">
+                <h1>List d'absence des employes</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                      <li class="breadcrumb-item">Absence</li>
+                      <li class="breadcrumb-item active">Employe</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-6 text-end">
+                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold" data-bs-toggle="modal" data-bs-target="#addAbsence">
+                    Ajouter Absence
+                </button>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="alert alert-success" *ngIf="message != ''">
+                    {{message}}
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>                  
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row mb-2">          
+            <div class="col-md-9"></div>
+            <div class="col-md-3 text-end">
+                <form action="" method="post" class="d-flex">                            
+                    <div class="form-group d-flex">
+                        <input type="date" class="form-control date ms-5" name="searchByDate" 
+                            [(ngModel)]="searchByDate" (change)="onChangeDate()" required>
+                        <button class="btn btn-primary btn-sm p-1 fw-bold ms-3" (click)="search()">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card">                    
+                    <div class="card-body">
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom d'employe</th>
+                                    <th scope="col">Date d'absence</th>
+                                    <th scope="col">Nature d'absence</th>
+                                    <th scope="col">Justificatif</th>
+                                    <th scope="col">Durée/jour</th>                                        
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let absence of absences;let i = index">
+                                    <td>{{ absence.employe.nom }}</td>
+                                    <td>{{ absence.dateAbs }}</td>
+                                    <td>{{ absence.natureAbsence }}</td>
+                                    <td>                                        
+                                        <button (click)="downloadJustificative(absence.justificatif)" class="bg-transparent border-0 text-primary">{{ absence.justificatif }}</button>
+                                    </td>
+                                    <td>{{ absence.duree }}</td>
+                                    <td>
+                                        <div class="me-auto d-flex">
+                                            <button class="btn btn-warning me-2 btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#updateAbsence" (click)="editAbs(absence.employe.nom, absence)">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#deleteAbsence" (click)="confirmDeleteAbs(absence.id, i)">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- main -->
+
+<!-- Add Absence Modal -->
+<div class="modal fade" id="addAbsence" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Ajouter Absence</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nom d'employe</th>
+                                <th scope="col">Cin</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Date début</th>
+                                <th scope="col">Département</th>
+                                <th scope="col">Poste</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let emp of employes; let i = index">
+                                <td>{{emp.nom}}</td>
+                                <td>{{emp.cin}}</td>
+                                <td>{{emp.email}}</td>                                    
+                                <td>{{emp.debutAmbauche}}</td>
+                                <td>{{emp.departement}}</td>
+                                <td>{{emp.poste}}</td>
+                                <td>
+                                    <div class="form-check ms-3">
+                                        <input type="checkbox" class="form-check-input" name="newAbs"
+                                            (change)="onChange(emp.id)">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addAbsence()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Absence Modal -->
+
+<!-- Update Absence Modal -->
+<div class="modal fade" id="updateAbsence" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Modifier l'absence de 'M.{{empName}}'</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom d'employe</label>
+                            <input type="text" placeholder="Employe Name" name="empName"
+                            [(ngModel)]="empName" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Date d'absence</label>
+                            <input type="date" required placeholder="Start Date" name="formationDate"
+                            [(ngModel)]="updAbs.dateAbs" class="form-control">
+                        </div>                        
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Nature d'absence</label>
+                            <select name="natureAbsence" [(ngModel)]="updAbs.natureAbsence" class="form-select">
+                                <option value="NONJUSTIFIEE" selected>NONJUSTIFIEE</option>
+                                <option value="NAISSANCE">NAISSANCE</option>
+                                <option value="CIRCONCISION">CIRCONCISION</option>
+                                <option value="MARIAGE">MARIAGE</option>
+                                <option value="MALADIE">MALADIE</option>
+                                <option value="DECES">DECES</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Justificatif</label>
+                            <input type="file" placeholder="Start Date" name="justificatif"
+                                [(ngModel)]="file.name" class="form-control" id="file" (change)="getFile($event)">
+                        </div>                        
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Durée</label>
+                            <input type="text" required placeholder="Duration" name="duree" 
+                            [(ngModel)]="updAbs.duree" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-warning" (click)="updateAbsence()">Modifier</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Update Absence Modal -->
+
+<!-- Delete formation Modal -->
+<div class="modal fade" id="deleteAbsence" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Confirmation!</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure, you want to delete this absence?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" (click)="deleteAbsence(absenceId, index)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete formation Modal -->

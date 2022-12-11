@@ -1,6 +1,7 @@
 package com.example.formationservice.web;
 
 import com.example.formationservice.entities.Collaborateur;
+import com.example.formationservice.entities.Demande;
 import com.example.formationservice.entities.Formation;
 import com.example.formationservice.entities.Plan;
 import com.example.formationservice.feign.EmployeRestClient;
@@ -60,14 +61,6 @@ public class FormationController {
         return formationService.getColl();
     }
 
-    /*@GetMapping("/collaborateurs/cin/{cin}")
-    public Collaborateur getCollaborateur(@PathVariable String cin){
-        Collaborateur col = formationService.findCollaborateurByCin(cin);
-        col.setEmploye(userRestClient.getEmployeById(col.getEmpolyeID()));
-
-        return col;
-    }*/
-
     @GetMapping("/collaborateurs/{id}")
     public Collaborateur getCollaborateurById(@PathVariable Long id){
         return formationService.findCollaborateurById(id);
@@ -91,6 +84,21 @@ public class FormationController {
     @GetMapping(path = "/listFormFromPlan/{idPlan}")
     public List<Formation> getAllFormFromPlan(@PathVariable Long idPlan) {
         return formationService.getAllFormFromPlan(idPlan);
+    }
+
+    @GetMapping(path = "/demandes/{id}")
+    public Demande getDemandeById(@PathVariable Long id){
+        return formationService.findDemandeById(id);
+    }
+
+    @GetMapping(path = "/demandes")
+    public List<Demande> getAllDemandes(){
+        return formationService.getAllDemande();
+    }
+
+    @GetMapping(path = "/demandes/byColl/{idColl}")
+    public List<Demande> getAllCollDemandes(@PathVariable Long idColl){
+        return formationService.getAllCollDemandes(idColl);
     }
 
     // ********************** POST ***************************************
@@ -131,8 +139,12 @@ public class FormationController {
 
     @PutMapping(path = "/plans/{id}")
     public void updatePlan(@RequestBody PlanRequest plan, @PathVariable Long id){
-        //formationService.addNewPlan(plan);
         formationService.updatePlan(plan, id);
+    }
+
+    @PutMapping(path = "/demandes/{idDm}/{status}")
+    public void updateDemande(@PathVariable Long idDm, @PathVariable String status){
+        formationService.updateDemande(idDm, status);
     }
 
     // ********************** DELETE ***************************************
@@ -159,5 +171,10 @@ public class FormationController {
     @DeleteMapping(path = "/collaborateurs/{idEmpl}")
     public void deleteCollaborateur(@PathVariable Long idEmpl){
         formationService.deleteCollaborateur(idEmpl);
+    }
+
+    @DeleteMapping("/demandes/{id}")
+    public void deleteDemande(@PathVariable Long id){
+        formationService.deleteDemande(id);
     }
 }

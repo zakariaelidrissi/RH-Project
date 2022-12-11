@@ -16,6 +16,7 @@ public class Demande {
     private Date dateDemande;
     @ManyToOne
     private Collaborateur collaborateur;
+    private String status;
     @ManyToOne
     private Formation formation;
 }

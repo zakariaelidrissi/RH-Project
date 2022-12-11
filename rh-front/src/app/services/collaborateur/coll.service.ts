@@ -19,6 +19,10 @@ export class CollService {
     return this.httpClient.get<Collaborateur[]>(this.url);
   }
 
+  getCollaborateurByEmpId(id : number) : Observable<Collaborateur>{
+    return this.httpClient.get<Collaborateur>(this.url+ '/employe/'+id);
+  }
+
   getColl() : Observable<any[]> {
     return this.httpClient.get<any[]>(this.url2);
   }

@@ -1,4 +1,4 @@
-<app-dashboard [dataLength]=dataLength></app-dashboard>
+<app-dashboard></app-dashboard>
 
 <!-- main -->
 <main class="mt-5 pt-3">
@@ -94,13 +94,13 @@
                 <h5 class="modal-title fw-bold" *ngIf="case == 'update'">Modifier Formation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body">                
                 <form method="post">
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom de formation</label>
                             <input type="text" required placeholder="Formation Name" name="name" 
-                             [(ngModel)]="newFormation.name" class="form-control">
+                             [(ngModel)]="newFormation.name" class="form-control">                             
                         </div>                                           
                     </div>
                     <div class="row mt-3">
@@ -115,6 +115,7 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début</label>
                             <input type="date" required placeholder="Start Date" name="formationDate"
                             [(ngModel)]="newFormation.formationDate" class="form-control">
+                            <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small>
                         </div>
                     </div>                    
                     <div class="row mt-3">
@@ -125,10 +126,13 @@
                         </div>
                     </div>
                 </form>
+                <div>
+                    <small *ngIf="errors && errors['full']" class="form-text text-danger">{{errors['full']}}</small>                    
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" *ngIf="case == 'add'">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="saveFormation()" *ngIf="case == 'add'">Ajouter</button>
+                <button type="button" class="btn btn-primary" (click)="addFormation()" *ngIf="case == 'add'">Ajouter</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" *ngIf="case == 'update'">Fermer</button>
                 <button type="button" class="btn btn-warning" (click)="updateFormation()" *ngIf="case == 'update'">Modifier</button>
             </div>
@@ -311,32 +315,3 @@
     </div>
 </div>
 <!-- Delete Coll From Formation Modal -->
-
-<!-- <div class="modal fade" id="validForm" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Form Validation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="newForm" novalidate>
-                    <div class="form-group">
-                      <label class="center-block">Name:
-                        <input class="form-control" formControlName="name">
-                      </label>
-                    </div>
-                    <div *ngIf="newForm.controls['name'].invalid && newForm.controls['name'].touched" class="alert alert-danger">
-                        <div *ngIf="newForm.controls['name'].errors.required">
-                        Name is required.
-                      </div>
-                    </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" (click)="deleteEmplFromFormation(formationID)">Yes</button>
-            </div>
-        </div>
-    </div>
-</div> -->

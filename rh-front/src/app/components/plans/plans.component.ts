@@ -9,6 +9,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AddById } from 'src/app/models/addById';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { formatDate } from '@angular/common';
 
 declare const $: any;
 const dataLength = 6;
@@ -38,28 +39,18 @@ export class PlansComponent implements OnInit {
   selectedItems : any = [];
   selectedItem : number = 0;
   dropdownFormationSettings:IDropdownSettings = {};
-
-  dataLength:number;
+  errors : any = [];
 
   @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
 
   constructor(private formationService: FormationService, 
               private router : Router,
-              private collService : CollService) { this.dataLength = this.load(); }
+              private collService : CollService) { }
 
   ngOnInit(): void {
     this.getPlans();
     this.getCollaborateur();
     this.dropDownFormation();
-  }
-
-  load(){  
-    const last = localStorage.getItem("lastDataLength");
-    let dl = parseInt(last ? last : "NaN");
-    if(!isFinite(dl)) {
-      dl  = dataLength;
-    }
-    return dl;
   }
   
   actions(planId : number, index: number) {
@@ -131,15 +122,27 @@ export class PlansComponent implements OnInit {
     this.cleanData();
   }
 
+  addPlan() {
+    if(this.newPlan.name && this.newPlan.planDate && this.newPlan.responsableID){
+      this.errors['full'] = "";
+      if (formatDate(this.newPlan.planDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en') ){
+        this.savePlan();
+        this.errors['date'] = '';
+      }else {
+        this.errors['date'] = "la date doit superieur ou egale à la date d'aujourd'hui!";
+      }
+    }else {
+      this.errors['full'] = "tout les champs est obligatoire!";
+    }
+  }
+
   savePlan() {        
     this.formationService.addPlan(this.newPlan).subscribe((response)=>{
       this.message = "This Plan well be added successfuly!";
       $('#addPlan').modal("hide");
-      // var dt : Date = new Date(this.newPlan.planDate);
-      // this.dashboard.setItems([this.newPlan.name, dt.toLocaleDateString(), this.newPlan.responsableID, this.actions(this.newPlan.id, 0)]);
-      // this.cleanData();
       this.dashboard.clear();
       this.getPlans();
+      this.cleanData();
     }, (err) => {
       console.log(err);
     });    
@@ -159,7 +162,6 @@ export class PlansComponent implements OnInit {
       $('#addPlan').modal("hide");
       this.dashboard.clear();
       this.getPlans();
-      // this.cleanData();
     }, (err) => {
       console.log(err);
     });
@@ -174,6 +176,8 @@ export class PlansComponent implements OnInit {
     this.formationService.deletePlan(planID).subscribe((response)=>{
       this.message = "This Plan well be deleted successfuly!";
       this.plans.splice(index, 1);
+      this.dashboard.clear();
+      this.getPlans();
       $('#deletePlan').modal("hide");
     }, (err) => {
       console.log(err);
@@ -236,7 +240,6 @@ export class PlansComponent implements OnInit {
   deleteFormatonFromPlan(formationID : number) {        
     this.formationService.deleteFormationFromPlan(formationID, this.planId).subscribe((response) => {      
       this.showFormation.splice(this.index, 1);
-      // $('#addFormationToPlan').modal("hide");
     }, (error) => {
       console.log(error);
     });
@@ -247,12 +250,6 @@ export class PlansComponent implements OnInit {
     this.newPlan.id = 0;
     this.newPlan.planDate = '';
     this.newPlan.responsableID = 0;
-  }
-
-
-  cancelBtn1() {
-    this.cleanData();
-    this.getPlans();
   }
 
 }

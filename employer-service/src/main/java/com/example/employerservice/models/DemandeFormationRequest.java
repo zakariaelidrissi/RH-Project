@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class DemandeFormation {
+public class DemandeFormationRequest {
     private Long idColl;
-    private String FormationName;
+    private Long idForm;
 }

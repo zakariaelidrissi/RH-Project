@@ -9,7 +9,6 @@ public interface CollaborateurRepository extends JpaRepository<Collaborateur,Lon
 
     Collaborateur findCollaborateurById(Long collaborateurId);
     Collaborateur findCollaborateurByEmpolyeID(Long userId);
-    //Collaborateur findByCin(String cin);
     void deleteCollaborateurById(Long id);
 
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
+import { EmployeAbsComponent } from './components/absence/employe-abs/employe-abs.component';
 import { EmployeComponent } from './components/absence/employe/employe.component';
 import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
 import { AttestationsComponent } from './components/attestations/attestations.component';
@@ -22,7 +23,7 @@ const routes: Routes = [
   {path: "plans", component: PlansComponent},
   {path: "gestion-employer", component: GestionEmployerComponent},
   {path: "gestion-stagiaire", component: GestionStagiaireComponent},
-  {path: "employe/absence", component: EmployeComponent},
+  {path: "employe/absence", component: EmployeAbsComponent},
   {path: "demande/absence", component: DemandeAbsenceComponent},
   {path: "stagiaire/absence", component: StagiaireComponent},
   {path: "stages", component: StagesComponent},

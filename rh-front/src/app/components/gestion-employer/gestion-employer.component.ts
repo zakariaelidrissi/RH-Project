@@ -12,7 +12,6 @@ import { AddById } from 'src/app/models/addById';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 
 declare const $: any;
-const dataLength = 6;
 
 @Component({
   selector: 'app-gestion-employer',
@@ -38,28 +37,17 @@ export class GestionEmployerComponent implements OnInit {
   selectedItem : number = 0;
   dropdownFormationSettings:IDropdownSettings = {};
 
-  dataLength:number;
-
   @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
 
 
   constructor(private employerService : GestionEmployeService, 
               private router: Router,
               private collService : CollService,
-              private formationService : FormationService) { this.dataLength = this.load(); }
+              private formationService : FormationService) { }
 
   ngOnInit(): void {    
 
     this.getAllEmployer();
-  }
-
-  load(){  
-    const last = localStorage.getItem("lastDataLength");
-    let dl = parseInt(last ? last : "NaN");
-    if(!isFinite(dl)) {
-      dl  = dataLength;
-    }
-    return dl;
   }
 
   actions(collId : number, index: number) {
@@ -132,9 +120,10 @@ export class GestionEmployerComponent implements OnInit {
         this.collRequest.employeId = response.id;
         
         this.collService.addCollaborateur(this.collRequest).subscribe((response) => {
+          this.dashboard.clear();
           this.getAllEmployer();
           this.cleanData();
-          this.router.navigate(['/gestion-employer']);
+          // this.router.navigate(['/gestion-employer']);
         }, (error) => {
           console.log(error);
         });
@@ -157,8 +146,9 @@ export class GestionEmployerComponent implements OnInit {
     this.employerService.updateEmploye(this.newEmploye).subscribe((response)=>{
       this.message = "This Employer well be updated successfuly!";
       $('#addEmployer').modal("hide");
-      this.cleanData();
-      this.router.navigate(['/gestion-employer']);
+      this.dashboard.clear();
+      this.getAllEmployer();
+      // this.router.navigate(['/gestion-employer']);
     }, err => {
       console.log(err);
     });
@@ -175,7 +165,9 @@ export class GestionEmployerComponent implements OnInit {
       this.employes.splice(index, 1);
       this.collService.deleteCollaborateur(employerID).subscribe((response) => {
         $('#deleteEmploye').modal("hide");
-        this.router.navigate(['/gestion-employer']);
+        this.dashboard.clear();
+        this.getAllEmployer();
+        // this.router.navigate(['/gestion-employer']);
       }, (error) => {
         console.log(error);
       });
@@ -245,11 +237,5 @@ export class GestionEmployerComponent implements OnInit {
       });      
     }
   }
-
-  cancelBtn1() {
-    this.cleanData();
-    this.getAllEmployer();
-  }
-
 
 }

@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     }
     return dl;
   }
+  
   ngOnInit(): void {
     const dataLength = this.load();
     const obj = $('#example').DataTable({
@@ -76,10 +77,6 @@ export class DashboardComponent implements OnInit {
   active(id:string){
     // document.querySelector("#sidebar a.nav-link:not(.collapsed)")?.classList.add('collapsed');
     // document.querySelector(id)?.classList.remove('collapsed');
-  }
-
-  clear=()=> {
-    this.obj.row.clear().draw();
   }
 
   clear(){

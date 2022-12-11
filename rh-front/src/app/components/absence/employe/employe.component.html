@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div class="row mb-2">          
+        <!-- <div class="row mb-2">          
             <div class="col-md-9"></div>
             <div class="col-md-3 text-end">
                 <form action="" method="post" class="d-flex">                            
@@ -41,12 +41,12 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-body">
-                        <table class="table datatable">
+                        <table id="example" class="table datatable">
                             <thead>
                                 <tr>
                                     <th scope="col">Nom d'employe</th>
@@ -58,7 +58,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let absence of absences;let i = index">
+                                <!-- <tr *ngFor="let absence of absences;let i = index">
                                     <td>{{ absence.employe.nom }}</td>
                                     <td>{{ absence.dateAbs }}</td>
                                     <td>{{ absence.natureAbsence }}</td>
@@ -78,7 +78,7 @@
                                             </button>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

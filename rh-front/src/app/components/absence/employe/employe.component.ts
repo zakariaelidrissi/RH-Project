@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbsenceEmpRequest } from 'src/app/models/absenceEmpRequest';
 import { AbsenceEmpResponse } from 'src/app/models/absenceEmpResponse';
 import { Employe } from 'src/app/models/employe';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 declare const $ : any;
 
@@ -28,6 +29,8 @@ export class EmployeComponent implements OnInit {
 
   message : string = '';
 
+  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
+
   constructor(private empolyeeServise : GestionEmployeService,
               private absService : AbsenceService,
               private router : Router) { }
@@ -37,21 +40,54 @@ export class EmployeComponent implements OnInit {
     this.getAllAbs();      
   }
 
+  actions(absId : number, index: number) {
+    return '<div id_='+absId+' index_='+index+' class="me-auto d-flex">'+
+              '<button type_="editAbs" class="btn btn-warning me-2 btn-sm"'+
+                  'data-bs-toggle="modal" data-bs-target="#updateAbsence">'+
+                  '<i class="bi bi-pencil-square"></i>'+
+              '</button>'+
+              '<button type_="confirmDeleteAbs" class="btn btn-danger btn-sm"'+
+                  'data-bs-toggle="modal" data-bs-target="#deleteAbsence">'+
+                  '<i class="bi bi-trash3-fill"></i>'+
+              '</button>'+
+            '</div>';
+  }
+
+  handleButons=(button:any)=>{
+    const type = button.getAttribute("type_");
+    const id_ = button.parentNode.getAttribute("id_");
+    const index_ = button.parentNode.getAttribute("index_");
+
+    if(type === "editAbs"){
+      this.editAbs(this.absences.find(f=>f.id == id_)!.employe.nom, this.absences.find(f=>f.id == id_) as AbsenceEmpResponse);
+    }else if(type === "dropDownFormation"){
+      this.confirmDeleteAbs(id_, index_);
+    }
+  }
+
   onChangeDate() {
     this.getAllAbs();
   }
 
   getAllEmployee(){
     this.empolyeeServise.getAllEmploye().subscribe((response) => {
-      this.employes = response;
+      this.employes = response;      
     }, (err) => {
       console.log(err);
     })
-  }
+  }  
 
   getAllAbs(){
     this.absService.getEmpAbsences().subscribe((response) => {
       this.absences = response;
+      const handleButons = this.handleButons;
+      this.absences.forEach((abs,index) => {
+        var dt : Date = new Date(abs.dateAbs);
+        this.dashboard.setItems([abs.employe.nom, dt.toLocaleDateString(), abs.natureAbsence, abs.justificatif, abs.duree, this.actions(abs.id, index)]);
+      });
+      $('#example tbody').on('click', 'button', function (this:any,event:any) {
+        handleButons(this);
+      } );
     }, (error) => {
       console.log(error);
     });

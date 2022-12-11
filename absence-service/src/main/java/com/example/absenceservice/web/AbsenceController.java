@@ -3,10 +3,7 @@ package com.example.absenceservice.web;
 import com.example.absenceservice.entities.EmployeAbsence;
 import com.example.absenceservice.entities.DemandeAbsence;
 import com.example.absenceservice.entities.StagiaireAbsence;
-import com.example.absenceservice.model.EmpAbsRequest;
-import com.example.absenceservice.model.DemandeRequest;
-import com.example.absenceservice.model.Employe;
-import com.example.absenceservice.model.StgAbsRequest;
+import com.example.absenceservice.model.*;
 import com.example.absenceservice.service.AbsenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +36,7 @@ public class AbsenceController {
     }
 
     @GetMapping(path = "/absences/date/{date}")
-    public List<EmployeAbsence> getAllAbsByDate(@PathVariable Date date){
+    public List<Absence> getAllAbsByDate(@PathVariable Date date){
         return absenceService.getAllEmpAbsByDate(date);
     }
 
@@ -66,6 +63,11 @@ public class AbsenceController {
     @GetMapping(path = "/demandes/{id}")
     public DemandeAbsence getDemande(@PathVariable Long id){
         return absenceService.getDemandeById(id);
+    }
+
+    @GetMapping(path = "/demandes/byEmpId/{idEmp}")
+    public List<EmpAbsRequest> getAllEmpAbsById(@PathVariable Long idEmp){
+        return absenceService.getAllEmpAbsById(idEmp);
     }
 
     // ************************* POST ************************

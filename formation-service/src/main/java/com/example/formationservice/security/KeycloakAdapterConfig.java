@@ -12,4 +12,6 @@ public class KeycloakAdapterConfig {
         return new KeycloakSpringBootConfigResolver();
     }
 
+
+
 }
