@@ -202,12 +202,15 @@ export class FormationsComponent implements OnInit {
   confirmDeleteEmploye(employeId: number, i: number) {
     this.employeID = employeId;
     this.index = i;
+    // console.log('employe id : ' + this.employeID);
+    // console.log('formation id : ' + this.formationID);
   }
 
-  deleteEmplFromFormation(collId: number) {
-    this.formationService.deleteCollFromFormation(collId, this.formationID).subscribe((response) => {
+  deleteEmplFromFormation() {
+    this.formationService.deleteCollFromFormation(this.employeID, this.formationID).subscribe((response) => {
       this.message = "Successfuly!";
       this.employes.splice(this.index, 1);
+      $('#deleteEmplFromForm').modal("hide");
     }, (error) => {
       console.log(error);
     });
@@ -235,6 +238,7 @@ export class FormationsComponent implements OnInit {
     this.selectedItem = formationId;
 
     this.selectedItems = [];
+    // console.log(this.selectedItems)
 
     this.dropdownCollSettings = {
       singleSelection: false,
@@ -248,17 +252,20 @@ export class FormationsComponent implements OnInit {
   }
 
   addCollToFormaton() {
-    for (let index = 0; index < this.selectedItems.length; index++) {
-      const collId = this.selectedItems[index];
-      let addById: AddById = new AddById();
-      addById.id1 = collId.id;
-      addById.id2 = this.selectedItem;
-      this.formationService.addCollToFormation(addById).subscribe((response) => {
-        this.message = "Successfuly!";
-        $('#addCollToFormation').modal("hide");
-      }, (error) => {
-        console.log(error);
-      });
+    for (let index = -1; index < this.selectedItems.length; index++) {
+      if (index != -1) {
+        const collId = this.selectedItems[index];
+        let addById: AddById = new AddById();
+        addById.id1 = collId.id;
+        addById.id2 = this.selectedItem;
+        // console.log('addById '+ index + ' : ' + addById.id1 + ' ' + addById.id2);
+        this.formationService.addCollToFormation(addById).subscribe((response) => {
+          this.message = "Successfuly!";
+          $('#addCollToFormation').modal("hide");
+        }, (error) => {
+          console.log(error);
+        });
+      }
     }
   }
 

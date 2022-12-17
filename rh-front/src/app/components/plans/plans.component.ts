@@ -55,15 +55,15 @@ export class PlansComponent implements OnInit {
   
   actions(planId : number, index: number) {
     return '<div id_='+planId+' index_='+index+' class="me-auto d-flex">'+
-              '<button type_="editPlan" class="btn btn-warning me-2 btn-sm" (click)="editPlan(plan)"'+
+              '<button type_="editPlan" class="btn btn-warning me-2 btn-sm"'+
                   'data-bs-toggle="modal" data-bs-target="#addPlan">'+
                   '<i class="bi bi-pencil-square"></i>'+
               '</button>'+
-              '<button type_="show" class="btn btn-success me-2 btn-sm" (click)="show(plan.id)"'+
+              '<button type_="show" class="btn btn-success me-2 btn-sm"'+
                   'data-bs-target="#showFormations" data-bs-toggle="modal">'+
                   '<i class="bi bi-eye-fill"></i>'+
               '</button>'+
-              '<button type_="confirmDeletePlan" class="btn btn-danger btn-sm" (click)="confirmDeletePlan(plan.id, i)"'+
+              '<button type_="confirmDeletePlan" class="btn btn-danger btn-sm"'+
                   'data-bs-toggle="modal" data-bs-target="#deletePlan">'+
                   '<i class="bi bi-trash3-fill"></i>'+
               '</button>'+
@@ -172,8 +172,8 @@ export class PlansComponent implements OnInit {
     this.index = i;
   }
 
-  deletePlan(planID: number, index: number) {
-    this.formationService.deletePlan(planID).subscribe((response) => {
+  deletePlan(index: number) {
+    this.formationService.deletePlan(this.planId).subscribe((response) => {
       this.message = "This Plan well be deleted successfuly!";
       this.plans.splice(index, 1);
       this.dashboard.clear();
@@ -237,9 +237,10 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  deleteFormatonFromPlan(formationID: number) {
-    this.formationService.deleteFormationFromPlan(formationID, this.planId).subscribe((response) => {
+  deleteFormatonFromPlan() {
+    this.formationService.deleteFormationFromPlan(this.formationId, this.planId).subscribe((response) => {
       this.showFormation.splice(this.index, 1);
+      $('#deleteFormFromPlan').modal("hide");
     }, (error) => {
       console.log(error);
     });
