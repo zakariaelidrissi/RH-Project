@@ -21,7 +21,7 @@ public class Collaborateur {
     //private String cin;
 
     @ManyToMany(mappedBy = "collaborateurs", fetch = FetchType.EAGER)
-    private List<Formation> formations = new ArrayList<>();
+    private Set<Formation> formations = new HashSet<>();
 
     @OneToMany(mappedBy = "responsable", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

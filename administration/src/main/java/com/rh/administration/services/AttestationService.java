@@ -1,6 +1,8 @@
 package com.rh.administration.services;
 
+import com.rh.administration.core.AttestationStagePdf;
 import com.rh.administration.core.AttestationTravailPdf;
+import com.rh.administration.core.IPDFCreator;
 import com.rh.administration.dto.AttestationRequest;
 import com.rh.administration.dto.AttestationResponse;
 import com.rh.administration.entities.Attestation;
@@ -70,8 +72,18 @@ public class AttestationService {
     public ByteArrayInputStream getPdf(Long id) throws IOException, NoSuchElementException {
         Attestation att = repo.findById(id).get();
         DemandeAttestation demande = demandeRepo.findById(att.getIdDemande()).get();
-        //User user = userService.getProductById(demande.getIdUser());
+        //TODO : User user = userService.getProductById(demande.getIdUser());
         User user = new User(Date.from(Instant.now()), User.Sexe.Femme);
-        return AttestationTravailPdf.getInstance().createPDF(att,user);
+        return getPDFCreator(att).createPDF(att,user);
+    }
+    private IPDFCreator<Attestation> getPDFCreator(Attestation attestation) throws IOException {
+        switch (attestation.getType()){
+            case Travail:
+                return AttestationTravailPdf.getInstance();
+            case Stage:
+                return AttestationStagePdf.getInstance();
+            default:
+               throw new NoSuchElementException("Le type d'attestion est inconnu");
+        }
     }
 }

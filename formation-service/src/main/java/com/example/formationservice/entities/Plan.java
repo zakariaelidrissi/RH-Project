@@ -17,8 +17,10 @@ public class Plan {
     private String name;
     @Temporal(TemporalType.DATE)
     private Date planDate;
+
     @ManyToOne
     private Collaborateur responsable;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Formation> formation = new ArrayList<>();

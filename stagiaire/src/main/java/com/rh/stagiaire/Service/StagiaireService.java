@@ -1,7 +1,7 @@
 package com.rh.stagiaire.Service;
 
 import com.rh.stagiaire.Entities.Stagiaire;
-import com.rh.stagiaire.Feign.UserRestClient;
+import com.rh.stagiaire.Feign.UserClient;
 import com.rh.stagiaire.Model.StagiareRequest;
 import com.rh.stagiaire.Model.User;
 import com.rh.stagiaire.Repositories.StagiaireRepository;
@@ -16,8 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public class StagiaireService {
 
+    private UserClient userRestClient;
     private StagiaireRepository stagiaireRepository;
-    private UserRestClient userRestClient;
 
     // ************************ GET **************************
     public User getUserById(Long id) {

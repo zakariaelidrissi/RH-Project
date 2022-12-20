@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DemandeRequest } from 'src/app/models/demandeRequest';
 import { DemandeResponse } from 'src/app/models/demandeResponse';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
 
@@ -18,6 +19,11 @@ export class DemandeAbsenceComponent implements OnInit {
   constructor(private absService : AbsenceService, private router : Router) { }
 
   ngOnInit(): void {
+    this.getAllDemande();
+  }
+
+  onChangeDate() {
+    this.getAllDemande();
   }
 
   getAllDemande() {
@@ -29,13 +35,27 @@ export class DemandeAbsenceComponent implements OnInit {
   }
 
   search() {
-    // if (this.searchByDate != null) {
-    //   this.absService.getAbsByDate(this.searchByDate).subscribe((response) => {
-    //     this.demandes = response;
-    //   }, (error) => {
-    //     console.log(error);
-    //   });
-    // }
+    this.getAbs(this.searchByDate);
+  }
+
+  getAbs(date : Date){
+    var abs : DemandeResponse[] = [];
+    for (var i=0; i<this.demandes.length; i++) {
+      if (this.demandes[i].dateDebut === date){
+        abs.push(this.demandes[i]);
+      }
+    }
+    this.demandes = abs;
+  }
+
+  updateDemande(demande : DemandeRequest, statut : string) {
+    demande.statut = statut;
+    this.absService.updateDm(demande).subscribe((response) => {
+      this.message = "Cette absence a été accepté avec succès!";
+      this.getAllDemande();
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

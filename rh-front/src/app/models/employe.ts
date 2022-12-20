@@ -1,15 +1,18 @@
+import { User } from "./user";
+
 export class Employe {
-    id : number;
-    nom : string;
-    cin : string;
-    email : string;
-    naissance : Date;
-    debutAmbauche : Date;
-    departement : string;
-    poste : string;
+    id: number;
+    nom: string;
+    cin: string;
+    email: string;
+    naissance: Date;
+    debutAmbauche: Date;
+    departement: string;
+    poste: string;
 
+    user!: User;
 
-    constructor(){
+    constructor() {
         this.id = 0;
         this.nom = '';
         this.cin = '';

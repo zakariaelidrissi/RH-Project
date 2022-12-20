@@ -18,10 +18,12 @@ public class MessageController {
     public ToAllMessageResponse sendToAll(@RequestBody SendMessageToAllRequest req){
         return service.saveToAll(req);
     }
+
     @PostMapping(path = "/messages")
     public MessageResponse send(@RequestBody MessageRequest req){
         return service.save(req);
     }
+
     @PostMapping(path = "/messages/send2many")
     public MessageResponse sendToMany(@RequestBody SendMessageToManyRequest req){
         req.getReceivers().forEach((id)->{

@@ -13,9 +13,10 @@ import { DemandeResponse } from 'src/app/models/demandeResponse';
 })
 export class AbsenceService {
 
-  urlAbs : string = "http://localhost:8085/";
-  urlDm : string = "http://localhost:8085/demandes";
-  // urlDiscovery : string = "http://localhost:8888/FORMATION-SERVICE/";
+  urlAbs : string = "http://localhost:8086/";
+  urlDm : string = "http://localhost:8086/demandes";
+  // urlAbs : string = "http://localhost:8888/ABSENCE-SERVICE/";
+  // urlDm : string = "http://localhost:8888/ABSENCE-SERVICE/demandes";
 
   constructor(private httpClient : HttpClient) { }
 
@@ -66,7 +67,7 @@ export class AbsenceService {
   }
 
   getStgAbsByDate(date : Date) : Observable<AbsenceStgResponse[]> {
-    return this.httpClient.get<AbsenceStgResponse[]>(this.urlAbs + "absences/stg/date/" + date);
+    return this.httpClient.get<AbsenceStgResponse[]>(this.urlAbs + "absencesStg/date/" + date);
   }
 
   addStgAbsence(newAbs : AbsenceStgRequest) : Observable<AbsenceStgRequest> {    

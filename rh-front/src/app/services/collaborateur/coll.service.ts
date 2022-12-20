@@ -9,24 +9,34 @@ import { CollRequest } from 'src/app/models/collRequest';
 })
 export class CollService {
 
-  url : string = "http://localhost:8083/";
+  url : string = "http://localhost:8085/collaborateurs";
+  url2 : string = "http://localhost:8085/coll";
+  // url : string = "http://localhost:8888/FORMATION-SERVICE/collaborateurs";
 
   constructor(private httpClient : HttpClient) { }
 
   getCollaborateur() : Observable<Collaborateur[]>{
-    return this.httpClient.get<Collaborateur[]>(this.url + "listCollaborateurs");
+    return this.httpClient.get<Collaborateur[]>(this.url);
+  }
+
+  getCollaborateurByEmpId(id : number) : Observable<Collaborateur>{
+    return this.httpClient.get<Collaborateur>(this.url+ '/employe/'+id);
+  }
+
+  getColl() : Observable<any[]> {
+    return this.httpClient.get<any[]>(this.url2);
   }
 
   addCollaborateur(newColl : CollRequest ) : Observable<CollRequest> {
-    return this.httpClient.post<CollRequest>(this.url + "addCollaborateur", newColl);
+    return this.httpClient.post<CollRequest>(this.url, newColl);
   }
 
   deleteCollaborateur(employerId : number) : Observable<any> {
-    return this.httpClient.delete<any>(this.url + "deleteColl/" + employerId);
+    return this.httpClient.delete<any>(this.url + "/" + employerId);
   }
 
   getCollById(employeId : number) : Observable<Collaborateur> {
-    return this.httpClient.get<Collaborateur>(this.url + 'collaborateurs/employe/' + employeId);
+    return this.httpClient.get<Collaborateur>(this.url + '/employe/' + employeId);
   }
 
 }

@@ -20,7 +20,6 @@ public class FormationServiceImpl implements FormationService {
     private FormationRepository formationRepository;
     private PlanRepository planRepository;
     private CollaborateurRepository collaborateurRepository;
-    //private ModuleRepository moduleRepository;
     private DemandeRepository demandeRepository;
     private EmployeRestClient employeRestClient;
 
@@ -53,11 +52,6 @@ public class FormationServiceImpl implements FormationService {
         collaborateurRepository.save(coll);
     }
 
-    /*@Override
-    public void addNewModule(Module module) {
-        moduleRepository.save(module);
-    }*/
-
     @Override
     public void addCollaborateurToFormation(AddById add) {
         Collaborateur collaborateur = findCollaborateurById(add.getId1());
@@ -80,26 +74,15 @@ public class FormationServiceImpl implements FormationService {
         }
     }
 
-    /*@Override
-    public void addModuleToPlan(AddWithStr add) {
-        Module module = findModuleByName(add.getStr1());
-        Plan plan = findPlanByName(add.getStr2());
-
-        if (plan.getModules() != null){
-            plan.getModules().add(module);
-            module.getPlans().add(plan);
-        }
-    }*/
-
     @Override
     public void addDemande(AddById add) {
-        //Collaborateur collaborateur = collaborateurRepository.findCollaborateurById(add.getId());
         Collaborateur collaborateur = collaborateurRepository.findCollaborateurById(add.getId1());
         Formation formation = formationRepository.findFormationById(add.getId2());
         Demande demande = new Demande();
         demande.setCollaborateur(collaborateur);
-        demande.setFormation(formation);
         demande.setDateDemande(new Date());
+        demande.setFormation(formation);
+        demande.setStatus("encore...");
         demandeRepository.save(demande);
     }
 
@@ -123,6 +106,13 @@ public class FormationServiceImpl implements FormationService {
         formation.setName(formationRequest.getName());
         formation.setObjectif(formationRequest.getObjectif());
         formationRepository.save(formation);
+    }
+
+    @Override
+    public void updateDemande(Long id, String status) {
+        Demande demande = demandeRepository.findDemandeById(id);
+        demande.setStatus(status);
+        demandeRepository.save(demande);
     }
 
     // ********************** GET ***************************************
@@ -182,17 +172,6 @@ public class FormationServiceImpl implements FormationService {
         return plan;
     }
 
-    /*@Override
-    public Module findModuleByName(String moduleName) {
-
-        return moduleRepository.findByName(moduleName);
-    }*/
-
-    /*@Override
-    public Collaborateur findCollaborateurByCin(String cin) {
-        return collaborateurRepository.findByCin(cin);
-    }*/
-
     @Override
     public List<Collaborateur> getCollaborateurs() {
         List<Collaborateur> col = collaborateurRepository.findAll();
@@ -202,6 +181,17 @@ public class FormationServiceImpl implements FormationService {
 
         return col;
     }
+    @Override
+    public List<Coll> getColl() {
+        List<Collaborateur> col = collaborateurRepository.findAll();
+        List<Coll> coll = new ArrayList<>();
+        col.forEach(c->{
+            c.setEmploye(employeRestClient.getEmployeById(c.getEmpolyeID()));
+            coll.add(new Coll(c.getId(), c.getEmploye().getNom()));
+        });
+
+        return coll;
+    }
 
     @Override
     public Collaborateur findCollaborateurById(Long id) {
@@ -209,6 +199,17 @@ public class FormationServiceImpl implements FormationService {
         col.setEmploye(employeRestClient.getEmployeById(col.getEmpolyeID()));
 
         return col;
+    }
+
+    @Override
+    public Demande findDemandeById(Long id) {
+        Demande demande = demandeRepository.findDemandeById(id);
+        return demande;
+    }
+
+    @Override
+    public List<Demande> getAllDemande() {
+        return demandeRepository.findAll();
     }
 
     @Override
@@ -255,6 +256,18 @@ public class FormationServiceImpl implements FormationService {
         return listFormFromPlan;
     }
 
+    @Override
+    public List<Demande> getAllCollDemandes(Long idColl) {
+        List<Demande> demandes = demandeRepository.findAll();
+        List<Demande> dms = new ArrayList<>();
+        demandes.forEach(demande -> {
+            if (demande.getCollaborateur().getId().equals(idColl)){
+                dms.add(demande);
+            }
+        });
+        return dms;
+    }
+
     // ********************** DELETE ***************************************
     @Override
     public void deleteFormation(Long id) {
@@ -292,6 +305,11 @@ public class FormationServiceImpl implements FormationService {
     public void deleteCollaborateur(Long id){
         Collaborateur collaborateur = findCollaborateurByEmployeId(id);
         collaborateurRepository.deleteCollaborateurById(collaborateur.getId());
+    }
+
+    @Override
+    public void deleteDemande(Long id) {
+        demandeRepository.deleteById(id);
     }
 
 }

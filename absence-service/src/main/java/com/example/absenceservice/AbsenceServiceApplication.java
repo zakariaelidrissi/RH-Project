@@ -1,17 +1,15 @@
 package com.example.absenceservice;
 
-import com.example.absenceservice.entities.Demande;
 import com.example.absenceservice.entities.EmployeAbsence;
 import com.example.absenceservice.entities.NatureAbsence;
 import com.example.absenceservice.feign.EmployeRestClient;
 import com.example.absenceservice.model.Employe;
-import com.example.absenceservice.repositories.AbsenceRepository;
+import com.example.absenceservice.repositories.EmpAbsRepository;
 import com.example.absenceservice.repositories.DemandeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
 
@@ -26,7 +24,7 @@ public class AbsenceServiceApplication {
     //@Bean
     CommandLineRunner start(EmployeRestClient userRestClient,
                             DemandeRepository demandeRepository,
-                            AbsenceRepository absenceRepository){
+                            EmpAbsRepository absenceRepository){
         return args -> {
             Employe emp1 = userRestClient.getEmployeById(1L);
             Employe emp2 = userRestClient.getEmployeById(3L);
@@ -37,7 +35,7 @@ public class AbsenceServiceApplication {
             abs.setDuree("");
             abs.setNatureAbsence(NatureAbsence.NONJUSTIFIEE);
             abs.setEmployeId(emp1.getId());
-            abs.setJustificatif(false);
+            //abs.setJustificatif(false);
 
             absenceRepository.save(abs);
 

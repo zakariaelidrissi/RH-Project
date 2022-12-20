@@ -9,15 +9,17 @@ import com.rh.administration.entities.Attestation;
 import com.rh.administration.services.AttestationService;
 import com.rh.administration.services.DemandeAttestationService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.Instant;
 import java.util.List;
 
-@CrossOrigin("*")
+//@CrossOrigin
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class DemandeAttestationController {
     DemandeAttestationService service;
 
@@ -43,8 +45,27 @@ public class DemandeAttestationController {
     public List<DemandeAttestationResponse> getAllByType(@PathVariable Attestation.AttestationType type){
         return service.getAllByType(type);
     }
-    @GetMapping(path = "/demande-att/done/{done}")
-    public List<DemandeAttestationResponse> getAllByType(@PathVariable boolean done){
-        return service.getAllByDone(done);
+    @PostMapping(path="/demande-att/accept/{id}")
+    public ResponseEntity acceptDemande(@PathVariable Long id){
+        try {
+            service.acceptDemande(id);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping(path="/demande-att/reject/{id}")
+    public ResponseEntity rejectDemande(@PathVariable Long id){
+        try {
+            service.rejectDemande(id);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping(path = "/demande-att/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+        service.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

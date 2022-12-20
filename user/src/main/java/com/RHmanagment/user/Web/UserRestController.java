@@ -2,12 +2,14 @@ package com.RHmanagment.user.Web;
 
 import com.RHmanagment.user.Entities.User;
 import com.RHmanagment.user.Service.UserService;
+import com.rhmanagment.user.Model.ChangePassword;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController @AllArgsConstructor
+@CrossOrigin("*")
 public class UserRestController {
     private UserService userService;
 
@@ -42,6 +44,11 @@ public class UserRestController {
     @PutMapping(path = "/users")
     public void updateUser(@RequestBody User UsrReq) {
         userService.updateUser(UsrReq);
+    }
+
+    @PutMapping(path = "/users/changePassword")
+    public void changePassword(@RequestBody ChangePassword change){
+        userService.changePassword(change);
     }
 
     // ************************ DELETE **************************

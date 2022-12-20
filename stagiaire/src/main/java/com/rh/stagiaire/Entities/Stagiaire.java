@@ -23,5 +23,4 @@ public class Stagiaire {
     @Transient
     private User user;
 
-
 }

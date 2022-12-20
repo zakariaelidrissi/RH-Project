@@ -1,6 +1,7 @@
 package com.example.formationservice.service;
 
 import com.example.formationservice.entities.Collaborateur;
+import com.example.formationservice.entities.Demande;
 import com.example.formationservice.entities.Formation;
 import com.example.formationservice.entities.Plan;
 import com.example.formationservice.models.*;
@@ -13,15 +14,14 @@ public interface FormationService {
     void addNewFormation(FormationRequest formation);
     void addNewPlan(PlanRequest plan);
     void addNewCollaborateur(CollaborateurRequest collaborateur);
-    //void addNewModule(Module module);
     void addCollaborateurToFormation(AddById add);
     void addFormationToPlan(AddById add);
-    //void addModuleToPlan(AddWithStr add);
     void addDemande(AddById add);
 
     // ********************** PUT ***************************************
     void updatePlan(PlanRequest planRequest, Long id);
     void updateFormation(FormationRequest formation, Long id);
+    void updateDemande(Long id, String status);
 
     // ********************** GET ***************************************
     Formation findFormationByName(String formationName);
@@ -30,15 +30,16 @@ public interface FormationService {
     List<Plan> getAllPlans();
     Plan findPlanByName(String planName);
     Plan findPlanById(Long id);
-    //Module findModuleByName(String moduleName);
-    //Collaborateur findCollaborateurByCin(String cin);
     List<Collaborateur> getCollaborateurs();
+    List<Coll> getColl();
     Collaborateur findCollaborateurById(Long id);
+    Demande findDemandeById(Long id);
+    List<Demande> getAllDemande();
     Collaborateur findCollaborateurByEmployeId(Long userId);
     Employe getEmployeById(Long id);
-    //void addCollaborateurToFormation(String cin, String formationName);
     List<Collaborateur> getAllCollFromFormation(Long idForm);
     List<Formation> getAllFormFromPlan(Long idPlan);
+    List<Demande> getAllCollDemandes(Long idColl);
 
     // ********************** DELETE ***************************************
     void deleteFormation(Long id);
@@ -46,4 +47,5 @@ public interface FormationService {
     void deleteFormationFromPlan(Long formationId, Long planId);
     void deleteCollFromFormation(Long CollId, Long FormID);
     void deleteCollaborateur(Long id);
+    void deleteDemande(Long id);
 }

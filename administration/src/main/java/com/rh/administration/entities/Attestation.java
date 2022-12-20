@@ -34,6 +34,7 @@ public class Attestation {
         Stage,
         Travail
     }
+
     public enum Etablissement{
         FaculteSciences("Faculté des Sciences"),
         Ensam("ENSAM");
@@ -45,8 +46,10 @@ public class Attestation {
             return name;
         }
     }
+
     public enum Poste{
         Doyen("Doyen");
+        //Dev("dev");
         private final String name;
         private Poste(String name) {
             this.name = name;
@@ -56,4 +59,17 @@ public class Attestation {
         }
     }
 
+    public enum Etat{
+        Accepted("Accepted"),
+        Rejected("Rejected"),
+        Waiting("Waiting");
+        //Dev("dev");
+        private final String name;
+        private Etat(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+    }
 }

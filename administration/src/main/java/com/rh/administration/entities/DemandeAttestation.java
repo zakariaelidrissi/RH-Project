@@ -19,5 +19,5 @@ public class DemandeAttestation {
     @Enumerated(EnumType.STRING) Attestation.Etablissement etablissement;
     @Temporal(TemporalType.DATE)
     Date date;
-    boolean done;
+    @Enumerated(EnumType.STRING) Attestation.Etat etat;
 }

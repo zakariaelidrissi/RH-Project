@@ -1,6 +1,6 @@
 package com.example.employerservice.feign;
 
-import com.example.employerservice.models.DemandeFormation;
+import com.example.employerservice.models.DemandeFormationRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,5 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface FormationRestClient {
 
     @PostMapping(path = "/addDemande")
-    void demandeFormation(@RequestBody DemandeFormation demandeFormation);
+    void demandeFormation(@RequestBody DemandeFormationRequest demandeFormation);
+
+
 }
