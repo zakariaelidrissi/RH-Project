@@ -1,8 +1,8 @@
-package com.rhmanagment.user.Web;
+package com.RHmanagment.user.Web;
 
-import com.rhmanagment.user.Entities.User;
+import com.RHmanagment.user.Entities.User;
+import com.RHmanagment.user.Service.UserService;
 import com.rhmanagment.user.Model.ChangePassword;
-import com.rhmanagment.user.Service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
