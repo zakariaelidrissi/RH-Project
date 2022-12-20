@@ -6,18 +6,19 @@ import com.rh.stagiaire.Model.StagiareRequest;
 import com.rh.stagiaire.Model.User;
 import com.rh.stagiaire.Repositories.StagiaireRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
 @Transactional
 @AllArgsConstructor
+@Service
 public class StagiaireService {
 
-    private UserClient userRestClient;
     private StagiaireRepository stagiaireRepository;
+    private UserClient userRestClient;
 
     // ************************ GET **************************
     public User getUserById(Long id) {

@@ -16,7 +16,7 @@ public class User {
     private String nom;
     private String prenom;
     @Column(unique = true)
-    private String email;
+    private String EmailId;
     private String motDePasse;
     @Column(unique = true)
     private String tel;
