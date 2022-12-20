@@ -14,12 +14,14 @@ declare const $: any;
 export class EmployeFormationsComponent implements OnInit {
 
   formations : FormationResponse[] = [];
+  empId : number = 2;
 
   @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
 
   constructor(private collService : CollService) { }
 
   ngOnInit(): void {
+    this.getAllFormation(this.empId);
   }
 
   getAllFormation(id : number){

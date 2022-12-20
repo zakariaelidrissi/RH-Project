@@ -96,9 +96,9 @@ public class FormationController {
         return formationService.getAllDemande();
     }
 
-    @GetMapping(path = "/demandes/byColl/{idColl}")
-    public List<Demande> getAllCollDemandes(@PathVariable Long idColl){
-        return formationService.getAllCollDemandes(idColl);
+    @GetMapping(path = "/demandes/byColl/{empId}")
+    public List<Demande> getAllCollDemandes(@PathVariable Long empId){
+        return formationService.getAllCollDemandes(empId);
     }
 
     // ********************** POST ***************************************
@@ -142,9 +142,11 @@ public class FormationController {
         formationService.updatePlan(plan, id);
     }
 
-    @PutMapping(path = "/demandes/{idDm}/{status}")
-    public void updateDemande(@PathVariable Long idDm, @PathVariable String status){
-        formationService.updateDemande(idDm, status);
+    // @PutMapping(path = "/demandes/{idDm}/{status}")
+    //public void updateDemande(@PathVariable Long idDm, @PathVariable String status){
+    @PutMapping(path = "/demandes")
+    public void updateDemande(@RequestBody DemandeRequest dmReq){
+        formationService.updateDemande(dmReq.getId(), dmReq.getStatus());
     }
 
     // ********************** DELETE ***************************************

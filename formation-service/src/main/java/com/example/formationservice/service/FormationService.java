@@ -39,7 +39,7 @@ public interface FormationService {
     Employe getEmployeById(Long id);
     List<Collaborateur> getAllCollFromFormation(Long idForm);
     List<Formation> getAllFormFromPlan(Long idPlan);
-    List<Demande> getAllCollDemandes(Long idColl);
+    List<Demande> getAllCollDemandes(Long empId);
 
     // ********************** DELETE ***************************************
     void deleteFormation(Long id);

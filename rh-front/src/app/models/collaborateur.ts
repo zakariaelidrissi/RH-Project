@@ -1,4 +1,5 @@
-import { Demande } from "./Demande";
+// import { DemandeFormation } from "./Demande";
+import { DemandeFormationRes } from "./demandeFormationRes";
 import { Employe } from "./employe";
 import { FormationResponse } from "./formationResponse";
 import { PlanRequest } from "./planRequest";
@@ -7,7 +8,7 @@ export class Collaborateur {
     id: number;    
     formations: Array<FormationResponse>;
     plans: Array<PlanRequest>;
-    demandes: Array<Demande>;
+    demandes: Array<DemandeFormationRes>;
     empolyeID: number;
     employe: Employe;
 
@@ -15,7 +16,7 @@ export class Collaborateur {
         this.id = 0;    
         this.formations = new Array<FormationResponse>();
         this.plans = new Array<PlanRequest>();
-        this.demandes = new Array<Demande>();
+        this.demandes = new Array<DemandeFormationRes>();
         this.empolyeID = 0;
         this.employe = new Employe();
     }
