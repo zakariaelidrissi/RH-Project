@@ -1,4 +1,4 @@
-package com.rhmanagment.user.Entities;
+package com.RHmanagment.user.Entities;
 
 public enum UserRole {
     USER,

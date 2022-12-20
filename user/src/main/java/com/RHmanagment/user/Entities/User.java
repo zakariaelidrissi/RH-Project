@@ -1,4 +1,4 @@
-package com.rhmanagment.user.Entities;
+package com.RHmanagment.user.Entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
