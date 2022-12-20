@@ -26,9 +26,9 @@ public class UserService {
         return userRepository.findUserById(id);
     }
 
-    public User login(String email){
+   /* public User login(String email){
         return userRepository.findUserByEmail(email);
-    }
+    }*/
 
     // ************************ POST **************************
     public void addUser(User UsrReq) {
