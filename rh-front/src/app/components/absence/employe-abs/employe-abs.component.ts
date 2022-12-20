@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AbsenceEmp } from 'src/app/models/absenceEmp';
 import { AbsenceEmpRequest } from 'src/app/models/absenceEmpRequest';
 import { AbsenceEmpResponse } from 'src/app/models/absenceEmpResponse';
 import { Employe } from 'src/app/models/employe';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
-import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 declare const $ : any;
 
@@ -17,7 +17,7 @@ declare const $ : any;
 export class EmployeAbsComponent implements OnInit {
 
   employes : Employe[] = [];
-  absences : AbsenceEmpResponse[] = [];
+  absences : AbsenceEmp[] = [];
   newAbs : AbsenceEmpRequest = new AbsenceEmpRequest();
   updAbs : AbsenceEmpRequest = new AbsenceEmpRequest();
   abs : number[] = [];
@@ -29,44 +29,20 @@ export class EmployeAbsComponent implements OnInit {
 
   message : string = '';
 
-  // @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
-
   constructor(private empolyeeServise : GestionEmployeService,
               private absService : AbsenceService,
               private router : Router) { }
 
   ngOnInit(): void {
-    this.getAllEmployee();
-    this.getAllAbs();      
-  }
-
-  actions(absId : number, index: number) {
-    return '<div id_='+absId+' index_='+index+' class="me-auto d-flex">'+
-              '<button type_="editAbs" class="btn btn-warning me-2 btn-sm"'+
-                  'data-bs-toggle="modal" data-bs-target="#updateAbsence">'+
-                  '<i class="bi bi-pencil-square"></i>'+
-              '</button>'+
-              '<button type_="confirmDeleteAbs" class="btn btn-danger btn-sm"'+
-                  'data-bs-toggle="modal" data-bs-target="#deleteAbsence">'+
-                  '<i class="bi bi-trash3-fill"></i>'+
-              '</button>'+
-            '</div>';
-  }
-
-  handleButons=(button:any)=>{
-    const type = button.getAttribute("type_");
-    const id_ = button.parentNode.getAttribute("id_");
-    const index_ = button.parentNode.getAttribute("index_");
-
-    if(type === "editAbs"){
-      this.editAbs(this.absences.find(f=>f.id == id_)!.employe.nom, this.absences.find(f=>f.id == id_) as AbsenceEmpResponse);
-    }else if(type === "dropDownFormation"){
-      this.confirmDeleteAbs(id_, index_);
-    }
+    // this.searchByDate = new Date();
+    // console.log('in OnInit ' + this.searchByDate);
+    this.getAbsences(this.searchByDate.toDateString());
   }
 
   onChangeDate() {
-    this.getAllAbs();
+    // this.getAllAbs();
+    console.log('in onChangeDate ' + this.searchByDate);
+    this.getAbsences(this.searchByDate.toDateString());
   }
 
   getAllEmployee(){
@@ -75,11 +51,21 @@ export class EmployeAbsComponent implements OnInit {
     }, (err) => {
       console.log(err);
     })
-  }  
+  }
+
+  getAbsences(date : string) {
+    // console.log('date : '+this.searchByDate.toDateString());
+    this.absService.getEmpAbsByDate(date).subscribe((res) => {
+      this.absences = res;
+      console.log(res);
+    }, (error) => {
+      console.log(error);
+    });
+  }
 
   getAllAbs(){
     this.absService.getEmpAbsences().subscribe((response) => {
-      this.absences = response;
+      // this.absences = response;
       console.log(this.absences);
       // const handleButons = this.handleButons;
       // this.absences.forEach((abs,index) => {
@@ -94,7 +80,7 @@ export class EmployeAbsComponent implements OnInit {
     });
   }
 
-  getAbsByDate(date : Date) {
+  getAbsByDate(date : string) {
     this.absService.getEmpAbsByDate(date).subscribe((response) => {
       this.absences = response;      
     }, (error) => {
@@ -105,11 +91,11 @@ export class EmployeAbsComponent implements OnInit {
   getAbs(date : Date){
     var abs : AbsenceEmpResponse[] = [];
     for (var i=0; i<this.absences.length; i++) {
-      if (this.absences[i].dateAbs === date){
-        abs.push(this.absences[i]);
-      }
+      // if (this.absences[i].dateAbs === date){
+      //   abs.push(this.absences[i]);
+      // }
     }
-    this.absences = abs;
+    // this.absences = abs;
   }
 
   addAbsence() {    

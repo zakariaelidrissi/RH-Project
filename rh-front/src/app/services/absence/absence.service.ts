@@ -7,6 +7,7 @@ import { AbsenceStgRequest } from 'src/app/models/absenceStgRequest';
 import { AbsenceStgResponse } from 'src/app/models/absenceStgResponse';
 import { DemandeRequest } from 'src/app/models/demandeRequest';
 import { DemandeResponse } from 'src/app/models/demandeResponse';
+import { AbsenceEmp } from 'src/app/models/absenceEmp';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,13 @@ export class AbsenceService {
     return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + 'absences');
   }
 
-  getEmpAbsByDate(date : Date) : Observable<AbsenceEmpResponse[]> {
-    return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + "absences/date/" + date);
+  // getEmpAbsByDate(date : Date) : Observable<AbsenceEmpResponse[]> {
+  //   return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + "absences/date/" + date);
+  // }
+
+  getEmpAbsByDate(date : string) : Observable<AbsenceEmp[]> {
+    // var dt = date.toLocaleDateString();
+    return this.httpClient.get<AbsenceEmp[]>(this.urlAbs + "absences/date/" + date);
   }
   
   addEmpAbsence(newAbs : AbsenceEmpRequest) : Observable<AbsenceEmpRequest> {    

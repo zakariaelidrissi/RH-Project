@@ -73,23 +73,23 @@ public class AbsenceService {
     }
 
     public List<Absence> getAllEmpAbsByDate(Date date) {
-        List<EmployeAbsence> listAbs = absenceRepository.findAllByDateAbs(date);
+        List<EmployeAbsence> listAbs = absenceRepository.findAllEmployeAbsenceByDateAbs(date);
         List<Employe> allEmp = employeRestClient.getAllEmp();
         List<Absence> allAbs = new ArrayList<>();
-
-        allEmp.forEach(emp -> {
-            final int[] count = {0};
-            listAbs.forEach(abs -> {
+        System.out.println(date);
+        for (Employe emp : allEmp) {
+            int count = 0;
+            for (EmployeAbsence abs : listAbs) {
                 if (emp.getId().equals(abs.getEmployeId())){
                     allAbs.add(new Absence(abs.getId(),abs.getDateAbs(),abs.getNatureAbsence(),
                             abs.getJustificatif(),abs.getDuree(),"yes",emp.getId(),emp.getNom()));
-                }else count[0]++;
-            });
-            if (count[0] == 0 ){
+                }else count++;
+            }
+            if (count == 0 ){
                 allAbs.add(new Absence(null,null,null,
                         null,null,"no", emp.getId(),emp.getNom()));
             }
-        });
+        }
 
         return allAbs;
     }

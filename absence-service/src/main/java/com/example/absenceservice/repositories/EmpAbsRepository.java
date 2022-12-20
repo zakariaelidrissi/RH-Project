@@ -9,5 +9,5 @@ import java.util.List;
 public interface EmpAbsRepository extends JpaRepository<EmployeAbsence,Long> {
 
     EmployeAbsence findEmployeAbsenceById(Long id);
-    List<EmployeAbsence> findAllByDateAbs(Date date);
+    List<EmployeAbsence> findAllEmployeAbsenceByDateAbs(Date date);
 }

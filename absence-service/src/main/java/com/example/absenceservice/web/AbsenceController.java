@@ -36,8 +36,9 @@ public class AbsenceController {
     }
 
     @GetMapping(path = "/absences/date/{date}")
-    public List<Absence> getAllAbsByDate(@PathVariable Date date){
-        return absenceService.getAllEmpAbsByDate(date);
+    public List<Absence> getAllAbsByDate(@PathVariable String date){
+        Date dt = new Date(date);
+        return absenceService.getAllEmpAbsByDate(dt);
     }
 
     @GetMapping(path = "/absencesStg/date/{date}")

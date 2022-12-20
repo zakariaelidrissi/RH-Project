@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div class="row mb-2">          
+        <!-- <div class="row mb-2">          
             <div class="col-md-9"></div>
             <div class="col-md-3 text-end">
                 <form action="" method="post" class="d-flex">                            
@@ -41,46 +41,62 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-body">
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nom d'employe</th>
-                                    <th scope="col">Date d'absence</th>
-                                    <th scope="col">Nature d'absence</th>
-                                    <th scope="col">Justificatif</th>
-                                    <th scope="col">Durée/jour</th>                                        
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let absence of absences;let i = index">
-                                    <td>{{ absence.employe.nom }}</td>
-                                    <td>{{ absence.dateAbs }}</td>
-                                    <td>{{ absence.natureAbsence }}</td>
-                                    <td>                                        
-                                        <button (click)="downloadJustificative(absence.justificatif)" class="bg-transparent border-0 text-primary">{{ absence.justificatif }}</button>
-                                    </td>
-                                    <td>{{ absence.duree }}</td>
-                                    <td>
-                                        <div class="me-auto d-flex">
-                                            <button class="btn btn-warning me-2 btn-sm"
-                                                data-bs-toggle="modal" data-bs-target="#updateAbsence" (click)="editAbs(absence.employe.nom, absence)">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm"
-                                                data-bs-toggle="modal" data-bs-target="#deleteAbsence" (click)="confirmDeleteAbs(absence.id, i)">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3 text-end">
+                                <form action="" method="post">                            
+                                    <div class="form-group d-flex">
+                                        <input type="date" class="form-control date ms-5" name="searchByDate" 
+                                            [(ngModel)]="searchByDate" (change)="onChangeDate()" required>
+                                        <button class="btn btn-primary btn-sm p-1 fw-bold ms-1" (click)="search()">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <table class="table datatable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nom d'employe</th>
+                                        <th scope="col">Date d'absence</th>
+                                        <th scope="col">Nature d'absence</th>
+                                        <!-- <th scope="col">Justificatif</th> -->
+                                        <th scope="col">Durée/jour</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let absence of absences;let i = index">
+                                        <td>{{ absence.userName }}</td>
+                                        <td>{{ absence.dateAbs }}</td>
+                                        <td>{{ absence.natureAbsence }}</td>
+                                        <!-- <td>                                        
+                                            <button (click)="downloadJustificative(absence.justificatif)" class="bg-transparent border-0 text-primary">{{ absence.justificatif }}</button>
+                                        </td> -->
+                                        <td>{{ absence.duree }}</td>
+                                        <td>
+                                            <div class="me-auto d-flex">
+                                                <!-- <button class="btn btn-warning me-2 btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#updateAbsence" (click)="editAbs(absence.userName, absence)">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button> -->
+                                                <!-- <button class="btn btn-danger btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteAbsence" (click)="confirmDeleteAbs(absence.id, i)">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button> -->
+                                                <div class="form-check ms-3">
+                                                    <input type="checkbox" class="form-check-input" name="newAbs"
+                                                        (change)="onChange(absence.userId)" [checked]="absence.status == 'yes'">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

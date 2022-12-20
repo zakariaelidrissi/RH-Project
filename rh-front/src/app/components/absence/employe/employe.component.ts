@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AbsenceEmp } from 'src/app/models/absenceEmp';
 import { AbsenceEmpRequest } from 'src/app/models/absenceEmpRequest';
 import { AbsenceEmpResponse } from 'src/app/models/absenceEmpResponse';
 import { Employe } from 'src/app/models/employe';
@@ -18,6 +19,7 @@ export class EmployeComponent implements OnInit {
 
   employes : Employe[] = [];
   absences : AbsenceEmpResponse[] = [];
+  absence : AbsenceEmp[] = [];
   newAbs : AbsenceEmpRequest = new AbsenceEmpRequest();
   updAbs : AbsenceEmpRequest = new AbsenceEmpRequest();
   abs : number[] = [];
@@ -93,9 +95,9 @@ export class EmployeComponent implements OnInit {
     });
   }
 
-  getAbsByDate(date : Date) {
+  getAbsByDate(date : string) {
     this.absService.getEmpAbsByDate(date).subscribe((response) => {
-      this.absences = response;      
+      this.absence = response;      
     }, (error) => {
       console.log(error);
     });
