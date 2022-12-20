@@ -14,12 +14,17 @@ import { HomeComponent } from './components/home/home.component';
 import { PlansComponent } from './components/plans/plans.component';
 import { StagesComponent } from './components/stages/stages.component';
 import { DemandeAttestationsComponent } from './components/demande-attestations/demande-attestations.component';
+import { EmployeFormationsComponent } from './components/employes/employe-formations/employe-formations.component';
+import { EmployeAbsencesComponent } from './components/employes/employe-absences/employe-absences.component';
+import { DemandeFormationComponent } from './components/employes/demande-formation/demande-formation.component';
+import { DemandeFormationsComponent } from './components/demande-formations/demande-formations.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: "home", component: HomeComponent},
   {path: "attestations", component: AttestationsComponent},
   {path: "demande-attestations", component: DemandeAttestationsComponent},
+  {path: "demande-formations", component: DemandeFormationsComponent},
   {path: "dash", component: DashBodyComponent},
   {path: "formations", component: FormationsComponent},
   {path: "plans", component: PlansComponent},
@@ -29,6 +34,10 @@ const routes: Routes = [
   {path: "demande/absence", component: DemandeAbsenceComponent},
   {path: "stagiaire/absence", component: StagiaireComponent},
   {path: "stages", component: StagesComponent},
+  {path: "employes/formations", component: EmployeFormationsComponent},
+  {path: "employes/absences", component: EmployeAbsencesComponent},
+  {path: "employes/demande/formation", component: DemandeFormationComponent},
+  {path: "employes/demande/absence", component: DemandeAbsenceComponent},
   {path: "**", component: ErrorComponent}
 ];
 

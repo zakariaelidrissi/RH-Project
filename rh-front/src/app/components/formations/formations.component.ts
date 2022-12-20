@@ -98,7 +98,7 @@ export class FormationsComponent implements OnInit {
   handleButons = (button: any) => {
     const type = button.getAttribute("type_");
     const id_ = button.parentNode.getAttribute("id_");
-    const index_ = button.parentNode.getAttribute("index_");    
+    const index_ = button.parentNode.getAttribute("index_");
 
     if(type === "dropDown"){
       this.dropDownFormation(id_);
@@ -258,7 +258,6 @@ export class FormationsComponent implements OnInit {
         let addById: AddById = new AddById();
         addById.id1 = collId.id;
         addById.id2 = this.selectedItem;
-        // console.log('addById '+ index + ' : ' + addById.id1 + ' ' + addById.id2);
         this.formationService.addCollToFormation(addById).subscribe((response) => {
           this.message = "Successfuly!";
           $('#addCollToFormation').modal("hide");

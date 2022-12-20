@@ -76,7 +76,7 @@ public class FormationServiceImpl implements FormationService {
 
     @Override
     public void addDemande(AddById add) {
-        Collaborateur collaborateur = collaborateurRepository.findCollaborateurById(add.getId1());
+        Collaborateur collaborateur = collaborateurRepository.findCollaborateurByEmpolyeID(add.getId1());
         Formation formation = formationRepository.findFormationById(add.getId2());
         Demande demande = new Demande();
         demande.setCollaborateur(collaborateur);
@@ -257,11 +257,12 @@ public class FormationServiceImpl implements FormationService {
     }
 
     @Override
-    public List<Demande> getAllCollDemandes(Long idColl) {
+    public List<Demande> getAllCollDemandes(Long empId) {
         List<Demande> demandes = demandeRepository.findAll();
+        Collaborateur coll = collaborateurRepository.findCollaborateurByEmpolyeID(empId);
         List<Demande> dms = new ArrayList<>();
         demandes.forEach(demande -> {
-            if (demande.getCollaborateur().getId().equals(idColl)){
+            if (demande.getCollaborateur().getId().equals(coll.getId())){
                 dms.add(demande);
             }
         });

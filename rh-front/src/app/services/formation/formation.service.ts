@@ -7,6 +7,8 @@ import { AddById } from 'src/app/models/addById';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { FormationRequest } from 'src/app/models/formationRequest';
 import { Collaborateur } from 'src/app/models/collaborateur';
+import { DemandeFormationRes } from 'src/app/models/demandeFormationRes';
+import { DemandeFormationReq } from 'src/app/models/demandeFormationReq';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +64,7 @@ export class FormationService {
     return this.httpClient.get<PlanResponse>(this.url + "plans/" + planID);
   }
 
-  // **************** Add Formation To Plan ********************
+  // **************** Formation To Plan ********************
 
   addFormationToPlan(newFormationToPlan : AddById) : Observable<AddById> {
     return this.httpClient.post<AddById>(this.url + "addFormationToPlan", newFormationToPlan);
@@ -76,7 +78,8 @@ export class FormationService {
     return this.httpClient.delete<any>(this.url + "deleteCollFromFormation/" + collId + "/" + formationId);
   }
 
-  // **************** Add Coll To Formation ********************
+  // **************** Coll To Formation ********************
+
   addCollToFormation(newCollToForm : AddById) : Observable<AddById> {
     return this.httpClient.post<AddById>(this.url + "addCollToFormation", newCollToForm);
   }
@@ -95,6 +98,24 @@ export class FormationService {
   
   getAllCollFromForm(idForm : number) : Observable<Collaborateur[]> {
     return this.httpClient.get<Collaborateur[]>(this.url + 'listCollFromForm/' + idForm);
+  }
+
+  // **************** Demandes ********************
+
+  getAllDemandes() : Observable<DemandeFormationRes[]> {
+    return this.httpClient.get<DemandeFormationRes[]>(this.url + "demandes");
+  }
+
+  getDemandesByEmpId(empId : number) : Observable<DemandeFormationRes[]> {
+    return this.httpClient.get<DemandeFormationRes[]>(this.url + "demandes/byColl/" + empId);
+  }
+
+  addDemande(addById : AddById) : Observable<AddById> {
+    return this.httpClient.post<AddById>(this.url + "demandes", addById);
+  }
+
+  updateDemande(updDemande : DemandeFormationReq) : Observable<DemandeFormationReq> {
+    return this.httpClient.put<DemandeFormationReq>(this.url + "demandes", updDemande);
   }
   
 }

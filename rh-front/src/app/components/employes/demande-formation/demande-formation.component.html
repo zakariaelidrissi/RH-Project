@@ -1,1 +1,105 @@
-<p>demande-formation works!</p>
+<app-dashboard></app-dashboard>
+
+<!-- main -->
+<main class="mt-5 pt-3">
+    <div class="container">
+        <div class="pagetitle row mt-2">
+            <div class="col-md-8">
+                <h1>Liste des demandes des formations</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                      <li class="breadcrumb-item">Emplyes</li>
+                      <li class="breadcrumb-item">Demande</li>
+                      <li class="breadcrumb-item active">Formations</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-4 text-end">
+                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold"
+                    data-bs-toggle="modal" data-bs-target="#newDemande">
+                    Nouvelle Demande
+                </button>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="alert alert-success" *ngIf="message != ''">
+                    {{message}}
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12" >
+                <div class="card">                    
+                    <div class="card-body">
+                        <table id="example" class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom de formation</th>
+                                    <th scope="col">Date de début</th>
+                                    <th scope="col">Durée/jour</th>
+                                    <th scope="col">Date de demande</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- main -->
+
+<!-- Add demande Modal -->
+<div class="modal fade" id="newDemande" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Nouvelle Demande</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                
+                <form method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <table id="example" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nom de formation</th>
+                                            <th scope="col">Date de début</th>
+                                            <th scope="col">Durée/jour</th>
+                                            <th scope="col">Objectif</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let form of formations;let i = index">
+                                            <td>{{form.name}}</td>
+                                            <td>{{form.formationDate}}</td>
+                                            <td>{{form.duree}}</td>
+                                            <td>{{form.objectif}}</td>
+                                            <td>
+                                                <button class="btn btn-primary me-2 btn-sm" (click)="addDemande(form.id, i)">
+                                                    <i class="bi bi-plus-circle-fill"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>                 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add demande Modal -->
