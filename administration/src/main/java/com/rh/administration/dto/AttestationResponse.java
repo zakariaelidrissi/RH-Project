@@ -11,12 +11,7 @@ import java.util.Date;
 @Data
 public class AttestationResponse {
     Long id;
-    String nom;
-    String cin;
-    Date debutPoste;
-
-    Attestation.Poste poste;
-    Attestation.Etablissement etablissement;
+    Long demandeId;
     Attestation.AttestationType type;
 
     User user;

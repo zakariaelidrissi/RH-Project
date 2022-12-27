@@ -9,7 +9,7 @@ import { Employe } from 'src/app/models/employe';
 export class GestionEmployeService {
 
   url: string = "http://localhost:8082/employes";
-  // url : string = "http://localhost:8888/GESTION-EMPLOYE-SERVICE/employe";
+  // url : string = "http://localhost:8888/GESTION-EMPLOYE-SERVICE/employes";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,8 +21,8 @@ export class GestionEmployeService {
     return this.httpClient.get<Employe>(this.url + "/cin/" + cin);
   }
 
-  getEmployeByUserId(userId: number): Observable<Employe> {
-    return this.httpClient.get<Employe>(this.url + "/user/" + userId);
+  getByUserId(userId: number): Observable<Employe> {
+    return this.httpClient.get<Employe>(this.url + "/userId/" + userId);
   }
 
   addEmploye(newEmploye: Employe): Observable<Employe> {
@@ -37,8 +37,8 @@ export class GestionEmployeService {
     return this.httpClient.delete<Employe>(this.url + "/" + employeID);
   }
 
-  getByUserId(userId: number): Observable<Employe> {
+  /*getByUserId(userId: number): Observable<Employe> {
     return this.httpClient.get<Employe>(this.url + "/user/" + userId);
-  }
+  }*/
 
 }

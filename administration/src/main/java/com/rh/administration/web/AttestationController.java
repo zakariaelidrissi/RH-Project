@@ -5,6 +5,7 @@ import com.rh.administration.dto.AttestationRequest;
 import com.rh.administration.dto.AttestationResponse;
 import com.rh.administration.entities.Attestation;
 import com.rh.administration.services.AttestationService;
+import com.rh.administration.services.RejectedOrNotYetAcceptedException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.InputStreamSource;
@@ -51,9 +52,11 @@ public class AttestationController {
             case "type":
                 return service.getAllByType(attestationType(value));
             case "etablissement":
-                return service.getAllByEtablissement(value);
+                throw new Exception("Unimplemented");
+                //return service.getAllByEtablissement(value);
             case "poste":
-                return service.getAllByPoste(value);
+                throw new Exception("Unimplemented");
+                //return service.getAllByPoste(value);
             default:
                 throw new Exception("key: "+key+" invalid");
         }
@@ -68,7 +71,8 @@ public class AttestationController {
     public Attestation.AttestationType attestationType(String type) throws Exception {
         switch(type.toLowerCase()){
             case "formation":
-                return Attestation.AttestationType.Formation;
+                throw new Exception("Type d'attestation invalid.");
+                //return Attestation.AttestationType.Formation;
             case "stage":
                 return Attestation.AttestationType.Stage;
             case "travail":
@@ -91,13 +95,14 @@ public class AttestationController {
                     .headers(headers)
                     .body(new InputStreamResource(array));
         }catch(NoSuchElementException e){
-            System.out.println("Something went wrong");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No records");
         }catch(IOException e){
-            System.out.println("Something went wrong");
-            e.printStackTrace();
+            System.out.println("??");
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Something went wrong");
+        }catch(RejectedOrNotYetAcceptedException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 }

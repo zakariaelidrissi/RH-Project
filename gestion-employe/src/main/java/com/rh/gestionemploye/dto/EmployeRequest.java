@@ -19,5 +19,4 @@ public class EmployeRequest {
     Date debutAmbauche;
     String departement;
     String poste;
-
 }

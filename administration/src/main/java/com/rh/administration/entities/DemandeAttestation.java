@@ -12,9 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 public class DemandeAttestation {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    Long idUser;
+    @Column(unique = true)
+    Long userId;
     @Enumerated(EnumType.STRING) Attestation.AttestationType type;
     @Enumerated(EnumType.STRING) Attestation.Etablissement etablissement;
     @Temporal(TemporalType.DATE)

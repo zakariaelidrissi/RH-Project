@@ -68,35 +68,98 @@
                 <h5 class="modal-title fw-bold">Demande d'attestation!</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" *ngIf="demande && user">
-                <p><strong>User Info:</strong></p>
+            <div class="modal-body" *ngIf="demande">
+                <p><strong class="text-muted">User Info:</strong></p>
                 <div>
-                    <h6>Id : <strong>{{user.id}}</strong></h6>
-                    <h6>Nom : <strong>{{user.nom}}</strong></h6>
-                    <h6>Prenom : <strong>{{user.prenom}}</strong></h6>
-                    <h6>Genre : <strong>{{user.genre}}</strong></h6>
-                    <h6>Nom : <strong>{{user.nom}}</strong></h6>
-                    <h6>Prenom : <strong>{{user.prenom}}</strong></h6>
-                    <h6>Email : <strong>{{user.email}}</strong></h6>
-                    <h6>Tel : <strong>{{user.tel}}</strong></h6>
-                    <h6>UserRole : <strong>{{user.userRole}}</strong></h6>
-                    <h6>EmailVerified : <strong>{{user.emailVerified}}</strong></h6>
+                    <table>
+                        <tr>
+                            <th>Id :</th>
+                            <td><strong>{{demande.user.id}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Nom :</th>
+                            <td><strong>{{demande.user.nom}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Prenom :</th>
+                            <td><strong>{{demande.user.prenom}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Genre :</th>
+                            <td><strong>{{demande.user.genre}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Nom :</th>
+                            <td><strong>{{demande.user.nom}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Prenom :</th>
+                            <td><strong>{{demande.user.prenom}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Email :</th>
+                            <td><strong>{{demande.user.email}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Tel :</th>
+                            <td><strong>{{demande.user.tel}}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>UserRole :</th>
+                            <td><strong>{{demande.user.userRole}}</strong></td>
+                        </tr>
+                        <!-- <tr>
+                            <th>EmailVerified :</th>
+                            <td><strong>{{demande.user.emailVerified}}</strong></td>
+                        </tr> -->
 
-                    <div ng-if="demande.stagiaire !== null">
-                        <h6>Stagiaire Id : <strong>{{demande.stagiaire.id}} </strong></h6>
-                        <h6>Civilité : <strong>{{demande.stagiaire.civilite}} </strong></h6>
-                        <h6>Niveau d'études : <strong>{{demande.stagiaire.niveau_etudes}} </strong></h6>
-                        <h6>Vill : <strong>{{demande.stagiaire.ville}} </strong></h6>
-                        <h6>Tele : <strong>{{demande.stagiaire.telephone}} </strong></h6>
-                        <h6>CV : <strong>{{demande.stagiaire.cv}} </strong></h6>
-                        <h6>LinkedIn Url : <strong>{{demande.stagiaire.LinkedIn_URL}} </strong></h6>
-                    </div>
-                    <div ng-if="demande.employe !== null">
-                        <h6>Employé Id : <strong>{{demande.employe.id}} </strong></h6>
-                        <h6>Date d'Embauche : <strong>{{demande.employe.debutAmbauche}} </strong></h6>
-                        <h6>Departement : <strong>{{demande.employe.departement}} </strong></h6>
-                        <h6>Poste : <strong>{{demande.employe.poste}} </strong></h6>
-                    </div>
+                        <p *ngIf="demande.stagiaire"><br><strong class="text-muted">Stagiaire Info:</strong></p>
+                        <tr *ngIf="demande.stagiaire">
+                            <th>Stagiaire Id :</th>
+                            <td><strong>{{demande.stagiaire.id}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.stagiaire">
+                            <th>Civilité :</th>
+                            <td><strong>{{demande.stagiaire.civilite}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.stagiaire">
+                            <th>Niveau d'études :</th>
+                            <td><strong>{{demande.stagiaire.niveau_etudes}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.stagiaire">
+                            <th>Vill :</th>
+                            <td><strong>{{demande.stagiaire.ville}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.stagiaire">
+                            <th>Tele :</th>
+                            <td><strong>{{demande.stagiaire.telephone}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.stagiaire">
+                            <th>CV :</th>
+                            <td><strong>{{demande.stagiaire.cv}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.stagiaire">
+                            <th>LinkedIn Url :</th>
+                            <td><strong>{{demande.stagiaire.LinkedIn_URL}} </strong></td>
+                        </tr>
+                        <p *ngIf="demande.employe"><br><strong class="text-muted">Employé Info:</strong></p>
+                        <tr *ngIf="demande.employe">
+                            <th>Employé Id :</th>
+                            <td><strong>{{demande.employe.id}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.employe">
+                            <th>Date d'Embauche :</th>
+                            <td><strong>{{demande.employe.debutAmbauche}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.employe">
+                            <th>Departement :</th>
+                            <td><strong>{{demande.employe.departement}} </strong></td>
+                        </tr>
+                        <tr *ngIf="demande.employe">
+                            <th>Poste :</th>
+                            <td><strong>{{demande.employe.poste}} </strong></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 

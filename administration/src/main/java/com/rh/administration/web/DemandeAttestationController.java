@@ -30,6 +30,7 @@ public class DemandeAttestationController {
         if (req.getDate() == null){
             req.setDate(Date.from(Instant.now()));
         }
+        System.out.println("dddd");
         return service.save(req);
     }
 

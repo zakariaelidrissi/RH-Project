@@ -43,9 +43,11 @@ public class EmployeService {
         // TODO: call the accounts service to add employee
         User user = new User(
                 -1L,
+                e.getCin(),
                 e.getGenre(),
                 e.getNom(),
                 e.getPrenom(),
+                e.getNaissance(),
                 e.getEmail(),
                 password,
                 e.getTel(),
@@ -79,7 +81,11 @@ public class EmployeService {
         return mapEmployes(repo.findAllByPoste(value));
     }
 
-    public Employe getEmployeByCin(String cin){
-        return repo.findEmployeByCin(cin);
+    public EmployeResponse getByUserId(Long id) {
+        return mapper.employeToEmployeResponse(repo.findByUserId(id));
     }
+
+    //public Employe getEmployeByCin(String cin){
+    //     return repo.findEmployeByCin(cin);
+    //}
 }

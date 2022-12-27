@@ -44,6 +44,10 @@ public class EmployeController {
     public List<EmployeResponse> get(){
         return service.getAll();
     }
+    @GetMapping(path = "/employes/userId/{id}")
+    public EmployeResponse getByUserId(@PathVariable Long id){
+        return service.getByUserId(id);
+    }
 
     @GetMapping(path = "/employes/{key}/{value}")
     public List<EmployeResponse> getByKey(@PathVariable String key,@PathVariable String value) throws Exception {
@@ -57,8 +61,8 @@ public class EmployeController {
         }
     }
 
-    @GetMapping("/employes/cin/{cin}")
-    public Employe getEmployeByCin(@PathVariable String cin){
-        return service.getEmployeByCin(cin);
-    }
+    //@GetMapping("/employes/cin/{cin}")
+    //public Employe getEmployeByCin(@PathVariable String cin){
+    //    return service.getEmployeByCin(cin);
+    //}
 }
