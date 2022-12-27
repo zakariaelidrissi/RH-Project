@@ -1,21 +1,10 @@
 package com.RHmanagment.user.Web;
 
-import com.RHmanagment.user.Entities.ConfirmationToken;
 import com.RHmanagment.user.Entities.User;
-import com.RHmanagment.user.Repositories.ConfirmationTokenRepository;
-import com.RHmanagment.user.Repositories.UserRepository;
-import com.RHmanagment.user.Service.EmailService;
+import com.RHmanagment.user.Model.ChangePassword;
 import com.RHmanagment.user.Service.UserService;
-import com.rhmanagment.user.Model.ChangePassword;
 import lombok.AllArgsConstructor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 

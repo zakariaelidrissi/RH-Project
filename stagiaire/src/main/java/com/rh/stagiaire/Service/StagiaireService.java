@@ -53,7 +53,6 @@ public class StagiaireService {
 
         stg.setCivilite(stgReq.getCivilite());
         stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
@@ -68,7 +67,6 @@ public class StagiaireService {
 
         stg.setCivilite(stgReq.getCivilite());
         stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
