@@ -10,9 +10,12 @@ import java.util.Date;
 public class EmployeRequest {
     Long id;
     String nom;
+    String prenom;
     String cin;
     String email;
+    String genre;
     Date naissance;
+    String tel;
     Date debutAmbauche;
     String departement;
     String poste;
