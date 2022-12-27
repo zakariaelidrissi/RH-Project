@@ -8,6 +8,7 @@ import com.RHmanagment.user.Service.EmailService;
 import com.RHmanagment.user.Service.UserService;
 import com.rhmanagment.user.Model.ChangePassword;
 import lombok.AllArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,7 +23,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class UserRestController {
     private UserService userService;
-
+    
     // ************************ GET **************************
     @GetMapping(path = "/users")
     public List<User> getAllUser() {
