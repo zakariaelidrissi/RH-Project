@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AttestationResponse } from 'src/app/models/attestationResponse';
 import { DemandeAttestationResponse } from 'src/app/models/demandeAttestationResponse';
+import { DemandeAttestationRequest } from 'src/app/models/demandeAttestationResquest';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class AdministrationService {
 
   constructor(private httpClient: HttpClient) { }
 
+  demanderAttestation(body: DemandeAttestationRequest): Observable<DemandeAttestationResponse> {
+    return this.httpClient.post<DemandeAttestationResponse>(this.url + "demande-att", body);
+  }
 
   getAttestations(): Observable<AttestationResponse[]> {
     return this.httpClient.get<AttestationResponse[]>(this.url + "attestations");
