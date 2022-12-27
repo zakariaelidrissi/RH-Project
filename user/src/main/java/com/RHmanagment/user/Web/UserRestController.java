@@ -23,7 +23,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class UserRestController {
     private UserService userService;
-    
+
     // ************************ GET **************************
     @GetMapping(path = "/users")
     public List<User> getAllUser() {
@@ -47,14 +47,14 @@ public class UserRestController {
 
     // ************************ POST **************************
     @PostMapping(path = "/users")
-    public void addUser(@RequestBody User UsrReq) {
-        userService.addUser(UsrReq);
+    public User addUser(@RequestBody User UsrReq) {
+        return userService.addUser(UsrReq);
     }
 
     // ************************ PUT **************************
     @PutMapping(path = "/users")
-    public void updateUser(@RequestBody User UsrReq) {
-        userService.updateUser(UsrReq);
+    public User updateUser(@RequestBody User UsrReq) {
+        return userService.updateUser(UsrReq);
     }
 
     @PutMapping(path = "/users/changePassword")
