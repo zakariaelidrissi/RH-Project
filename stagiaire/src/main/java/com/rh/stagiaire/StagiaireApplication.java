@@ -30,9 +30,9 @@ public class StagiaireApplication {
         return args -> {
             restconfiguration.exposeIdsFor(Stagiaire.class);
 
-            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","ERRACHIDIA","","",null,null));
-            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MEKNES","","",null,null));
-            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MERIRT","","",null,null));
+            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","ERRACHIDIA","","",1L,null));
+            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MEKNES","","",2L,null));
+            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MERIRT","","",3L,null));
 
             stagiaireRepository.findAll().forEach(System.out::println);
         };

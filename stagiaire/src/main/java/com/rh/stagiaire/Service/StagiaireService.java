@@ -21,6 +21,8 @@ public class StagiaireService {
 
     // ************************ GET **************************
     public User getUserById(Long id) {
+        System.out.println("id");
+        System.out.println(id);
         return userRestClient.getUserById(id);
     }
 

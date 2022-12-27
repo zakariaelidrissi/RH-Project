@@ -2,6 +2,7 @@ package com.rh.offre_stage.Service;
 
 import com.rh.offre_stage.Entities.OffreStage;
 import com.rh.offre_stage.Feign.UserClient;
+import com.rh.offre_stage.Model.OffreStageRequest;
 import com.rh.offre_stage.Model.User;
 import com.rh.offre_stage.Repositories.OffreStageRepository;
 
@@ -18,51 +19,42 @@ public class OffreStageService {
 
     public List<OffreStage> getAllOffreStage() {
         List<OffreStage> listStg = offreStageRepository.findAll();
-        listStg.forEach(stg -> {
-            stg.setId(getUserById(stg.getId()));
-        });
-
         return listStg;
     }
 
     public OffreStage getOffreStageById(Long id){
         OffreStage stg = offreStageRepository.findOffreStageById(id);
-        stg.setUser(getUserById(stg.getUserId()));
-
+        stg.setId(stg.getId());
         return  stg;
     }
 
-    public OffreStage getOffreStageByUserId(Long id) {
-        OffreStage stg = offreStageRepository.findOffreStageByUserId(id);
-        stg.setUser(getUserById(stg.getUserId()));
-
-        return stg;
-    }
 
     // ************************ POST **************************
-    public void addOffreStage(StagiareRequest stgReq) {
+    public void addOffreStage(OffreStageRequest stgReq) {
         OffreStage stg = new OffreStage();
 
-        stg.setCivilite(stgReq.getCivilite());
-        stg.setCv(stgReq.getCv());
-        stg.setNiveau_etudes(stgReq.getNiveau_etudes());
-        stg.setUserId(stgReq.getUserId());
-        stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
-        stg.setVille(stgReq.getVille());
+        stg.setIntitule(stgReq.getIntitule());
+        stg.setType_stage(stgReq.getType_stage());
+        stg.setDuree_stage_mois(stgReq.getDuree_stage_mois());
+        stg.setDate_debut_stage(stgReq.getDate_debut_stage());
+        stg.setRemuneration(stgReq.getRemuneration());
+        stg.setDiplome_demande(stgReq.getDiplome_demande());
+        stg.setDescriptif_mission(stgReq.getDescriptif_mission());
 
         offreStageRepository.save(stg);
     }
 
     // ************************ PUT **************************
-    public void updateOffreStage(StagiareRequest stgReq) {
+    public void updateOffreStage(OffreStageRequest stgReq) {
         OffreStage stg = getOffreStageById(stgReq.getId());
 
-        stg.setCivilite(stgReq.getCivilite());
-        stg.setCv(stgReq.getCv());
-        stg.setNiveau_etudes(stgReq.getNiveau_etudes());
-        stg.setUserId(stgReq.getUserId());
-        stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
-        stg.setVille(stgReq.getVille());
+        stg.setIntitule(stgReq.getIntitule());
+        stg.setType_stage(stgReq.getType_stage());
+        stg.setDuree_stage_mois(stgReq.getDuree_stage_mois());
+        stg.setDate_debut_stage(stgReq.getDate_debut_stage());
+        stg.setRemuneration(stgReq.getRemuneration());
+        stg.setDiplome_demande(stgReq.getDiplome_demande());
+        stg.setDescriptif_mission(stgReq.getDescriptif_mission());
 
         offreStageRepository.save(stg);
     }

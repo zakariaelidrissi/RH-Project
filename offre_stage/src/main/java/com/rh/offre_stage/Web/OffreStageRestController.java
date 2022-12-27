@@ -24,10 +24,7 @@ public class OffreStageRestController {
         return offreStageService.getOffreStageById(id);
     }
 
-    @GetMapping(path = "/offreStages/user/{id}")
-    public OffreStage getOffreStageByUserId(@PathVariable Long id) {
-        return offreStageService.getOffreStageByUserId(id);
-    }
+
 
     // ************************ POST **************************
     @PostMapping(path = "/offreStages")
@@ -48,4 +45,4 @@ public class OffreStageRestController {
     }
 }
 
-}
+
