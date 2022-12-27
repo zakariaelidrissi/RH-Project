@@ -14,14 +14,17 @@ import java.util.Date;
 public class Employe {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    Long userId;
+    @Temporal(TemporalType.DATE)
+    Date debutAmbauche;
+    String departement;
+    String poste;
+    /*
     String nom;
     @Column(unique = true)
     String cin;
     String email;
     @Temporal(TemporalType.DATE)
     Date naissance;
-    @Temporal(TemporalType.DATE)
-    Date debutAmbauche;
-    String departement;
-    String poste;
+     */
 }
