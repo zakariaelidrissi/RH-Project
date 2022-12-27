@@ -1,76 +1,48 @@
 package com.rh.offre_stage.Web;
 
 import com.rh.offre_stage.Entities.OffreStage;
+import com.rh.offre_stage.Model.OffreStageRequest;
 import com.rh.offre_stage.Model.User;
 import com.rh.offre_stage.Repositories.OffreStageRepository;
+import com.rh.offre_stage.Service.OffreStageService;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
 
 public class OffreStageRestController {
-    private OffreStageRepository offreStageRepository;
-    private User userRestClient;
+    private OffreStageService offreStageService;
 
     // ************************ GET **************************
-    public User getUserById(Long id) {
-        return userRestClient.getUserById(id);
-    }
-
+    @GetMapping(path = "/offreStages")
     public List<OffreStage> getAllOffreStage() {
-        List<OffreStage> listStg = offreStageRepository.findAll();
-        listStg.forEach(stg -> {
-            stg.setUser(getUserById(stg.getUserId()));
-        });
-
-        return listStg;
+        return offreStageService.getAllOffreStage();
     }
 
-    public OffreStage getOffreStageById(Long id){
-        OffreStage stg = offreStageRepository.findOffreStageById(id);
-        stg.setUser(getUserById(stg.getUserId()));
-
-        return  stg;
+    @GetMapping(path = "/offreStages/{id}")
+    public OffreStage getOffreStageById(@PathVariable Long id){
+        return offreStageService.getOffreStageById(id);
     }
 
-    public OffreStage getOffreStageByUserId(Long id) {
-        OffreStage stg = offreStageRepository.findOffreStageByUserId(id);
-        stg.setUser(getUserById(stg.getUserId()));
 
-        return stg;
-    }
 
     // ************************ POST **************************
-    public void addOffreStage(StagiareRequest stgReq) {
-        OffreStage stg = new OffreStage();
-
-        stg.setCivilite(stgReq.getCivilite());
-        stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
-        stg.setNiveau_etudes(stgReq.getNiveau_etudes());
-        stg.setUserId(stgReq.getUserId());
-        stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
-        stg.setVille(stgReq.getVille());
-
-        offreStageRepository.save(stg);
+    @PostMapping(path = "/offreStages")
+    public void addOffreStage(@RequestBody OffreStageRequest stgReq) {
+        offreStageService.addOffreStage(stgReq);
     }
 
     // ************************ PUT **************************
-    public void updateOffreStage(StagiareRequest stgReq) {
-        OffreStage stg = getOffreStageById(stgReq.getId());
-
-        stg.setCivilite(stgReq.getCivilite());
-        stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
-        stg.setNiveau_etudes(stgReq.getNiveau_etudes());
-        stg.setUserId(stgReq.getUserId());
-        stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
-        stg.setVille(stgReq.getVille());
-
-        offreStageRepository.save(stg);
+    @PutMapping(path = "/offreStages")
+    public void updateOffreStage(@RequestBody OffreStageRequest stgReq) {
+        offreStageService.updateOffreStage(stgReq);
     }
 
     // ************************ DELETE **************************
-    public void deleteById(Long id) {
-        offreStageRepository.deleteById(id);
+    @DeleteMapping(path = "/offreStages/{id}")
+    public void deleteById(@PathVariable Long id) {
+        offreStageService.deleteById(id);
     }
 }
+
+

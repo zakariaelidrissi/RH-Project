@@ -1,5 +1,6 @@
 package com.rh.stagiaire;
 
+import com.rh.stagiaire.Entities.Stagiaire;
 import com.rh.stagiaire.Model.StagiareRequest;
 import com.rh.stagiaire.Repositories.StagiaireRepository;
 import com.rh.stagiaire.Service.StagiaireService;
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import java.time.Instant;
 import java.util.Date;
@@ -24,21 +26,15 @@ public class StagiaireApplication {
     }
 
     @Bean
-    CommandLineRunner start(StagiaireService ss) {
+    CommandLineRunner start(StagiaireRepository stagiaireRepository, RepositoryRestConfiguration restconfiguration){
         return args -> {
-             ss.addStagiaire(new StagiareRequest(
-                    -1L,
-                    1L,
-                    "civi",
-                    "net",
-                    "ville",
-                    "tele",
-                    "cv",
-                    "url"
-            ));
-            System.out.println("----------");
-            System.out.println("created");
-            System.out.println("----------");
+            restconfiguration.exposeIdsFor(Stagiaire.class);
+
+            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","ERRACHIDIA","","",1L,null));
+            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MEKNES","","",2L,null));
+            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MERIRT","","",3L,null));
+
+            stagiaireRepository.findAll().forEach(System.out::println);
         };
     }
 }

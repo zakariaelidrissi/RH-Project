@@ -21,6 +21,8 @@ public class StagiaireService {
 
     // ************************ GET **************************
     public User getUserById(Long id) {
+        System.out.println("id");
+        System.out.println(id);
         return userRestClient.getUserById(id);
     }
 
@@ -53,7 +55,6 @@ public class StagiaireService {
 
         stg.setCivilite(stgReq.getCivilite());
         stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
@@ -68,7 +69,6 @@ public class StagiaireService {
 
         stg.setCivilite(stgReq.getCivilite());
         stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
