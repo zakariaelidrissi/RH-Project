@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class DemandeAttestationRequest {
-    Long idUser;
+    Long userId;
     Attestation.AttestationType type;
     Attestation.Etablissement etablissement;
     Date date;

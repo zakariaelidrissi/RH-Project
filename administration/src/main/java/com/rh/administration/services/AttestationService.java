@@ -30,7 +30,7 @@ public class AttestationService {
 
     private AttestationRepo repo;
     private DemandeAttestationRepo demandeRepo;
-    //private UserService userService;
+    private UserService userService;
     private AttestationMapper mapper;
 
     public AttestationResponse save(AttestationRequest req) {
@@ -45,8 +45,8 @@ public class AttestationService {
         return l.stream().map(p->mapper.attestationToAttestationResponse(p)).collect(Collectors.toList());
     }
 
-    public void delete(AttestationRequest req) {
-        repo.deleteById(req.getId());
+    public void delete(Long id) {
+        repo.deleteById(id);
     }
 
     public AttestationResponse getById(Long id) {
@@ -58,22 +58,30 @@ public class AttestationService {
         return mapAttestations(repo.findAllByType(type));
     }
 
-    public List<AttestationResponse> getAllByEtablissement(String value) {
+    /*public List<AttestationResponse> getAllByEtablissement(String value) {
         return mapAttestations(repo.findAllByEtablissement(value));
     }
 
     public List<AttestationResponse> getAllByPoste(String value) {
         return mapAttestations(repo.findAllByPoste(value));
-    }
+    }*/
 
     private List<AttestationResponse> mapAttestations(List<Attestation> l){
         return l.stream().map(p->mapper.attestationToAttestationResponse(p)).collect(Collectors.toList());
     }
-    public ByteArrayInputStream getPdf(Long id) throws IOException, NoSuchElementException {
-        Attestation att = repo.findById(id).get();
-        DemandeAttestation demande = demandeRepo.findById(att.getIdDemande()).get();
-        //TODO : User user = userService.getProductById(demande.getIdUser());
-        User user = new User(Date.from(Instant.now()), User.Sexe.Femme);
+
+    public ByteArrayInputStream getPdf(Long userId) throws IOException, NoSuchElementException, RejectedOrNotYetAcceptedException {
+        User user = userService.getById(userId);
+        if(user == null){throw new NoSuchElementException("No user found");}
+        DemandeAttestation demande = demandeRepo.findByUserId(userId);//.get();
+        if(demande == null) {throw new NoSuchElementException("No Attestation Demande");}
+        if(demande.getEtat() == Attestation.Etat.Rejected){throw new RejectedOrNotYetAcceptedException("Rejected");}
+        if(demande.getEtat() == Attestation.Etat.Waiting){throw new RejectedOrNotYetAcceptedException("Not yet accepted");}
+        Attestation att = repo.findByDemandeId(demande.getId());//.get();
+        if(att == null) {throw new NoSuchElementException("No Attestation Demande");}
+        System.out.println(user);
+        System.out.println(att);
+        System.out.println(demande);
         return getPDFCreator(att).createPDF(att,user);
     }
     private IPDFCreator<Attestation> getPDFCreator(Attestation attestation) throws IOException {
@@ -83,7 +91,8 @@ public class AttestationService {
             case Stage:
                 return AttestationStagePdf.getInstance();
             default:
-               throw new NoSuchElementException("Le type d'attestion est inconnu");
+               throw new NoSuchElementException("Le type d'attestion est inconnu: "+ attestation.getType());
         }
     }
 }
+

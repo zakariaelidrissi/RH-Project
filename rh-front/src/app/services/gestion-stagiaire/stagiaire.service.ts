@@ -29,7 +29,7 @@ export class StagiaireService {
   }
 
   getByUserId(userId: number): Observable<Stagiaire> {
-    return this.httpClient.get<Stagiaire>(this.url + "/" + userId);
+    return this.httpClient.get<Stagiaire>(this.url + "/user/" + userId);
   }
 
 }

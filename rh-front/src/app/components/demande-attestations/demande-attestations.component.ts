@@ -19,7 +19,6 @@ export class DemandeAttestationsComponent implements OnInit {
   demandes: DemandeAttestationResponse[] = [];
 
   demande!: DemandeAttestationResponse;
-  user!: User;
 
   message: string = '';
 
@@ -73,10 +72,24 @@ export class DemandeAttestationsComponent implements OnInit {
   voirInfo(id: number, index: number) {
     const dem = this.demandes[index];
     this.demande = dem;
-    if (dem.type === "Stage")
-      this.user = dem.stagiaire.user;
-    else if (dem.type === "Travail")
-      this.user = dem.employe.user;
+
+    const role = this.demande.user.userRole.toLocaleLowerCase();
+    console.log({ role })
+    if (role == "stagiaire") {
+      this.demande.stagiaire = undefined;
+      this.stagiaireService.getByUserId(this.demande.userId).subscribe((response) => {
+        this.demande.stagiaire = response;
+      });
+    } else if (role == "employer") {
+      this.demande.employe = undefined;
+      this.gestionEmployeService.getByUserId(this.demande.userId).subscribe((response) => {
+        this.demande.employe = response;
+      });
+    }
+    // if (dem.type === "Stage")
+    //   this.user = dem.stagiaire.user;
+    // else if (dem.type === "Travail")
+    //   this.user = dem.employe.user;
 
     //   const idUser = dem.idUser;
 
@@ -158,8 +171,9 @@ export class DemandeAttestationsComponent implements OnInit {
     $(row).addClass(colors[data[5]]);
   }
   itemToRow(att: DemandeAttestationResponse, index: number) {
+    console.log({ att });
     return [
-      att.idUser || "Null",
+      att.userId || "Null",
       att.poste || "Null",
       att.etablissement || "Null",
       att.type || "Null",
