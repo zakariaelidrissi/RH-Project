@@ -7,6 +7,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.Stagiaire;
 import com.rh.administration.entities.User;
 
 import java.io.ByteArrayInputStream;
@@ -17,7 +18,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AttestationStagePdf implements IPDFCreator<Attestation> {
+public class AttestationStagePdf implements IPDFCreator<Attestation,Stagiaire> {
 
     private static AttestationStagePdf instance;
     private final PDFUtils pdfUtils;
@@ -41,14 +42,15 @@ public class AttestationStagePdf implements IPDFCreator<Attestation> {
     }
 
     @Override
-    public ByteArrayInputStream createPDF(Attestation attestation, User user) throws IOException {
+    public ByteArrayInputStream createPDF(Attestation attestation, Stagiaire user) throws IOException {
         return this.build(attestation,user);
     }
 
     //TODO: add stagiaire as a parameter
     @Override
-    public void buildPage(Attestation a,User user,Document document) throws IOException {
+    public void buildPage(Attestation a, Stagiaire stagiaire, Document document) throws IOException {
         //document.add(new Table(1));
+        User user = stagiaire.getUser();
         String nom = user.getNom();
         String prenom = user.getPrenom();
         String cin = user.getCin();

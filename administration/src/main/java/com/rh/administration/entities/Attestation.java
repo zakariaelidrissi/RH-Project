@@ -22,49 +22,5 @@ public class Attestation {
 
     //@Enumerated(EnumType.STRING) Poste poste;
     //@Enumerated(EnumType.STRING) Etablissement etablissement;
-    @Enumerated(EnumType.STRING) AttestationType type;
-
-    public enum AttestationType{
-        //Formation,
-        Stage,
-        Travail
-    }
-
-    public enum Etablissement{
-        FaculteSciences("Faculté des Sciences"),
-        Ensam("ENSAM");
-        private final String name;
-        private Etablissement(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public enum Poste{
-        Doyen("Doyen");
-        //Dev("dev");
-        private final String name;
-        private Poste(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public enum Etat{
-        Accepted("Accepted"),
-        Rejected("Rejected"),
-        Waiting("Waiting");
-        //Dev("dev");
-        private final String name;
-        private Etat(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
+    //@Enumerated(EnumType.STRING) AttestationType type;
 }

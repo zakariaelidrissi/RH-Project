@@ -4,6 +4,7 @@ package com.rh.administration.web;
 import com.rh.administration.dto.AttestationRequest;
 import com.rh.administration.dto.AttestationResponse;
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.DemandeAttestation;
 import com.rh.administration.services.AttestationService;
 import com.rh.administration.services.RejectedOrNotYetAcceptedException;
 import lombok.AllArgsConstructor;
@@ -50,7 +51,8 @@ public class AttestationController {
     public List<AttestationResponse> get(@PathVariable String key,@PathVariable String value) throws Exception {
         switch (key){
             case "type":
-                return service.getAllByType(attestationType(value));
+                throw new Exception("Unimplemented");
+                //return service.getAllByType(attestationType(value));
             case "etablissement":
                 throw new Exception("Unimplemented");
                 //return service.getAllByEtablissement(value);
@@ -68,15 +70,15 @@ public class AttestationController {
         return service.getAll();
     }
 
-    public Attestation.AttestationType attestationType(String type) throws Exception {
+    public DemandeAttestation.AttestationType attestationType(String type) throws Exception {
         switch(type.toLowerCase()){
             case "formation":
                 throw new Exception("Type d'attestation invalid.");
                 //return Attestation.AttestationType.Formation;
             case "stage":
-                return Attestation.AttestationType.Stage;
+                return DemandeAttestation.AttestationType.Stage;
             case "travail":
-                return Attestation.AttestationType.Travail;
+                return DemandeAttestation.AttestationType.Travail;
             default:
                 throw new Exception("Type d'attestation invalid.");
         }

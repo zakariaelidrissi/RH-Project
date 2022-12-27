@@ -1,30 +1,27 @@
+import { DemandeAttestationEtat } from "./demandeAttestationEtat";
+import { DemandeAttestationType } from "./demandeAttestationType";
 import { Employe } from "./employe";
 import { Stagiaire } from "./stagiaire";
 import { User } from "./user";
 
 export class DemandeAttestationResponse {
     id: number;
-    userId: number;
-    etablissement: String;
-    type: String;
-    poste: string;
+    userId;
+    type: DemandeAttestationType;
     date: Date;
-    etat: string;
-    done: boolean;
+    etat: DemandeAttestationEtat;
+
+    user: User;
 
     stagiaire: Stagiaire | undefined;
     employe: Employe | undefined;
-    user: User;
 
     constructor() {
         this.id = 0;
         this.userId = 0;
-        this.poste = "";
-        this.etablissement = "";
-        this.etat = "";
-        this.type = "";
+        this.etat = DemandeAttestationEtat.Waiting;
+        this.type = DemandeAttestationType.Stage;
         this.date = new Date();
-        this.done = false;
         this.user = new User();
     }
 }

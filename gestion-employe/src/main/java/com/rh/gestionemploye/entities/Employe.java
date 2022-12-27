@@ -17,8 +17,41 @@ public class Employe {
     Long userId;
     @Temporal(TemporalType.DATE)
     Date debutAmbauche;
-    String departement;
-    String poste;
+    @Enumerated(EnumType.STRING) Departement departement;
+    @Enumerated(EnumType.STRING) Poste poste;
+    @Enumerated(EnumType.STRING) Etablissement etablissement;
+    public enum Etablissement{
+        Fs("Faculté des Sciences"),
+        Ensam("ENSAM");
+        private final String name;
+        private Etablissement(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+    }
+    public enum Departement{
+        Info("Informatique");
+        private final String name;
+        private Departement(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+    }
+    public enum Poste{
+        Doyen("Doyen");
+        //Dev("dev");
+        private final String name;
+        private Poste(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+    }
     /*
     String nom;
     @Column(unique = true)

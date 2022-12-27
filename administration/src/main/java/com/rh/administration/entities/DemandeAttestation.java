@@ -14,11 +14,28 @@ import java.util.Date;
 public class DemandeAttestation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(unique = true)
-    Long userId;
-    @Enumerated(EnumType.STRING) Attestation.AttestationType type;
-    @Enumerated(EnumType.STRING) Attestation.Etablissement etablissement;
-    @Temporal(TemporalType.DATE)
-    Date date;
-    @Enumerated(EnumType.STRING) Attestation.Etat etat;
+    @Column(unique = true) Long userId;
+    @Enumerated(EnumType.STRING) AttestationType type;
+    @Temporal(TemporalType.DATE) Date date;
+    @Enumerated(EnumType.STRING) Etat etat;
+
+    public enum AttestationType{
+        //Formation,
+        Stage,
+        Travail
+    }
+
+    public enum Etat{
+        Accepted("Accepted"),
+        Rejected("Rejected"),
+        Waiting("Waiting");
+        //Dev("dev");
+        private final String name;
+        private Etat(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+    }
 }

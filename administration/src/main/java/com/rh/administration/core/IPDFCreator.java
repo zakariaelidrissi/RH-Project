@@ -20,18 +20,18 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-public interface IPDFCreator<T> {
+public interface IPDFCreator<T,U> {
     String getTitre();
 
-    ByteArrayInputStream createPDF(T t,User user) throws IOException;
-    void buildPage(T t,User user,Document doc) throws IOException;
+    ByteArrayInputStream createPDF(T t,U u) throws IOException;
+    void buildPage(T t,U u,Document doc) throws IOException;
 
-    default ByteArrayInputStream build(T a, User user) throws IOException {
+    default ByteArrayInputStream build(T a, U u) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(out);
         PdfDocument pdfDocument = new PdfDocument(writer);
         Document document = new Document(pdfDocument);
-        buildPage(a,user,document);
+        buildPage(a,u,document);
         // TODO
         document.close();
         pdfDocument.close();
