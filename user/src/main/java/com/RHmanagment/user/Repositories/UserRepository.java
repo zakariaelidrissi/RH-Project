@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<User,Long> {
     User findUserById(Long id);
 
-    User findByEmailIdIgnoreCase(String emailId);
+    //User findByEmailIdIgnoreCase(String emailId);
 }

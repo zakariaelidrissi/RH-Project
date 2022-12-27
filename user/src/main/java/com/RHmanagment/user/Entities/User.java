@@ -16,13 +16,13 @@ public class User {
     private String nom;
     private String prenom;
     @Column(unique = true)
-    private String EmailId;
+    //private int EmailId;
     private String motDePasse;
     @Column(unique = true)
     private String tel;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    private boolean emailVerified;
+    //private boolean emailVerified;
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
