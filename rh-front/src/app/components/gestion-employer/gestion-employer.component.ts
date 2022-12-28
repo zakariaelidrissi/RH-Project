@@ -75,6 +75,7 @@ export class GestionEmployerComponent implements OnInit {
   getAllEmployer(): void {
     this.collService.getCollaborateur().subscribe((response: Collaborateur[]) => {
       this.employes = response;
+      console.log(this.employes);
       const handleButons = this.handleButons;
       this.employes.forEach((coll, index) => {
         var dtBirth: Date = new Date(coll.employe.naissance);

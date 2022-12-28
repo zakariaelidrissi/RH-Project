@@ -14,14 +14,20 @@
                     </ol>
                 </nav>
             </div>
+            <div class="col-md-6 text-end">
+                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold"
+                    data-bs-toggle="modal" data-bs-target="#addDemande">
+                    Demande
+                </button>
+            </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <!-- <div class="alert alert-success" *ngIf="message != ''">
+                <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
                     <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>                  
-                </div> -->
+                </div>
             </div>
             <div class="col-md-3"></div>
         </div>
@@ -46,3 +52,33 @@
     </div>
 </main>
 <!-- main -->
+
+<!-- Add formation Modal -->
+<div class="modal fade" id="addDemande" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Demande une attestation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                
+                <form method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Type d'attestation</label>
+                            <select class="form-select" title="Select one Plan" aria-label="Default select example"
+                                name="responsableID" [(ngModel)]="selectedItem">
+                                <option *ngFor="let type of types" value="{{type}">{{type}} </option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addDemande()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add formation Modal -->

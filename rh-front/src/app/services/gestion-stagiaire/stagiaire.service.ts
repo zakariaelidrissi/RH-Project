@@ -8,7 +8,7 @@ import { Stagiaire } from 'src/app/models/stagiaire';
 })
 export class StagiaireService {
 
-  url : string = "http://localhost:8089/stagiaires";
+  url : string = "http://localhost:8083/stagiaires";
 
   constructor(private httpClient: HttpClient) { }
 
