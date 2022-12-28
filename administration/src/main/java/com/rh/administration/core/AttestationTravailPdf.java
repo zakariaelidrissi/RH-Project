@@ -10,6 +10,7 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.Employe;
 import com.rh.administration.entities.User;
 
 import java.io.ByteArrayInputStream;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 
-public class AttestationTravailPdf implements IPDFCreator<Attestation> {
+public class AttestationTravailPdf implements IPDFCreator<Attestation,Employe> {
     private static AttestationTravailPdf instance;
     public static AttestationTravailPdf getInstance() throws IOException {
         if(instance == null) instance = new AttestationTravailPdf();
@@ -47,29 +48,38 @@ public class AttestationTravailPdf implements IPDFCreator<Attestation> {
     }
 
     @Override
-    public ByteArrayInputStream createPDF(Attestation attestation, User user) throws IOException {
+    public ByteArrayInputStream createPDF(Attestation attestation, Employe user) throws IOException {
         return this.build(attestation,user);
     }
 
+    String nomResponsable = "Nom Responsable";
+
+    // TODO: add Employe as parameter
     @Override
-    public void buildPage(Attestation a,User user,Document document) throws IOException {
-        String nom = a.getNom();
-        String prenom = "";
-        String cin = a.getCin();
-        String ville = a.getVille();
-        String sexe = user.getSexe().getTitre();
+    public void buildPage(Attestation a, Employe employe, Document document) throws IOException {
+        User user = employe.getUser();
+        System.out.println("Creating pdf for Employe: " + employe.toString());
+        String nom = user.getNom();
+        String prenom = user.getPrenom();
+        String cin = user.getCin();
+        String departement = employe.getDepartement();
+        String ville = "";//user.getVille();
+        String sexe = user.getGenre().toLowerCase(Locale.ROOT).equals("homme") ? "Mr" : "Mme";
+        Date dateSignature_ = Date.from(Instant.now());//a.getDateSignature()
         String date = pdfUtils.formatDate(Date.from(Instant.now()));
-        String dateNaiss = pdfUtils.formatDate(user.getDateNaissanse());
-        String dateSignature = pdfUtils.formatDate(a.getDateSignature());
-        String fonction = a.getPoste().getName();
-        String pers = a.getEtablissement().getName();// TODO "_"
+        String dateNaissance = pdfUtils.formatDate(user.getDateNaissance());
+        String dateSignature = pdfUtils.formatDate(dateSignature_);
+        String fonction = employe.getPoste();//user.getPoste().getName();//
+        System.out.println(employe.getEtablissement());
+        String pers = employe.getEtablissement().getName();
 
         Map<String,String> map = new LinkedHashMap<>();
         //Adding elements to map
         map.put("Nom: ",nom);
-        //map.put("Prenom: ",a.getNom());
+        map.put("Prenom: ",prenom);
         map.put("CIN: ",cin);
-        map.put("Né le: ",dateNaiss);
+        map.put("Né le: ",dateNaissance);
+        map.put("Departement: ",departement);
 
 
         Table table = new Table(1);
@@ -77,7 +87,7 @@ public class AttestationTravailPdf implements IPDFCreator<Attestation> {
 
         buildSimplePageHeader(table,logo,getTitre(),titreFont);
         table
-                .addCell(pdfUtils.textToParagraph(msg,"_","___","____",sexe))
+                .addCell(pdfUtils.textToParagraph(msg,"_",nomResponsable,"____",sexe))
                 .addCell(blackSpace(15))
                 .addCell(kvTable(map,font,font,20))
                 .addCell(blackSpace(20))

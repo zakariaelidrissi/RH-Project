@@ -26,25 +26,40 @@ import java.util.stream.Collectors;
 public class DemandeAttestationService {
 
     private DemandeAttestationRepo repo;
+    private AttestationRepo attestationRepo;
     private DemandeAttestationMapper mapper;
     private UserService userService;
 
     public DemandeAttestationResponse save(DemandeAttestationRequest req) {
+        if(userService.getById(req.getUserId()) == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No User with id: " + req.getUserId());
+        }
+        if(repo.findByUserId(req.getUserId()) != null){
+            System.out.println("Demande already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Demande already exists");
+        }
+
         DemandeAttestation d = mapper.requestToDemande(req);
-        d.setEtat(Attestation.Etat.Waiting);
+        d.setEtat(DemandeAttestation.Etat.Waiting);
         DemandeAttestationResponse a = mapper.demandeToDemandeResponse(repo.save(d));
-        a.setUser(userService.getById(a.getIdUser()));
+        a.setUser(userService.getById(a.getUserId()));
+        System.out.println("added");
+        System.out.println(d);
         return a;
     }
 
     public List<DemandeAttestationResponse> getAll() {
-        return mapDemandeAttestations(repo.findAll());
+        List<DemandeAttestationResponse> dar = mapDemandeAttestations(repo.findAll());
+        dar.forEach(da->{
+            da.setUser(userService.getById(da.getUserId()));
+        });
+        return dar;
     }
 
     private List<DemandeAttestationResponse> mapDemandeAttestations(List<DemandeAttestation> l){
         return l.stream().map(p-> {
             DemandeAttestationResponse a = mapper.demandeToDemandeResponse(p);
-            a.setUser(userService.getById(a.getIdUser()));
+            a.setUser(userService.getById(a.getUserId()));
             return a;
         }).collect(Collectors.toList());
     }
@@ -56,7 +71,7 @@ public class DemandeAttestationService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Id not found");
     }
 
-    public List<DemandeAttestationResponse> getAllByType(Attestation.AttestationType type) {
+    public List<DemandeAttestationResponse> getAllByType(DemandeAttestation.AttestationType type) {
         return mapDemandeAttestations(repo.findAllByType(type));
     }
 
@@ -71,14 +86,22 @@ public class DemandeAttestationService {
         DemandeAttestation a = repo.findById(id).orElseThrow(
                 ()->new Exception("Not found")
         );
-        a.setEtat(Attestation.Etat.Accepted);
+        a.setEtat(DemandeAttestation.Etat.Accepted);
+        attestationRepo.save(new Attestation(
+                -1L,
+                a.getId()
+        ));
         repo.save(a);
     }
     public void rejectDemande(Long id) throws Exception {
         DemandeAttestation a = repo.findById(id).orElseThrow(
                 ()->new Exception("Not found")
         );
-        a.setEtat(Attestation.Etat.Rejected);
+        a.setEtat(DemandeAttestation.Etat.Rejected);
+        Attestation att = attestationRepo.findByDemandeId(id);
+        System.out.println("Rejecting");
+        System.out.println(att);
+        attestationRepo.delete(att);
         repo.save(a);
     }
 }

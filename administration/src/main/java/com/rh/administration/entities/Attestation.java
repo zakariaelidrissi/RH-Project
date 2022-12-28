@@ -12,64 +12,15 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 public class Attestation {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    Long idDemande;
-    String nom;
-    String cin;
-    String ville;
+    @Column(unique = true)
+    Long demandeId;
 
-    @Temporal(TemporalType.DATE) Date debutPoste;
-    @Temporal(TemporalType.DATE) Date dateSignature;
+    //@Temporal(TemporalType.DATE) Date debutPoste;
+    //@Temporal(TemporalType.DATE) Date dateSignature;
 
-
-    @Enumerated(EnumType.STRING) Poste poste;
-    @Enumerated(EnumType.STRING) Etablissement etablissement;
-    @Enumerated(EnumType.STRING) AttestationType type;
-
-
-
-    public enum AttestationType{
-        Formation,
-        Stage,
-        Travail
-    }
-
-    public enum Etablissement{
-        FaculteSciences("Faculté des Sciences"),
-        Ensam("ENSAM");
-        private final String name;
-        private Etablissement(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public enum Poste{
-        Doyen("Doyen");
-        //Dev("dev");
-        private final String name;
-        private Poste(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
-
-    public enum Etat{
-        Accepted("Accepted"),
-        Rejected("Rejected"),
-        Waiting("Waiting");
-        //Dev("dev");
-        private final String name;
-        private Etat(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-    }
+    //@Enumerated(EnumType.STRING) Poste poste;
+    //@Enumerated(EnumType.STRING) Etablissement etablissement;
+    //@Enumerated(EnumType.STRING) AttestationType type;
 }

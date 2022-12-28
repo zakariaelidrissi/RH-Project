@@ -1,12 +1,13 @@
 package com.rh.administration.feign;
 
+import com.rh.administration.entities.Stagiaire;
 import com.rh.administration.entities.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient("USER-SERVICE")
-public interface UserService {
-    @GetMapping("/users/{id}")
-    User getById(@PathVariable(name="id") Long id);
+@FeignClient("STAGIAIRE-SERVICE")
+public interface StagiaireService {
+    @GetMapping("/stagiaires/user/{id}")
+    Stagiaire getByUserId(@PathVariable(name="id") Long id);
 }

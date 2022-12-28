@@ -1,19 +1,20 @@
 package com.rh.gestionemploye.dto;
 
+import com.rh.gestionemploye.entities.Employe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @AllArgsConstructor
 @Data
 public class EmployeResponse {
     Long id;
-    String nom;
-    String cin;
-    String email;
-    Date naissance;
+    Long userId;
     Date debutAmbauche;
     String departement;
-    String poste;
+    Employe.Poste poste;
+    Employe.Etablissement etablissement;
 }

@@ -1,30 +1,34 @@
-package com.RHmanagment.user.Entities;
+package com.rh.gestionemploye.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 import java.util.Date;
 
-@Entity
-@Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cin;
     private String genre;
     private String nom;
     private String prenom;
     private Date dateNaissance;
-    @Column(unique = true)
     private String email;
     private String motDePasse;
-    @Column(unique = true)
     private String tel;
-    @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-
+    //private boolean emailVerified;
+    public enum UserRole {
+        USER,
+        ADMIN,
+        EMPLOYER,
+        STAGIAIRE,
+        STAGIAIRE_POTENTIEL
+    }
 }

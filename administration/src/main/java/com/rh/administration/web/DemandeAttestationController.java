@@ -6,6 +6,7 @@ import com.rh.administration.dto.AttestationResponse;
 import com.rh.administration.dto.DemandeAttestationRequest;
 import com.rh.administration.dto.DemandeAttestationResponse;
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.DemandeAttestation;
 import com.rh.administration.services.AttestationService;
 import com.rh.administration.services.DemandeAttestationService;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class DemandeAttestationController {
         if (req.getDate() == null){
             req.setDate(Date.from(Instant.now()));
         }
+        System.out.println("dddd");
         return service.save(req);
     }
 
@@ -42,7 +44,7 @@ public class DemandeAttestationController {
         return service.getById(id);
     }
     @GetMapping(path = "/demande-att/type/{type}")
-    public List<DemandeAttestationResponse> getAllByType(@PathVariable Attestation.AttestationType type){
+    public List<DemandeAttestationResponse> getAllByType(@PathVariable DemandeAttestation.AttestationType type){
         return service.getAllByType(type);
     }
     @PostMapping(path="/demande-att/accept/{id}")

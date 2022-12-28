@@ -1,6 +1,7 @@
 package com.rh.administration.dto;
 
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.DemandeAttestation;
 import com.rh.administration.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +12,10 @@ import java.util.Date;
 @Data
 public class DemandeAttestationResponse {
     Long id;
-    Long idUser;
-    Attestation.AttestationType type;
-    Attestation.Etablissement etablissement;
-    Attestation.Poste poste;
+    Long userId;
+    DemandeAttestation.AttestationType type;
     Date date;
-    Attestation.Etat etat;
+    DemandeAttestation.Etat etat;
 
     User user;
 }

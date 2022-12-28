@@ -25,6 +25,7 @@ public class StagiaireApplication {
         SpringApplication.run(StagiaireApplication.class, args);
     }
 
+
     //@Bean
     CommandLineRunner start(StagiaireRepository stagiaireRepository, RepositoryRestConfiguration restconfiguration){
         return args -> {

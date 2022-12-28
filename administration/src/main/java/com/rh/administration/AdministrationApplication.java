@@ -10,6 +10,7 @@ import com.rh.administration.services.DemandeAttestationService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -19,13 +20,13 @@ import java.time.Instant;
 import java.util.Date;
 
 @SpringBootApplication
-//@EnableFeignClients
+@EnableFeignClients
 public class AdministrationApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AdministrationApplication.class, args);
     }
-
+    /*
     @Bean
     CommandLineRunner start(AttestationService att, DemandeAttestationService dem) {
         return args -> {
@@ -37,7 +38,6 @@ public class AdministrationApplication {
             ));
             AttestationResponse res1 = att.save(
                     new AttestationRequest(
-                            null,
                             res.getId(),
                             "Otmane Khtou",
                             "D654123",
@@ -52,7 +52,7 @@ public class AdministrationApplication {
             System.out.println(res1.getId());
             System.out.println("----------");
         };
-    }
+    }*/
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
