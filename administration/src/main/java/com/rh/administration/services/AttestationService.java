@@ -22,6 +22,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,15 +74,19 @@ public class AttestationService {
         return l.stream().map(p->mapper.attestationToAttestationResponse(p)).collect(Collectors.toList());
     }
 
-    public ByteArrayInputStream getPdf(Long userId) throws IOException, NoSuchElementException, RejectedOrNotYetAcceptedException {
-        User user = userService.getById(userId);
-        if(user == null){throw new NoSuchElementException("No user found");}
-        DemandeAttestation demande = demandeRepo.findByUserId(userId);//.get();
-        if(demande == null) {throw new NoSuchElementException("No Attestation Demande");}
+    public ByteArrayInputStream getPdfByDemandeId(Long demandeId) throws IOException, NoSuchElementException, RejectedOrNotYetAcceptedException {
+        Optional<DemandeAttestation> demandeOpt = demandeRepo.findById(demandeId);
+        if(!demandeOpt.isPresent()) {throw new NoSuchElementException("No Attestation Demande : demandeId " +demandeId);}
+        DemandeAttestation demande = demandeOpt.get();
         if(demande.getEtat() == DemandeAttestation.Etat.Rejected){throw new RejectedOrNotYetAcceptedException("Rejected");}
         if(demande.getEtat() == DemandeAttestation.Etat.Waiting){throw new RejectedOrNotYetAcceptedException("Not yet accepted");}
+
+        Long userId = demande.getUserId();
+        User user = userService.getById(userId);
+        if(user == null){throw new NoSuchElementException("No user found");}
+
         Attestation att = repo.findByDemandeId(demande.getId());//.get();
-        if(att == null) {throw new NoSuchElementException("No Attestation Demande");}
+        if(att == null) {throw new NoSuchElementException("No Attestation: demandeId " + demandeId);}
         System.out.println(user);
         System.out.println(att);
         System.out.println(demande);

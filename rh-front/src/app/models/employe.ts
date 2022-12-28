@@ -1,29 +1,25 @@
 import { Departement } from "./departement";
 import { Etablissement } from "./etablissement";
 import { User } from "./user";
+import { Poste } from "./poste";
 
 export class Employe {
+
     id: number;
-    nom: string;
-    cin: string;
-    email: string;
-    naissance: Date;
+    userId: number;
     debutAmbauche: Date;
-    departement: Departement;
-    poste: string;
+    departement: String;
+    poste: Poste;
     etablissement: Etablissement;
 
     user!: User;
 
     constructor() {
         this.id = 0;
-        this.nom = '';
-        this.cin = '';
-        this.email = '';
-        this.naissance = new Date();
         this.debutAmbauche = new Date();
         this.departement = Departement.Info;
-        this.poste = '';
+        this.userId = 0;
+        this.poste = Poste.Doyen;
         this.etablissement = Etablissement.Ensam;
     }
 }
