@@ -14,6 +14,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import java.util.Date;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+
 public class UserApplication {
 
     public static void main(String[] args) {

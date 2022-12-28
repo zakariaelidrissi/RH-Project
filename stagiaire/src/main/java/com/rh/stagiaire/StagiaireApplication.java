@@ -25,7 +25,8 @@ public class StagiaireApplication {
         SpringApplication.run(StagiaireApplication.class, args);
     }
 
-    @Bean
+
+    //@Bean
     CommandLineRunner start(StagiaireRepository stagiaireRepository, RepositoryRestConfiguration restconfiguration){
         return args -> {
             restconfiguration.exposeIdsFor(Stagiaire.class);

@@ -18,6 +18,7 @@ public class UserRestController {
 
     // ****************** L O G I N *************************
     //@RequestMapping("/login")
+  /*  @RequestMapping("/login")
     public boolean login(@RequestBody org.springframework.security.core.userdetails.User user) {
         return user.getUsername().equals("user") && user.getPassword().equals("password");
     }
@@ -28,7 +29,7 @@ public class UserRestController {
                 .substring("Basic".length()).trim();
         return () ->  new String(Base64.getDecoder()
                 .decode(authToken)).split(":")[0];
-    }
+    }*/
 
     // ************************ GET **************************
     @GetMapping(path = "/users")

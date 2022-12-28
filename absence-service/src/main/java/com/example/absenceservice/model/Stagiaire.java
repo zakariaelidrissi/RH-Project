@@ -10,7 +10,6 @@ public class Stagiaire {
     private String civilite;
     private String niveau_etudes;
     private String ville;
-    private String telephone;
     private String cv;
     private String LinkedIn_URL;
     private Long userId;

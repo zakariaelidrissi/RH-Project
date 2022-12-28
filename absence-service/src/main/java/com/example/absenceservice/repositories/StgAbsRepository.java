@@ -10,5 +10,5 @@ import java.util.List;
 public interface StgAbsRepository extends JpaRepository<StagiaireAbsence, Long> {
 
     StagiaireAbsence findStagiaireAbsenceById(Long id);
-    List<StagiaireAbsence> findStagiaireAbsenceByDateAbs(Date date);
+    List<StagiaireAbsence> findAllStagiaireAbsenceByDateAbs(Date date);
 }

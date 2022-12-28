@@ -42,12 +42,13 @@ public class AbsenceController {
     }
 
     @GetMapping(path = "/absencesStg/date/{date}")
-    public List<StagiaireAbsence> getAllStgAbsByDate(@PathVariable Date date){
-        return absenceService.getAllStgAbsByDate(date);
+    public List<Absence> getAllStgAbsByDate(@PathVariable String date){
+        Date dt = new Date(date);
+        return absenceService.getAllStgAbsByDate(dt);
     }
 
     @GetMapping(path = "/absences/{id}")
-    public EmployeAbsence getEmpAbsById(@PathVariable Long id){
+    public List<EmployeAbsence> getEmpAbsById(@PathVariable Long id){
         return absenceService.getEmpAbsById(id);
     }
 
@@ -90,20 +91,20 @@ public class AbsenceController {
 
     // ************************* PUT *************************
 
-    @PutMapping(path = "/absences")
+    /*@PutMapping(path = "/absences")
     public void updateEmpAbs(@RequestBody EmpAbsRequest absReq){
         absenceService.updateEmpAbs(absReq);
-    }
+    }*/
 
-    @PutMapping(path = "/absences/stg")
+    /*@PutMapping(path = "/absences/stg")
     public void updateStgAbs(@RequestBody StgAbsRequest stgReq) {
         absenceService.updateStgAbs(stgReq);
-    }
+    }*/
 
-    @PutMapping(path = "/demandes")
+    /*@PutMapping(path = "/demandes")
     public void updateDm(@RequestBody DemandeRequest dmReq){
         absenceService.updateDm(dmReq);
-    }
+    }*/
 
     // ************************* DELETE **********************
 

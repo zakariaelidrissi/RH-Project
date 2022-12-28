@@ -27,6 +27,10 @@ export class AbsenceService {
     return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + 'absences');
   }
 
+  getEmpAbsencesById(empId : number) : Observable<AbsenceEmpResponse[]> {
+    return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + 'absences/' + empId);
+  }
+
   // getEmpAbsByDate(date : Date) : Observable<AbsenceEmpResponse[]> {
   //   return this.httpClient.get<AbsenceEmpResponse[]>(this.urlAbs + "absences/date/" + date);
   // }
@@ -72,8 +76,8 @@ export class AbsenceService {
     return this.httpClient.get<AbsenceStgResponse[]>(this.urlAbs + "absences/stg");
   }
 
-  getStgAbsByDate(date : Date) : Observable<AbsenceStgResponse[]> {
-    return this.httpClient.get<AbsenceStgResponse[]>(this.urlAbs + "absencesStg/date/" + date);
+  getStgAbsByDate(date : string) : Observable<AbsenceEmp[]> {
+    return this.httpClient.get<AbsenceEmp[]>(this.urlAbs + "absencesStg/date/" + date);
   }
 
   addStgAbsence(newAbs : AbsenceStgRequest) : Observable<AbsenceStgRequest> {    

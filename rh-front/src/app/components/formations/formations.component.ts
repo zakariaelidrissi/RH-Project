@@ -10,7 +10,6 @@ import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { AddById } from 'src/app/models/addById';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { DatePipe, formatDate } from '@angular/common';
-import { Errors } from 'src/app/models/errors';
 
 declare const $: any;
 
@@ -43,8 +42,7 @@ export class FormationsComponent implements OnInit {
 
   constructor(private formationService: FormationService, 
               private router: Router, 
-              private collService : CollService,
-              private datePipe: DatePipe) {}
+              private collService : CollService) {}
 
   ngOnInit(): void {
 
