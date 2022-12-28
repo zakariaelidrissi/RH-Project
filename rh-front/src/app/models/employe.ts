@@ -1,3 +1,5 @@
+import { Departement } from "./departement";
+import { Etablissement } from "./etablissement";
 import { User } from "./user";
 
 export class Employe {
@@ -7,8 +9,9 @@ export class Employe {
     email: string;
     naissance: Date;
     debutAmbauche: Date;
-    departement: string;
+    departement: Departement;
     poste: string;
+    etablissement: Etablissement;
 
     user!: User;
 
@@ -19,7 +22,8 @@ export class Employe {
         this.email = '';
         this.naissance = new Date();
         this.debutAmbauche = new Date();
-        this.departement = '';
+        this.departement = Departement.Info;
         this.poste = '';
+        this.etablissement = Etablissement.Ensam;
     }
 }

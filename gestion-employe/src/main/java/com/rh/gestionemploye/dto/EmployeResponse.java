@@ -1,5 +1,6 @@
 package com.rh.gestionemploye.dto;
 
+import com.rh.gestionemploye.entities.Employe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,5 +15,6 @@ public class EmployeResponse {
     Long userId;
     Date debutAmbauche;
     String departement;
-    String poste;
+    Employe.Poste poste;
+    Employe.Etablissement etablissement;
 }

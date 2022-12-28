@@ -5,9 +5,9 @@ import com.rh.administration.core.AttestationTravailPdf;
 import com.rh.administration.core.IPDFCreator;
 import com.rh.administration.dto.AttestationRequest;
 import com.rh.administration.dto.AttestationResponse;
-import com.rh.administration.entities.Attestation;
-import com.rh.administration.entities.DemandeAttestation;
-import com.rh.administration.entities.User;
+import com.rh.administration.entities.*;
+import com.rh.administration.feign.EmployeService;
+import com.rh.administration.feign.StagiaireService;
 import com.rh.administration.feign.UserService;
 import com.rh.administration.mappers.AttestationMapper;
 import com.rh.administration.repos.AttestationRepo;
@@ -32,6 +32,8 @@ public class AttestationService {
     private DemandeAttestationRepo demandeRepo;
     private UserService userService;
     private AttestationMapper mapper;
+    private EmployeService employeService;
+    private StagiaireService stagiaireService;
 
     public AttestationResponse save(AttestationRequest req) {
         return mapper.attestationToAttestationResponse(repo.save(mapper.requestToAttestation(req)));
@@ -54,11 +56,12 @@ public class AttestationService {
         return mapper.attestationToAttestationResponse(repo.findById(id).get());
     }
 
-    public List<AttestationResponse> getAllByType(Attestation.AttestationType type) {
+    /*
+    public List<AttestationResponse> getAllByType(DemandeAttestation.AttestationType type) {
         return mapAttestations(repo.findAllByType(type));
     }
 
-    /*public List<AttestationResponse> getAllByEtablissement(String value) {
+    public List<AttestationResponse> getAllByEtablissement(String value) {
         return mapAttestations(repo.findAllByEtablissement(value));
     }
 
@@ -75,16 +78,27 @@ public class AttestationService {
         if(user == null){throw new NoSuchElementException("No user found");}
         DemandeAttestation demande = demandeRepo.findByUserId(userId);//.get();
         if(demande == null) {throw new NoSuchElementException("No Attestation Demande");}
-        if(demande.getEtat() == Attestation.Etat.Rejected){throw new RejectedOrNotYetAcceptedException("Rejected");}
-        if(demande.getEtat() == Attestation.Etat.Waiting){throw new RejectedOrNotYetAcceptedException("Not yet accepted");}
+        if(demande.getEtat() == DemandeAttestation.Etat.Rejected){throw new RejectedOrNotYetAcceptedException("Rejected");}
+        if(demande.getEtat() == DemandeAttestation.Etat.Waiting){throw new RejectedOrNotYetAcceptedException("Not yet accepted");}
         Attestation att = repo.findByDemandeId(demande.getId());//.get();
         if(att == null) {throw new NoSuchElementException("No Attestation Demande");}
         System.out.println(user);
         System.out.println(att);
         System.out.println(demande);
-        return getPDFCreator(att).createPDF(att,user);
+        User.UserRole role = user.getUserRole();
+        IPDFCreator pdfCreator = getPDFCreator(demandeRepo.findById(att.getDemandeId()).get());
+        if(role.equals(User.UserRole.EMPLOYER)){
+            Employe employe = employeService.getByUserId(userId);
+            employe.setUser(user);
+            return pdfCreator.createPDF(att,employe);
+        }else if(role.equals(User.UserRole.STAGIAIRE)){
+            Stagiaire stagiaire = stagiaireService.getByUserId(userId);
+            stagiaire.setUser(user);
+            return pdfCreator.createPDF(att,stagiaire);
+        }
+        throw new NoSuchElementException("Invalid user Role: "+role.toString());
     }
-    private IPDFCreator<Attestation> getPDFCreator(Attestation attestation) throws IOException {
+    private IPDFCreator getPDFCreator(DemandeAttestation attestation) throws IOException {
         switch (attestation.getType()){
             case Travail:
                 return AttestationTravailPdf.getInstance();

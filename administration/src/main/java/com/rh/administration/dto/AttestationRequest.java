@@ -1,6 +1,7 @@
 package com.rh.administration.dto;
 
 import com.rh.administration.entities.Attestation;
+import com.rh.administration.entities.DemandeAttestation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,5 +13,5 @@ public class AttestationRequest {
     Long demandeId;
     Date dateSignature;
 
-    Attestation.AttestationType type;
+    DemandeAttestation.AttestationType type;
 }

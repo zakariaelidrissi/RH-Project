@@ -25,12 +25,17 @@ public class EmployeService {
 
     public EmployeResponse save(EmployeRequest req) {
         User user = creerCompte(req);
+        if(user == null){
+            //TODO: throw
+            return null;
+        }
         Employe em = new Employe(
                 -1L,
                 user.getId(),
                 Date.from(Instant.now()),
                 req.getDepartement(),
-                req.getPoste()
+                req.getPoste(),
+                req.getEtablissement()
         );
         Employe e = repo.save(em);
         return mapper.employeToEmployeResponse(e);

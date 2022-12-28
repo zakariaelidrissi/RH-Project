@@ -174,8 +174,8 @@ export class DemandeAttestationsComponent implements OnInit {
     console.log({ att });
     return [
       att.userId || "Null",
-      att.poste || "Null",
-      att.etablissement || "Null",
+      // att.poste || "Null",
+      // att.etablissement || "Null",
       att.type || "Null",
       att.date || "Null",
       att.etat || "Null",

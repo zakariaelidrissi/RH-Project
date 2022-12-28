@@ -18,6 +18,7 @@ import { EmployeFormationsComponent } from './components/employes/employe-format
 import { EmployeAbsencesComponent } from './components/employes/employe-absences/employe-absences.component';
 import { DemandeFormationComponent } from './components/employes/demande-formation/demande-formation.component';
 import { DemandeFormationsComponent } from './components/demande-formations/demande-formations.component';
+import { EmployeAttestationsComponent } from './components/employes/employe-attestations/employe-attestations.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "home", pathMatch: "full"},
@@ -38,6 +39,7 @@ const routes: Routes = [
   {path: "employes/absences", component: EmployeAbsencesComponent},
   {path: "employes/demande/formation", component: DemandeFormationComponent},
   {path: "employes/demande/absence", component: DemandeAbsenceComponent},
+  {path: "employes/demande/attestations", component: EmployeAttestationsComponent},
   {path: "**", component: ErrorComponent}
 ];
 
