@@ -35,6 +35,12 @@ export class AdministrationService {
   acceptDemande(id: number): Observable<DemandeAttestationResponse[]> {
     return this.httpClient.post<DemandeAttestationResponse[]>(this.url + "demande-att/accept/" + id, {});
   }
+  downloadAttestationPdf(demandeId: number): Observable<any> {
+    return this.httpClient.get(this.url + "attestations/pdf/" + demandeId);
+  }
+  getDemandeAttestationsByUserId(userId: number): Observable<DemandeAttestationResponse[]> {
+    return this.httpClient.get<DemandeAttestationResponse[]>(this.url + "demande-att/user/" + userId);
+  }
 
   // addCollaborateur(newColl : AttestationRequest ) : Observable<CollRequest> {
   //   return this.httpClient.post<CollRequest>(this.url + "addCollaborateur", newColl);

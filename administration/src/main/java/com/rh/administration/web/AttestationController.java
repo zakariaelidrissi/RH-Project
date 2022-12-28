@@ -47,6 +47,7 @@ public class AttestationController {
         return service.getById(id);
     }
 
+    /*
     @GetMapping(path = "/attestations/{key}/{value}")
     public List<AttestationResponse> get(@PathVariable String key,@PathVariable String value) throws Exception {
         switch (key){
@@ -63,7 +64,7 @@ public class AttestationController {
                 throw new Exception("key: "+key+" invalid");
         }
     }
-
+    */
     @GetMapping(path = "/attestations")
     public List<AttestationResponse> get(){
         System.out.println("---------");
@@ -84,11 +85,11 @@ public class AttestationController {
         }
     }
 
-    @GetMapping(path="/pdf/{id}")
+    @GetMapping(path="/attestations/pdf/{demandeId}")
     @ResponseBody
-    public ResponseEntity<InputStreamSource> pdf(@PathVariable Long id){
+    public ResponseEntity<InputStreamSource> pdf(@PathVariable Long demandeId){
         try{
-            ByteArrayInputStream array = service.getPdf(id);
+            ByteArrayInputStream array = service.getPdfByDemandeId(demandeId);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition","inline;");
             return ResponseEntity
