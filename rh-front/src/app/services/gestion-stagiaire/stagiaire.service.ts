@@ -8,7 +8,7 @@ import { Stagiaire } from 'src/app/models/stagiaire';
 })
 export class StagiaireService {
 
-  url: string = "http://localhost:8089/stagiaires";
+  url : string = "http://localhost:8089/stagiaires";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -29,7 +29,7 @@ export class StagiaireService {
   }
 
   getByUserId(userId: number): Observable<Stagiaire> {
-    return this.httpClient.get<Stagiaire>(this.url + "/" + userId);
+    return this.httpClient.get<Stagiaire>(this.url + "/user/" + userId);
   }
 
 }

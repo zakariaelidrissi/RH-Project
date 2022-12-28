@@ -83,7 +83,9 @@ public class AbsenceService {
                 if (emp.getId().equals(abs.getEmployeId())){
                     allAbs.add(new Absence(abs.getId(),abs.getDateAbs(),abs.getNatureAbsence(),
                             abs.getJustificatif(),abs.getDuree(),"yes",emp.getId(),emp.getNom()));
-                }else count++;
+                    count++;
+                    break;
+                }
             }
             if (count == 0 ){
                 allAbs.add(new Absence(null,null,null,
@@ -94,19 +96,40 @@ public class AbsenceService {
         return allAbs;
     }
 
-    public List<StagiaireAbsence> getAllStgAbsByDate(Date date) {
-        List<StagiaireAbsence> listAbs = stgAbsRepository.findStagiaireAbsenceByDateAbs(date);
+    public List<Absence> getAllStgAbsByDate(Date date) {
+        List<StagiaireAbsence> listAbs = stgAbsRepository.findAllStagiaireAbsenceByDateAbs(date);
+        List<Stagiaire> allStg = stagiaireRestClient.getAllStg();
+        List<Absence> allAbs = new ArrayList<>();
 
         listAbs.forEach(abs -> {
             abs.setStagiaire(getStgById(abs.getStagiaireId()));
         });
 
-        return listAbs;
+        System.out.println(date);
+        for (Stagiaire stg : allStg) {
+            int count = 0;
+            for (StagiaireAbsence abs : listAbs) {
+                if (stg.getId().equals(abs.getStagiaireId())){
+                    allAbs.add(new Absence(abs.getId(),abs.getDateAbs(),abs.getNatureAbsence(),
+                            abs.getJustificatif(),abs.getDuree(),"yes",stg.getId(),stg.getUser().getNom()));
+                    count++;
+                    break;
+                }
+            }
+            if (count == 0 ){
+                allAbs.add(new Absence(null,null,null,
+                        null,null,"no", stg.getId(),stg.getUser().getNom()));
+            }
+        }
+
+        return allAbs;
     }
 
-    public EmployeAbsence getEmpAbsById(Long id) {
-        EmployeAbsence abs = absenceRepository.findEmployeAbsenceById(id);
-        abs.setEmploye(getEmployeById(abs.getEmployeId()));
+    public List<EmployeAbsence> getEmpAbsById(Long id) {
+        List<EmployeAbsence> abs = absenceRepository.findAllEmployeAbsenceByEmployeId(id);
+        abs.forEach(a -> {
+                a.setEmploye(getEmployeById(a.getEmployeId()));
+        });
         return abs;
     }
 
@@ -171,7 +194,7 @@ public class AbsenceService {
     }
 
     // ************************* PUT *************************
-    public void updateEmpAbs(EmpAbsRequest absReq){
+    /*public void updateEmpAbs(EmpAbsRequest absReq){
         EmployeAbsence abs = getEmpAbsById(absReq.getId());
 
         abs.setDateAbs(absReq.getDateAbs());
@@ -181,9 +204,9 @@ public class AbsenceService {
         abs.setJustificatif(absReq.getJustificatif());
 
         absenceRepository.save(abs);
-    }
+    }*/
 
-    public void updateStgAbs(StgAbsRequest stgReq){
+    /*public void updateStgAbs(StgAbsRequest stgReq){
         StagiaireAbsence abs = getStgAbsById(stgReq.getId());
         abs.setDateAbs(stgReq.getDateAbs());
         abs.setNatureAbsence(stgReq.getNatureAbsence());
@@ -205,7 +228,7 @@ public class AbsenceService {
         dm.setStatut(dmReq.getStatut());
 
         demandeRepository.save(dm);
-    }
+    }*/
 
     // ************************* DELETE **********************
 

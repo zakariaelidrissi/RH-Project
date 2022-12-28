@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient("OFFRE_STAGE-SERVICE")
 public interface OffreStageRestClient {
-
     @GetMapping(path = "offres_stage/{id}")
     OffreStage getOffreStageById(@PathVariable Long id);
 }

@@ -6,7 +6,6 @@ import com.rh.stagiaire.Model.StagiareRequest;
 import com.rh.stagiaire.Model.User;
 import com.rh.stagiaire.Repositories.StagiaireRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -54,7 +53,6 @@ public class StagiaireService {
 
         stg.setCivilite(stgReq.getCivilite());
         stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
@@ -69,7 +67,6 @@ public class StagiaireService {
 
         stg.setCivilite(stgReq.getCivilite());
         stg.setCv(stgReq.getCv());
-        stg.setTelephone(stgReq.getTelephone());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
