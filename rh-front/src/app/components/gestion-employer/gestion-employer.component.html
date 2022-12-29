@@ -75,18 +75,18 @@
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom d'employe</label>
                             <input type="text" required placeholder="Employee Name" name="nom"
-                                [(ngModel)]="newEmploye.nom" class="form-control">
+                                [(ngModel)]="newEmploye.user.nom" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Cin</label>
                             <input type="text" required placeholder="Employee Cin" name="cin"
-                                [(ngModel)]="newEmploye.cin" class="form-control">
+                                [(ngModel)]="newEmploye.user.cin" class="form-control">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
-                            <input type="text" required placeholder="email" name="email" [(ngModel)]="newEmploye.email"
+                            <input type="text" required placeholder="email" name="email" [(ngModel)]="newEmploye.user.email"
                                 class="form-control">
                         </div>
                         <div class="col-md-6">
@@ -99,7 +99,7 @@
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de Naissance</label>
                             <input type="date" required placeholder="naissance" name="naissance"
-                                [(ngModel)]="newEmploye.naissance" class="form-control">
+                                [(ngModel)]="newEmploye.user.dateNaissance" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début d'embauche</label>

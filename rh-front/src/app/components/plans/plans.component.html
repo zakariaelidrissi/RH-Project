@@ -115,8 +115,8 @@
                                 aria-label="Default select example" name="responsableID"
                                 [(ngModel)]="newPlan.responsableID">
                                 <option value="">Choisir Responsable</option>
-                                <option *ngFor="let coll of Collaborateurs" value="{{coll.id}}">{{coll.employe.nom + ' | ' 
-                                    + coll.employe.cin}} </option>
+                                <option *ngFor="let coll of Collaborateurs" value="{{coll.id}}">{{coll.employe.user.nom + ' ' 
+                                    + coll.employe.user.prenom}} </option>
                             </select>
                         </div>
                     </div>

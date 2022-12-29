@@ -11,6 +11,7 @@ import { FormationService } from 'src/app/services/formation/formation.service';
 import { AddById } from 'src/app/models/addById';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Departement } from 'src/app/models/departement';
+import { Poste } from 'src/app/models/poste';
 
 declare const $: any;
 
@@ -78,9 +79,10 @@ export class GestionEmployerComponent implements OnInit {
       console.log(this.employes);
       const handleButons = this.handleButons;
       this.employes.forEach((coll, index) => {
-        var dtBirth: Date = new Date(coll.employe.naissance);
+        var dtBirth: Date = new Date(coll.employe.user.dateNaissance);
         var dtemb: Date = new Date(coll.employe.debutAmbauche);
-        this.dashboard.setItems([coll.employe.nom, coll.employe.cin, coll.employe.email,
+        var userName = coll.employe.user.nom + coll.employe.user.prenom;
+        this.dashboard.setItems([userName, coll.employe.user.cin, coll.employe.user.email,
         dtBirth.toLocaleDateString(), dtemb.toLocaleDateString(), coll.employe.departement, coll.employe.poste, this.actions(coll.id, index)]);
       });
       $('#example tbody').on('click', 'button', function (this: any, event: any) {
@@ -102,7 +104,7 @@ export class GestionEmployerComponent implements OnInit {
       this.dropDownFormation(id_, this.employes.find(f => f.id == id_)!.formations);
     } else if (type === "showCollFormation") {
       this.showCollFormation(this.employes.find(f => f.id == id_)!.formations,
-        this.employes.find(f => f.id == id_)!.empolyeID, this.employes.find(f => f.id == id_)!.employe.nom);
+        this.employes.find(f => f.id == id_)!.empolyeID, this.employes.find(f => f.id == id_)!.employe.user.nom);
     } else if (type === "confirmDeleteEmploye") {
       this.confirmDeleteEmploye(this.employes.find(f => f.id == id_)!.empolyeID, index_);
     }
@@ -118,7 +120,7 @@ export class GestionEmployerComponent implements OnInit {
       this.message = "This Employer well be added successfuly!";
       $('#addEmployer').modal("hide");
 
-      this.employerService.getEmployeByCin(response.cin).subscribe((response) => {
+      this.employerService.getEmployeByCin(response.user.cin).subscribe((response) => {
         this.collRequest.employeId = response.id;
 
         this.collService.addCollaborateur(this.collRequest).subscribe((response) => {
@@ -185,13 +187,13 @@ export class GestionEmployerComponent implements OnInit {
   }
 
   cleanData() {
-    this.newEmploye.cin = '';
+    this.newEmploye.user.cin = '';
     this.newEmploye.debutAmbauche = new Date();
     this.newEmploye.departement = Departement.Info;
-    this.newEmploye.email = '';
-    this.newEmploye.naissance = new Date();
-    this.newEmploye.nom = '';
-    this.newEmploye.poste = '';
+    this.newEmploye.user.email = '';
+    this.newEmploye.user.dateNaissance = new Date();
+    this.newEmploye.user.nom = '';
+    // this.newEmploye.poste = '';
   }
 
   getFormation(): void {

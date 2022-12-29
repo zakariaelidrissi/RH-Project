@@ -3,18 +3,18 @@ package com.example.employerservice.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import java.util.Date;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class User {
-    private Long idUser;
+    private Long id;
+    private String cin;
+    private String genre;
     private String nom;
     private String prenom;
+    private Date dateNaissance;
     private String email;
     private String motDePasse;
     private String tel;
-    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 }
