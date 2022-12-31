@@ -29,11 +29,11 @@ export class AdministrationService {
   deleteDemande(id: number): Observable<DemandeAttestationResponse[]> {
     return this.httpClient.delete<DemandeAttestationResponse[]>(this.url + "demande-att/" + id);
   }
-  rejectDemande(id: number): Observable<DemandeAttestationResponse[]> {
-    return this.httpClient.post<DemandeAttestationResponse[]>(this.url + "demande-att/reject/" + id, {});
+  rejectDemande(id: number): Observable<any> {
+    return this.httpClient.post(this.url + "demande-att/reject/" + id, {});
   }
-  acceptDemande(id: number): Observable<DemandeAttestationResponse[]> {
-    return this.httpClient.post<DemandeAttestationResponse[]>(this.url + "demande-att/accept/" + id, {});
+  acceptDemande(id: number): Observable<any> {
+    return this.httpClient.post(this.url + "demande-att/accept/" + id, {});
   }
   downloadAttestationPdf(demandeId: number): Observable<any> {
     return this.httpClient.get(this.url + "attestations/pdf/" + demandeId);

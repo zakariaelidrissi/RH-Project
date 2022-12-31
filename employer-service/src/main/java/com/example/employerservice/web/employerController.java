@@ -27,14 +27,14 @@ public class employerController {
         return userRestClient.getUserById(id);
     }
 
-    @GetMapping(path = "/employe/getAtt/{id}")
-    public DemandeAttestationResponse getAtt(@PathVariable Long id){
-        return attestationRestClient.getAll(id);
+    @GetMapping(path = "/employe/getAtt/{userId}")
+    public List<DemandeAttestationResponse> getAtt(@PathVariable Long userId){
+        return attestationRestClient.getAllByUserId(userId);
     }
 
-    @GetMapping(path = "/absences/{idEmp}")
-    List<Absence> getAllAbs(@PathVariable Long idEmp){
-        return absenceRestClient.getAllAbs(idEmp);
+    @GetMapping(path = "/absences/{empId}")
+    List<Absence> getAllAbs(@PathVariable Long empId){
+        return absenceRestClient.getAllAbs(empId);
     }
 
     // ************************ POST **************************
