@@ -19,28 +19,30 @@ import { EmployeAbsencesComponent } from './components/employes/employe-absences
 import { DemandeFormationComponent } from './components/employes/demande-formation/demande-formation.component';
 import { DemandeFormationsComponent } from './components/demande-formations/demande-formations.component';
 import { EmployeAttestationsComponent } from './components/employes/employe-attestations/employe-attestations.component';
+import { MessagerieComponent } from './components/messagerie/messagerie.component';
 
 const routes: Routes = [
-  {path: "", redirectTo: "home", pathMatch: "full"},
-  {path: "home", component: HomeComponent},
-  {path: "attestations", component: AttestationsComponent},
-  {path: "demande-attestations", component: DemandeAttestationsComponent},
-  {path: "demande-formations", component: DemandeFormationsComponent},
-  {path: "dash", component: DashBodyComponent},
-  {path: "formations", component: FormationsComponent},
-  {path: "plans", component: PlansComponent},
-  {path: "gestion-employer", component: GestionEmployerComponent},
-  {path: "gestion-stagiaire", component: GestionStagiaireComponent},
-  {path: "employe/absence", component: EmployeAbsComponent},
-  {path: "demande/absence", component: DemandeAbsenceComponent},
-  {path: "stagiaire/absence", component: StagiaireComponent},
-  {path: "stages", component: StagesComponent},
-  {path: "employes/formations", component: EmployeFormationsComponent},
-  {path: "employes/absences", component: EmployeAbsencesComponent},
-  {path: "employes/demande/formation", component: DemandeFormationComponent},
-  {path: "employes/demande/absence", component: DemandeAbsenceComponent},
-  {path: "employes/demande/attestations", component: EmployeAttestationsComponent},
-  {path: "**", component: ErrorComponent}
+  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "home", component: HomeComponent },
+  { path: "attestations", component: AttestationsComponent },
+  { path: "demande-attestations", component: DemandeAttestationsComponent },
+  { path: "demande-formations", component: DemandeFormationsComponent },
+  { path: "dash", component: DashBodyComponent },
+  { path: "formations", component: FormationsComponent },
+  { path: "plans", component: PlansComponent },
+  { path: "gestion-employer", component: GestionEmployerComponent },
+  { path: "gestion-stagiaire", component: GestionStagiaireComponent },
+  { path: "employe/absence", component: EmployeAbsComponent },
+  { path: "demande/absence", component: DemandeAbsenceComponent },
+  { path: "stagiaire/absence", component: StagiaireComponent },
+  { path: "stages", component: StagesComponent },
+  { path: "employes/formations", component: EmployeFormationsComponent },
+  { path: "employes/absences", component: EmployeAbsencesComponent },
+  { path: "employes/demande/formation", component: DemandeFormationComponent },
+  { path: "employes/demande/absence", component: DemandeAbsenceComponent },
+  { path: "employes/demande/attestations", component: EmployeAttestationsComponent },
+  { path: "**", component: ErrorComponent },
+  { path: "messagerie", component: MessagerieComponent }
 ];
 
 @NgModule({

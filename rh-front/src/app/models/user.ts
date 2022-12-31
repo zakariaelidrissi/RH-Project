@@ -3,18 +3,21 @@ export class User {
     genre: string;
     nom: string;
     prenom: string;
+    dateNaissance?: Date;
+    cin: string;
     email: string;
     motDePasse: string;
     tel: string;
     userRole: string;
     emailVerified: boolean;
-    verificationCode: string;    
+    verificationCode: string;
 
-    constructor(){
+    constructor() {
         this.id = 0;
         this.genre = ''
         this.nom = '';
         this.prenom = '';
+        this.cin = '';
         this.email = '';
         this.motDePasse = '';
         this.tel = '';

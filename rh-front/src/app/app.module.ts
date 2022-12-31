@@ -39,6 +39,7 @@ import { EmployeAbsComponent } from './components/absence/employe-abs/employe-ab
 import { DemandeAttestationsComponent } from './components/demande-attestations/demande-attestations.component';
 import { DemandeFormationsComponent } from './components/demande-formations/demande-formations.component';
 import { EmployeAttestationsComponent } from './components/employes/employe-attestations/employe-attestations.component';
+import { MessagerieComponent } from './components/messagerie/messagerie.component';
 
 // export function kcFactory(kcSecurity: KeycloakSecurityService) {
 //   return () => kcSecurity.init();
@@ -49,9 +50,10 @@ import { EmployeAttestationsComponent } from './components/employes/employe-atte
     AppComponent, DashboardComponent, FormationsComponent, DashBodyComponent,
     HomeComponent, NavbarComponent, FooterComponent, PlansComponent,
     GestionEmployerComponent, ErrorComponent, EmployeComponent,
-    GestionStagiaireComponent, DemandeAbsenceComponent, StagiaireComponent,   
+    GestionStagiaireComponent, DemandeAbsenceComponent, StagiaireComponent,
     LoginComponent, StagesComponent, AttestationsComponent, EmployeFormationsComponent, EmployeAbsencesComponent, DemandeFormationComponent, EmployeAbsComponent,
     DemandeAttestationsComponent,
+    MessagerieComponent,
     DemandeFormationsComponent,
     EmployeAttestationsComponent,
   ],
