@@ -297,3 +297,11 @@ li.user:hover {
     color: rgba(22, 1, 181, 0.9);
     text-decoration: underline;
 }
+
+i.notallowed {
+    cursor: not-allowed;
+}
+
+div.pre_wrap {
+    white-space: pre;
+}
