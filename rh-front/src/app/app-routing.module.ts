@@ -40,8 +40,8 @@ const routes: Routes = [
   { path: "employes/demande/formation", component: DemandeFormationComponent },
   { path: "employes/demande/absence", component: DemandeAbsenceComponent },
   { path: "employes/demande/attestations", component: EmployeAttestationsComponent },
-  { path: "**", component: ErrorComponent },
-  { path: "messagerie", component: MessagerieComponent }
+  { path: "messagerie", component: MessagerieComponent },
+  { path: "**", component: ErrorComponent }
 ];
 
 @NgModule({
