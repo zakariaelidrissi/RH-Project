@@ -24,10 +24,10 @@ public class StagiaireRestController {
         return stagiaireService.getStagiaireById(id);
     }
 
-//    @GetMapping(path = "/stagiaires/user/{id}")
-//    public Stagiaire getStagiaireByUserId(@PathVariable Long id) {
-//        return stagiaireService.getStagiaireByUserId(id);
-//    }
+    @GetMapping(path = "/stagiaires/user/{id}")
+    public Stagiaire getStagiaireByUserId(@PathVariable Long id) {
+        return stagiaireService.getStagiaireByUserId(id);
+    }
 
     // ************************ POST **************************
     @PostMapping(path = "/stagiaires")
