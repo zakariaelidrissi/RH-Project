@@ -187,7 +187,7 @@ public class FormationServiceImpl implements FormationService {
         List<Coll> coll = new ArrayList<>();
         col.forEach(c->{
             c.setEmploye(employeRestClient.getEmployeById(c.getEmpolyeID()));
-            coll.add(new Coll(c.getId(), c.getEmploye().getNom()));
+            coll.add(new Coll(c.getId(), c.getEmploye().getUser().getNom()));
         });
 
         return coll;

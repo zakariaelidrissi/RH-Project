@@ -35,7 +35,7 @@ export class DemandeFormationsComponent implements OnInit {
     return '<div id_='+demandeId+' collId_='+collid+' formId_='+formid+' index_='+index+' class="me-auto d-flex">'+
               '<button type_="accept" class="btn btn-success me-2 btn-sm"'+
               'data-bs-toggle="modal" data-bs-target="#demandeModal">'+
-              '<i class="bi bi-pencil-square"></i>'+
+              '<i class="bi bi-check"></i>'+
               ' </button>'+
               '<button  type_="refuse" class="btn btn-danger me-2 btn-sm"'+
                   'data-bs-toggle="modal" data-bs-target="#demandeModal">'+
@@ -97,8 +97,6 @@ export class DemandeFormationsComponent implements OnInit {
   accept(demandeId : number) {
     this.updDemande.id = demandeId;
     this.updDemande.status = 'accept';
-    // this.addCollToForm.id1 = this.collID;
-    // this.addCollToForm.id2 = this.formID;
     this.formationService.updateDemande(this.updDemande).subscribe((res) => {
       this.formationService.addCollToFormation(this.addCollToForm).subscribe((res) => {
         this.message = 'Successfuly!';

@@ -45,37 +45,7 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- <tr *ngFor="let formation of formations;let i = index">
-                                    <th scope="row">{{ formation.name }}</th>
-                                    <td>{{ formation.formationDate }}</td>
-                                    <td>{{ formation.duree }}</td>
-                                    <td>{{ (formation.objectif.length>40)? (formation.objectif | slice:0:40)+'...':(formation.objectif) }}</td>
-                                    <td>
-                                        <div class="me-auto d-flex">
-                                            <button class="btn btn-primary me-2 btn-sm" (click)="dropDownFormation(formation.id)"
-                                                data-bs-toggle="modal" data-bs-target="#addCollToFormation">
-                                                <i class="bi bi-plus-circle-fill"></i>
-                                            </button>
-                                            <button class="btn btn-warning me-2 btn-sm" (click)="editFormation(formation)"
-                                                data-bs-toggle="modal" data-bs-target="#addFormation">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                            <button class="btn btn-success me-2 btn-sm" (click)="showPlan(formation)"
-                                                data-bs-toggle="modal" data-bs-target="#show">
-                                                <i class="bi bi-eye-fill"></i>
-                                            </button>
-                                            <button class="btn btn-primary me-2 btn-sm" (click)="showColl(formation.id)"
-                                                data-bs-toggle="modal" data-bs-target="#showColl">
-                                                <i class="bi bi-eyeglasses"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm" (click)="confirmDeleteFormation(formation.id, i)"
-                                                data-bs-toggle="modal" data-bs-target="#deleteFormation">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr> -->
+                            <tbody>                               
                             </tbody>
                         </table>
                     </div>
@@ -211,7 +181,6 @@
                                 <th>Nom de plan</th>
                                 <th>Date de plan</th>
                                 <th>Responsable</th>
-                                <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -219,13 +188,6 @@
                                 <td>{{ plan.name }}</td>
                                 <td>{{ plan.planDate }}</td>
                                 <td>{{ plan.responsable.employe.user.nom+' '+plan.responsable.employe.user.prenom }}</td>
-                                <!-- <td>
-                                    <button class="btn btn-danger me-2" (click)="deleteFormatonFromPlan(formation.id, planId, i)"
-                                        data-bs-target="#showFormations" data-bs-toggle="modal">
-                                        Delete
-                                    </button>
-                                </td> -->
-
                             </tr>
                         </tbody>
                     </table>
@@ -256,7 +218,7 @@
                                     <tr>
                                         <th scope="col">Nom d'employe</th>
                                         <th scope="col">Cin</th>
-                                        <th scope="col">Email</th>
+                                        <!-- <th scope="col">Email</th> -->
                                         <th scope="col">Naissance</th>
                                         <th scope="col">Début Embauche</th>
                                         <th scope="col">Département</th>
@@ -268,7 +230,7 @@
                                     <tr *ngFor="let coll of employes; let i = index">
                                         <td>{{coll.employe.user.nom+' '+coll.employe.user.prenom}}</td>
                                         <td>{{coll.employe.user.cin}}</td>
-                                        <td>{{coll.employe.user.email}}</td>
+                                        <!-- <td>{{coll.employe.user.email}}</td> -->
                                         <td>{{coll.employe.user.dateNaissance| date:"shortDate"}}</td>
                                         <td>{{coll.employe.debutAmbauche | date:"shortDate"}}</td>
                                         <td>{{coll.employe.departement}}</td>

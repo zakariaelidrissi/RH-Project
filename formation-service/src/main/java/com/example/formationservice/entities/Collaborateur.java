@@ -14,12 +14,6 @@ public class Collaborateur {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Enumerated(EnumType.STRING)
-    //private CollRole role;
-
-    //@Column(unique = true)
-    //private String cin;
-
     @ManyToMany(mappedBy = "collaborateurs", fetch = FetchType.EAGER)
     private Set<Formation> formations = new HashSet<>();
 

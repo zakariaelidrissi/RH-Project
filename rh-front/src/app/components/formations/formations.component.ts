@@ -9,7 +9,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { AddById } from 'src/app/models/addById';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { DatePipe, formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
 
 declare const $: any;
 
@@ -32,7 +32,6 @@ export class FormationsComponent implements OnInit {
   message: string = '';
 
   dropdownListColl: any = [];
-  // listColl : any = [];
   selectedItems : any = [];
   selectedItem : number = 0;
   dropdownCollSettings:IDropdownSettings = {};
@@ -225,6 +224,7 @@ export class FormationsComponent implements OnInit {
   getColl() {
     this.collService.getColl().subscribe((response) => {
       this.dropdownListColl = response;
+      console.log(response);
     }, (error) => {
       console.log(error);
     });
