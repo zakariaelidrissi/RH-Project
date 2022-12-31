@@ -26,14 +26,14 @@ public class StagiaireApplication {
     }
 
 
-    //@Bean
+    @Bean
     CommandLineRunner start(StagiaireRepository stagiaireRepository, RepositoryRestConfiguration restconfiguration){
         return args -> {
             restconfiguration.exposeIdsFor(Stagiaire.class);
 
-            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","ERRACHIDIA","","",1L,null));
-            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MEKNES","","",2L,null));
-            stagiaireRepository.save(new Stagiaire(null,"Mr","BAC+8","MERIRT","","",3L,null));
+            stagiaireRepository.save(new Stagiaire(1L,"Mr","BAC+8","ERRACHIDIA","","",1L,null));
+            stagiaireRepository.save(new Stagiaire(2L,"Mr","BAC+8","MEKNES","","",2L,null));
+            stagiaireRepository.save(new Stagiaire(3L,"Mr","BAC+8","MERIRT","","",3L,null));
 
             stagiaireRepository.findAll().forEach(System.out::println);
         };

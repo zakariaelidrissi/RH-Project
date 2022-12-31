@@ -14,12 +14,12 @@ public class OffreStageRestController {
     private OffreStageService offreStageService;
 
     // ************************ GET **************************
-    @GetMapping(path = "/offreStages")
+    @GetMapping(path = "/offrestages")
     public List<OffreStage> getAllOffreStage() {
         return offreStageService.getAllOffreStage();
     }
 
-    @GetMapping(path = "/offreStages/{id}")
+    @GetMapping(path = "/offrestages/{id}")
     public OffreStage getOffreStageById(@PathVariable Long id){
         return offreStageService.getOffreStageById(id);
     }
@@ -27,19 +27,19 @@ public class OffreStageRestController {
 
 
     // ************************ POST **************************
-    @PostMapping(path = "/offreStages")
+    @PostMapping(path = "/offrestages")
     public void addOffreStage(@RequestBody OffreStageRequest stgReq) {
         offreStageService.addOffreStage(stgReq);
     }
 
     // ************************ PUT **************************
-    @PutMapping(path = "/offreStages")
+    @PutMapping(path = "/offrestages")
     public void updateOffreStage(@RequestBody OffreStageRequest stgReq) {
         offreStageService.updateOffreStage(stgReq);
     }
 
     // ************************ DELETE **************************
-    @DeleteMapping(path = "/offreStages/{id}")
+    @DeleteMapping(path = "/offrestages/{id}")
     public void deleteById(@PathVariable Long id) {
         offreStageService.deleteById(id);
     }
