@@ -20,4 +20,5 @@ public class User {
     private String motDePasse;
     private String tel;
     private String userRole;
+    private Boolean Enabled;
 }
