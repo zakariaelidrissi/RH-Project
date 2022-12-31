@@ -5,16 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
 
-@AllArgsConstructor @NoArgsConstructor
-@Entity
-@Data
-public class ToAllMessage {
-    @Id
+
+public class LastMessageSeen {
     Long id;
-    String text;
-    Long sender;
+    Long senderId;
+    Long receiverId;
+    Long messageId;
     Date date;
 }

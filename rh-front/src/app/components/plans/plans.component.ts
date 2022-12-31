@@ -33,12 +33,12 @@ export class PlansComponent implements OnInit {
 
   message: string = '';
 
-  dropdownListFormation : FormationResponse[] = [];
-  dropdownListPlan : PlanResponse[] = [];
-  selectedItems : any = [];
-  selectedItem : number = 0;
-  dropdownFormationSettings:IDropdownSettings = {};
-  errors : any = [];
+  dropdownListFormation: FormationResponse[] = [];
+  dropdownListPlan: PlanResponse[] = [];
+  selectedItems: any = [];
+  selectedItem: number = 0;
+  dropdownFormationSettings: IDropdownSettings = {};
+  errors: any = [];
 
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
@@ -52,26 +52,26 @@ export class PlansComponent implements OnInit {
     this.getCollaborateur();
     this.dropDownFormation();
   }
-  
-  actions(planId : number, index: number) {
-    return '<div id_='+planId+' index_='+index+' class="me-auto d-flex">'+
-              '<button type_="editPlan" class="btn btn-warning me-2 btn-sm"'+
-                  'data-bs-toggle="modal" data-bs-target="#addPlan">'+
-                  '<i class="bi bi-pencil-square"></i>'+
-              '</button>'+
-              '<button type_="show" class="btn btn-success me-2 btn-sm"'+
-                  'data-bs-target="#showFormations" data-bs-toggle="modal">'+
-                  '<i class="bi bi-eye-fill"></i>'+
-              '</button>'+
-              '<button type_="confirmDeletePlan" class="btn btn-danger btn-sm"'+
-                  'data-bs-toggle="modal" data-bs-target="#deletePlan">'+
-                  '<i class="bi bi-trash3-fill"></i>'+
-              '</button>'+
-          '</div>';
+
+  actions(planId: number, index: number) {
+    return '<div id_=' + planId + ' index_=' + index + ' class="me-auto d-flex">' +
+      '<button type_="editPlan" class="btn btn-warning me-2 btn-sm"' +
+      'data-bs-toggle="modal" data-bs-target="#addPlan">' +
+      '<i class="bi bi-pencil-square"></i>' +
+      '</button>' +
+      '<button type_="show" class="btn btn-success me-2 btn-sm"' +
+      'data-bs-target="#showFormations" data-bs-toggle="modal">' +
+      '<i class="bi bi-eye-fill"></i>' +
+      '</button>' +
+      '<button type_="confirmDeletePlan" class="btn btn-danger btn-sm"' +
+      'data-bs-toggle="modal" data-bs-target="#deletePlan">' +
+      '<i class="bi bi-trash3-fill"></i>' +
+      '</button>' +
+      '</div>';
   }
- 
-  getCollaborateur() : void {
-    this.collService.getCollaborateur().subscribe((response : Collaborateur[]) => {
+
+  getCollaborateur(): void {
+    this.collService.getCollaborateur().subscribe((response: Collaborateur[]) => {
       this.Collaborateurs = response;
     }, (err) => {
       console.log(err);
@@ -85,7 +85,8 @@ export class PlansComponent implements OnInit {
       const handleButons = this.handleButons;
       this.plans.forEach((plan, index) => {
         var dt: Date = new Date(plan.planDate);
-        this.dashboard.setItems([plan.name, dt.toLocaleDateString(), plan.responsable.employe.nom, this.actions(plan.id, index)]);
+        var userName = plan.responsable.employe.user.nom + ' ' + plan.responsable.employe.user.prenom
+        this.dashboard.setItems([plan.name, dt.toLocaleDateString(), userName, this.actions(plan.id, index)]);
       });
       $('#example tbody').on('click', 'button', function (this: any, event: any) {
         handleButons(this);
@@ -123,21 +124,21 @@ export class PlansComponent implements OnInit {
   }
 
   addPlan() {
-    if(this.newPlan.name && this.newPlan.planDate && this.newPlan.responsableID){
+    if (this.newPlan.name && this.newPlan.planDate && this.newPlan.responsableID) {
       this.errors['full'] = "";
-      if (formatDate(this.newPlan.planDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en') ){
+      if (formatDate(this.newPlan.planDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
         this.savePlan();
         this.errors['date'] = '';
-      }else {
+      } else {
         this.errors['date'] = "la date doit superieur ou egale à la date d'aujourd'hui!";
       }
-    }else {
+    } else {
       this.errors['full'] = "tout les champs est obligatoire!";
     }
   }
 
-  savePlan() {        
-    this.formationService.addPlan(this.newPlan).subscribe((response)=>{
+  savePlan() {
+    this.formationService.addPlan(this.newPlan).subscribe((response) => {
       this.message = "This Plan well be added successfuly!";
       $('#addPlan').modal("hide");
       this.dashboard.clear();

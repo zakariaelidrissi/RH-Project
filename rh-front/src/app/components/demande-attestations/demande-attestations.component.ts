@@ -9,6 +9,7 @@ import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-
 import { StagiaireService } from 'src/app/services/gestion-stagiaire/stagiaire.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { DemandeAttestationEtat } from 'src/app/models/demandeAttestationEtat';
 declare const $: any;
 @Component({
   selector: 'app-demande-attestations',
@@ -163,19 +164,23 @@ export class DemandeAttestationsComponent implements OnInit {
 
   }
   createdRow(row: any, data: any, dataIndex: any, cells: any) {
-    const colors: any = {
-      "Waiting": "table-active",
-      "Accepted": "table-success",
-      "Rejected": "table-danger"
-    }
-    $(row).addClass(colors[data[5]]);
+    let color = "";
+    const type = data[3];
+    if (type == DemandeAttestationEtat.Waiting)
+      color = "table-active";
+    else if (type == DemandeAttestationEtat.Accepted)
+      color = "table-success";
+    else if (type == DemandeAttestationEtat.Rejected)
+      color = "table-danger";
+    if (color === "") { console.error({ type, color }); }
+    $(row).addClass(color);
   }
   itemToRow(att: DemandeAttestationResponse, index: number) {
     console.log({ att });
     return [
       att.userId || "Null",
-      // att.poste || "Null",
-      // att.etablissement || "Null",
+      // "Null",
+      // "Null",
       att.type || "Null",
       att.date || "Null",
       att.etat || "Null",

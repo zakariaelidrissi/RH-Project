@@ -17,12 +17,13 @@ public class UserRestController {
     private UserService userService;
 
     // ****************** L O G I N *************************
+    //@RequestMapping("/login")
   /*  @RequestMapping("/login")
     public boolean login(@RequestBody org.springframework.security.core.userdetails.User user) {
         return user.getUsername().equals("user") && user.getPassword().equals("password");
     }
 
-    @RequestMapping("/user")
+    //@RequestMapping("/user")
     public Principal user(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization")
                 .substring("Basic".length()).trim();

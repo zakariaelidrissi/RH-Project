@@ -55,7 +55,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let demande of demandes;let i = index">
-                                    <td>{{ demande.employe.nom }}</td>
+                                    <td>{{ demande.employe.user.nom + ' ' + demande.employe.user.prenom }}</td>
                                     <td>{{ demande.dateDebut }}</td>
                                     <td>{{ demande.dateFin }}</td>
                                     <td>{{ demande.natureAbsence }}</td>

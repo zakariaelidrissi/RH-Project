@@ -17,7 +17,7 @@ public class Employe {
     User user;
 
     public enum Etablissement{
-        FaculteSciences("Faculté des Sciences"),
+        Fs("Faculté des Sciences"),
         Ensam("ENSAM");
         private final String name;
         private Etablissement(String name) {

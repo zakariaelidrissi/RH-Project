@@ -1,9 +1,13 @@
 package com.rh.messagerie.web;
 
 import com.rh.messagerie.dto.*;
+import com.rh.messagerie.entities.Conversation;
+import com.rh.messagerie.entities.MiniMessage;
 import com.rh.messagerie.services.MessageService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -12,56 +16,34 @@ import java.util.List;
 @RestController
 public class MessageController {
     MessageService service;
-
-    // ********************** POST ***************************************
-    @PostMapping(path = "/messages/send2all")
-    public ToAllMessageResponse sendToAll(@RequestBody SendMessageToAllRequest req){
-        return service.saveToAll(req);
+    @GetMapping(path = "/conversation/{userId1}/{userId2}")
+    public Conversation getConversation(@PathVariable long userId1, @PathVariable long userId2){
+        try {
+            return service.getConversationBetweenUsers(userId1,userId2);
+        } catch (Exception e) {
+            System.out.println("************Error***********");
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
-
-    @PostMapping(path = "/messages")
-    public MessageResponse send(@RequestBody MessageRequest req){
-        return service.save(req);
+    @PostMapping(path = "/send-message")
+    public MessageResponse sendMessage(@RequestBody MessageRequest messageRequest){
+        try {
+            return service.sendMessage(messageRequest);
+        } catch (Exception e) {
+            System.out.println("************Error***********");
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
-
-    @PostMapping(path = "/messages/send2many")
-    public MessageResponse sendToMany(@RequestBody SendMessageToManyRequest req){
-        req.getReceivers().forEach((id)->{
-            service.save(new MessageRequest(
-                    req.getId(),
-                    req.getText(),
-                    req.getSender(),
-                    req.getDate(),
-                    id,
-                    false
-            ));
-        });
-        // TODO
-        return null;
-    }
-    // ********************** GET ***************************************
-    @GetMapping(path = "/messages/received/{userId}")
-    public List<MessageResponse> getReceivedMessages(@PathVariable long userId){
-        return service.getAllByReceiverId(userId);
-    }
-    @GetMapping(path = "/messages/received/{userId}/{senderId}")
-    public List<MessageResponse> getReceivedMessages(@PathVariable long userId,@PathVariable long senderId){
-        return service.getAllByReceiverAndSender(userId,senderId);
-    }
-    @GetMapping(path = "/messages/sent/{senderId}")
-    public List<MessageResponse> getSentMessages(@PathVariable long senderId){
-        return service.getAllBySender(senderId);
-    }
-    @GetMapping(path = "/messages/conversation/{id1}/{id2}")
-    public List<MessageResponse> getConversationBetweenUsers(@PathVariable long id1,@PathVariable long id2){
-        return service.getConversationBetweenUsers(id1,id2);
-    }
-    @GetMapping(path = "/messages/unseen/{id}")
-    public List<MessageResponse> getAllUnseenMessages(@PathVariable long id){
-        return service.getAllUnseenMessages(id);
-    }
-    @GetMapping(path = "/messages/unseen/{id}/{senderId}")
-    public List<MessageResponse> getUnseenMessages(@PathVariable long id,@PathVariable long senderId){
-        return null;//service.getConversationBetweenUsers(id1,id2);
+    @GetMapping(path = "/last-contacted/{id}")
+    public List<MiniMessage> getMiniMessagesForUser(@PathVariable Long id){
+        try {
+            return service.getMiniMessagesForUser(id);
+        } catch (Exception e) {
+            System.out.println("************Error***********");
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 }

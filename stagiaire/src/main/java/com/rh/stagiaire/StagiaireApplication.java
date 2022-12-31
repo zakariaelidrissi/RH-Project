@@ -16,7 +16,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import java.time.Instant;
 import java.util.Date;
 
-@ImportAutoConfiguration({FeignAutoConfiguration.class})
+//@ImportAutoConfiguration({FeignAutoConfiguration.class})
 @EnableFeignClients
 @SpringBootApplication
 public class StagiaireApplication {

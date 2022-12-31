@@ -38,7 +38,15 @@ public class EmployeService {
                 req.getEtablissement()
         );
         Employe e = repo.save(em);
-        return mapper.employeToEmployeResponse(e);
+        return map(e);
+    }
+    private EmployeResponse map(Employe e){
+        System.out.println(e);
+        EmployeResponse er = mapper.employeToEmployeResponse(e);
+        System.out.println(er);
+        System.out.println("user id : "+userService.getUserById(er.getUserId()));
+        er.setUser(userService.getUserById(er.getUserId()));
+        return er;
     }
 
     private User creerCompte(EmployeRequest e) {
@@ -66,7 +74,9 @@ public class EmployeService {
         return mapEmployes(repo.findAll());
     }
     private List<EmployeResponse> mapEmployes(List<Employe> l){
-        return l.stream().map(p->mapper.employeToEmployeResponse(p)).collect(Collectors.toList());
+        return l.stream()
+                .map(this::map)
+                .collect(Collectors.toList());
     }
 
     public void delete(Long req) {
@@ -75,7 +85,7 @@ public class EmployeService {
 
     public EmployeResponse getById(Long id) {
         // TODO
-        return mapper.employeToEmployeResponse(repo.findById(id).get());
+        return map(repo.findById(id).get());
     }
 
     public List<EmployeResponse> getAllByDepartement(String value) {
@@ -87,7 +97,7 @@ public class EmployeService {
     }
 
     public EmployeResponse getByUserId(Long id) {
-        return mapper.employeToEmployeResponse(repo.findByUserId(id));
+        return map(repo.findByUserId(id));
     }
 
     //public Employe getEmployeByCin(String cin){

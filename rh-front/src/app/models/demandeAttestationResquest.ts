@@ -7,9 +7,11 @@ import { User } from "./user";
 export class DemandeAttestationRequest {
     userId: number;
     type: DemandeAttestationType;
+    date : Date;
 
     constructor() {
         this.userId = 0;
         this.type = DemandeAttestationType.Stage;
+        this.date = new Date();
     }
 }

@@ -11,7 +11,7 @@ public class MessageResponse {
     Long id;
     String text;
     Long sender;
-    Date date;
     Long receiver;
+    Date date;
     boolean seen;
 }

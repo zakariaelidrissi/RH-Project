@@ -9,4 +9,6 @@ import java.util.List;
 public interface DemandeAttestationRepo extends JpaRepository<DemandeAttestation,Long> {
     List<DemandeAttestation> findAllByType(DemandeAttestation.AttestationType type);
     DemandeAttestation findByUserId(Long userId);
+
+    List<DemandeAttestation> findAllByUserId(Long userId);
 }

@@ -31,7 +31,6 @@ public class DemandeAttestationController {
         if (req.getDate() == null){
             req.setDate(Date.from(Instant.now()));
         }
-        System.out.println("dddd");
         return service.save(req);
     }
 
@@ -39,8 +38,12 @@ public class DemandeAttestationController {
     public List<DemandeAttestationResponse> getAll(){
         return service.getAll();
     }
+    @GetMapping(path = "/demande-att/user/{userId}")
+    public List<DemandeAttestationResponse> getAllByUserId(@PathVariable Long userId){
+        return service.getAllByUserId(userId);
+    }
     @GetMapping(path = "/demande-att/{id}")
-    public DemandeAttestationResponse getAll(@PathVariable Long id){
+    public DemandeAttestationResponse get(@PathVariable Long id){
         return service.getById(id);
     }
     @GetMapping(path = "/demande-att/type/{type}")
