@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @FeignClient(name = "ADMINISTRATION-SERVICE")
 public interface AttestationRestClient {
 
     @PostMapping(path = "/demande-att")
     DemandeAttestationResponse sendDemande(@RequestBody DemandeAttestationRequest demande);
 
-    @GetMapping(path = "/demande-att/{id}")
-    DemandeAttestationResponse getAll(@PathVariable Long id);
+    @GetMapping(path = "/demande-att/user/{userId}")
+    List<DemandeAttestationResponse> getAllByUserId(@PathVariable Long userId);
+
 }

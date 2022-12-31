@@ -9,11 +9,11 @@ import java.util.Date;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class DemandeAttestationResponse {
-    private Long id;
-    private Long idUser;
-    private String type;
-    private String etablissement;
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    private boolean done;
+    Long id;
+    Long userId;
+    AttestationType type;
+    Date date;
+    Etat etat;
+
+    User user;
 }

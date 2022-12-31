@@ -85,7 +85,8 @@ export class PlansComponent implements OnInit {
       const handleButons = this.handleButons;
       this.plans.forEach((plan, index) => {
         var dt: Date = new Date(plan.planDate);
-        this.dashboard.setItems([plan.name, dt.toLocaleDateString(), plan.responsable.employe.nom, this.actions(plan.id, index)]);
+        var userName = plan.responsable.employe.user.nom + ' ' + plan.responsable.employe.user.prenom
+        this.dashboard.setItems([plan.name, dt.toLocaleDateString(), userName, this.actions(plan.id, index)]);
       });
       $('#example tbody').on('click', 'button', function (this: any, event: any) {
         handleButons(this);

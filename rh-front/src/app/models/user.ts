@@ -1,28 +1,25 @@
 export class User {
     id: number;
+    cin: string;
     genre: string;
     nom: string;
     prenom: string;
-    dateNaissance?: Date;
-    cin: string;
+    dateNaissance: Date;
     email: string;
     motDePasse: string;
     tel: string;
     userRole: string;
-    emailVerified: boolean;
-    verificationCode: string;
 
     constructor() {
         this.id = 0;
+        this.cin = '';
         this.genre = ''
         this.nom = '';
         this.prenom = '';
-        this.cin = '';
+        this.dateNaissance = new Date();
         this.email = '';
         this.motDePasse = '';
         this.tel = '';
         this.userRole = '';
-        this.emailVerified = false;
-        this.verificationCode = ''
     }
 }

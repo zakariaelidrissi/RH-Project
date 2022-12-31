@@ -218,7 +218,7 @@
                             <tr *ngFor="let plan of plans;let i = index">
                                 <td>{{ plan.name }}</td>
                                 <td>{{ plan.planDate }}</td>
-                                <td>{{ plan.responsable.employe.nom }}</td>
+                                <td>{{ plan.responsable.employe.user.nom+' '+plan.responsable.employe.user.prenom }}</td>
                                 <!-- <td>
                                     <button class="btn btn-danger me-2" (click)="deleteFormatonFromPlan(formation.id, planId, i)"
                                         data-bs-target="#showFormations" data-bs-toggle="modal">
@@ -266,10 +266,10 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let coll of employes; let i = index">
-                                        <td>{{coll.employe.nom}}</td>
-                                        <td>{{coll.employe.cin}}</td>
-                                        <td>{{coll.employe.email}}</td>
-                                        <td>{{coll.employe.naissance | date:"shortDate"}}</td>
+                                        <td>{{coll.employe.user.nom+' '+coll.employe.user.prenom}}</td>
+                                        <td>{{coll.employe.user.cin}}</td>
+                                        <td>{{coll.employe.user.email}}</td>
+                                        <td>{{coll.employe.user.dateNaissance| date:"shortDate"}}</td>
                                         <td>{{coll.employe.debutAmbauche | date:"shortDate"}}</td>
                                         <td>{{coll.employe.departement}}</td>
                                         <td>{{coll.employe.poste}}</td>

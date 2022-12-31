@@ -18,7 +18,6 @@ import { PlansComponent } from './components/plans/plans.component';
 import { GestionEmployerComponent } from './components/gestion-employer/gestion-employer.component';
 import { GestionEmployeService } from './services/gestion-employe/gestion-employe.service';
 import { ErrorComponent } from './components/error/error.component';
-import { EmployeComponent } from './components/absence/employe/employe.component';
 import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestion-stagiaire.component';
 import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
@@ -49,7 +48,7 @@ import { MessagerieComponent } from './components/messagerie/messagerie.componen
   declarations: [
     AppComponent, DashboardComponent, FormationsComponent, DashBodyComponent,
     HomeComponent, NavbarComponent, FooterComponent, PlansComponent,
-    GestionEmployerComponent, ErrorComponent, EmployeComponent,
+    GestionEmployerComponent, ErrorComponent,
     GestionStagiaireComponent, DemandeAbsenceComponent, StagiaireComponent,
     LoginComponent, StagesComponent, AttestationsComponent, EmployeFormationsComponent, EmployeAbsencesComponent, DemandeFormationComponent, EmployeAbsComponent,
     DemandeAttestationsComponent,

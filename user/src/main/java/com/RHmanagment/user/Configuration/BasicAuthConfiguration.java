@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 //@EnableWebSecurity
 public class BasicAuthConfiguration {
     //@Bean
-    /*@Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.withUsername("user")
                 .password("{noop}password")
@@ -37,5 +36,5 @@ public class BasicAuthConfiguration {
                 .and()
                 .httpBasic();
         return http.build();
-    }*/
+    }
 }

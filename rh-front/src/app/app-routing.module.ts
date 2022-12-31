@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
 import { EmployeAbsComponent } from './components/absence/employe-abs/employe-abs.component';
-import { EmployeComponent } from './components/absence/employe/employe.component';
 import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
 import { AttestationsComponent } from './components/attestations/attestations.component';
 import { DashBodyComponent } from './components/dash-body/dash-body.component';

@@ -7,10 +7,12 @@ import com.rh.stagiaire.Model.User;
 import com.rh.stagiaire.Repositories.StagiaireRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
+@CrossOrigin("*")
 @Transactional
 @AllArgsConstructor
 @Service

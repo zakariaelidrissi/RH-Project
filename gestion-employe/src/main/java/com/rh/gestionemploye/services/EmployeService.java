@@ -41,7 +41,10 @@ public class EmployeService {
         return map(e);
     }
     private EmployeResponse map(Employe e){
+        System.out.println(e);
         EmployeResponse er = mapper.employeToEmployeResponse(e);
+        System.out.println(er);
+        System.out.println("user id : "+userService.getUserById(er.getUserId()));
         er.setUser(userService.getUserById(er.getUserId()));
         return er;
     }
