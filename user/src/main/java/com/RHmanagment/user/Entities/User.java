@@ -25,6 +25,7 @@ public class User {
     private String tel;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    private Boolean Enabled;
 
 
 }

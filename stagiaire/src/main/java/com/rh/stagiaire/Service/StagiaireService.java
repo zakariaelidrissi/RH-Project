@@ -33,14 +33,12 @@ public class StagiaireService {
         listStg.forEach(stg -> {
             stg.setUser(getUserById(stg.getUserId()));
         });
-
         return listStg;
     }
 
     public Stagiaire getStagiaireById(Long id){
         Stagiaire stg = stagiaireRepository.findStagiaireById(id);
         stg.setUser(getUserById(stg.getUserId()));
-
         return  stg;
     }
 
