@@ -8,10 +8,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class MessageRequest {
-    Long id;
     String text;
     Long sender;
-    Date date;
     Long receiver;
-    boolean seen;
 }
