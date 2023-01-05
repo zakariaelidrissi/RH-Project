@@ -39,6 +39,7 @@ public class UserService {
         BCryptPasswordEncoder bcp = new BCryptPasswordEncoder();
         UsrReq.setMotDePasse(bcp.encode(UsrReq.getMotDePasse()));
         return userRepository.save(UsrReq);
+
     }
 
     // ************************ PUT **************************
