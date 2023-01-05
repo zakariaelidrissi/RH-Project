@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public interface StagiaireRepository extends JpaRepository<Stagiaire,Long> {
 
     Stagiaire findStagiaireById(Long id);
-//    Stagiaire findStagiaireByUserId(Long id);
+    Stagiaire findStagiaireByUserId(Long id);
 }

@@ -14,7 +14,7 @@ declare const $: any;
 })
 export class EmployeAttestationsComponent implements OnInit {
 
-  userId : number = 2;
+  userId : number = 3;
   selectedItem : string = '';
   types : any = [DemandeAttestationType.Stage, DemandeAttestationType.Travail]
 
@@ -82,6 +82,7 @@ export class EmployeAttestationsComponent implements OnInit {
       console.log(this.newDemande);
       this.adminService.demanderAttestation(this.newDemande).subscribe((res) => {
         this.message = 'successfuly';
+        this.getAllAttByUserId(this.userId);
         $('#addDemande').modal("hide");
       });
     }

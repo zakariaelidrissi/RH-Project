@@ -5,9 +5,15 @@ import com.rh.offre_stage.Feign.UserClient;
 import com.rh.offre_stage.Model.OffreStageRequest;
 import com.rh.offre_stage.Model.User;
 import com.rh.offre_stage.Repositories.OffreStageRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
+@CrossOrigin("*")
+@Service
+@AllArgsConstructor
 public class OffreStageService {
     private OffreStageRepository offreStageRepository;
     private UserClient userRestClient;

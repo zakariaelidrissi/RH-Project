@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-// import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER } from '@angular/core';
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -39,10 +39,29 @@ import { DemandeAttestationsComponent } from './components/demande-attestations/
 import { DemandeFormationsComponent } from './components/demande-formations/demande-formations.component';
 import { EmployeAttestationsComponent } from './components/employes/employe-attestations/employe-attestations.component';
 import { MessagerieComponent } from './components/messagerie/messagerie.component';
+import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 // export function kcFactory(kcSecurity: KeycloakSecurityService) {
 //   return () => kcSecurity.init();
 // }
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8080/auth',
+        realm : "gestion-rh",
+        clientId: "AngularGestionRhApp"
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        // onLoad: 'login-required',
+        // silentCheckSsoRedirectUri:
+        //   window.location.origin + '/assets/silent-check-sso.html'
+      }
+    });
+}
 
 @NgModule({
   declarations: [
@@ -55,11 +74,12 @@ import { MessagerieComponent } from './components/messagerie/messagerie.componen
     MessagerieComponent,
     DemandeFormationsComponent,
     EmployeAttestationsComponent,
+    OffreStageComponent,
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(), FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule, KeycloakAngularModule
   ],
   providers: [
     FormationService,
@@ -67,8 +87,9 @@ import { MessagerieComponent } from './components/messagerie/messagerie.componen
     CollService,
     StagiaireService,
     AbsenceService,
-    DatePipe,
+    DatePipe,    
     // {provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true},
+    {provide: APP_INITIALIZER, deps: [KeycloakService], useFactory: initializeKeycloak, multi: true},
     // {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true}
   ],
   bootstrap: [

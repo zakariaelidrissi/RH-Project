@@ -47,26 +47,6 @@
                                 </tr>
                             </thead>                            
                             <tbody>
-                                <!-- <tr *ngFor="let stg of stagiaires; let i = index">
-                                    <td>{{stg.user.nom + ' ' + stg.user.prenom}}</td>
-                                    <td>{{stg.user.email}}</td>
-                                    <td>{{stg.user.tel}}</td>
-                                    <td>{{stg.niveau_etudes}}</td>
-                                    <td>{{stg.telephone}}</td>
-                                    <td>{{stg.civilite}}</td>                                
-                                    <td>                                        
-                                        <div class="me-auto d-flex">
-                                            <button class="btn btn-warning me-2 btn-sm" (click)="editStagiaire(stg)"
-                                                data-bs-toggle="modal" data-bs-target="#updateStagiaire">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteStagiaire"
-                                                (click)="confirmDeleteStgiaire(stg.id, i)">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -77,70 +57,6 @@
     </div>    
 </main>
 <!-- main -->
-
-<!-- Add Stagiaire Modal -->
-<!-- <div class="modal fade" id="addStagiaire" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add Stagiaire</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Stagiaire Name</label>
-                            <input type="text" required placeholder="Employee Name" name="nom" 
-                             [(ngModel)]="newStagiaire.user.nom" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Stagiaire Cin</label>
-                            <input type="text" required placeholder="Employee Cin" name="cin" 
-                             [(ngModel)]="newStagiaire.user.cin" class="form-control">
-                        </div>                                               
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
-                            <input type="text" required placeholder="email" name="email" 
-                             [(ngModel)]="newStagiaire.user.email" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Departement</label>
-                            <input type="text" required placeholder="Departement" name="departement" 
-                             [(ngModel)]="newStagiaire.departement" class="form-control">
-                        </div>                                               
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de Naissance</label>
-                            <input type="date" required placeholder="naissance" name="naissance"
-                            [(ngModel)]="newStagiaire.naissance" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de debut</label>
-                            <input type="date" required placeholder="date de debut d'ambauche" name="debutAmbauche"
-                            [(ngModel)]="newStagiaire.dateDebut" class="form-control">
-                        </div>
-                    </div>                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Poste</label>
-                            <input type="text" required placeholder="Poste" name="poste"
-                            [(ngModel)]="newStagiaire.poste" class="form-control">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="addStagiaire()">Save</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-<!-- Add Stagiaire Modal -->
 
 <!-- Update Stagiaire Modal -->
 <!-- <div class="modal fade" id="updateStagiaire" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -154,45 +70,38 @@
                 <form method="post">
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Stagiaire Name</label>
-                            <input type="text" required placeholder="Employee Name" name="nom" 
-                             [(ngModel)]="updStagiaire.nom" class="form-control">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">First Name</label>
+                            <input type="text" required placeholder="First Name" name="nom" 
+                             [(ngModel)]="updStagiaire.user.nom" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Stagiaire Cin</label>
-                            <input type="text" required placeholder="Employee Cin" name="cin" 
-                             [(ngModel)]="updStagiaire.cin" class="form-control">
-                        </div>                                               
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Last Name</label>
+                            <input type="text" required placeholder="Last Name" name="prenom" 
+                             [(ngModel)]="updStagiaire.user.prenom" class="form-control">
+                        </div>                                     
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
                             <input type="text" required placeholder="email" name="email" 
-                             [(ngModel)]="updStagiaire.email" class="form-control">
+                             [(ngModel)]="updStagiaire.user.email" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Departement</label>
-                            <input type="text" required placeholder="Departement" name="departement" 
-                             [(ngModel)]="updStagiaire.departement" class="form-control">
-                        </div>                                               
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Stagiaire Cin</label>
+                            <input type="text" required placeholder="Employee Cin" name="cin" 
+                             [(ngModel)]="updStagiaire.user.cin" class="form-control">
+                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de naissance</label>
                             <input type="date" required placeholder="naissance" name="naissance"
-                            [(ngModel)]="updStagiaire.naissance" class="form-control">
+                            [(ngModel)]="updStagiaire.user.dateNaissance" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de debut</label>
                             <input type="date" required placeholder="date de debut d'mbauche" name="debutAmbauche"
-                            [(ngModel)]="updStagiaire.dateDebut" class="form-control">
-                        </div>
-                    </div>                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Poste</label>
-                            <input type="text" required placeholder="Poste" name="poste"
-                            [(ngModel)]="updStagiaire.poste" class="form-control">
+                            [(ngModel)]="updStagiaire.user.dateDebut" class="form-control">
                         </div>
                     </div>
                 </form>

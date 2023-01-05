@@ -28,9 +28,9 @@ export class GestionStagiaireComponent implements OnInit {
     this.getAllStagiare();
   }
 
-  actions(collId : number, index: number) {
-    return '<div id_='+collId+' index_='+index+' class="me-auto d-flex">'+
-              '<button type_="editStagiaire" class="btn btn-warning me-2 btn-sm" (click)="editStagiaire(stg)"'+
+  actions2(stgId : number, index: number) {
+    return '<div id_='+stgId+' index_='+index+' class="me-auto d-flex">'+
+              '<button type_="editStagiaire" class="btn btn-warning me-2 btn-sm"'+
                   'data-bs-toggle="modal" data-bs-target="#updateStagiaire">'+
                   '<i class="bi bi-pencil-square"></i>'+
               '</button>'+
@@ -41,12 +41,21 @@ export class GestionStagiaireComponent implements OnInit {
           '</div>';
   }
 
+  actions(stgId : number, index: number) {
+    return '<div id_='+stgId+' index_='+index+' class="me-auto d-flex">'+              
+              '<button type_="confirmDeleteStgiaire" class="btn btn-danger btn-sm" title="supprimer un stagiaire"'+
+              'data-bs-toggle="modal" data-bs-target="#deleteStagiaire">'+                  
+                  '<i class="bi bi-trash3-fill"></i>'+
+              '</button>'+
+          '</div>';
+  }
+
   getAllStagiare() {
     this.stagiaireService.getStagiaire().subscribe((response) => {
       this.stagiaires = response;
       const handleButons = this.handleButons;
       this.stagiaires.forEach((stg,index) => {
-        this.dashboard.setItems([stg.user.nom+' '+stg.user.prenom, stg.user.email, stg.user.tel, stg.niveau_etudes, stg.ville, stg.civilite]);
+        this.dashboard.setItems([stg.user.nom+' '+stg.user.prenom, stg.user.email, stg.user.tel, stg.niveau_etudes, stg.ville, stg.civilite, this.actions(stg.id, index)]);
       });
       $('#example tbody').on('click', 'button', function (this:any,event:any) {
         handleButons(this);

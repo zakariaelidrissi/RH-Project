@@ -20,8 +20,8 @@ export class KeycloakSecurityService {
       clientId: "AngularGestionRhApp"
     });
     this.kc.init({
-      // onLoad: 'login-required'
-      onLoad: 'check-sso',
+      onLoad: 'login-required',
+      // onLoad: 'check-sso',
       promiseType: 'native'
     }).then((authenticated:any) => {
       console.log(authenticated);

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OffreStage } from 'src/app/models/offreStage';
+import { StageService } from 'src/app/services/offre-stage/stage.service';
 
 @Component({
   selector: 'app-stages',
@@ -12,26 +14,21 @@ export class StagesComponent implements OnInit {
   pageSize : number = 8;
   pageSizes : any = [5, 10, 15, 20, 30]
 
-  stages : any = [
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."},
-    {image : "https://mdbootstrap.com/img/Photos/Others/images/43.webp", title : "Card title", body : "Some quick example text to build on the card title and make up the bulk of the card scontent."}
-  ]
+  stages : OffreStage[] = [];
 
-  constructor() { }
+  constructor(private stageService : StageService) { }
 
   ngOnInit(): void {
-    this.stages;
+    this.getAllStages();
+  }
+
+  getAllStages() {
+    this.stageService.getAllStages().subscribe((res) => {
+      this.stages = res;
+      console.log(res);
+    }, (error) => {
+      console.log(error);
+    })
   }
 
   onTableDataChange(event: any) {

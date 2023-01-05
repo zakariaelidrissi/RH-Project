@@ -51,23 +51,23 @@ export class FormationsComponent implements OnInit {
 
   actions(formationId : number, index: number) {
     return '<div id_='+formationId+' index_='+index+' class="me-auto d-flex">'+
-              '<button  type_="dropDown" class="btn btn-primary me-2 btn-sm"'+
+              '<button  type_="dropDown" class="btn btn-primary me-2 btn-sm" title="Ajouter un employe à la formation"'+
                   'data-bs-toggle="modal" data-bs-target="#addCollToFormation">'+
                   '<i class="bi bi-plus-circle-fill"></i>'+
               '</button>'+
-              '<button type_="editFormation" class="btn btn-warning me-2 btn-sm"'+
+              '<button type_="editFormation" class="btn btn-warning me-2 btn-sm" title="modifier les informations"'+
                   'data-bs-toggle="modal" data-bs-target="#addFormation">'+
                   '<i class="bi bi-pencil-square"></i>'+
               ' </button>'+
-              '<button type_="showPlan" class="btn btn-success me-2 btn-sm"'+
+              '<button type_="showPlan" class="btn btn-success me-2 btn-sm" title="afficher les plan lies à cette formation"'+
                 '   data-bs-toggle="modal" data-bs-target="#show">'+
                   '<i class="bi bi-eye-fill"></i>'+
               '</button>'+
-              '<button type_="showColl" class="btn btn-primary me-2 btn-sm"'+
+              '<button type_="showColl" class="btn btn-primary me-2 btn-sm" title="afficher les employes associer à cette formation"'+
                   ' data-bs-toggle="modal" data-bs-target="#showColl">'+
                   '<i class="bi bi-eyeglasses"></i>'+
               '</button>'+
-              '<button type_="confirmDeleteFormation" class="btn btn-danger btn-sm"'+
+              '<button type_="confirmDeleteFormation" class="btn btn-danger btn-sm" title="supprimer une formation"'+
                   ' data-bs-toggle="modal" data-bs-target="#deleteFormation">'+
                   '<i class="bi bi-trash3-fill"></i>'+
               '</button>'+

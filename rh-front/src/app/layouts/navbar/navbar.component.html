@@ -8,11 +8,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-5 mb-2 mb-lg-0 text-uppercase">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+                    <a class="nav-link active" aria-current="page" routerLink="/home" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Stages</a>
-                    <!-- routerLink="/stages" -->
+                    <a routerLink="/stages" href="#" class="nav-link">Stages</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>
@@ -24,21 +23,21 @@
         </div>
         <div class="d-flex">
             <div class="navbar-nav me-2">
-                <a class="nav-item nav-link text-uppercase btn btn-primary active" 
-                    *ngIf="!kcService.kc.authenticated" (click)="register()">Register</a>
+                <a class="nav-item nav-link text-uppercase btn btn-primary active" *ngIf="!logged"
+                    (click)="register()">Register</a>
             </div>
             <div class="navbar-nav">
-                <a class="nav-item nav-link text-uppercase btn btn-primary active" 
-                    *ngIf="!kcService.kc.authenticated" (click)="login()">Login</a>
+                <a class="nav-item nav-link text-uppercase btn btn-primary active" *ngIf="!logged"
+                    (click)="login()">Login</a>
             </div>
             <div class="navbar-nav me-2">
-                <a routerLink="/dash" class="nav-item nav-link text-uppercase active" *ngIf="kcService.kc.authenticated">
-                    {{kcService.kc.tokenParsed.name}}
+                <a routerLink="/dash" class="nav-item nav-link text-uppercase active" *ngIf="logged">
+                    {{profile.firstName + ' ' + profile.lastName}}
                 </a>
             </div>
             <div class="navbar-nav">
                 <a class="nav-item nav-link text-uppercase btn btn-primary active"
-                    *ngIf="kcService.kc.authenticated" (click)="logOut()">LogOut</a>
+                    *ngIf="logged" (click)="logOut()">LogOut</a>
             </div>
         </div>
     </div>
