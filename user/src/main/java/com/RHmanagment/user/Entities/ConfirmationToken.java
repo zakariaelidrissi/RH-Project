@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,4 +41,9 @@ public class ConfirmationToken {
     @JoinColumn(nullable = false, name = "user_id")
     private User userEntity;
 
+    public ConfirmationToken(User user) {
+        this.userEntity = userEntity;
+        createdDate = new Date();
+        confirmationToken = UUID.randomUUID().toString();
+    }
 }

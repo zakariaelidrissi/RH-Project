@@ -26,9 +26,9 @@ public class UserApplication {
 		return args -> {
 			restconfiguration.exposeIdsFor(User.class);
 
-            userRepository.addUser(new User(null,"UA120929","masculin","KHTOU","Otmane", new Date("20/12/2000"),"khtouotman@gmail.com","123","0618566121", UserRole.ADMIN));
-            userRepository.addUser(new User(null,"AB984256","masculin","EL IDRISSI","Zakaria", new Date("21/12/2000"),"idrissizakaria@gmail.com","123","0612345678", UserRole.EMPLOYER));
-            userRepository.addUser(new User(null,"S452893","masculin","AKAJDAOU","Nabil", new Date("22/12/2000"),"akajdaounabil@gmail.com","123","0609876543",UserRole.STAGIAIRE));
+            userRepository.addUser(new User(null,"UA120929","masculin","KHTOU","Otmane", new Date("20/12/2000"),"khtouotman@gmail.com","123","0618566121", UserRole.ADMIN,false));
+            userRepository.addUser(new User(null,"AB984256","masculin","EL IDRISSI","Zakaria", new Date("21/12/2000"),"idrissizakaria@gmail.com","123","0612345678", UserRole.EMPLOYER,false));
+            userRepository.addUser(new User(null,"S452893","masculin","AKAJDAOU","Nabil", new Date("22/12/2000"),"akajdaounabil@gmail.com","123","0609876543",UserRole.STAGIAIRE,false));
 
             userRepository.getAllUsers().forEach(System.out::println);
 		};

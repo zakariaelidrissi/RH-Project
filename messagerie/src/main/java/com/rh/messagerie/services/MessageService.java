@@ -141,6 +141,7 @@ public class MessageService {
 
         return lastMessages.stream()
                 .map(lm->repo.findById(lm.getMessageId()).get())
+                .filter(m->m.getSender()!=m.getReceiver())
                 .map(m-> {
                     Long otherId = m.getReceiver() == id ? m.getSender(): m.getReceiver();
                     User other = userService.getUserById(otherId);
@@ -152,6 +153,9 @@ public class MessageService {
                     );
                 }).sorted((m1,m2)->-1 * (m1.getDate().compareTo(m2.getDate())))
                 .collect(Collectors.toList());
+    }
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
     /*
     public void delete(MessageRequest req) {
