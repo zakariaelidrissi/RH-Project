@@ -21,29 +21,87 @@ import { EmployeAttestationsComponent } from './components/employes/employe-atte
 import { MessagerieComponent } from './components/messagerie/messagerie.component';
 import { AuthGuard } from './guard/authGuard';
 import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
+import { ADM, EMP, USR } from './utils';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: HomeComponent },
-  { path: "attestations", component: AttestationsComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "demande-attestations", component: DemandeAttestationsComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "demande-formations", component: DemandeFormationsComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "dash", component: DashBodyComponent,canActivate:[AuthGuard],data:{role:"ADMIN"}},
-  { path: "formations", component: FormationsComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "plans", component: PlansComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "gestion-employer", component: GestionEmployerComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "gestion-stagiaire", component: GestionStagiaireComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "employe/absence", component: EmployeAbsComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "demande/absence", component: DemandeAbsenceComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "stagiaire/absence", component: StagiaireComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "stages", component: StagesComponent},
-  { path: "offre-stage", component: OffreStageComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "employes/formations", component: EmployeFormationsComponent,canActivate:[AuthGuard],data:{role:"EMPLOYER"} },
-  { path: "employes/absences", component: EmployeAbsencesComponent ,canActivate:[AuthGuard],data:{role:"EMPLOYER"}},
-  { path: "employes/demande/formation", component: DemandeFormationComponent ,canActivate:[AuthGuard],data:{role:"EMPLOYER"}},
-  { path: "employes/demande/absence", component: DemandeAbsenceComponent,canActivate:[AuthGuard],data:{role:"EMPLOYER"} },
-  { path: "employes/demande/attestations", component: EmployeAttestationsComponent,canActivate:[AuthGuard],data:{role:"EMPLOYER"} },
-  { path: "messagerie", component: MessagerieComponent },
+  {
+    path: "attestations", component: AttestationsComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "demande-attestations", component: DemandeAttestationsComponent,
+    canActivate: [AuthGuard], data: { role: [ADM, EMP] }
+  },
+  {
+    path: "demande-formations", component: DemandeFormationsComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "dash", component: DashBodyComponent,
+    canActivate: [AuthGuard], data: { role: [ADM, EMP] }
+  },
+  {
+    path: "formations", component: FormationsComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "plans", component: PlansComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "gestion-employer", component: GestionEmployerComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "gestion-stagiaire", component: GestionStagiaireComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "employe/absence", component: EmployeAbsComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "demande/absence", component: DemandeAbsenceComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "stagiaire/absence", component: StagiaireComponent,
+    canActivate: [AuthGuard], data: { role: ADM }
+  },
+  {
+    path: "stages", component: StagesComponent,
+    canActivate: [AuthGuard], data: { role: USR }
+  },
+  { 
+    path: "offre-stage", component: OffreStageComponent,
+    canActivate:[AuthGuard],data:{role: ADM} 
+  },
+  {
+    path: "employes/formations", component: EmployeFormationsComponent,
+    canActivate: [AuthGuard], data: { role: EMP }
+  },
+  {
+    path: "employes/absences", component: EmployeAbsencesComponent,
+    canActivate: [AuthGuard], data: { role: EMP }
+  },
+  {
+    path: "employes/demande/formation", component: DemandeFormationComponent,
+    canActivate: [AuthGuard], data: { role: EMP }
+  },
+  {
+    path: "employes/demande/absence", component: DemandeAbsenceComponent,
+    canActivate: [AuthGuard], data: { role: EMP }
+  },
+  {
+    path: "employes/demande/attestations", component: EmployeAttestationsComponent,
+    canActivate: [AuthGuard], data: { role: EMP }
+  },
+  {
+    path: "messagerie", component: MessagerieComponent,
+    canActivate: [AuthGuard], data: { role: [EMP, ADM, USR] }
+  },
   { path: "**", component: ErrorComponent }
 ];
 
