@@ -8,7 +8,8 @@ import { User } from 'src/app/models/user';
 })
 export class UserService {
 
-  url: string = 'localhost:8081/users';
+  // url: string = 'localhost:8081/users';
+  url: string = 'localhost:8888/USER-SERVICE/users';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -25,7 +26,7 @@ export class UserService {
   }
 
   getUserByEmail(email: string): Observable<User> {
-    return this.httpClient.get<User>(this.url + "/user/" + email);
+    return this.httpClient.get<User>(this.url + "/email/" + email);
   }
 
   deleteUser(id: number): Observable<any> {

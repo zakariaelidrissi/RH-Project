@@ -58,6 +58,7 @@ public class UserRestController {
     // ************************ POST **************************
     @PostMapping(path = "/users")
     public User addUser(@RequestBody User UsrReq) {
+        System.out.println("Adding User: " + UsrReq);
         return userService.addUser(UsrReq);
     }
 

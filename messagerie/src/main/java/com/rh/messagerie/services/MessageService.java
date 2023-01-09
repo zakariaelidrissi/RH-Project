@@ -157,6 +157,10 @@ public class MessageService {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    public User getUserByEmail(String email) {
+        return userService.getUserByEmail(email);
+    }
     /*
     public void delete(MessageRequest req) {
         repo.deleteById(req.getId());

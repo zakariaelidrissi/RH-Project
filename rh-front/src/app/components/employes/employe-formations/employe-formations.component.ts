@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 import { Collaborateur } from 'src/app/models/collaborateur';
 import { FormationResponse } from 'src/app/models/formationResponse';
+import { User } from 'src/app/models/user';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
+import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
+import { getCurrentUserByEmail } from 'src/app/utils';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 declare const $: any;
@@ -13,23 +17,31 @@ declare const $: any;
 })
 export class EmployeFormationsComponent implements OnInit {
 
-  formations : FormationResponse[] = [];
-  empId : number = 2;
+  formations: FormationResponse[] = [];
 
-  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
+  currentUser?: User;
+  profile?: Keycloak.KeycloakProfile;
 
-  constructor(private collService : CollService) { }
+  @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  ngOnInit(): void {
-    this.getAllFormation(this.empId);
+  constructor(kcService: KeycloakService, messagerieService: MessagerieService, private collService: CollService) {
+    kcService.loadUserProfile().then(pr => {
+      this.profile = pr;
+      getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
+        this.currentUser = user as User;
+        this.getAllFormation(this.currentUser!.id);
+      });
+    })
   }
 
-  getAllFormation(id : number){
+  ngOnInit(): void { }
+
+  getAllFormation(id: number) {
     this.collService.getCollaborateurByEmpId(id).subscribe((response) => {
       this.formations = response.formations;
       // const handleButons = this.handleButons;
       this.formations.forEach(form => {
-        var dt : Date = new Date(form.formationDate);
+        var dt: Date = new Date(form.formationDate);
         // console.log(index);
         this.dashboard.setItems([form.name, dt.toLocaleDateString(), form.duree, form.objectif]);
       });
