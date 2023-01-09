@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OffreStage } from 'src/app/models/offreStage';
+import { StageService } from 'src/app/services/offre-stage/stage.service';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  stages : OffreStage[] = [];
 
-  ngOnInit(): void {}
+  constructor(private offresStgService : StageService) { }
+
+  ngOnInit(): void {
+    this.getAllStages();
+  }
+
+  getAllStages() {
+    this.offresStgService.getAllStages().subscribe((res) => {
+      this.stages = res;
+    }, (error) => {
+      console.log(error);
+    });
+  }
 
 }

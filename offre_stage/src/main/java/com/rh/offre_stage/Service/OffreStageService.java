@@ -36,7 +36,7 @@ public class OffreStageService {
 
     public OffreStage getOffreStageById(Long id){
         OffreStage stg = offreStageRepository.findOffreStageById(id);
-        stg.setId(stg.getId());
+        //stg.setId(stg.getId());
         return  stg;
     }
 
@@ -58,21 +58,25 @@ public class OffreStageService {
     // ************************* P O S T U L E R *******************
     public List<Postulation> getAllPostulations() {
         List<Postulation> listP = postulationRepository.findAll();
+        listP.forEach(po -> {
+            po.setUser(userRestClient.getUserById(po.getUserId()));
+        });
         return listP;
     }
 
-    public void Postuler(PostulationRequest P) {
-        Postulation Po =new Postulation();
+    public void Postuler(PostulationRequest req) {
+        Postulation po = new Postulation();
 
-        Po.setOffreStageId(Po.getOffreStageId());
-        Po.setUserId(Po.getUserId());
+        po.setOffreStageId(req.getOffreStageId());
+        po.setUserId(req.getUserId());
 
-        postulationRepository.save(Po);
+        postulationRepository.save(po);
     }
 
     public Postulation getPostulationById (Long id){
-        Postulation P = postulationRepository.findPostulationById(id);
-        return  P;
+        Postulation po = postulationRepository.findPostulationById(id);
+        po.setUser(userRestClient.getUserById(po.getUserId()));
+        return  po;
     }
 
     // ************************ PUT **************************

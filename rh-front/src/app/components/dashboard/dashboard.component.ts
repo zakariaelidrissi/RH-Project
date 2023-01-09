@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterContentChecked, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common'
-import { KeycloakSecurityService } from 'src/app/services/keycloak-security/keycloak-security.service';
+import { KeycloakService } from 'keycloak-angular';
+
 declare const $: any;
 const dataLength = 5;
 @Component({
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   obj: any;
   constructor(@Inject(DOCUMENT) private document: Document,
-    public kcService: KeycloakSecurityService, private router: Router) { }
+    public kcService: KeycloakService, private router: Router) { }
 
   load() {
     const last = localStorage.getItem("lastDataLength");
@@ -51,7 +52,8 @@ export class DashboardComponent implements OnInit {
     });
   }
   Settings() {
-    this.kcService.kc.accountManagement();
+    // this.kcService.accountManagement();
+    
   }
 
   setItems = (arr: String[]) => {
@@ -64,7 +66,7 @@ export class DashboardComponent implements OnInit {
   }
 
   logOut() {
-    this.kcService.kc.logout();
+    this.kcService.logout();
     console.log('logOut...');
     this.router.navigate(['/home']);
   }

@@ -1,1 +1,152 @@
-<p>offre-stage works!</p>
+<app-dashboard></app-dashboard>
+
+<!-- main -->
+<main class="mt-5 pt-3">
+    <div class="container">
+        <div class="pagetitle row mt-2">
+            <div class="col-md-6">
+                <h1>Liste des offres des stages</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Offre Stages</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-6 text-end">
+                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold" (click)="onAdd()"
+                    data-bs-toggle="modal" data-bs-target="#addOffre">
+                    Ajouter Offre de stage
+                </button>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="alert alert-success" *ngIf="message != ''">
+                    {{message}}
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example" class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Type de stage</th>
+                                    <th scope="col">Durée/Mois</th>
+                                    <th scope="col">Date de début</th>
+                                    <th scope="col">Remuneration</th>
+                                    <th scope="col">Diplome demande</th>
+                                    <th scope="col">Descriptif mission</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- main -->
+
+<!-- Add offre de stage Modal -->
+<div class="modal fade" id="addOffre" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" *ngIf="case == 'add'">Ajouter un offre de stage</h5>
+                <h5 class="modal-title fw-bold" *ngIf="case == 'update'">Modifier un offre de stage</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                
+                <form method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Title de stage</label>
+                            <input type="text" required placeholder="Title de stage" name="intitule"
+                                [(ngModel)]="newOffre.intitule" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">type de stage</label>
+                            <input type="text" required placeholder="Type De Stage" name="type_stage"
+                                [(ngModel)]="newOffre.type_stage" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Duree/Mois</label>
+                            <input type="number" required placeholder="Duree De Stage" name="duree_stage_mois" min="1" max="24"
+                            [(ngModel)]="newOffre.duree_stage_mois" class="form-control">
+                            <!-- <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small> -->
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début</label>
+                            <input type="date" required placeholder="Date De Début" name="date_debut_stage"
+                                [(ngModel)]="newOffre.date_debut_stage" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Remuneration</label>
+                            <input type="text" required placeholder="Remuneration" name="remuneration"
+                            [(ngModel)]="newOffre.remuneration" class="form-control">
+                            <!-- <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small> -->
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Diplome demande</label>
+                            <input type="text" required placeholder="Diplome demande" name="diplome_demande"
+                                [(ngModel)]="newOffre.diplome_demande" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">descriptif de mission</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descriptif_mission"
+                                [(ngModel)]="newOffre.descriptif_mission"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <!-- <small *ngIf="errors && errors['full']" class="form-text text-danger">{{errors['full']}}</small>                     -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addOffre()" *ngIf="case == 'add'">Ajouter</button>                
+                <button type="button" class="btn btn-warning" (click)="updateOffre()" *ngIf="case == 'update'">Modifier</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add offre de stage Modal -->
+
+<!-- Delete offre Modal -->
+<div class="modal fade" id="deleteOffre" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Confirmation!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure, you want to delete this oofre?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" (click)="deleteOffre(OffreID, index)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete offre Modal -->

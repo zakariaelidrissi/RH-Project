@@ -40,7 +40,7 @@ public class OffreStageRestController {
         return offreStageService.getAllPostulations();
     }
 
-    @GetMapping(path = "/postulation/{id}")
+    @GetMapping(path = "/postulations/{id}")
     public Postulation getPostulationById(@PathVariable Long id){
 
         return offreStageService.getPostulationById(id);

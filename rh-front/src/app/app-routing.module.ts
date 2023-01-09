@@ -19,8 +19,8 @@ import { DemandeFormationComponent } from './components/employes/demande-formati
 import { DemandeFormationsComponent } from './components/demande-formations/demande-formations.component';
 import { EmployeAttestationsComponent } from './components/employes/employe-attestations/employe-attestations.component';
 import { MessagerieComponent } from './components/messagerie/messagerie.component';
-import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
 import { AuthGuard } from './guard/authGuard';
+import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -36,7 +36,8 @@ const routes: Routes = [
   { path: "employe/absence", component: EmployeAbsComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
   { path: "demande/absence", component: DemandeAbsenceComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
   { path: "stagiaire/absence", component: StagiaireComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
-  { path: "stages", component: StagesComponent,canActivate:[AuthGuard],data:{role:"USER"} },
+  { path: "stages", component: StagesComponent},
+  { path: "offre-stage", component: OffreStageComponent,canActivate:[AuthGuard],data:{role:"ADMIN"} },
   { path: "employes/formations", component: EmployeFormationsComponent,canActivate:[AuthGuard],data:{role:"EMPLOYER"} },
   { path: "employes/absences", component: EmployeAbsencesComponent ,canActivate:[AuthGuard],data:{role:"EMPLOYER"}},
   { path: "employes/demande/formation", component: DemandeFormationComponent ,canActivate:[AuthGuard],data:{role:"EMPLOYER"}},

@@ -142,7 +142,7 @@ export class FormationsComponent implements OnInit {
       console.log(response);
       $('#addFormation').modal("hide");
       this.dashboard.clear();
-      this.getFormations();      
+      this.getFormations();  
       this.cleanData();
     }, err => {
       console.log(err);
