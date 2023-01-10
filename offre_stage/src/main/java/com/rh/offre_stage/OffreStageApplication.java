@@ -1,7 +1,9 @@
 package com.rh.offre_stage;
 
 import com.rh.offre_stage.Entities.OffreStage;
+import com.rh.offre_stage.Entities.Postulation;
 import com.rh.offre_stage.Repositories.OffreStageRepository;
+import com.rh.offre_stage.Repositories.PostulationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,6 +32,18 @@ public class OffreStageApplication {
 			offrestageRepository.save(new OffreStage(3L,"Administrateur 2eme Grade Data Analyst","stage d’observation",1,new Date("01/09/2023"),false,"BAC+5 MASTER",""));
 
 			offrestageRepository.findAll().forEach(System.out::println);
+		};
+	}
+	@Bean
+	CommandLineRunner start(PostulationRepository postulationRepository, RepositoryRestConfiguration restconfiguration){
+		return args -> {
+			restconfiguration.exposeIdsFor(OffreStage.class);
+
+			postulationRepository.save(new Postulation(1L,1L,null,1L));
+
+			postulationRepository.save(new Postulation(2L,2L,null,2L));
+
+			postulationRepository.findAll().forEach(System.out::println);
 		};
 	}
 
