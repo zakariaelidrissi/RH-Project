@@ -13,4 +13,7 @@ public interface UserService {
     User getUserById(@PathVariable Long userId);
     @GetMapping(path = "/users")
     List<User> getAllUsers();
+
+    @GetMapping(path = "/users/email/{email}")
+    User getUserByEmail(@PathVariable String email);
 }

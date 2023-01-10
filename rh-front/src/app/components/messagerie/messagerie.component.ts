@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 import { Conversation } from 'src/app/models/conversation';
 import { Message } from 'src/app/models/message';
 import { MessageRequest } from 'src/app/models/messageRequest';
@@ -6,6 +7,7 @@ import { MiniMessage } from 'src/app/models/mini_message';
 import { User } from 'src/app/models/user';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { getCurrentUserByEmail } from 'src/app/utils';
 
 declare const $: any;
 @Component({
@@ -17,31 +19,35 @@ export class MessagerieComponent implements OnInit {
   @ViewChild('messageTextArea') messageTextArea: any;
   @ViewChild('searchMMInput') searchMMInput: any;
 
+  profile?: Keycloak.KeycloakProfile;
   currentUser: User = new User();
   otherUser?: User;
+
+
   fullConversation?: Conversation;
   lastContactedFiltered?: MiniMessage[];
   lastContacted?: MiniMessage[];
   sendingMessage: boolean = false;
-  constructor(private messagerieService: MessagerieService, private userService: UserService) {
-    this.currentUser.id = 1;
-    // const otherUser = new User();
-    // otherUser.nom = "Nom";
-    // otherUser.id = 2;
-    // this.resetConversation(otherUser);
-  }
 
+  constructor(private kcService: KeycloakService, private messagerieService: MessagerieService, private userService: UserService) {
+    kcService.loadUserProfile().then(pr => {
+      this.profile = pr;
+      getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
+        this.currentUser = user as User;
+        this.getLastContacted();
+      }).catch(e => {
+        console.error({ e })
+      });
+    })
+  }
   ngOnInit(): void {
-    this.getLastContacted();
+
   }
   getLastContacted() {
+    console.log(this.currentUser.id);
     this.messagerieService.getLastContacted(this.currentUser!.id).subscribe(response => {
       this.lastContacted = response;
       this.updateFiltered();
-      // console.log({ response })
-      // response.forEach(m => {
-      //   console.log(m);
-      // })
     });
   }
   resetConversation(other: User) {

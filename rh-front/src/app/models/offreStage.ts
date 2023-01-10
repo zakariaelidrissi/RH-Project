@@ -12,7 +12,7 @@ export class OffreStage {
         this.id = 0;
         this.intitule = '';
         this.type_stage = '';
-        this.duree_stage_mois = 4;
+        this.duree_stage_mois = 1;
         this.date_debut_stage = new Date();
         this.remuneration = false;
         this.diplome_demande = '';

@@ -21,7 +21,7 @@ public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);
     }
-	@Bean
+	//@Bean
     CommandLineRunner start(UserService userRepository, RepositoryRestConfiguration restconfiguration){
 		return args -> {
 			restconfiguration.exposeIdsFor(User.class);

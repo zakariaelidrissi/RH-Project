@@ -27,4 +27,7 @@ export class MessagerieService {
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.url + "users");
   }
+  getUserByEmail(email: string): Observable<User> {
+    return this.httpClient.get<User>(this.url + "users/email/" + email);
+  }
 }

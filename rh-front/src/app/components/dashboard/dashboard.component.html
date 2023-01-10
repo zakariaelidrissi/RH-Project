@@ -81,7 +81,10 @@
     <div class="offcanvas-body p-0">
         <nav class="navbar-dark">
             <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('ADMIN')"> -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" *ngIf="isLoggedIn && isAdmin">
+                <li class="my-4">
+                    <hr>
+                </li>
                 <li>
                     <div class="text-muted small fw-bold text-uppercase px-3">core</div>
                 </li>
@@ -207,7 +210,35 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div>                    
+                </li>
+                <li>
+                    <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#offre" role="button"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span>Offre stages</span>
+                        <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
+                    </a>
+                    <div class="collapse" id="offre">
+                        <div>
+                            <ul class="navbar-nav ps-3">
+                                <li>
+                                    <a routerLink="/offre-stage" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Stages</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span>Postulations</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>                    
+                </li>
+                <li>
                     <a routerLink="/messagerie" class="nav-link px-3">
                         <span class="me-2"><i class="bi bi-layout-split"></i></span>
                         <span>Messages</span>
@@ -215,7 +246,7 @@
                 </li>
             </ul>
             <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('EMPLOYE')"> -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" *ngIf="isLoggedIn && isEmployee">
                 <li class="my-4">
                     <hr>
                 </li>
@@ -296,7 +327,7 @@
                 </li>
             </ul>
             <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('STAGIAIRE')"> -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" *ngIf="isLoggedIn && isStagiaire">
                 <li class="my-4">
                     <hr>
                 </li>

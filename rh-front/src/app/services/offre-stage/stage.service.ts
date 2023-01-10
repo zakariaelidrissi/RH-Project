@@ -8,8 +8,8 @@ import { OffreStage } from 'src/app/models/offreStage';
 })
 export class StageService {
 
-  // url : string = "http://localhost:8089/offre/stages";
-  url : string = "http://localhost:8888/OFFRE-STAGE-SERVICE/offre/stages";
+  url : string = "http://localhost:8089/offre/stages";
+  // url : string = "http://localhost:8888/OFFRE-STAGE-SERVICE/offre/stages";
 
   constructor(private httpClient : HttpClient) { }
 

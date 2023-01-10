@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
 public class PostulationRequest {
-    private Long id;
     private Long userId;
-    private User user;
     private Long OffreStageId;
     private String Statut;
 }

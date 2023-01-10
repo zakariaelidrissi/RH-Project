@@ -63,4 +63,16 @@ public class MessageController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
+    @GetMapping(path = "/users/email/{email}")
+    public User getUserById(@PathVariable String email){
+        try {
+            User user = service.getUserByEmail(email);
+            System.out.println("User: "+user);
+            return user;
+        } catch (Exception e) {
+            System.out.println("************Error***********");
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 }

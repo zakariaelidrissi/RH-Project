@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterContentChecked, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { DOCUMENT } from '@angular/common'
-import { KeycloakSecurityService } from 'src/app/services/keycloak-security/keycloak-security.service';
+import { DOCUMENT } from '@angular/common';
+import { KeycloakService } from 'keycloak-angular';
+import { isCurrentUserAnAdmin, isCurrentUserAnEmplyee as isCurrentUserAnEmployee, isCurrentUserAStagiaire } from 'src/app/utils';
 declare const $: any;
 const dataLength = 5;
 @Component({
@@ -10,13 +11,30 @@ const dataLength = 5;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+  isLoggedIn?: boolean;
+  profile?: Keycloak.KeycloakProfile;
+  isAdmin?: boolean;
+  isEmployee?: boolean;
+  isStagiaire?: boolean;
+
   @Input()
   dashboardTableOptions: Object = {};
   @Input() dataLength!: number;
 
   obj: any;
   constructor(@Inject(DOCUMENT) private document: Document,
-    public kcService: KeycloakSecurityService, private router: Router) { }
+    public kcService: KeycloakService, private router: Router) {
+    kcService.loadUserProfile().then(pr => {
+      this.profile = pr;
+      kcService.isLoggedIn().then(async (l) => {
+        this.isLoggedIn = l;
+        this.isAdmin = await isCurrentUserAnAdmin(kcService);
+        this.isEmployee = await isCurrentUserAnEmployee(kcService);
+        this.isStagiaire = await isCurrentUserAStagiaire(kcService);
+      })
+    })
+  }
 
   load() {
     const last = localStorage.getItem("lastDataLength");
@@ -26,7 +44,7 @@ export class DashboardComponent implements OnInit {
     }
     return dl;
   }
-  
+
   ngOnInit(): void {
 
     $(function () {
@@ -51,7 +69,7 @@ export class DashboardComponent implements OnInit {
     });
   }
   Settings() {
-    this.kcService.kc.accountManagement();
+    // this.kcService.accountManagement();
   }
 
   setItems = (arr: String[]) => {
@@ -64,7 +82,7 @@ export class DashboardComponent implements OnInit {
   }
 
   logOut() {
-    this.kcService.kc.logout();
+    this.kcService.logout();
     console.log('logOut...');
     this.router.navigate(['/home']);
   }
