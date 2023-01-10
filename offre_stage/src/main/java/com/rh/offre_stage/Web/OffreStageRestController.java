@@ -113,7 +113,7 @@ public class OffreStageRestController {
             helper.setSubject("Confirmation de votre candidature");
 
             // Générer le lien de confirmation de présence
-            String confirmationUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/confirm_attendance?token=your_token";
+            String confirmationUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/confirm_attendance?token=098765432165432178900987654321MLKJHGFDSQ1234567890NBVCXW0987654321POIUYTREZA";
 
             // Ajoutez le lien de confirmation de présence au contenu de l'email
             String message = "Veuillez cliquer sur ce lien pour confirmer votre présence à l'entretien : " + confirmationUrl;

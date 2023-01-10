@@ -66,7 +66,7 @@ public class StagiaireRestController {
         try {
             OffreStage offreStage = postulationClient.getOffreById(offre.getId());
             User user = userRestClient.getUserById(stgReq.getUserId());
-            
+
             Stagiaire stg = new Stagiaire();
 
             stg.setCivilite(stgReq.getCivilite());
