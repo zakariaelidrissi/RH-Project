@@ -17,4 +17,5 @@ public class Postulation {
     @Transient
     private User user;
     private Long OffreStageId;
+    private String Statut;
 }

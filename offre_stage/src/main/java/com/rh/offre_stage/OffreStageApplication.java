@@ -39,9 +39,9 @@ public class OffreStageApplication {
 		return args -> {
 			restconfiguration.exposeIdsFor(OffreStage.class);
 
-			postulationRepository.save(new Postulation(1L,1L,null,1L));
+			postulationRepository.save(new Postulation(1L,1L,null,1L,"En cours"));
 
-			postulationRepository.save(new Postulation(2L,2L,null,2L));
+			postulationRepository.save(new Postulation(2L,2L,null,2L,"Accepté"));
 
 			postulationRepository.findAll().forEach(System.out::println);
 		};

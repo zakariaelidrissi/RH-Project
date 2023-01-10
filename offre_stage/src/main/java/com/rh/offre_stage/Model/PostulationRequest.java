@@ -10,4 +10,5 @@ public class PostulationRequest {
     private Long userId;
     private User user;
     private Long OffreStageId;
+    private String Statut;
 }
