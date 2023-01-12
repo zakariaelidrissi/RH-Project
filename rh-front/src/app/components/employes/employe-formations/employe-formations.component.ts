@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Collaborateur } from 'src/app/models/collaborateur';
+import { Employe } from 'src/app/models/employe';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { User } from 'src/app/models/user';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
+import { EmployeService } from 'src/app/services/employes/employe.service';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { getCurrentUserByEmail } from 'src/app/utils';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 
@@ -21,15 +24,22 @@ export class EmployeFormationsComponent implements OnInit {
 
   currentUser?: User;
   profile?: Keycloak.KeycloakProfile;
+  emp? : Employe;
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(kcService: KeycloakService, messagerieService: MessagerieService, private collService: CollService) {
+  constructor(kcService: KeycloakService, messagerieService: MessagerieService, private collService: CollService
+    , private empService : EmployeService,userService:UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
         this.currentUser = user as User;
-        this.getAllFormation(this.currentUser!.id);
+        this.empService.getEmpByUserId(this.currentUser!.id).subscribe((res) => {
+          this.emp = res;
+          this.getAllFormation(this.emp!.id);
+        },err=>{
+          console.error({err});
+        });
       });
     })
   }

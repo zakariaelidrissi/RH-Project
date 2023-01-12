@@ -2,9 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { AddById } from 'src/app/models/addById';
 import { DemandeFormationRes } from 'src/app/models/demandeFormationRes';
+import { Employe } from 'src/app/models/employe';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { User } from 'src/app/models/user';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
+import { EmployeService } from 'src/app/services/employes/employe.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { FormationService } from 'src/app/services/formation/formation.service';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { getCurrentUserByEmail } from 'src/app/utils';
@@ -25,22 +28,30 @@ export class DemandeFormationComponent implements OnInit {
   formations: FormationResponse[] = [];
   profile?: Keycloak.KeycloakProfile;
   currentUser?: User;
+  emp? : Employe;
   // case : string = 'old';
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(kcService: KeycloakService, private formationService: FormationService, private collService: CollService, messagerieService: MessagerieService) {
+  constructor(kcService: KeycloakService, private formationService: FormationService, private collService: CollService, 
+    messagerieService: MessagerieService, private empService : EmployeService, userService : UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
         this.currentUser = user as User;
-        this.getDemandesFormation(this.currentUser!.id);
-        this.getCollFormations(this.currentUser!.id);
+        this.empService.getEmpByUserId(this.currentUser!.id).subscribe((res) => {
+          this.emp = res;
+          this.getDemandesFormation(this.emp!.id);
+          this.getCollFormations(this.emp!.id);
+        }, err => {
+          console.error(err);          
+        });
       });
     })
   }
 
   ngOnInit(): void {
+    
   }
 
   getDemandesFormation(dmId: number) {
@@ -64,7 +75,7 @@ export class DemandeFormationComponent implements OnInit {
       this.message = 'Success!';
       this.formations.splice(index, 1);
       // this.getCollFormations(this.currentUser!.id);
-      this.getDemandesFormation(this.currentUser!.id);
+      this.getDemandesFormation(this.emp!.id);
       // $('#newDemande').modal("hide");
     }, (error) => {
       console.log(error);

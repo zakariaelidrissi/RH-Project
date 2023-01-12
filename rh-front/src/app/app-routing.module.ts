@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
+import { DemandeAbsencesComponent } from './components/absence/demande-absence/demande-absence.component';
 import { EmployeAbsComponent } from './components/absence/employe-abs/employe-abs.component';
 import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
 import { AttestationsComponent } from './components/attestations/attestations.component';
@@ -22,6 +22,7 @@ import { MessagerieComponent } from './components/messagerie/messagerie.componen
 import { AuthGuard } from './guard/authGuard';
 import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
 import { ADM, EMP, USR } from './utils';
+import { DemandeAbsenceComponent } from './components/employes/demande-absence/demande-absence.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -63,7 +64,7 @@ const routes: Routes = [
     canActivate: [AuthGuard], data: { role: ADM }
   },
   {
-    path: "demande/absence", component: DemandeAbsenceComponent,
+    path: "demande/absence", component: DemandeAbsencesComponent,
     canActivate: [AuthGuard], data: { role: ADM }
   },
   {

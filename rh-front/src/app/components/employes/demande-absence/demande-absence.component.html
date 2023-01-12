@@ -1,1 +1,113 @@
-<p>demande-absence works!</p>
+<app-dashboard></app-dashboard>
+
+<!-- main -->
+<main class="mt-5 pt-3">
+    <div class="container">
+        <div class="pagetitle row mt-2">
+            <div class="col-md-6">
+                <h1>List Demande Absence</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                      <li class="breadcrumb-item">Absence</li>
+                      <li class="breadcrumb-item active">Demande</li>
+                    </ol>
+                </nav>
+            </div>   
+            <div class="col-md-6 text-end">
+                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold"
+                    data-bs-toggle="modal" data-bs-target="#addDemande">
+                    Demande Absence
+                </button>
+            </div>         
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="alert alert-success" *ngIf="message != ''">
+                    {{message}}
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>                    
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example" class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Demande ID</th>
+                                    <th scope="col">Date Début</th>
+                                    <th scope="col">Date de fin</th>
+                                    <th scope="col">Nature d'absence</th>
+                                    <!-- <th scope="col">Justificatif</th> -->
+                                    <th scope="col">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</main>
+<!-- main -->
+
+<!-- Add Demande Modal -->
+<div class="modal fade" id="addDemande" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Ajouter Demande</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                
+                <form method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début</label>
+                            <input type="date" required placeholder="Date de début" name="dateDebut"
+                                [(ngModel)]="newDemande.dateDebut" class="form-control">
+                            <!-- <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small> -->
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de fin</label>
+                            <input type="date" required placeholder="Date de fin" name="dateFin"
+                                [(ngModel)]="newDemande.dateFin" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Nature d'absence</label>
+                            <!-- <input type="text" required placeholder="Nature d'absence" name="natureAbsence"
+                                [(ngModel)]="newDemande.natureAbsence" class="form-control"> -->
+                                <select name="natureAbsence" [(ngModel)]="newDemande.natureAbsence" class="form-select">
+                                    <option value="NONJUSTIFIEE">NONJUSTIFIEE</option>
+                                    <option value="NAISSANCE">NAISSANCE</option>
+                                    <option value="CIRCONCISION">CIRCONCISION</option>
+                                    <option value="MARIAGE">MARIAGE</option>
+                                    <option value="MALADIE">MALADIE</option>
+                                    <option value="DECES">DECES</option>
+                                </select>
+                            <!-- <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small> -->
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <!-- <small *ngIf="errors && errors['full']" class="form-text text-danger">{{errors['full']}}</small>                     -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addDemande()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Demande Modal -->

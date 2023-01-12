@@ -26,7 +26,7 @@ public class StagiaireApplication {
     }
 
 
-    @Bean
+    //@Bean
     CommandLineRunner start(StagiaireRepository stagiaireRepository, RepositoryRestConfiguration restconfiguration){
         return args -> {
             restconfiguration.exposeIdsFor(Stagiaire.class);

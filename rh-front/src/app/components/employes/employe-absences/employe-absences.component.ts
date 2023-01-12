@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { AbsenceEmpResponse } from 'src/app/models/absenceEmpResponse';
+import { Employe } from 'src/app/models/employe';
 import { User } from 'src/app/models/user';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
+import { EmployeService } from 'src/app/services/employes/employe.service';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { getCurrentUserByEmail } from 'src/app/utils';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 
@@ -19,13 +22,20 @@ export class EmployeAbsencesComponent implements OnInit {
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
   profile?: Keycloak.KeycloakProfile;
   currentUser?: User;
+  emp? : Employe;
 
-  constructor(kcService: KeycloakService, messagerieService: MessagerieService, private absService: AbsenceService) {
+  constructor(kcService: KeycloakService, messagerieService: MessagerieService, private absService: AbsenceService
+    , private empService : EmployeService, userService : UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
         this.currentUser = user as User;
-        this.getAllEmpAbs(this.currentUser!.id);
+        this.empService.getEmpByUserId(this.currentUser!.id).subscribe((res) => {
+          this.emp = res;
+          this.getAllEmpAbs(this.emp!.id);
+        }, err => {
+          console.error(err);          
+        })
       });
     })
   }

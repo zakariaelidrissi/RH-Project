@@ -82,14 +82,14 @@ public class AbsenceService {
             for (EmployeAbsence abs : listAbs) {
                 if (emp.getId().equals(abs.getEmployeId())){
                     allAbs.add(new Absence(abs.getId(),abs.getDateAbs(),abs.getNatureAbsence(),
-                            abs.getJustificatif(),abs.getDuree(),"yes",emp.getId(),emp.getNom()));
+                            abs.getJustificatif(),abs.getDuree(),"yes",emp.getId(),emp.getUser().getNom()));
                     count++;
                     break;
                 }
             }
             if (count == 0 ){
                 allAbs.add(new Absence(null,null,null,
-                        null,null,"no", emp.getId(),emp.getNom()));
+                        null,null,"no", emp.getId(),emp.getUser().getNom()));
             }
         }
 
@@ -153,6 +153,15 @@ public class AbsenceService {
         DemandeAbsence dm = demandeRepository.findDemandeById(id);
         dm.setEmploye(getEmployeById(dm.getEmployeId()));
         return dm;
+    }
+
+    public List<DemandeAbsence> getDemandeByEmpId(Long id) {
+        List<DemandeAbsence> listDm = demandeRepository.findAllByEmployeId(id);
+        listDm.forEach(dm -> {
+            dm.setEmploye(getEmployeById(dm.getEmployeId()));
+        });
+
+        return listDm;
     }
 
     // ************************* POST ************************
@@ -244,4 +253,10 @@ public class AbsenceService {
         demandeRepository.deleteById(id);
     }
 
+    public void updateDm(DemandeRequest dmres) {
+        DemandeAbsence dm = demandeRepository.findDemandeById(dmres.getId());
+        dm.setStatut(dmres.getStatut());
+
+        demandeRepository.save(dm);
+    }
 }

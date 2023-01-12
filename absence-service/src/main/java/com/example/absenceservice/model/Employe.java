@@ -11,13 +11,11 @@ import java.util.Date;
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Employe {
     Long id;
-    String nom;
-    String cin;
-    String email;
-    @Temporal(TemporalType.DATE)
-    Date naissance;
+    Long userId;
     @Temporal(TemporalType.DATE)
     Date debutAmbauche;
     String departement;
     String poste;
+    String etablissement;
+    User user;
 }

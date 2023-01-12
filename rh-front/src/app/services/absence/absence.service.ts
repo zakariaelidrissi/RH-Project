@@ -58,6 +58,10 @@ export class AbsenceService {
     return this.httpClient.get<DemandeResponse[]>(this.urlDm);
   }
 
+  getDmByEmpId(id : number) : Observable<DemandeResponse[]> {
+    return this.httpClient.get<DemandeResponse[]>(this.urlDm + '/abs/' + id);
+  }
+
   addDemande(newDm : DemandeRequest) : Observable<DemandeRequest> {
     return this.httpClient.post<DemandeRequest>(this.urlDm, newDm);
   }

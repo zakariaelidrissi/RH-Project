@@ -5,6 +5,7 @@ import com.example.absenceservice.entities.DemandeAbsence;
 import com.example.absenceservice.entities.StagiaireAbsence;
 import com.example.absenceservice.model.*;
 import com.example.absenceservice.service.AbsenceService;
+import com.netflix.servo.util.ThreadCpuStats;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,6 +73,11 @@ public class AbsenceController {
         return absenceService.getAllEmpAbsById(idEmp);
     }
 
+    @GetMapping(path = "/demandes/abs/{empid}")
+    public List<DemandeAbsence> getAllDemandeById(@PathVariable Long empid){
+        return absenceService.getDemandeByEmpId(empid);
+    }
+
     // ************************* POST ************************
 
     @PostMapping(path = "/absences")
@@ -90,6 +96,9 @@ public class AbsenceController {
     }
 
     // ************************* PUT *************************
+
+    @PutMapping(path = "/demandes")
+    public void updateDm(@RequestBody DemandeRequest dmres) { absenceService.updateDm(dmres); }
 
     /*@PutMapping(path = "/absences")
     public void updateEmpAbs(@RequestBody EmpAbsRequest absReq){

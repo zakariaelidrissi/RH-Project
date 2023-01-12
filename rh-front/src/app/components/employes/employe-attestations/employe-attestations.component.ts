@@ -8,6 +8,7 @@ import { User } from 'src/app/models/user';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { KeycloakService } from 'keycloak-angular';
 import { getCurrentUserByEmail } from 'src/app/utils';
+import { UserService } from 'src/app/services/user/user.service';
 
 declare const $: any;
 
@@ -28,7 +29,8 @@ export class EmployeAttestationsComponent implements OnInit {
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(private kcService: KeycloakService, private adminService: AdministrationService, private messagerieService: MessagerieService) {
+  constructor(private kcService: KeycloakService, private adminService: AdministrationService, private messagerieService: MessagerieService,
+    userService : UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {

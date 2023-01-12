@@ -1,5 +1,6 @@
 import { KeycloakService } from "keycloak-angular";
 import { MessagerieService } from "./services/messagerie/messagerie.service";
+import { UserService } from "./services/user/user.service";
 
 export const ADM = "ADMIN";
 export const EMP = "EMPLOYER";

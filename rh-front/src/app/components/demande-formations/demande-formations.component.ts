@@ -66,7 +66,7 @@ export class DemandeFormationsComponent implements OnInit {
         var dtDebut: Date = new Date(dm.formation.formationDate);
         var dtDemande: Date = new Date(dm.demandeDate);
         var act : string = '';
-        if (dm.status === "encore..."){
+        if (dm.status === "encore"){
           act = this.actions(dm.id, index, dm.collaborateur.id, dm.formation.id);
         }
         else act = ' - ';
@@ -96,8 +96,10 @@ export class DemandeFormationsComponent implements OnInit {
 
   accept(demandeId : number) {
     this.updDemande.id = demandeId;
-    this.updDemande.status = 'accept';
+    this.updDemande.status = 'accepte';
     this.formationService.updateDemande(this.updDemande).subscribe((res) => {
+      console.log(this.addCollToForm);
+      
       this.formationService.addCollToFormation(this.addCollToForm).subscribe((res) => {
         this.message = 'Successfuly!';
         $('#demandeModal').modal('hide');

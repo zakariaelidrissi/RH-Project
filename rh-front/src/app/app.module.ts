@@ -19,7 +19,7 @@ import { GestionEmployerComponent } from './components/gestion-employer/gestion-
 import { GestionEmployeService } from './services/gestion-employe/gestion-employe.service';
 import { ErrorComponent } from './components/error/error.component';
 import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestion-stagiaire.component';
-import { DemandeAbsenceComponent } from './components/absence/demande-absence/demande-absence.component';
+import { DemandeAbsencesComponent } from './components/absence/demande-absence/demande-absence.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { CollService } from './services/collaborateur/coll.service';
 import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service';
@@ -41,6 +41,7 @@ import { EmployeAttestationsComponent } from './components/employes/employe-atte
 import { MessagerieComponent } from './components/messagerie/messagerie.component';
 import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { DemandeAbsenceComponent } from './components/employes/demande-absence/demande-absence.component';
 
 // export function kcFactory(kcSecurity: KeycloakSecurityService) {
 //   return () => kcSecurity.init();
@@ -68,9 +69,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppComponent, DashboardComponent, FormationsComponent, DashBodyComponent,
     HomeComponent, NavbarComponent, FooterComponent, PlansComponent,
     GestionEmployerComponent, ErrorComponent,
-    GestionStagiaireComponent, DemandeAbsenceComponent, StagiaireComponent,
+    GestionStagiaireComponent, DemandeAbsencesComponent, StagiaireComponent,
     LoginComponent, StagesComponent, AttestationsComponent, EmployeFormationsComponent, EmployeAbsencesComponent, DemandeFormationComponent, EmployeAbsComponent,
-    DemandeAttestationsComponent,
+    DemandeAttestationsComponent, DemandeAbsenceComponent,
     MessagerieComponent,
     DemandeFormationsComponent,
     EmployeAttestationsComponent,
