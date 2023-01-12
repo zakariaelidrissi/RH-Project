@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class PostulationRequest {
     private Long userId;
     private Long OffreStageId;
+    private String Statut;
 }

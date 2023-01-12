@@ -8,15 +8,25 @@ import com.rh.offre_stage.Model.User;
 import com.rh.offre_stage.Repositories.OffreStageRepository;
 import com.rh.offre_stage.Service.OffreStageService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController @AllArgsConstructor
 @CrossOrigin("*")
 public class OffreStageRestController {
     private OffreStageService offreStageService;
+    @Autowired
+    private JavaMailSender javaMailSender;
+    @Autowired
+    private HttpServletRequest request;
 
     // ************************ GET **************************
 
@@ -72,6 +82,49 @@ public class OffreStageRestController {
 
         offreStageService.deleteById(id);
     }
+    // ************************ E m a i l *************************
+    @PostMapping("/acceptRejectMail")
+    public void acceptOrRejectApplication(@RequestParam("status") String status, @RequestParam("email") String email) {
+        // Code pour enregistrer le statut de la demande de stage (Accepté ou Refusé)
+
+        try {
+            MimeMessage msg = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            helper.setTo(email);
+            if (status.equals("accepted")) {
+                helper.setSubject("Acceptation de votre demande de stage");
+                helper.setText("Nous sommes heureux de vous informer que votre demande de stage a été acceptée.");
+            } else {
+                helper.setSubject("Refus de votre demande de stage");
+                helper.setText("Nous sommes désolés de vous informer que votre demande de stage a été refusée.");
+            }
+            javaMailSender.send(msg);
+        } catch (MessagingException e) {
+            // Traitement des erreurs
+        }
+    }
+    //******************* Mail de Confirmation ******************
+    @PostMapping("/sendConfirmationMail")
+    public void sendConfirmationEmail(@RequestParam("email") String email) {
+        try {
+            MimeMessage msg = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            helper.setTo(email);
+            helper.setSubject("Confirmation de votre candidature");
+
+            // Générer le lien de confirmation de présence
+            String confirmationUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/confirm_attendance?token=098765432165432178900987654321MLKJHGFDSQ1234567890NBVCXW0987654321POIUYTREZA";
+
+            // Ajoutez le lien de confirmation de présence au contenu de l'email
+            String message = "Veuillez cliquer sur ce lien pour confirmer votre présence à l'entretien : " + confirmationUrl;
+            helper.setText(message, true);
+
+            javaMailSender.send(msg);
+        } catch (MessagingException e) {
+            // Traitement des erreurs
+        }
+    }
+
 }
 
 
