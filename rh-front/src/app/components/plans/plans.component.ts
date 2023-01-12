@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Collaborateur } from 'src/app/models/collaborateur';
 import { PlanRequest } from 'src/app/models/planRequest';
 import { PlanResponse } from 'src/app/models/planResponse';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
@@ -10,6 +9,8 @@ import { AddById } from 'src/app/models/addById';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { formatDate } from '@angular/common';
+import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
+import { Employe } from 'src/app/models/employe';
 
 declare const $: any;
 
@@ -21,7 +22,7 @@ declare const $: any;
 export class PlansComponent implements OnInit {
 
   plans: PlanResponse[] = [];
-  Collaborateurs: Collaborateur[] = [];
+  Collaborateurs: Employe[] = [];
   newPlan: PlanRequest = new PlanRequest();
   formations: FormationResponse[] = [];
   showFormation: FormationResponse[] = [];
@@ -45,7 +46,8 @@ export class PlansComponent implements OnInit {
 
   constructor(private formationService: FormationService,
     private router: Router,
-    private collService: CollService) { }
+    private collService: CollService,
+    private gestionEmployeService: GestionEmployeService) { }
 
   ngOnInit(): void {
     this.getPlans();
@@ -71,7 +73,7 @@ export class PlansComponent implements OnInit {
   }
 
   getCollaborateur(): void {
-    this.collService.getCollaborateur().subscribe((response: Collaborateur[]) => {
+    this.gestionEmployeService.getAllEmploye().subscribe((response) => {
       this.Collaborateurs = response;
     }, (err) => {
       console.log(err);
@@ -85,7 +87,7 @@ export class PlansComponent implements OnInit {
       const handleButons = this.handleButons;
       this.plans.forEach((plan, index) => {
         var dt: Date = new Date(plan.planDate);
-        var userName = plan.responsable.employe.user.nom + ' ' + plan.responsable.employe.user.prenom
+        var userName = plan.responsable.user.nom + ' ' + plan.responsable.user.prenom
         this.dashboard.setItems([plan.name, dt.toLocaleDateString(), userName, this.actions(plan.id, index)]);
       });
       $('#example tbody').on('click', 'button', function (this: any, event: any) {

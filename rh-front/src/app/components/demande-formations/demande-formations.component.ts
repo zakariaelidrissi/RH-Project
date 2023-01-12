@@ -14,34 +14,34 @@ declare const $: any;
 })
 export class DemandeFormationsComponent implements OnInit {
 
-  demandes : DemandeFormationRes[] = [];
-  updDemande : DemandeFormationReq = new DemandeFormationReq();
-  message : string = '';
-  demandeId : number = 0;
-  collID : number = 0;
-  formID : number = 0;
-  addCollToForm : AddById = new AddById();
-  case : string = '';
-  
-  @ViewChild(DashboardComponent) dashboard!:DashboardComponent;
-  
-  constructor(private formationService : FormationService) { }
+  demandes: DemandeFormationRes[] = [];
+  updDemande: DemandeFormationReq = new DemandeFormationReq();
+  message: string = '';
+  demandeId: number = 0;
+  collID: number = 0;
+  formID: number = 0;
+  addCollToForm: AddById = new AddById();
+  case: string = '';
+
+  @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
+
+  constructor(private formationService: FormationService) { }
 
   ngOnInit(): void {
     this.getAllDemandes();
   }
 
-  actions(demandeId : number, index: number, collid : number, formid : number) {
-    return '<div id_='+demandeId+' collId_='+collid+' formId_='+formid+' index_='+index+' class="me-auto d-flex">'+
-              '<button type_="accept" class="btn btn-success me-2 btn-sm"'+
-              'data-bs-toggle="modal" data-bs-target="#demandeModal">'+
-              '<i class="bi bi-check"></i>'+
-              ' </button>'+
-              '<button  type_="refuse" class="btn btn-danger me-2 btn-sm"'+
-                  'data-bs-toggle="modal" data-bs-target="#demandeModal">'+
-                  '<i class="bi bi-trash3-fill"></i>'+
-              '</button>'+
-            '</div>';
+  actions(demandeId: number, index: number, collid: number, formid: number) {
+    return '<div id_=' + demandeId + ' collId_=' + collid + ' formId_=' + formid + ' index_=' + index + ' class="me-auto d-flex">' +
+      '<button type_="accept" class="btn btn-success me-2 btn-sm"' +
+      'data-bs-toggle="modal" data-bs-target="#demandeModal">' +
+      '<i class="bi bi-check"></i>' +
+      ' </button>' +
+      '<button  type_="refuse" class="btn btn-danger me-2 btn-sm"' +
+      'data-bs-toggle="modal" data-bs-target="#demandeModal">' +
+      '<i class="bi bi-trash3-fill"></i>' +
+      '</button>' +
+      '</div>';
   }
 
   handleButons = (button: any) => {
@@ -51,7 +51,7 @@ export class DemandeFormationsComponent implements OnInit {
     const collId = button.parentNode.getAttribute("collId_");
     const formId = button.parentNode.getAttribute("formId_");
 
-    if(type === "accept"){
+    if (type === "accept") {
       this.conferme(id_, type, collId, formId);
     } else if (type === "refuse") {
       this.conferme(id_, type, collId, formId);
@@ -65,9 +65,9 @@ export class DemandeFormationsComponent implements OnInit {
       this.demandes.forEach((dm, index) => {
         var dtDebut: Date = new Date(dm.formation.formationDate);
         var dtDemande: Date = new Date(dm.demandeDate);
-        var act : string = '';
-        if (dm.status === "encore"){
-          act = this.actions(dm.id, index, dm.collaborateur.id, dm.formation.id);
+        var act: string = '';
+        if (dm.status === "encore") {
+          act = this.actions(dm.id, index, dm.employe.id, dm.formation.id);
         }
         else act = ' - ';
         this.dashboard.setItems([dm.formation.name, dtDebut.toLocaleDateString(), dm.formation.duree, dtDemande.toLocaleDateString(), dm.status, act]);
@@ -80,7 +80,7 @@ export class DemandeFormationsComponent implements OnInit {
     });
   }
 
-  conferme(id : number, type : string, collId : number, formId : number) {
+  conferme(id: number, type: string, collId: number, formId: number) {
     if (type === "accept") {
       this.case = "accept";
     }
@@ -94,12 +94,12 @@ export class DemandeFormationsComponent implements OnInit {
     console.log(this.addCollToForm.id2);
   }
 
-  accept(demandeId : number) {
+  accept(demandeId: number) {
     this.updDemande.id = demandeId;
     this.updDemande.status = 'accepte';
     this.formationService.updateDemande(this.updDemande).subscribe((res) => {
       console.log(this.addCollToForm);
-      
+
       this.formationService.addCollToFormation(this.addCollToForm).subscribe((res) => {
         this.message = 'Successfuly!';
         $('#demandeModal').modal('hide');
@@ -111,7 +111,7 @@ export class DemandeFormationsComponent implements OnInit {
     });
   }
 
-  refuse(demandeId : number) {
+  refuse(demandeId: number) {
     this.updDemande.id = demandeId;
     this.updDemande.status = 'refuse';
     this.formationService.updateDemande(this.updDemande).subscribe((res) => {

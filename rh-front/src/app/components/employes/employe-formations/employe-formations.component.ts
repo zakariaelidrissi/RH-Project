@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
-import { Collaborateur } from 'src/app/models/collaborateur';
 import { Employe } from 'src/app/models/employe';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { User } from 'src/app/models/user';
 import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { EmployeService } from 'src/app/services/employes/employe.service';
+import { FormationService } from 'src/app/services/formation/formation.service';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { getCurrentUserByEmail } from 'src/app/utils';
@@ -24,12 +24,12 @@ export class EmployeFormationsComponent implements OnInit {
 
   currentUser?: User;
   profile?: Keycloak.KeycloakProfile;
-  emp? : Employe;
+  emp?: Employe;
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
   constructor(kcService: KeycloakService, messagerieService: MessagerieService, private collService: CollService
-    , private empService : EmployeService,userService:UserService) {
+    , private empService: EmployeService, userService: UserService, private formationService: FormationService,) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
@@ -37,8 +37,8 @@ export class EmployeFormationsComponent implements OnInit {
         this.empService.getEmpByUserId(this.currentUser!.id).subscribe((res) => {
           this.emp = res;
           this.getAllFormation(this.emp!.id);
-        },err=>{
-          console.error({err});
+        }, err => {
+          console.error({ err });
         });
       });
     })
@@ -47,8 +47,8 @@ export class EmployeFormationsComponent implements OnInit {
   ngOnInit(): void { }
 
   getAllFormation(id: number) {
-    this.collService.getCollaborateurByEmpId(id).subscribe((response) => {
-      this.formations = response.formations;
+    this.formationService.getFormationsByEmployeId(id).subscribe((response) => {
+      this.formations = response;
       // const handleButons = this.handleButons;
       this.formations.forEach(form => {
         var dt: Date = new Date(form.formationDate);

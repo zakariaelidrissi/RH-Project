@@ -45,7 +45,7 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>                               
+                            <tbody>
                             </tbody>
                         </table>
                     </div>
@@ -65,7 +65,7 @@
                 <h5 class="modal-title fw-bold" *ngIf="case == 'update'">Modifier Formation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <form method="post">
                     <div class="row mt-3">
                         <div class="col-md-12">
@@ -85,8 +85,9 @@
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début</label>
                             <input type="date" required placeholder="Start Date" name="formationDate"
-                            [(ngModel)]="newFormation.formationDate" class="form-control">
-                            <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small>
+                                [(ngModel)]="newFormation.formationDate" class="form-control">
+                            <small *ngIf="errors && errors['date']"
+                                class="form-text text-danger">{{errors['date']}}</small>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -98,14 +99,18 @@
                     </div>
                 </form>
                 <div>
-                    <small *ngIf="errors && errors['full']" class="form-text text-danger">{{errors['full']}}</small>                    
+                    <small *ngIf="errors && errors['full']" class="form-text text-danger">{{errors['full']}}</small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" *ngIf="case == 'add'">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="addFormation()" *ngIf="case == 'add'">Ajouter</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" *ngIf="case == 'update'">Fermer</button>
-                <button type="button" class="btn btn-warning" (click)="updateFormation()" *ngIf="case == 'update'">Modifier</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    *ngIf="case == 'add'">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addFormation()"
+                    *ngIf="case == 'add'">Ajouter</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    *ngIf="case == 'update'">Fermer</button>
+                <button type="button" class="btn btn-warning" (click)="updateFormation()"
+                    *ngIf="case == 'update'">Modifier</button>
             </div>
         </div>
     </div>
@@ -187,7 +192,8 @@
                             <tr *ngFor="let plan of plans;let i = index">
                                 <td>{{ plan.name }}</td>
                                 <td>{{ plan.planDate }}</td>
-                                <td>{{ plan.responsable.employe.user.nom+' '+plan.responsable.employe.user.prenom }}</td>
+                                <td>{{ plan.responsable.user.nom+' '+plan.responsable.user.prenom }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -227,19 +233,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let coll of employes; let i = index">
-                                        <td>{{coll.employe.user.nom+' '+coll.employe.user.prenom}}</td>
-                                        <td>{{coll.employe.user.cin}}</td>
-                                        <!-- <td>{{coll.employe.user.email}}</td> -->
-                                        <td>{{coll.employe.user.dateNaissance| date:"shortDate"}}</td>
-                                        <td>{{coll.employe.debutAmbauche | date:"shortDate"}}</td>
-                                        <td>{{coll.employe.departement}}</td>
-                                        <td>{{coll.employe.poste}}</td>
+                                    <tr *ngFor="let employe of employes; let i = index">
+                                        <td>{{employe.user.nom+' '+employe.user.prenom}}</td>
+                                        <td>{{employe.user.cin}}</td>
+                                        <!-- <td>{{employe.user.email}}</td> -->
+                                        <td>{{employe.user.dateNaissance| date:"shortDate"}}</td>
+                                        <td>{{employe.debutAmbauche | date:"shortDate"}}</td>
+                                        <td>{{employe.departement}}</td>
+                                        <td>{{employe.poste}}</td>
                                         <td>
                                             <div class="me-auto d-flex">
                                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#deleteEmplFromForm"
-                                                    (click)="confirmDeleteEmploye(coll.id, i)">
+                                                    (click)="confirmDeleteEmploye(employe.id, i)">
                                                     <i class="bi bi-trash3-fill"></i>
                                                 </button>
                                             </div>
@@ -273,8 +279,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary"
-                    (click)="deleteEmplFromFormation()">Yes</button>
+                <button type="button" class="btn btn-primary" (click)="deleteEmplFromFormation()">Yes</button>
             </div>
         </div>
     </div>

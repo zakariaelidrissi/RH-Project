@@ -74,32 +74,75 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom d'employe</label>
-                            <input type="text" required placeholder="Employee Name" name="nom"
-                                [(ngModel)]="newEmploye.user.nom" class="form-control">
+                            <input type="text" required placeholder="Nom" name="nom" [(ngModel)]="newEmploye.nom"
+                                class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Prenom d'employe</label>
+                            <input type="text" required placeholder="Prenom" name="prenom"
+                                [(ngModel)]="newEmploye.prenom" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="genre" class="mb-2 fw-bold text-secondary ms-2">Genre d'employe</label>
+                            <!-- <input type="text" required placeholder="First name" name="prenom"
+                                                        [(ngModel)]="newEmploye.prenom" class="form-control"> -->
+                            <select class="mb-2 fw-bold text-secondary form-select " name="genre" id="genre"
+                                [(ngModel)]="newEmploye.genre">
+                                <option value="homme">Homme</option>
+                                <option value="femme">Femme</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Cin</label>
-                            <input type="text" required placeholder="Employee Cin" name="cin"
-                                [(ngModel)]="newEmploye.user.cin" class="form-control">
+                            <input type="text" required placeholder="Cin" name="cin" [(ngModel)]="newEmploye.cin"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Département</label>
+                            <select class="mb-2 fw-bold text-secondary form-select " name="departement" id="departement"
+                                [(ngModel)]="newEmploye.departement">
+                                <option *ngFor="let type of departementTypes" [value]="type">
+                                    {{type}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="poste" class="mb-2 fw-bold text-secondary ms-2">Poste</label>
+                            <select class="mb-2 fw-bold text-secondary form-select " name="poste" id="poste"
+                                [(ngModel)]="newEmploye.poste">
+                                <option *ngFor="let type of posteTypes" [value]="type">
+                                    {{type}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Email</label>
-                            <input type="text" required placeholder="email" name="email" [(ngModel)]="newEmploye.user.email"
+                            <input type="text" required placeholder="Email" name="email" [(ngModel)]="newEmploye.email"
                                 class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Département</label>
-                            <input type="text" required placeholder="Departement" name="departement"
-                                [(ngModel)]="newEmploye.departement" class="form-control">
+                            <label for="genre" class="mb-2 fw-bold text-secondary ms-2">Etablissement</label>
+                            <!-- <input type="text" required placeholder="First name" name="prenom"
+                                                                                [(ngModel)]="newEmploye.prenom" class="form-control"> -->
+                            <select class="mb-2 fw-bold text-secondary form-select " name="etablissement"
+                                id="etablissement" [(ngModel)]="newEmploye.etablissement">
+                                <option *ngFor="let type of etablissementTypes" [value]="type">
+                                    {{type}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de Naissance</label>
                             <input type="date" required placeholder="naissance" name="naissance"
-                                [(ngModel)]="newEmploye.user.dateNaissance" class="form-control">
+                                [(ngModel)]="newEmploye.naissance" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début d'embauche</label>
@@ -109,8 +152,8 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Poste</label>
-                            <input type="text" required placeholder="Poste" name="poste" [(ngModel)]="newEmploye.poste"
+                            <label for="" class="mb-2 fw-bold text-secondary ms-2">Tel.</label>
+                            <input type="text" required placeholder="Telephone" name="tel" [(ngModel)]="newEmploye.tel"
                                 class="form-control">
                         </div>
                     </div>

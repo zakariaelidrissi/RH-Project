@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Collaborateur } from 'src/app/models/collaborateur';
 import { FormationRequest } from 'src/app/models/formationRequest';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { PlanResponse } from 'src/app/models/planResponse';
@@ -10,6 +9,8 @@ import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { AddById } from 'src/app/models/addById';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { formatDate } from '@angular/common';
+import { Employe } from 'src/app/models/employe';
+import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
 
 declare const $: any;
 
@@ -23,7 +24,7 @@ export class FormationsComponent implements OnInit {
   formations: FormationResponse[] = [];
   newFormation: FormationRequest = new FormationRequest();
   plans: PlanResponse[] = [];
-  employes: Collaborateur[] = [];
+  employes: Employe[] = [];
   index: number = 0;
   formationID: number = 0;
   employeID: number = 0;
@@ -32,16 +33,17 @@ export class FormationsComponent implements OnInit {
   message: string = '';
 
   dropdownListColl: any = [];
-  selectedItems : any = [];
-  selectedItem : number = 0;
-  dropdownCollSettings:IDropdownSettings = {};
-  errors : any = [];
+  selectedItems: any = [];
+  selectedItem: number = 0;
+  dropdownCollSettings: IDropdownSettings = {};
+  errors: any = [];
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(private formationService: FormationService, 
-              private router: Router, 
-              private collService : CollService) {}
+  constructor(private formationService: FormationService,
+    private router: Router,
+    private collService: CollService,
+    private gestionEmployeService: GestionEmployeService) { }
 
   ngOnInit(): void {
 
@@ -49,29 +51,29 @@ export class FormationsComponent implements OnInit {
     // this.addFormation();
   }
 
-  actions(formationId : number, index: number) {
-    return '<div id_='+formationId+' index_='+index+' class="me-auto d-flex">'+
-              '<button  type_="dropDown" class="btn btn-primary me-2 btn-sm" title="Ajouter un employe à la formation"'+
-                  'data-bs-toggle="modal" data-bs-target="#addCollToFormation">'+
-                  '<i class="bi bi-plus-circle-fill"></i>'+
-              '</button>'+
-              '<button type_="editFormation" class="btn btn-warning me-2 btn-sm" title="modifier les informations"'+
-                  'data-bs-toggle="modal" data-bs-target="#addFormation">'+
-                  '<i class="bi bi-pencil-square"></i>'+
-              ' </button>'+
-              '<button type_="showPlan" class="btn btn-success me-2 btn-sm" title="afficher les plan lies à cette formation"'+
-                '   data-bs-toggle="modal" data-bs-target="#show">'+
-                  '<i class="bi bi-eye-fill"></i>'+
-              '</button>'+
-              '<button type_="showColl" class="btn btn-primary me-2 btn-sm" title="afficher les employes associer à cette formation"'+
-                  ' data-bs-toggle="modal" data-bs-target="#showColl">'+
-                  '<i class="bi bi-eyeglasses"></i>'+
-              '</button>'+
-              '<button type_="confirmDeleteFormation" class="btn btn-danger btn-sm" title="supprimer une formation"'+
-                  ' data-bs-toggle="modal" data-bs-target="#deleteFormation">'+
-                  '<i class="bi bi-trash3-fill"></i>'+
-              '</button>'+
-            '</div>';
+  actions(formationId: number, index: number) {
+    return '<div id_=' + formationId + ' index_=' + index + ' class="me-auto d-flex">' +
+      '<button  type_="dropDown" class="btn btn-primary me-2 btn-sm" title="Ajouter un employe à la formation"' +
+      'data-bs-toggle="modal" data-bs-target="#addCollToFormation">' +
+      '<i class="bi bi-plus-circle-fill"></i>' +
+      '</button>' +
+      '<button type_="editFormation" class="btn btn-warning me-2 btn-sm" title="modifier les informations"' +
+      'data-bs-toggle="modal" data-bs-target="#addFormation">' +
+      '<i class="bi bi-pencil-square"></i>' +
+      ' </button>' +
+      '<button type_="showPlan" class="btn btn-success me-2 btn-sm" title="afficher les plan lies à cette formation"' +
+      '   data-bs-toggle="modal" data-bs-target="#show">' +
+      '<i class="bi bi-eye-fill"></i>' +
+      '</button>' +
+      '<button type_="showColl" class="btn btn-primary me-2 btn-sm" title="afficher les employes associer à cette formation"' +
+      ' data-bs-toggle="modal" data-bs-target="#showColl">' +
+      '<i class="bi bi-eyeglasses"></i>' +
+      '</button>' +
+      '<button type_="confirmDeleteFormation" class="btn btn-danger btn-sm" title="supprimer une formation"' +
+      ' data-bs-toggle="modal" data-bs-target="#deleteFormation">' +
+      '<i class="bi bi-trash3-fill"></i>' +
+      '</button>' +
+      '</div>';
   }
 
   getFormations(): void {
@@ -97,7 +99,7 @@ export class FormationsComponent implements OnInit {
     const id_ = button.parentNode.getAttribute("id_");
     const index_ = button.parentNode.getAttribute("index_");
 
-    if(type === "dropDown"){
+    if (type === "dropDown") {
       this.dropDownFormation(id_);
     } else if (type === "editFormation") {
       this.editFormation(this.formations.find(f => f.id == id_) as FormationResponse, index_);
@@ -115,34 +117,34 @@ export class FormationsComponent implements OnInit {
     this.cleanData();
   }
 
-  formatDate = function(date: Date){
+  formatDate = function (date: Date) {
     var dateOut = new Date(date);
     return dateOut;
-};
+  };
 
   addFormation() {
-    
-    if(this.newFormation.name && this.newFormation.duree && this.newFormation.formationDate && this.newFormation.objectif){
+
+    if (this.newFormation.name && this.newFormation.duree && this.newFormation.formationDate && this.newFormation.objectif) {
       this.errors['full'] = "";
-      if (formatDate(this.newFormation.formationDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en') ){
+      if (formatDate(this.newFormation.formationDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
         this.saveFormation();
         this.errors['date'] = '';
-      }else {
+      } else {
         this.errors['date'] = "la date doit superieur ou egale à la date d'aujourd'hui!";
       }
-    }else {
+    } else {
       this.errors['full'] = "tout les champs est obligatoire!";
     }
   }
 
-  saveFormation() {   
-    this.case = 'add';    
-    this.formationService.addFormation(this.newFormation).subscribe((response)=>{
+  saveFormation() {
+    this.case = 'add';
+    this.formationService.addFormation(this.newFormation).subscribe((response) => {
       this.message = "Cette information a été ajoutée avec succès!";
       console.log(response);
       $('#addFormation').modal("hide");
       this.dashboard.clear();
-      this.getFormations();  
+      this.getFormations();
       this.cleanData();
     }, err => {
       console.log(err);
@@ -188,7 +190,7 @@ export class FormationsComponent implements OnInit {
   }
 
   showColl(formationId: number) {
-    this.formationService.getAllCollFromForm(formationId).subscribe((response) => {
+    this.formationService.getEmployesByFormationId(formationId).subscribe((response) => {
       this.employes = response;
       this.formationID = formationId;
     }, (error) => {
@@ -222,7 +224,7 @@ export class FormationsComponent implements OnInit {
   }
 
   getColl() {
-    this.collService.getColl().subscribe((response) => {
+    this.gestionEmployeService.getAllEmploye().subscribe((response) => {
       this.dropdownListColl = response;
       console.log(response);
     }, (error) => {
@@ -276,5 +278,5 @@ export class FormationsComponent implements OnInit {
       console.log(addById);
     }
   }
-  
+
 }

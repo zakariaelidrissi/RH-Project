@@ -12,6 +12,7 @@ import { FormationService } from 'src/app/services/formation/formation.service';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { getCurrentUserByEmail } from 'src/app/utils';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
 
 declare const $: any;
 
@@ -28,30 +29,30 @@ export class DemandeFormationComponent implements OnInit {
   formations: FormationResponse[] = [];
   profile?: Keycloak.KeycloakProfile;
   currentUser?: User;
-  emp? : Employe;
+  emp?: Employe;
   // case : string = 'old';
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(kcService: KeycloakService, private formationService: FormationService, private collService: CollService, 
-    messagerieService: MessagerieService, private empService : EmployeService, userService : UserService) {
+  constructor(kcService: KeycloakService, private formationService: FormationService, private collService: CollService,
+    messagerieService: MessagerieService, private gestionEmployeService: GestionEmployeService, userService: UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
         this.currentUser = user as User;
-        this.empService.getEmpByUserId(this.currentUser!.id).subscribe((res) => {
+        this.gestionEmployeService.getByUserId(this.currentUser!.id).subscribe((res) => {
           this.emp = res;
           this.getDemandesFormation(this.emp!.id);
           this.getCollFormations(this.emp!.id);
         }, err => {
-          console.error(err);          
+          console.error(err);
         });
       });
     })
   }
 
   ngOnInit(): void {
-    
+
   }
 
   getDemandesFormation(dmId: number) {
@@ -83,12 +84,12 @@ export class DemandeFormationComponent implements OnInit {
   }
 
   getCollFormations(id: number) {
-    this.collService.getCollaborateurByEmpId(id).subscribe((res) => {
+    this.formationService.getFormationsByEmployeId(id).subscribe((res) => {
       this.formationService.getFormations().subscribe((response) => {
         // this.formations = response;
         response.forEach(form => {
           var k = 0;
-          res.formations.forEach(f => {
+          this.formations.forEach(f => {
             if (form.id === f.id) {
               k++;
             }
