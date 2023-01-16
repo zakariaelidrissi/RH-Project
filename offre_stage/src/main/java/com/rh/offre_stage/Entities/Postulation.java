@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
@@ -14,8 +15,14 @@ public class Postulation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
+    private Long OffreStageId;
+    @Temporal(TemporalType.DATE)
+    private Date postulationDate;
+    private String Statut;
+
     @Transient
     private User user;
-    private Long OffreStageId;
-    private String Statut;
+
+    @Transient
+    private OffreStage offreStage;
 }

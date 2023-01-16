@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Data
@@ -18,6 +20,7 @@ public class User {
     private String genre;
     private String nom;
     private String prenom;
+    @Temporal(TemporalType.DATE)
     private Date dateNaissance;
     private String email;
     private String motDePasse;

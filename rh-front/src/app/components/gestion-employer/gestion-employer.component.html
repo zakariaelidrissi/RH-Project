@@ -86,8 +86,6 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="genre" class="mb-2 fw-bold text-secondary ms-2">Genre d'employe</label>
-                            <!-- <input type="text" required placeholder="First name" name="prenom"
-                                                        [(ngModel)]="newEmploye.prenom" class="form-control"> -->
                             <select class="mb-2 fw-bold text-secondary form-select " name="genre" id="genre"
                                 [(ngModel)]="newEmploye.genre">
                                 <option value="homme">Homme</option>
@@ -128,8 +126,6 @@
                         </div>
                         <div class="col-md-6">
                             <label for="genre" class="mb-2 fw-bold text-secondary ms-2">Etablissement</label>
-                            <!-- <input type="text" required placeholder="First name" name="prenom"
-                                                                                [(ngModel)]="newEmploye.prenom" class="form-control"> -->
                             <select class="mb-2 fw-bold text-secondary form-select " name="etablissement"
                                 id="etablissement" [(ngModel)]="newEmploye.etablissement">
                                 <option *ngFor="let type of etablissementTypes" [value]="type">
@@ -171,8 +167,8 @@
 </div>
 <!-- Add Employee Modal -->
 
-<!-- Add Coll To form Modal -->
-<div class="modal fade" id="addCollToFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+<!-- Add Emp To form Modal -->
+<div class="modal fade" id="addEmpToFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -196,12 +192,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="addCollToFormaton()">Ajouter</button>
+                <button type="button" class="btn btn-primary" (click)="addEmpToFormation()">Ajouter</button>
             </div>
         </div>
     </div>
 </div>
-<!-- Add coll To form Modal -->
+<!-- Add Emp To form Modal -->
 
 <!-- Delete Employee Modal -->
 <div class="modal fade" id="deleteEmploye" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
@@ -225,7 +221,7 @@
 <!-- Delete Employee Modal -->
 
 <!-- Show Formations -->
-<div class="modal fade" id="showCollFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+<div class="modal fade" id="showEmpFormation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

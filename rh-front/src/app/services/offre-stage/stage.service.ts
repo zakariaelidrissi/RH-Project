@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OffreStage } from 'src/app/models/offreStage';
+import { PostulationRequest } from 'src/app/models/postulationRequest';
+import { PostulationResponse } from 'src/app/models/postulationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,7 @@ import { OffreStage } from 'src/app/models/offreStage';
 export class StageService {
 
   url : string = "http://localhost:8089/offre/stages";
+  urlPos : string = "http://localhost:8089/postulations";
   // url : string = "http://localhost:8888/OFFRE-STAGE-SERVICE/offre/stages";
 
   constructor(private httpClient : HttpClient) { }
@@ -31,6 +34,23 @@ export class StageService {
 
   delateStage(stageId : number) : Observable<any> {
     return this.httpClient.delete(this.url + "/" + stageId);
+  }
+
+  // ********************* Postulation *********************
+  getAllPostulation() : Observable<PostulationResponse[]> {
+    return this.httpClient.get<PostulationResponse[]>(this.urlPos);
+  }
+
+  addPostulation(newPos : PostulationRequest) : Observable<PostulationRequest> {
+    return this.httpClient.post<PostulationRequest>(this.urlPos, newPos);
+  }
+
+  updatePostulation(updPos : PostulationRequest) : Observable<PostulationRequest> {
+    return this.httpClient.put<PostulationRequest>(this.urlPos, updPos);
+  }
+
+  deletePostulation(posId : number) : Observable<any> {
+    return this.httpClient.delete<any>(this.urlPos + '/' + posId);
   }
 
 }

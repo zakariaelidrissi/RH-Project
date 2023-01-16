@@ -23,6 +23,7 @@ import { AuthGuard } from './guard/authGuard';
 import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
 import { ADM, EMP, USR } from './utils';
 import { DemandeAbsenceComponent } from './components/employes/demande-absence/demande-absence.component';
+import { PostulationComponent } from './components/postulation/postulation.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -78,6 +79,10 @@ const routes: Routes = [
   { 
     path: "offre-stage", component: OffreStageComponent,
     canActivate:[AuthGuard],data:{role: ADM} 
+  },
+  {
+    path: "stages/postulation", component: PostulationComponent,
+    canActivate:[AuthGuard], data: { role: ADM}
   },
   {
     path: "employes/formations", component: EmployeFormationsComponent,

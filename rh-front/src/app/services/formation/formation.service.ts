@@ -23,7 +23,7 @@ export class FormationService {
 
   // **************** Formations ********************
   getFormationsByEmployeId(employeId: number): Observable<FormationResponse[]> {
-    return this.httpClient.get<FormationResponse[]>(this.url + "formations/employeId/" + employeId);
+    return this.httpClient.get<FormationResponse[]>(this.url + "empFormation/" + employeId);
   }
 
   getFormations(): Observable<FormationResponse[]> {
@@ -35,15 +35,11 @@ export class FormationService {
   }
 
   updateFormation(updateFormation: FormationRequest): Observable<FormationRequest> {
-    return this.httpClient.put<FormationRequest>(this.url + "formations/" + updateFormation.id, updateFormation);
+    return this.httpClient.put<FormationRequest>(this.url + "formations", updateFormation);
   }
 
   deleteFormation(formationID: number): Observable<any> {
     return this.httpClient.delete<any>(this.url + "formations/" + formationID);
-  }
-
-  findFormation(searchTerm: string): Observable<FormationResponse> {
-    return this.httpClient.get<FormationResponse>("" + searchTerm);
   }
 
   // **************** Plans ********************
@@ -57,11 +53,11 @@ export class FormationService {
   }
 
   updatePlan(updatePlan: PlanRequest): Observable<PlanRequest> {
-    return this.httpClient.put<PlanRequest>(this.url + "plans/" + updatePlan.id, updatePlan);
+    return this.httpClient.put<PlanRequest>(this.url + "plans", updatePlan);
   }
 
   deletePlan(planID: number): Observable<any> {
-    return this.httpClient.delete<PlanRequest>(this.url + "plans/" + planID);
+    return this.httpClient.delete<any>(this.url + "plans/" + planID);
   }
 
   getPlanById(planID: number): Observable<PlanResponse> {
@@ -74,22 +70,18 @@ export class FormationService {
     return this.httpClient.post<AddById>(this.url + "addFormationToPlan", newFormationToPlan);
   }
 
-  deleteFormationFromPlan(formationId: Number, planId: number): Observable<any> {
-    return this.httpClient.delete<any>(this.url + "deleteFormationFromPlan/" + formationId + "/" + planId);
+  deleteFormationFromPlan(id: Number): Observable<any> {
+    return this.httpClient.delete<any>(this.url + "deleteFormationFromPlan/" + id);
   }
 
-  deleteCollFromFormation(collId: number, formationId: Number): Observable<any> {
-    return this.httpClient.delete<any>(this.url + "deleteCollFromFormation/" + collId + "/" + formationId);
+  deleteEmpFromFormation(id: number): Observable<any> {
+    return this.httpClient.delete<any>(this.url + "deleteEmpFromFormation/" + id);
   }
 
-  // **************** Coll To Formation ********************
+  // **************** Emp To Formation ********************
 
-  addCollToFormation(newCollToForm: AddById): Observable<AddById> {
-    return this.httpClient.post<AddById>(this.url + "addCollToFormation", newCollToForm);
-  }
-
-  deleteCollFromForm(collId: number, formationId: number): Observable<any> {
-    return this.httpClient.delete<any>(this.url + "deleteCollFromFormation/" + collId + "/" + formationId);
+  addEmpToFormation(newEmpToForm: AddById): Observable<AddById> {
+    return this.httpClient.post<AddById>(this.url + "addEmpToFormation", newEmpToForm);
   }
 
   // **************** Get All Formation From Plan ********************
@@ -98,13 +90,16 @@ export class FormationService {
     return this.httpClient.get<FormationResponse[]>(this.url + 'listFormFromPlan/' + idPlan);
   }
 
-  // **************** Get All Coll From Form ********************
+  // **************** Get All Plan From Formation ********************
 
-  // getAllFormationBy(idForm: number): Observable<Collaborateur[]> {
-  //   return this.httpClient.get<Collaborateur[]>(this.url + 'listCollFromForm/' + idForm);
-  // }
+  getAllPlanFromForm(idForm : number) : Observable<PlanResponse[]> {
+    return this.httpClient.get<PlanResponse[]>(this.url + "planFormation/" + idForm);
+  }
+
+  // **************** Get All Emp From Form ********************
+  
   getEmployesByFormationId(idForm: number): Observable<Employe[]> {
-    return this.httpClient.get<Employe[]>(this.url + 'listCollFromForm/' + idForm);
+    return this.httpClient.get<Employe[]>(this.url + 'listEmpFromForm/' + idForm);
   }
 
   // **************** Demandes ********************
@@ -114,15 +109,23 @@ export class FormationService {
   }
 
   getDemandesByEmpId(empId: number): Observable<DemandeFormationRes[]> {
-    return this.httpClient.get<DemandeFormationRes[]>(this.url + "demandes/byColl/" + empId);
+    return this.httpClient.get<DemandeFormationRes[]>(this.url + "demandes/byEmpId/" + empId);
   }
 
-  addDemande(addById: AddById): Observable<AddById> {
-    return this.httpClient.post<AddById>(this.url + "demandes", addById);
+  getDemandesByFormId(idForm : number) : Observable<DemandeFormationRes[]> {
+    return this.httpClient.get<DemandeFormationRes[]>(this.url + "demandes/byFormId/" + idForm);
+  }
+
+  addDemande(demandeReq: DemandeFormationReq): Observable<DemandeFormationReq> {
+    return this.httpClient.post<DemandeFormationReq>(this.url + "demandes", demandeReq);
   }
 
   updateDemande(updDemande: DemandeFormationReq): Observable<DemandeFormationReq> {
     return this.httpClient.put<DemandeFormationReq>(this.url + "demandes", updDemande);
+  }
+
+  deleteDemande(idDemande : number) : Observable<any> {
+    return this.httpClient.delete<any>(this.url + "demandes/" + idDemande);
   }
 
 }

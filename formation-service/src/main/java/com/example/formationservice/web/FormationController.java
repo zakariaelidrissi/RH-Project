@@ -1,14 +1,10 @@
 package com.example.formationservice.web;
 
-import com.example.formationservice.entities.Collaborateur;
 import com.example.formationservice.entities.Demande;
 import com.example.formationservice.entities.Formation;
 import com.example.formationservice.entities.Plan;
-import com.example.formationservice.feign.EmployeRestClient;
 import com.example.formationservice.models.*;
-import com.example.formationservice.repositories.CollaborateurRepository;
-import com.example.formationservice.repositories.PlanRepository;
-import com.example.formationservice.service.FormationService;
+import com.example.formationservice.service.FormationsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,57 +14,27 @@ import java.util.List;
 @AllArgsConstructor
 public class FormationController {
 
-    private FormationService formationService;
+    private FormationsService formationService;
 
-    // ********************** GET ***************************************
+    // TODO : ***************** GET ***********************
     @GetMapping("/formations")
     public List<Formation> listFormations(){
-        return formationService.getAllFormation();
-    }
-
-    @GetMapping("/formations/name/{formationName}")
-    public Formation getFormation(@PathVariable String formationName){
-        return formationService.findFormationByName(formationName);
+        return formationService.getFormations();
     }
 
     @GetMapping("/formations/{id}")
     public Formation getFormationById(@PathVariable Long id){
-        return formationService.findFormationById(id);
+        return formationService.getFormationById(id);
     }
 
     @GetMapping("/plans")
     public List<Plan> getPlans(){
-        return formationService.getAllPlans();
-    }
-
-    @GetMapping("/plans/name/{planName}")
-    public Plan getPlan(@PathVariable String planName){
-        return formationService.findPlanByName(planName);
+        return formationService.getPlans();
     }
 
     @GetMapping("/plans/{id}")
     public Plan getPlanById(@PathVariable Long id){
-        return formationService.findPlanById(id);
-    }
-
-    @GetMapping("/collaborateurs")
-    public List<Collaborateur> getCollaborateurs(){
-        return formationService.getCollaborateurs();
-    }
-
-    @GetMapping(path = "/coll")
-    public List<Coll> getColl() {
-        return formationService.getColl();
-    }
-
-    @GetMapping("/collaborateurs/{id}")
-    public Collaborateur getCollaborateurById(@PathVariable Long id){
-        return formationService.findCollaborateurById(id);
-    }
-
-    @GetMapping("/collaborateurs/employe/{id}")
-    public Collaborateur getCollaborateurByEmployeId(@PathVariable Long id){
-        return formationService.findCollaborateurByEmployeId(id);
+        return formationService.getPlanById(id);
     }
 
     @GetMapping(path = "/getEmploye/{id}")
@@ -76,80 +42,90 @@ public class FormationController {
         return formationService.getEmployeById(id);
     }
 
-    @GetMapping(path = "/listCollFromForm/{idForm}")
-    public List<Collaborateur> getAllCollFromFormation(@PathVariable Long idForm){
-        return formationService.getAllCollFromFormation(idForm);
+    @GetMapping(path = "/listEmpFromForm/{idForm}")
+    public List<Employe> getAllEmpFromFormation(@PathVariable Long idForm){
+        return formationService.getAllEmpFromFormById(idForm);
     }
 
     @GetMapping(path = "/listFormFromPlan/{idPlan}")
     public List<Formation> getAllFormFromPlan(@PathVariable Long idPlan) {
-        return formationService.getAllFormFromPlan(idPlan);
-    }
-
-    @GetMapping(path = "/demandes/{id}")
-    public Demande getDemandeById(@PathVariable Long id){
-        return formationService.findDemandeById(id);
+        return formationService.getAllFormPlanById(idPlan);
     }
 
     @GetMapping(path = "/demandes")
     public List<Demande> getAllDemandes(){
-        return formationService.getAllDemande();
+        return formationService.getDemandes();
     }
 
-    @GetMapping(path = "/demandes/byColl/{empId}")
-    public List<Demande> getAllCollDemandes(@PathVariable Long empId){
-        return formationService.getAllCollDemandes(empId);
+    @GetMapping(path = "/demandes/{id}")
+    public Demande getDemandeById(@PathVariable Long id){
+        return formationService.getDemandeById(id);
     }
 
-    // ********************** POST ***************************************
+    @GetMapping(path = "/empFormation/{employeId}")
+    public List<Formation> getAllFormEmpById(@PathVariable Long employeId){
+        return formationService.getAllFormEmpById(employeId);
+    }
+
+    @GetMapping(path = "/planFormation/{formationId}")
+    public List<Plan> getAllPlanFormById(@PathVariable Long formationId) {
+        return formationService.getAllPlanFormById(formationId);
+    }
+
+    @GetMapping(path = "/demandes/byEmpId/{empId}")
+    public List<Demande> getAllEmpDemandes(@PathVariable Long empId){
+        return formationService.getAllDemandesByEmpId(empId);
+    }
+
+    @GetMapping(path = "/demandes/byFormId/{formId}")
+    public List<Demande> getAllDemandesByFormId(@PathVariable Long formId) {
+        return formationService.getAllDemandesByFormId(formId);
+    }
+
+    // TODO : ***************** POST ***********************
 
     @PostMapping(path = "/formations")
-    public void addFormation(@RequestBody FormationRequest formation){
-        formationService.addNewFormation(formation);
+    public void addFormation(@RequestBody Formation formation){
+        formationService.addFormation(formation);
     }
 
     @PostMapping(path = "/plans")
     public void addPlan(@RequestBody PlanRequest plan){
-        formationService.addNewPlan(plan);
+        formationService.addPlan(plan);
     }
 
     @PostMapping(path = "/addFormationToPlan")
     public void addFormationToPlan(@RequestBody AddById add) {
-        formationService.addFormationToPlan(add);
+        formationService.addFormToPlan(add);
     }
 
-    @PostMapping(path = "/collaborateurs")
-    public void addCollaborateur(@RequestBody CollaborateurRequest collaborateur){formationService.addNewCollaborateur(collaborateur);}
-
-    @PostMapping(path = "/addCollToFormation")
-    public void addCollaborateurToFormation(@RequestBody AddById add){
-        formationService.addCollaborateurToFormation(add);
+    @PostMapping(path = "/addEmpToFormation")
+    public void addEmployeToFormation(@RequestBody AddById add){
+        formationService.addEmployeToForm(add);
     }
 
     @PostMapping(path = "/demandes")
-    public void addDemande(@RequestBody AddById add){
+    public void addDemande(@RequestBody DemandeRequest add){
         formationService.addDemande(add);
     }
 
-    // ********************** PUT ***************************************
-    @PutMapping(path = "/formations/{id}")
-    public void updateFormation(@RequestBody FormationRequest formation, @PathVariable Long id){
-        formationService.updateFormation(formation, id);
+    // TODO : ***************** PUT ***********************
+    @PutMapping(path = "/formations")
+    public void updateFormation(@RequestBody Formation formation){
+        formationService.updateFormation(formation);
     }
 
-    @PutMapping(path = "/plans/{id}")
-    public void updatePlan(@RequestBody PlanRequest plan, @PathVariable Long id){
-        formationService.updatePlan(plan, id);
+    @PutMapping(path = "/plans")
+    public void updatePlan(@RequestBody PlanRequest plan){
+        formationService.updatePlan(plan);
     }
 
-    // @PutMapping(path = "/demandes/{idDm}/{status}")
-    //public void updateDemande(@PathVariable Long idDm, @PathVariable String status){
     @PutMapping(path = "/demandes")
     public void updateDemande(@RequestBody DemandeRequest dmReq){
-        formationService.updateDemande(dmReq.getId(), dmReq.getStatus());
+        formationService.updateDemande(dmReq);
     }
 
-    // ********************** DELETE ***************************************
+    // TODO : ***************** DELETE ***********************
     @DeleteMapping(path = "/formations/{id}")
     public void deleteFormatio(@PathVariable Long id){
         formationService.deleteFormation(id);
@@ -160,19 +136,14 @@ public class FormationController {
         formationService.deletePlan(id);
     }
 
-    @DeleteMapping(path = "/deleteFormationFromPlan/{formationId}/{planId}")
-    public void deleteFormationFromPlan(@PathVariable Long formationId, @PathVariable Long planId){
-        formationService.deleteFormationFromPlan(formationId, planId);
+    @DeleteMapping(path = "/deleteFormationFromPlan/{id}")
+    public void deleteFormationFromPlan(@PathVariable Long id){
+        formationService.deleteFormFromPlan(id);
     }
 
-    @DeleteMapping(path = "/deleteCollFromFormation/{collId}/{formationId}")
-    public void deleteCollFromFormation(@PathVariable Long collId, @PathVariable Long formationId){
-        formationService.deleteCollFromFormation(collId, formationId);
-    }
-
-    @DeleteMapping(path = "/collaborateurs/{idEmpl}")
-    public void deleteCollaborateur(@PathVariable Long idEmpl){
-        formationService.deleteCollaborateur(idEmpl);
+    @DeleteMapping(path = "/deleteEmpFromFormation/{id}")
+    public void deleteEmpFromFormation(@PathVariable Long id){
+        formationService.deleteEmpFromForm(id);
     }
 
     @DeleteMapping("/demandes/{id}")

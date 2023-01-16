@@ -3,7 +3,6 @@ import { KeycloakService } from 'keycloak-angular';
 import { Employe } from 'src/app/models/employe';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { User } from 'src/app/models/user';
-import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { EmployeService } from 'src/app/services/employes/employe.service';
 import { FormationService } from 'src/app/services/formation/formation.service';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
@@ -28,7 +27,7 @@ export class EmployeFormationsComponent implements OnInit {
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(kcService: KeycloakService, messagerieService: MessagerieService, private collService: CollService
+  constructor(kcService: KeycloakService, messagerieService: MessagerieService
     , private empService: EmployeService, userService: UserService, private formationService: FormationService,) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;

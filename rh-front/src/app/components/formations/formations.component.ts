@@ -5,7 +5,6 @@ import { FormationResponse } from 'src/app/models/formationResponse';
 import { PlanResponse } from 'src/app/models/planResponse';
 import { FormationService } from 'src/app/services/formation/formation.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { AddById } from 'src/app/models/addById';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { formatDate } from '@angular/common';
@@ -24,25 +23,23 @@ export class FormationsComponent implements OnInit {
   formations: FormationResponse[] = [];
   newFormation: FormationRequest = new FormationRequest();
   plans: PlanResponse[] = [];
-  employes: Employe[] = [];
+  employes: Employe[] = [];  
   index: number = 0;
   formationID: number = 0;
-  employeID: number = 0;
+  empFormId: number = 0;
   case: string = 'add';
 
   message: string = '';
 
-  dropdownListColl: any = [];
+  dropdownListEmp: any = [];
   selectedItems: any = [];
   selectedItem: number = 0;
-  dropdownCollSettings: IDropdownSettings = {};
+  dropdownEmpSettings: IDropdownSettings = {};
   errors: any = [];
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
   constructor(private formationService: FormationService,
-    private router: Router,
-    private collService: CollService,
     private gestionEmployeService: GestionEmployeService) { }
 
   ngOnInit(): void {
@@ -53,23 +50,23 @@ export class FormationsComponent implements OnInit {
 
   actions(formationId: number, index: number) {
     return '<div id_=' + formationId + ' index_=' + index + ' class="me-auto d-flex">' +
-      '<button  type_="dropDown" class="btn btn-primary me-2 btn-sm" title="Ajouter un employe à la formation"' +
-      'data-bs-toggle="modal" data-bs-target="#addCollToFormation">' +
+      '<button  type_="dropDown" class="btn btn-primary me-2 btn-sm" title="Ajouter un employe à cette formation"' +
+      'data-bs-toggle="modal" data-bs-target="#addEmpToFormation">' +
       '<i class="bi bi-plus-circle-fill"></i>' +
       '</button>' +
-      '<button type_="editFormation" class="btn btn-warning me-2 btn-sm" title="modifier les informations"' +
+      '<button type_="editFormation" class="btn btn-warning me-2 btn-sm" title="modifier les informations de cette formation"' +
       'data-bs-toggle="modal" data-bs-target="#addFormation">' +
       '<i class="bi bi-pencil-square"></i>' +
       ' </button>' +
       '<button type_="showPlan" class="btn btn-success me-2 btn-sm" title="afficher les plan lies à cette formation"' +
-      '   data-bs-toggle="modal" data-bs-target="#show">' +
+      '   data-bs-toggle="modal" data-bs-target="#showPlan">' +
       '<i class="bi bi-eye-fill"></i>' +
       '</button>' +
-      '<button type_="showColl" class="btn btn-primary me-2 btn-sm" title="afficher les employes associer à cette formation"' +
-      ' data-bs-toggle="modal" data-bs-target="#showColl">' +
+      '<button type_="showEmployes" class="btn btn-primary me-2 btn-sm" title="afficher les employes associer à cette formation"' +
+      ' data-bs-toggle="modal" data-bs-target="#showEmployes">' +
       '<i class="bi bi-eyeglasses"></i>' +
       '</button>' +
-      '<button type_="confirmDeleteFormation" class="btn btn-danger btn-sm" title="supprimer une formation"' +
+      '<button type_="confirmDeleteFormation" class="btn btn-danger btn-sm" title="supprimer cette formation"' +
       ' data-bs-toggle="modal" data-bs-target="#deleteFormation">' +
       '<i class="bi bi-trash3-fill"></i>' +
       '</button>' +
@@ -82,8 +79,8 @@ export class FormationsComponent implements OnInit {
       const handleButons = this.handleButons;
       this.formations.forEach((form, index) => {
         var dt: Date = new Date(form.formationDate);
-        // console.log(index);
-        this.dashboard.setItems([form.name, dt.toLocaleDateString(), form.duree, form.objectif, this.actions(form.id, index)]);
+        var obj = form.objectif.slice(0,20)+'...';
+        this.dashboard.setItems([form.name, dt.toLocaleDateString(), form.duree, obj, this.actions(form.id, index)]);
       });
       $('#example tbody').on('click', 'button', function (this: any, event: any) {
         handleButons(this);
@@ -104,9 +101,9 @@ export class FormationsComponent implements OnInit {
     } else if (type === "editFormation") {
       this.editFormation(this.formations.find(f => f.id == id_) as FormationResponse, index_);
     } else if (type === "showPlan") {
-      this.showPlan(this.formations.find(f => f.id == id_) as FormationResponse);
-    } else if (type === "showColl") {
-      this.showColl(id_);
+      this.showPlan(id_);
+    } else if (type === "showEmployes") {
+      this.showEmployes(id_);
     } else if (type === "confirmDeleteFormation") {
       this.confirmDeleteFormation(id_, index_);
     }
@@ -185,11 +182,16 @@ export class FormationsComponent implements OnInit {
     });
   }
 
-  showPlan(formation: FormationResponse) {
-    this.plans = formation.plan;
+  showPlan(formationId : number) {
+    this.formationService.getAllPlanFromForm(formationId).subscribe((res) => {
+      this.plans = res;
+      console.log(this.plans);
+    }, (error) => {
+      console.log(error);
+    });
   }
 
-  showColl(formationId: number) {
+  showEmployes(formationId: number) {
     this.formationService.getEmployesByFormationId(formationId).subscribe((response) => {
       this.employes = response;
       this.formationID = formationId;
@@ -198,15 +200,12 @@ export class FormationsComponent implements OnInit {
     });
   }
 
-  confirmDeleteEmploye(employeId: number, i: number) {
-    this.employeID = employeId;
+  confirmDeleteEmploye(i: number) {
     this.index = i;
-    // console.log('employe id : ' + this.employeID);
-    // console.log('formation id : ' + this.formationID);
   }
 
-  deleteEmplFromFormation() {
-    this.formationService.deleteCollFromFormation(this.employeID, this.formationID).subscribe((response) => {
+  deleteEmpFromFormation() {
+    this.formationService.deleteEmpFromFormation(this.formationID).subscribe((response) => {
       this.message = "Successfuly!";
       this.employes.splice(this.index, 1);
       $('#deleteEmplFromForm').modal("hide");
@@ -223,24 +222,34 @@ export class FormationsComponent implements OnInit {
     this.newFormation.formationDate = new Date();
   }
 
-  getColl() {
+  getEmployes(formationId : number) {
+    this.dropdownListEmp = [];
     this.gestionEmployeService.getAllEmploye().subscribe((response) => {
-      this.dropdownListColl = response;
-      console.log(response);
+      this.formationService.getEmployesByFormationId(formationId).subscribe((res) => {
+        this.dropdownListEmp = response;
+        response.forEach((re, index) => {
+          var k = 0;
+          for (var r of res){
+            if (re.id == r.id) {k++; break;};
+          }
+          if ( k > 0) {
+            this.dropdownListEmp.splice(index, 1);
+          }
+        });
+      });
     }, (error) => {
       console.log(error);
     });
   }
 
-  dropDownFormation = (formationId: number) => {
+  dropDownFormation (formationId: number) {
 
-    this.getColl();
-    this.selectedItem = formationId;
+    this.getEmployes(formationId);
+    this.selectedItem = formationId;    
 
     this.selectedItems = [];
-    // console.log(this.selectedItems)
 
-    this.dropdownCollSettings = {
+    this.dropdownEmpSettings = {
       singleSelection: false,
       idField: 'id',
       textField: "name",
@@ -251,31 +260,20 @@ export class FormationsComponent implements OnInit {
     };
   }
 
-  addCollToFormaton() {
+  addEmpToFormaton() {
     for (let index = -1; index < this.selectedItems.length; index++) {
       if (index != -1) {
         const collId = this.selectedItems[index];
         let addById: AddById = new AddById();
         addById.id1 = collId.id;
         addById.id2 = this.selectedItem;
-        this.formationService.addCollToFormation(addById).subscribe((response) => {
+        this.formationService.addEmpToFormation(addById).subscribe((response) => {
           this.message = "Successfuly!";
-          $('#addCollToFormation').modal("hide");
+          $('#addEmpToFormation').modal("hide");
         }, (error) => {
           console.log(error);
         });
       }
-    }
-  }
-
-  addCollToForm() {
-    console.log('formation id : ' + this.selectedItem);
-    for (let index = 0; index < this.selectedItems.length; index++) {
-      const collId = this.selectedItems[index];
-      let addById: AddById = new AddById();
-      addById.id1 = collId.id;
-      addById.id2 = this.selectedItem;
-      console.log(addById);
     }
   }
 

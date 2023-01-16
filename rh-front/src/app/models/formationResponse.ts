@@ -7,7 +7,7 @@ export class FormationResponse {
     duree: string;
     formationDate: Date;
     // collaborateurs: Set<Collaborateur>;
-    plan: PlanResponse[];
+    //plan: PlanResponse[];
     // demandes: Array<Demande>;
 
     constructor() {
@@ -17,7 +17,7 @@ export class FormationResponse {
         this.duree = '';
         this.formationDate = new Date();
         // this.collaborateurs = new Set<Collaborateur>();
-        this.plan = new Array<PlanResponse>();
+        //this.plan = new Array<PlanResponse>();
         // this.demandes = new Array<Demande>();
     }
 }

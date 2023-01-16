@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { APP_INITIALIZER } from '@angular/core';
-// import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +20,6 @@ import { ErrorComponent } from './components/error/error.component';
 import { GestionStagiaireComponent } from './components/gestion-stagiaire/gestion-stagiaire.component';
 import { DemandeAbsencesComponent } from './components/absence/demande-absence/demande-absence.component';
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
-import { CollService } from './services/collaborateur/coll.service';
 import { StagiaireService } from './services/gestion-stagiaire/stagiaire.service';
 import { AbsenceService } from './services/absence/absence.service';
 import { DatePipe } from '@angular/common';
@@ -29,8 +27,6 @@ import { LoginComponent } from './components/login/login.component';
 import { StagesComponent } from './components/stages/stages.component';
 import { AttestationsComponent } from './components/attestations/attestations.component';
 import { StagiaireComponent } from './components/absence/stagiaire/stagiaire.component';
-// import { KeycloakSecurityService } from './services/keycloak-security/keycloak-security.service';
-// import { RequestInterceptorService } from './services/keycloak-request/request-interceptor.service';
 import { EmployeFormationsComponent } from './components/employes/employe-formations/employe-formations.component';
 import { EmployeAbsencesComponent } from './components/employes/employe-absences/employe-absences.component';
 import { DemandeFormationComponent } from './components/employes/demande-formation/demande-formation.component';
@@ -42,10 +38,8 @@ import { MessagerieComponent } from './components/messagerie/messagerie.componen
 import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { DemandeAbsenceComponent } from './components/employes/demande-absence/demande-absence.component';
+import { PostulationComponent } from './components/postulation/postulation.component';
 
-// export function kcFactory(kcSecurity: KeycloakSecurityService) {
-//   return () => kcSecurity.init();
-// }
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -76,6 +70,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DemandeFormationsComponent,
     EmployeAttestationsComponent,
     OffreStageComponent,
+    PostulationComponent,
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule,
@@ -85,13 +80,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
   providers: [
     FormationService,
     GestionEmployeService,
-    CollService,
     StagiaireService,
     AbsenceService,
-    DatePipe,    
-    // {provide: APP_INITIALIZER, deps: [KeycloakSecurityService], useFactory: kcFactory, multi: true},
+    DatePipe,
     {provide: APP_INITIALIZER, deps: [KeycloakService], useFactory: initializeKeycloak, multi: true},
-    // {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptorService, multi: true}
   ],
   bootstrap: [
     AppComponent

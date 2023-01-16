@@ -4,13 +4,9 @@ import com.rh.offre_stage.Entities.OffreStage;
 import com.rh.offre_stage.Entities.Postulation;
 import com.rh.offre_stage.Model.OffreStageRequest;
 import com.rh.offre_stage.Model.PostulationRequest;
-import com.rh.offre_stage.Model.User;
-import com.rh.offre_stage.Repositories.OffreStageRepository;
 import com.rh.offre_stage.Service.OffreStageService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.*;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,12 +19,10 @@ import java.util.List;
 @CrossOrigin("*")
 public class OffreStageRestController {
     private OffreStageService offreStageService;
-    @Autowired
     private JavaMailSender javaMailSender;
-    @Autowired
     private HttpServletRequest request;
 
-    // ************************ GET **************************
+    // TODO : ************************ GET **************************
 
     @GetMapping(path = "/offre/stages")
     public List<OffreStage> getAllOffreStage() {
@@ -43,7 +37,28 @@ public class OffreStageRestController {
         return offreStageService.getOffreStageById(id);
     }
 
-    //************************* Postuler **********************
+    // TODO : ************************ POST **************************
+    @PostMapping(path = "/offre/stages")
+    public void addOffreStage(@RequestBody OffreStageRequest stgReq) {
+
+        offreStageService.addOffreStage(stgReq);
+    }
+
+    // TODO : ************************ PUT **************************
+    @PutMapping(path = "/offre/stages")
+    public void updateOffreStage(@RequestBody OffreStageRequest stgReq) {
+
+        offreStageService.updateOffreStage(stgReq);
+    }
+
+    // TODO : ************************ DELETE **************************
+    @DeleteMapping(path = "/offre/stages/{id}")
+    public void deleteById(@PathVariable Long id) {
+
+        offreStageService.deleteById(id);
+    }
+
+    // TODO : ************************* Postuler **********************
     @GetMapping(path = "/postulations")
     public List<Postulation> getAllPostulations() {
 
@@ -62,27 +77,7 @@ public class OffreStageRestController {
         offreStageService.Postuler(PReq);
     }
 
-    // ************************ POST **************************
-    @PostMapping(path = "/offre/stages")
-    public void addOffreStage(@RequestBody OffreStageRequest stgReq) {
-
-        offreStageService.addOffreStage(stgReq);
-    }
-
-    // ************************ PUT **************************
-    @PutMapping(path = "/offre/stages")
-    public void updateOffreStage(@RequestBody OffreStageRequest stgReq) {
-
-        offreStageService.updateOffreStage(stgReq);
-    }
-
-    // ************************ DELETE **************************
-    @DeleteMapping(path = "/offre/stages/{id}")
-    public void deleteById(@PathVariable Long id) {
-
-        offreStageService.deleteById(id);
-    }
-    // ************************ E m a i l *************************
+    // TODO : ************************ E m a i l *************************
     @PostMapping("/acceptRejectMail")
     public void acceptOrRejectApplication(@RequestParam("status") String status, @RequestParam("email") String email) {
         // Code pour enregistrer le statut de la demande de stage (Accepté ou Refusé)
@@ -103,7 +98,7 @@ public class OffreStageRestController {
             // Traitement des erreurs
         }
     }
-    //******************* Mail de Confirmation ******************
+    // TODO : ******************* Mail de Confirmation ******************
     @PostMapping("/sendConfirmationMail")
     public void sendConfirmationEmail(@RequestParam("email") String email) {
         try {

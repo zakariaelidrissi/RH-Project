@@ -47,6 +47,7 @@ public class EmployeService {
         User user = userService.getUserById(er.getUserId());
         System.out.println("user id : " + user);
         er.setUser(user);
+        er.setName(user.getNom() + ' ' + user.getPrenom());
         return er;
     }
 

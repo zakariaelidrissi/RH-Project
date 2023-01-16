@@ -6,16 +6,15 @@ export class PlanResponse {
 
     id: number;
     name: string;
-    // name: string;
     planDate: string;
+    employe_id : number;
     responsable: Employe;
-    // formation: Array<Formation>;
 
     constructor() {
         this.id = 0;
         this.name = '';
         this.planDate = '';
+        this.employe_id = 0;
         this.responsable = new Employe();
-        // this.formation = new Array<Formation>();
     }
 }

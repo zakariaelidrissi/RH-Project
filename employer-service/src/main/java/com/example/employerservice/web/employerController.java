@@ -20,7 +20,7 @@ public class employerController {
     private AbsenceRestClient absenceRestClient;
     private AttestationRestClient attestationRestClient;
 
-    // ************************ GET **************************
+    // TODO : ************************ GET **************************
 
     @GetMapping(path = "/getUser/{id}")
     public User getUser(@PathVariable Long id){
@@ -37,7 +37,7 @@ public class employerController {
         return absenceRestClient.getAllAbs(empId);
     }
 
-    // ************************ POST **************************
+    // TODO : ************************ POST **************************
 
     @PostMapping(path = "/addDemandeFormation")
     public void addDemandeFormation(@RequestBody DemandeFormationRequest demandeFormation){
@@ -54,7 +54,7 @@ public class employerController {
         return attestationRestClient.sendDemande(demande);
     }
 
-    // ************************ PUT **************************
+    // TODO : ************************ PUT **************************
 
     @PutMapping(path = "/employe/changePassword")
     public void changePassword(@RequestBody ChangePassword change){
