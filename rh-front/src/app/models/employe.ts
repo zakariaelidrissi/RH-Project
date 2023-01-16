@@ -8,7 +8,7 @@ export class Employe {
     id: number;
     userId: number;
     debutAmbauche: Date;
-    departement: String;
+    departement: Departement;
     poste: Poste;
     etablissement: Etablissement;
 

@@ -10,5 +10,5 @@ public class PlanRequest {
     private Long id;
     private String name;
     private Date planDate;
-    private Long responsableID;
+    private Long employe_id;
 }

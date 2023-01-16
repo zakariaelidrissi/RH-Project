@@ -17,6 +17,7 @@ public class User {
     private String genre;
     private String nom;
     private String prenom;
+    @Temporal(TemporalType.DATE)
     private Date dateNaissance;
     @Column(unique = true)
     private String email;

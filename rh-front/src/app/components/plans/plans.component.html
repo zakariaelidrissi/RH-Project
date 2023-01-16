@@ -13,7 +13,6 @@
                     </ol>
                 </nav>
             </div>
-            <!-- <div class="col-md-1"></div> -->
             <div class="col-md-6 text-end">
                 <button type="button" class="btn btn-primary me-2 btn-sm p-1 fw-bold" data-bs-toggle="modal"
                     data-bs-target="#addFormationToPlan">
@@ -30,7 +29,6 @@
             <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
-                    <!-- <button type="button" class="close float-end" data-bs-dismiss="alert">x</button> -->
                     <button type="button" class="btn-close float-end" data-bs-dismiss="alert"
                         aria-label="Close"></button>
                 </div>
@@ -51,27 +49,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr *ngFor="let plan of plans;let i = index">
-                                    <td>{{ plan.name }}</td>
-                                    <td>{{ plan.planDate }}</td>
-                                    <td>{{ plan.responsable.employe.nom }}</td>                                        
-                                    <td>
-                                        <div class="me-auto d-flex">
-                                            <button class="btn btn-warning me-2 btn-sm" (click)="editPlan(plan)"
-                                                data-bs-toggle="modal" data-bs-target="#addPlan">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                            <button class="btn btn-success me-2 btn-sm" (click)="show(plan.id)"
-                                                data-bs-target="#showFormations" data-bs-toggle="modal">
-                                                <i class="bi bi-eye-fill"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm" (click)="confirmDeletePlan(plan.id, i)"
-                                                data-bs-toggle="modal" data-bs-target="#deletePlan">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -114,11 +91,11 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Responsable</label>
                             <select class="form-select" title="Select one responsable"
                                 aria-label="Default select example" name="responsableID"
-                                [(ngModel)]="newPlan.responsableID">
+                                [(ngModel)]="newPlan.employe_id">
                                 <option value="">Choisir Responsable</option>
-                                <option *ngFor="let coll of Collaborateurs" value="{{coll.id}}">{{coll.user.nom
-                                    + ' '
-                                    + coll.user.prenom}} </option>
+                                <option *ngFor="let emp of employes" value="{{emp.id}}">
+                                    {{emp.user.nom + ' ' + emp.user.prenom}} 
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -130,7 +107,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     *ngIf="case == 'add'">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="addPlan()" *ngIf="case == 'add'">Ajouter</button>
+                <button type="button" class="btn btn-primary" (click)="addPlan()" 
+                    *ngIf="case == 'add'">Ajouter</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     *ngIf="case == 'update'">Fermer</button>
                 <button type="button" class="btn btn-warning" (click)="updatePlan()"
@@ -157,7 +135,7 @@
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Choisir un plan</label>
                             <select class="form-select" title="Select one Plan" aria-label="Default select example"
-                                name="responsableID" [(ngModel)]="selectedItem">
+                                name="selectedItem" [(ngModel)]="selectedItem" (change)="dropDownFormation(selectedItem)">
                                 <option selected>Choisir un plan</option>
                                 <option *ngFor="let plan of plans" value="{{plan.id}}">{{plan.name }} </option>
                             </select>

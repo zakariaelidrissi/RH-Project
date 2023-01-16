@@ -5,7 +5,6 @@ import { DemandeFormationRes } from 'src/app/models/demandeFormationRes';
 import { Employe } from 'src/app/models/employe';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { User } from 'src/app/models/user';
-import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { EmployeService } from 'src/app/services/employes/employe.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { FormationService } from 'src/app/services/formation/formation.service';
@@ -13,6 +12,7 @@ import { MessagerieService } from 'src/app/services/messagerie/messagerie.servic
 import { getCurrentUserByEmail } from 'src/app/utils';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
+import { DemandeFormationReq } from 'src/app/models/demandeFormationReq';
 
 declare const $: any;
 
@@ -24,7 +24,7 @@ declare const $: any;
 export class DemandeFormationComponent implements OnInit {
 
   demandes: DemandeFormationRes[] = [];
-  newDemande: AddById = new AddById();
+  newDemande: DemandeFormationReq = new DemandeFormationReq();
   message: string = '';
   formations: FormationResponse[] = [];
   profile?: Keycloak.KeycloakProfile;
@@ -34,7 +34,7 @@ export class DemandeFormationComponent implements OnInit {
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(kcService: KeycloakService, private formationService: FormationService, private collService: CollService,
+  constructor(kcService: KeycloakService, private formationService: FormationService,
     messagerieService: MessagerieService, private gestionEmployeService: GestionEmployeService, userService: UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
@@ -43,7 +43,7 @@ export class DemandeFormationComponent implements OnInit {
         this.gestionEmployeService.getByUserId(this.currentUser!.id).subscribe((res) => {
           this.emp = res;
           this.getDemandesFormation(this.emp!.id);
-          this.getCollFormations(this.emp!.id);
+          // this.getEmpFormations(this.emp!.id);
         }, err => {
           console.error(err);
         });
@@ -60,8 +60,7 @@ export class DemandeFormationComponent implements OnInit {
       this.demandes = response;
       this.demandes.forEach(dm => {
         var dtDebut: Date = new Date(dm.formation.formationDate);
-        var dtDm: Date = new Date(dm.demandeDate);
-        // console.log(index);
+        var dtDm: Date = new Date(dm.dateDemande);
         this.dashboard.setItems([dm.formation.name, dtDebut.toLocaleDateString(), dm.formation.duree, dtDm.toLocaleDateString(), dm.status]);
       });
     }, (error) => {
@@ -70,12 +69,13 @@ export class DemandeFormationComponent implements OnInit {
   }
 
   addDemande(formationId: number, index: number) {
-    this.newDemande.id1 = this.currentUser!.id;
-    this.newDemande.id2 = formationId;
+    this.newDemande.employeId = this.emp!.id;
+    this.newDemande.formationId = formationId;
+    this.newDemande.status = 'Waiting';
     this.formationService.addDemande(this.newDemande).subscribe((response) => {
-      this.message = 'Success!';
+      this.message = 'Successfuly!';
       this.formations.splice(index, 1);
-      // this.getCollFormations(this.currentUser!.id);
+      this.dashboard.clear();
       this.getDemandesFormation(this.emp!.id);
       // $('#newDemande').modal("hide");
     }, (error) => {
@@ -83,24 +83,23 @@ export class DemandeFormationComponent implements OnInit {
     });
   }
 
-  getCollFormations(id: number) {
+  getEmpFormations(id: number) {
+    this.formations = [];
     this.formationService.getFormationsByEmployeId(id).subscribe((res) => {
       this.formationService.getFormations().subscribe((response) => {
-        // this.formations = response;
-        response.forEach(form => {
+        this.formations = response;
+        // for (let form of response)
+        response.forEach((form, index) => {
           var k = 0;
-          this.formations.forEach(f => {
-            if (form.id === f.id) {
-              k++;
-            }
-          });
-          this.demandes.forEach(dm => {
-            if (form.id === dm.formation.id) {
-              k++;
-            }
-          });
-          if (k === 0) {
-            this.formations.push(form);
+          for (var f of res) {
+            if (form.id === f.id) {k++; break;}
+          }
+          for (var dm of this.demandes){
+            if (form.id === dm.formation.id) {k++; break;}
+          }
+          if (k > 0) {
+            // this.formations.push(form);
+            this.formations.splice(index, 1);
           }
         });
       }, (error) => {
@@ -110,5 +109,33 @@ export class DemandeFormationComponent implements OnInit {
       console.log(error);
     });
   }
+
+  // getEmpFormations(id: number) {
+  //   this.formationService.getFormationsByEmployeId(id).subscribe((res) => {
+  //     this.formationService.getFormations().subscribe((response) => {
+  //       // this.formations = response;
+  //       response.forEach(form => {
+  //         var k = 0;
+  //         this.formations.forEach(f => {
+  //           if (form.id === f.id) {
+  //             k++;
+  //           }
+  //         });
+  //         this.demandes.forEach(dm => {
+  //           if (form.id === dm.formation.id) {
+  //             k++;
+  //           }
+  //         });
+  //         if (k === 0) {
+  //           this.formations.push(form);
+  //         }
+  //       });
+  //     }, (error) => {
+  //       console.log(error);
+  //     });
+  //   }, (error) => {
+  //     console.log(error);
+  //   });
+  // }
 
 }

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { CollRequest } from 'src/app/models/collRequest';
 import { Employe } from 'src/app/models/employe';
 import { FormationResponse } from 'src/app/models/formationResponse';
-import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { FormationService } from 'src/app/services/formation/formation.service';
@@ -50,32 +49,28 @@ export class GestionEmployerComponent implements OnInit {
 
   constructor(private employerService: GestionEmployeService,
     private router: Router,
-    private collService: CollService,
     private formationService: FormationService) { }
 
-  ngOnInit(): void {
-    console.log(this.newEmploye);
-
+  ngOnInit(): void {    
     this.getAllEmployer();
   }
 
-  actions(collId: number, index: number) {
-    return '<div id_=' + collId + ' index_=' + index + ' class="me-auto d-flex">' +
-      '<button type_="editEmploye" class="btn btn-warning me-2 btn-sm" (click)="editEmploye(coll.employe)"' +
-      'data-bs-toggle="modal" data-bs-target="#addEmploye">' +
-      '<i class="bi bi-pencil-square"></i>' +
+  actions(empId: number, index: number) {
+    return '<div id_=' + empId + ' index_=' + index + ' class="me-auto d-flex">' +
+      '<button type_="editEmploye" class="btn btn-warning me-2 btn-sm"' +
+        'data-bs-toggle="modal" data-bs-target="#addEmploye">' +
+        '<i class="bi bi-pencil-square"></i>' +
       '</button>' +
-      '<button type_="dropDownFormation" class="btn btn-primary me-2 btn-sm" (click)="dropDownFormation(coll.id, coll.formations)" ' +
-      'data-bs-target="#addCollToFormation" data-bs-toggle="modal">' +
-      '<i class="bi bi-plus-circle-fill"></i>' +
+      '<button type_="dropDownFormation" class="btn btn-primary me-2 btn-sm"' +
+        'data-bs-target="#addEmpToFormation" data-bs-toggle="modal">' +
+        '<i class="bi bi-plus-circle-fill"></i>' +
       '</button>' +
-      '<button type_="showCollFormation" class="btn btn-success me-2 btn-sm" (click)="showCollFormation(coll.formations, coll.empolyeID, coll.employe.nom)"' +
-      'data-bs-toggle="modal" data-bs-target="#showCollFormation">' +
-      '<i class="bi bi-eye-fill"></i>' +
+      '<button type_="showEmpFormation" class="btn btn-success me-2 btn-sm"' +
+        'data-bs-toggle="modal" data-bs-target="#showEmpFormation">' +
+        '<i class="bi bi-eye-fill"></i>' +
       '</button>' +
-      '<button type_="confirmDeleteEmploye" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteEmploye"' +
-      '(click)="confirmDeleteEmploye(coll.empolyeID, i)">' +
-      '<i class="bi bi-trash3-fill"></i>' +
+      '<button type_="confirmDeleteEmploye" class="btn btn-danger btn-sm" data-bs-toggle="modal"'+
+        'data-bs-target="#deleteEmploye"> <i class="bi bi-trash3-fill"></i>' +
       '</button>' +
       '</div>';
   }
@@ -104,23 +99,21 @@ export class GestionEmployerComponent implements OnInit {
     const type = button.getAttribute("type_");
     const id_ = button.parentNode.getAttribute("id_");
     const index_ = button.parentNode.getAttribute("index_");
-    console.log(type, id_)
     if (type === "editEmploye") {
-      // this.editEmploye(this.employes.find(f => f.id == id_)?.employe as Employe);
+      this.editEmploye(this.employes.find(f => f.id == id_) as Employe);
     } else if (type === "dropDownFormation") {
       const employeId = this.employes.find(f => f.id == id_)?.id as number;
-      this.formationService.getFormationsByEmployeId(employeId).subscribe((response) => {
-        this.dropDownFormation(id_, response);
-      })
-    } else if (type === "showCollFormation") {
+      console.log(employeId);
+      this.dropDownFormation(employeId);
+    } else if (type === "showEmpFormation") {
       const employeId = this.employes.find(f => f.id == id_)?.id as number;
       this.formationService.getFormationsByEmployeId(employeId).subscribe((response) => {
-        this.showCollFormation(
+        this.showEmpFormation(
           response,
           this.employes.find(f => f.id == id_)!.id,
           this.employes.find(f => f.id == id_)!.user.nom
         );
-      })
+      });
     } else if (type === "confirmDeleteEmploye") {
       this.confirmDeleteEmploye(this.employes.find(f => f.id == id_)!.id, index_);
     }
@@ -132,45 +125,38 @@ export class GestionEmployerComponent implements OnInit {
   }
 
   addEmploye() {
-    // const addEmployeRequest = new AddEmployeRequest();
-
     this.employerService.addEmploye(this.newEmploye).subscribe((response) => {
-      this.message = "This Employer well be added successfuly!";
-      $('#addEmployer').modal("hide");
-
-      this.employerService.getByUserId(response.userId).subscribe((response) => {
-        this.collRequest.employeId = response.id;
-
-        // this.collService.addCollaborateur(this.collRequest).subscribe((response) => {
-        // }, (error) => {
-        //   console.log(error);
-        // });
-
+      this.message = "This Employer well be added successfuly!";      
         this.dashboard.clear();
         this.getAllEmployer();
         this.cleanData();
-        this.router.navigate(['/gestion-employer']);
-      }, (error) => {
-        console.log(error);
-      });
-
+        $('#addEmployer').modal("hide");
     }, err => {
       console.log(err);
     });
   }
 
-  editEmploye(empolye: AddEmployeRequest) {
-    this.newEmploye = empolye;
+  editEmploye(employe: Employe) {
+    this.newEmploye.cin = employe.user.cin;
+    this.newEmploye.email = employe.user.email;
+    this.newEmploye.debutAmbauche = employe.debutAmbauche;
+    this.newEmploye.departement = employe.departement;
+    this.newEmploye.etablissement = employe.etablissement;
+    this.newEmploye.poste = employe.poste;
+    this.newEmploye.genre = employe.user.genre;
+    this.newEmploye.naissance = employe.user.dateNaissance;
+    this.newEmploye.nom = employe.user.nom;
+    this.newEmploye.prenom = employe.user.prenom;
+    this.newEmploye.tel = employe.user.tel;
     this.case = 'update';
   }
 
   updateEmployes() {
     this.employerService.updateEmploye(this.newEmploye).subscribe((response) => {
       this.message = "This Employer well be updated successfuly!";
-      $('#addEmployer').modal("hide");
       this.dashboard.clear();
       this.getAllEmployer();
-      // this.router.navigate(['/gestion-employer']);
+      $('#addEmployer').modal("hide");
     }, err => {
       console.log(err);
     });
@@ -185,11 +171,6 @@ export class GestionEmployerComponent implements OnInit {
     this.employerService.deleteEmploye(employerID).subscribe((response) => {
       this.message = "This Employer well be deleted successfuly!";
       this.employes.splice(index, 1);
-      // this.collService.deleteCollaborateur(employerID).subscribe((response) => {
-      //   // this.router.navigate(['/gestion-employer']);
-      // }, (error) => {
-      //   console.log(error);
-      // });
       $('#deleteEmploye').modal("hide");
       this.dashboard.clear();
       this.getAllEmployer();
@@ -198,7 +179,7 @@ export class GestionEmployerComponent implements OnInit {
     })
   }
 
-  showCollFormation(formations: FormationResponse[], employeId: number, employeName: string) {
+  showEmpFormation(formations: FormationResponse[], employeId: number, employeName: string) {
     this.formations = formations;
     this.employeId = employeId;
     this.employeName = employeName;
@@ -211,13 +192,31 @@ export class GestionEmployerComponent implements OnInit {
     this.newEmploye.email = '';
     this.newEmploye.naissance = new Date();
     this.newEmploye.nom = '';
-    // this.newEmploye.poste = '';
+    this.newEmploye.etablissement = Etablissement.Fs;
+    this.newEmploye.poste = Poste.Doyen;
+    this.newEmploye.genre = 'Homme';
+    this.newEmploye.prenom = '';
+    this.newEmploye.tel = '';
   }
 
-  getFormation(): void {
+  getFormation(empId : number): void {
+    this.dropdownListFormation = [];
     this.formationService.getFormations().subscribe((response: FormationResponse[]) => {
-      this.dropdownListFormation = response;
-      console.log(response);
+      this.formationService.getFormationsByEmployeId(empId).subscribe((res) => {
+        this.formationService.getDemandesByEmpId(empId).subscribe((r) => {
+          this.dropdownListFormation = response;
+          response.forEach((form, index) => {
+            var k = 0;
+            for (var f of res) {
+              if (form.id === f.id) {k++; break;}
+            }
+            for (var dm of r) {
+              if (form.id === dm.id) {k++; break;}
+            }
+            if (k > 0) this.dropdownListFormation.splice(index, 1);
+          });
+        });
+      });
     }, (error) => {
       console.log(error);
     });
@@ -227,10 +226,10 @@ export class GestionEmployerComponent implements OnInit {
     this.selectedItem = collId;
   }
 
-  dropDownFormation(collId: number, formation: FormationResponse[]) {
+  dropDownFormation(empId: number) {
 
-    this.getFormation();
-    this.selectedItem = collId;
+    this.getFormation(empId);
+    this.selectedItem = empId;
 
     this.selectedItems = [];
 
@@ -245,13 +244,13 @@ export class GestionEmployerComponent implements OnInit {
     };
   }
 
-  addCollToFormaton() {
+  addEmpToFormation() {
     for (let index = 0; index < this.selectedItems.length; index++) {
       const formationID = this.selectedItems[index];
       let addById: AddById = new AddById();
       addById.id1 = this.selectedItem;
       addById.id2 = formationID.id;
-      this.formationService.addCollToFormation(addById).subscribe((response) => {
+      this.formationService.addEmpToFormation(addById).subscribe((response) => {
         this.message = "Successfuly!";
         $('#addCollToFormation').modal("hide");
       }, (error) => {

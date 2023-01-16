@@ -60,6 +60,7 @@ public class OffreStageService {
         List<Postulation> listP = postulationRepository.findAll();
         listP.forEach(po -> {
             po.setUser(userRestClient.getUserById(po.getUserId()));
+            po.setOffreStage(offreStageRepository.findOffreStageById(po.getOffreStageId()));
         });
         return listP;
     }

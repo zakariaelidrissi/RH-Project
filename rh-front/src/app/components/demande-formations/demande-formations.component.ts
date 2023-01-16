@@ -18,9 +18,9 @@ export class DemandeFormationsComponent implements OnInit {
   updDemande: DemandeFormationReq = new DemandeFormationReq();
   message: string = '';
   demandeId: number = 0;
-  collID: number = 0;
+  empID: number = 0;
   formID: number = 0;
-  addCollToForm: AddById = new AddById();
+  addEmpToForm: AddById = new AddById();
   case: string = '';
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
@@ -31,8 +31,8 @@ export class DemandeFormationsComponent implements OnInit {
     this.getAllDemandes();
   }
 
-  actions(demandeId: number, index: number, collid: number, formid: number) {
-    return '<div id_=' + demandeId + ' collId_=' + collid + ' formId_=' + formid + ' index_=' + index + ' class="me-auto d-flex">' +
+  actions(demandeId: number, index: number, empid: number, formid: number) {
+    return '<div id_=' + demandeId + ' empId_=' + empid + ' formId_=' + formid + ' index_=' + index + ' class="me-auto d-flex">' +
       '<button type_="accept" class="btn btn-success me-2 btn-sm"' +
       'data-bs-toggle="modal" data-bs-target="#demandeModal">' +
       '<i class="bi bi-check"></i>' +
@@ -48,13 +48,13 @@ export class DemandeFormationsComponent implements OnInit {
     const type = button.getAttribute("type_");
     const id_ = button.parentNode.getAttribute("id_");
     const index_ = button.parentNode.getAttribute("index_");
-    const collId = button.parentNode.getAttribute("collId_");
+    const empId = button.parentNode.getAttribute("empId_");
     const formId = button.parentNode.getAttribute("formId_");
 
     if (type === "accept") {
-      this.conferme(id_, type, collId, formId);
+      this.conferme(id_, type, empId, formId);
     } else if (type === "refuse") {
-      this.conferme(id_, type, collId, formId);
+      this.conferme(id_, type, empId, formId);
     }
   }
 
@@ -64,13 +64,14 @@ export class DemandeFormationsComponent implements OnInit {
       const handleButons = this.handleButons;
       this.demandes.forEach((dm, index) => {
         var dtDebut: Date = new Date(dm.formation.formationDate);
-        var dtDemande: Date = new Date(dm.demandeDate);
+        var dtDemande: Date = new Date(dm.dateDemande);
         var act: string = '';
+        var name = dm.employe.user.nom + ' ' + dm.employe.user.prenom;
         if (dm.status === "encore") {
-          act = this.actions(dm.id, index, dm.employe.id, dm.formation.id);
+          act = this.actions(dm.id, index, dm.employeId, dm.formationId);
         }
-        else act = ' - ';
-        this.dashboard.setItems([dm.formation.name, dtDebut.toLocaleDateString(), dm.formation.duree, dtDemande.toLocaleDateString(), dm.status, act]);
+        else act = ' --- ';
+        this.dashboard.setItems([name ,dm.formation.name, dtDebut.toLocaleDateString(), dm.formation.duree, dtDemande.toLocaleDateString(), dm.status, act]);
       });
       $('#example tbody').on('click', 'button', function (this: any, event: any) {
         handleButons(this);
@@ -80,7 +81,7 @@ export class DemandeFormationsComponent implements OnInit {
     });
   }
 
-  conferme(id: number, type: string, collId: number, formId: number) {
+  conferme(id: number, type: string, empId: number, formId: number) {
     if (type === "accept") {
       this.case = "accept";
     }
@@ -88,19 +89,16 @@ export class DemandeFormationsComponent implements OnInit {
       this.case = "refuse"
     }
     this.demandeId = id;
-    this.addCollToForm.id1 = collId;
-    this.addCollToForm.id2 = formId;
-    console.log(this.addCollToForm.id1);
-    console.log(this.addCollToForm.id2);
+    this.addEmpToForm.id1 = empId;
+    this.addEmpToForm.id2 = formId;
   }
 
   accept(demandeId: number) {
     this.updDemande.id = demandeId;
     this.updDemande.status = 'accepte';
     this.formationService.updateDemande(this.updDemande).subscribe((res) => {
-      console.log(this.addCollToForm);
-
-      this.formationService.addCollToFormation(this.addCollToForm).subscribe((res) => {
+      // console.log(this.addEmpToForm);
+      this.formationService.addEmpToFormation(this.addEmpToForm).subscribe((res) => {
         this.message = 'Successfuly!';
         $('#demandeModal').modal('hide');
       }, (error) => {

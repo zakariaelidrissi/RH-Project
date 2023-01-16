@@ -18,6 +18,6 @@ public class EmployeResponse {
     String departement;
     Employe.Poste poste;
     Employe.Etablissement etablissement;
-
+    String name;
     User user;
 }

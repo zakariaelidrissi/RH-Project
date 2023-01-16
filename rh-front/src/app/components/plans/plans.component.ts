@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlanRequest } from 'src/app/models/planRequest';
 import { PlanResponse } from 'src/app/models/planResponse';
-import { CollService } from 'src/app/services/collaborateur/coll.service';
 import { FormationService } from 'src/app/services/formation/formation.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AddById } from 'src/app/models/addById';
@@ -22,7 +21,7 @@ declare const $: any;
 export class PlansComponent implements OnInit {
 
   plans: PlanResponse[] = [];
-  Collaborateurs: Employe[] = [];
+  employes: Employe[] = [];
   newPlan: PlanRequest = new PlanRequest();
   formations: FormationResponse[] = [];
   showFormation: FormationResponse[] = [];
@@ -44,15 +43,13 @@ export class PlansComponent implements OnInit {
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(private formationService: FormationService,
-    private router: Router,
-    private collService: CollService,
+  constructor(private formationService: FormationService,    
     private gestionEmployeService: GestionEmployeService) { }
 
   ngOnInit(): void {
     this.getPlans();
-    this.getCollaborateur();
-    this.dropDownFormation();
+    // this.getEmployes();
+    // this.dropDownFormation();
   }
 
   actions(planId: number, index: number) {
@@ -61,7 +58,7 @@ export class PlansComponent implements OnInit {
       'data-bs-toggle="modal" data-bs-target="#addPlan">' +
       '<i class="bi bi-pencil-square"></i>' +
       '</button>' +
-      '<button type_="show" class="btn btn-success me-2 btn-sm"' +
+      '<button type_="showFormations" class="btn btn-success me-2 btn-sm"' +
       'data-bs-target="#showFormations" data-bs-toggle="modal">' +
       '<i class="bi bi-eye-fill"></i>' +
       '</button>' +
@@ -72,9 +69,9 @@ export class PlansComponent implements OnInit {
       '</div>';
   }
 
-  getCollaborateur(): void {
+  getEmployes(): void {
     this.gestionEmployeService.getAllEmploye().subscribe((response) => {
-      this.Collaborateurs = response;
+      this.employes = response;
     }, (err) => {
       console.log(err);
     });
@@ -105,14 +102,14 @@ export class PlansComponent implements OnInit {
     console.log(type, id_)
     if (type === "editPlan") {
       this.editPlan(this.plans.find(f => f.id == id_) as PlanResponse);
-    } else if (type === "show") {
-      this.show(id_);
+    } else if (type === "showFormations") {
+      this.showFormations(id_);
     } else if (type === "confirmDeletePlan") {
       this.confirmDeletePlan(id_, index_);
     }
   }
 
-  getFormation(): void {
+  getFormations(): void {
     this.formationService.getFormations().subscribe((response: FormationResponse[]) => {
       this.dropdownListFormation = response;
     }, (error) => {
@@ -123,10 +120,12 @@ export class PlansComponent implements OnInit {
   onAdd() {
     this.case = 'add';
     this.cleanData();
+    this.getEmployes();
   }
 
   addPlan() {
-    if (this.newPlan.name && this.newPlan.planDate && this.newPlan.responsableID) {
+    console.log('plan name : ' + this.newPlan.name);
+    if (this.newPlan.name && this.newPlan.planDate && this.newPlan.employe_id) {
       this.errors['full'] = "";
       if (formatDate(this.newPlan.planDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
         this.savePlan();
@@ -155,7 +154,7 @@ export class PlansComponent implements OnInit {
     this.newPlan.id = plan.id;
     this.newPlan.name = plan.name;
     this.newPlan.planDate = plan.planDate;
-    this.newPlan.responsableID = plan.responsable.id;
+    this.newPlan.employe_id = plan.employe_id;
     this.case = 'update';
   }
 
@@ -184,12 +183,36 @@ export class PlansComponent implements OnInit {
       $('#deletePlan').modal("hide");
     }, (err) => {
       console.log(err);
-    })
+    });
   }
 
-  dropDownFormation() {
+  planSelected(selectedItem : number) {
+    this.dropdownListFormation = [];
+    this.formationService.getAllFormFromPlan(selectedItem).subscribe((res) => {
+      this.formationService.getFormations().subscribe((response: FormationResponse[]) => {
+        this.dropdownListFormation = response;
+        response.forEach((fr, index) => {
+          var k = 0;
+          for (var f of res){
+            if (fr.id == f.id) {k++; break;};
+          }
+          if ( k > 0) {
+            // this.dropdownListEmp.push(re);
+            this.dropdownListFormation.splice(index, 1);
+          }
+        });
+      }, (error) => {
+        console.log(error);
+      });
+    }, (error) => {
+      console.log(error);
+    });
+  }
 
-    this.getFormation();
+  dropDownFormation(selectedItem : number) {
+
+    // this.getFormations();
+    this.planSelected(selectedItem);
 
     this.selectedItems = [];
 
@@ -231,7 +254,7 @@ export class PlansComponent implements OnInit {
     this.index = i;
   }
 
-  show(idPlan: number) {
+  showFormations(idPlan: number) {
     this.formationService.getAllFormFromPlan(idPlan).subscribe((response) => {
       this.showFormation = response;
       this.planId = idPlan;
@@ -241,7 +264,7 @@ export class PlansComponent implements OnInit {
   }
 
   deleteFormatonFromPlan() {
-    this.formationService.deleteFormationFromPlan(this.formationId, this.planId).subscribe((response) => {
+    this.formationService.deleteFormationFromPlan(this.formationId).subscribe((response) => {
       this.showFormation.splice(this.index, 1);
       $('#deleteFormFromPlan').modal("hide");
     }, (error) => {
@@ -253,7 +276,7 @@ export class PlansComponent implements OnInit {
     this.newPlan.name = '';
     this.newPlan.id = 0;
     this.newPlan.planDate = '';
-    this.newPlan.responsableID = 0;
+    this.newPlan.employe_id = 0;
   }
 
 }

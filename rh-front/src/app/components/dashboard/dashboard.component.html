@@ -80,7 +80,8 @@
     aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-body p-0">
         <nav class="navbar-dark">
-            <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('ADMIN')"> -->
+
+            <!-- ********************* admin services ********************* -->
             <ul class="navbar-nav" *ngIf="isLoggedIn && isAdmin">
                 <li class="my-4">
                     <hr>
@@ -99,7 +100,7 @@
                 <li>
                     <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#formationPlan" role="button"
                         aria-expanded="false" aria-controls="collapseExample">
-                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span class="me-2"><i class="bi bi-book"></i></span>
                         <span>Formations & Plans</span>
                         <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
                     </a>
@@ -108,7 +109,7 @@
                             <ul class="navbar-nav ps-3">
                                 <li>
                                     <a routerLink="/formations" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-file-text-fill"></i></span>
+                                        <span class="me-2"><i class="bi bi-journal"></i></span>
                                         <span>Formations</span>
                                     </a>
                                 </li>
@@ -120,7 +121,7 @@
                                 </li>
                                 <li>
                                     <a routerLink="/demande-formations" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-file-text-fill"></i></span>
+                                        <span class="me-2"><i class="bi bi-patch-question-fill"></i></span>
                                         <span>Demandes</span>
                                     </a>
                                 </li>
@@ -131,7 +132,7 @@
                 <li>
                     <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#absence" role="button"
                         aria-expanded="false" aria-controls="collapseExample">
-                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span class="me-2"><i class="bi bi-person-x"></i></span>
                         <span>Absence</span>
                         <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
                     </a>
@@ -140,20 +141,20 @@
                             <ul class="navbar-nav ps-3">
                                 <li>
                                     <a routerLink="/employe/absence" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span class="me-2"><i class="bi bi-person-x"></i></span>
                                         <span>Employer</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a routerLink="/demande/absence" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                                        <span>Demande</span>
+                                    <a routerLink="/stagiaire/absence" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-person-x"></i></span>
+                                        <span>Stagiaires</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a routerLink="/stagiaire/absence" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                                        <span>Stagiaires</span>
+                                    <a routerLink="/demande/absence" class="nav-link px-3">
+                                        <span class="me-2"><i class="bi bi-patch-question-fill"></i></span>
+                                        <span>Demande</span>
                                     </a>
                                 </li>
                             </ul>
@@ -163,7 +164,7 @@
                 <li>
                     <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collaborateur" role="button"
                         aria-expanded="false" aria-controls="collapseExample">
-                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span class="me-2"><i class="bi bi-person-lines-fill"></i></span>
                         <span>Collaborateur</span>
                         <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
                     </a>
@@ -172,13 +173,13 @@
                             <ul class="navbar-nav ps-3">
                                 <li>
                                     <a routerLink="/gestion-employer" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span class="me-2"><i class="bi bi-person-badge"></i></span>
                                         <span>Employer</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a routerLink="/gestion-stagiaire" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span class="me-2"><i class="bi bi-person-badge"></i></span>
                                         <span>Stagiaires</span>
                                     </a>
                                 </li>
@@ -204,7 +205,7 @@
                                 </li>
                                 <li>
                                     <a routerLink="/demande-attestations" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span class="me-2"><i class="bi bi-patch-question-fill"></i></span>
                                         <span>Demande Attestations</span>
                                     </a>
                                 </li>
@@ -229,7 +230,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a routerLink="" class="nav-link px-3">
+                                    <a routerLink="/stages/postulation" class="nav-link px-3">
                                         <span class="me-2"><i class="bi bi-layout-split"></i></span>
                                         <span>Postulations</span>
                                     </a>
@@ -240,12 +241,13 @@
                 </li>
                 <li>
                     <a routerLink="/messagerie" class="nav-link px-3">
-                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span class="me-2"><i class="bi bi-chat-dots-fill"></i></span>
                         <span>Messages</span>
                     </a>
                 </li>
             </ul>
-            <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('EMPLOYE')"> -->
+
+            <!-- ********************* Employe services ********************* -->
             <ul class="navbar-nav" *ngIf="isLoggedIn && isEmployee">
                 <li class="my-4">
                     <hr>
@@ -256,7 +258,7 @@
                 <li>
                     <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#formations" role="button"
                         aria-expanded="false" aria-controls="collapseExample">
-                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                        <span class="me-2"><i class="bi bi-book"></i></span>
                         <span>Formations</span>
                         <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
                     </a>
@@ -265,13 +267,13 @@
                             <ul class="navbar-nav ps-3">
                                 <li>
                                     <a routerLink="/employes/formations" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-file-text-fill"></i></span>
+                                        <span class="me-2"><i class="bi bi-journal"></i></span>
                                         <span>Formations</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a routerLink="/employes/demande/formation" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span class="me-2"><i class="bi bi-patch-question-fill"></i></span>
                                         <span>Demandes</span>
                                     </a>
                                 </li>
@@ -317,7 +319,7 @@
                                 </li>
                                 <li>
                                     <a routerLink="/employes/demande/absence" class="nav-link px-3">
-                                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                                        <span class="me-2"><i class="bi bi-patch-question-fill"></i></span>
                                         <span>Demandes</span>
                                     </a>
                                 </li>
@@ -326,7 +328,8 @@
                     </div>
                 </li>
             </ul>
-            <!-- <ul class="navbar-nav" *ngIf="kcService.kc.authenticated && kcService.kc.hasRealmRole('STAGIAIRE')"> -->
+
+            <!-- ********************* Stagiaire services ********************* -->
             <ul class="navbar-nav" *ngIf="isLoggedIn && isStagiaire">
                 <li class="my-4">
                     <hr>
