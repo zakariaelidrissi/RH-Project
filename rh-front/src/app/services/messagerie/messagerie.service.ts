@@ -24,10 +24,23 @@ export class MessagerieService {
   sendMessage(body: MessageRequest): Observable<any> {
     return this.httpClient.post<any>(this.url + "send-message", body);
   }
+  sendFile(from: number, to: number, files: FileList): Observable<any> {
+    const formData = new FormData();
+    Array.from(files).forEach(f => {
+      formData.append("files", f, f.name);
+    })
+    return this.httpClient.post<any>(this.url + "send-file/" + from + "/" + to, formData);
+  }
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.url + "users");
   }
   getUserByEmail(email: string): Observable<User> {
     return this.httpClient.get<User>(this.url + "users/email/" + email);
+  }
+
+  downloadFile(id: number, filename: string): Observable<any> {
+    console.log(this.url + "download-file/" + filename + "/" + id);
+
+    return this.httpClient.get<any>(this.url + "download-file/" + filename + "/" + id);
   }
 }

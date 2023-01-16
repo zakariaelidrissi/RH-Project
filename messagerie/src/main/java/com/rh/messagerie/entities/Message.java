@@ -1,18 +1,16 @@
 package com.rh.messagerie.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor
 @Entity
 @Data
+@EqualsAndHashCode(exclude = "files")
 public class Message {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -21,5 +19,10 @@ public class Message {
     Date date;
     Long receiver;
     boolean seen;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy="message",cascade = CascadeType.ALL)
+//    @JoinColumn(name="id")
+    Collection<File> files;
 }
 

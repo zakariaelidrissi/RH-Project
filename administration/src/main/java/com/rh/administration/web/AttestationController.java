@@ -89,9 +89,10 @@ public class AttestationController {
     @ResponseBody
     public ResponseEntity<InputStreamSource> pdf(@PathVariable Long demandeId){
         try{
+            String filename = "attestation.pdf";
             ByteArrayInputStream array = service.getPdfByDemandeId(demandeId);
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition","inline;");
+            headers.add("Content-Disposition","attachment; filename=\""+filename+"\"");
             return ResponseEntity
                     .ok()
                     .contentType(MediaType.APPLICATION_PDF)
