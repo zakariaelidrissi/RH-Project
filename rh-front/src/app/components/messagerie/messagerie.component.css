@@ -314,4 +314,9 @@ i.hover:hover {
 .file-message {
     text-decoration: underline;
     cursor: pointer;
+    color: #000;
+}
+
+.file-message :hover {
+    color: rgb(119, 119, 119);
 }

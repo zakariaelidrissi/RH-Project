@@ -8,7 +8,9 @@ import com.example.absenceservice.service.AbsenceService;
 import com.netflix.servo.util.ThreadCpuStats;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -91,7 +93,8 @@ public class AbsenceController {
     }
 
     @PostMapping(path = "/demandes")
-    public void saveDm(@RequestBody DemandeRequest dmReq){
+    public void saveDm(@RequestParam("dmReq") DemandeRequest dmReq, @RequestParam("just")MultipartFile justificatif) throws IOException {
+        dmReq.setJustificatif(justificatif.getBytes());
         absenceService.addDmAbs(dmReq);
     }
 
@@ -131,5 +134,7 @@ public class AbsenceController {
     public void deleteDm(@PathVariable Long id){
         absenceService.deleteDm(id);
     }
+
+
 
 }

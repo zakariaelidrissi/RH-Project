@@ -153,7 +153,7 @@ public class MessageService {
 
         return lastMessages.stream()
                 .map(lm->repo.findById(lm.getMessageId()).get())
-                .filter(m->m.getSender()!=m.getReceiver())
+                .filter(m->m.getSender() != m.getReceiver())
                 .map(m-> {
                     Long otherId = m.getReceiver() == id ? m.getSender(): m.getReceiver();
                     User other = userService.getUserById(otherId);

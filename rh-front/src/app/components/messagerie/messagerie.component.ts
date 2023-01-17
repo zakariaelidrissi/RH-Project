@@ -274,30 +274,29 @@ export class MessagerieComponent implements OnInit {
     this.updateFiltered();
     this.searchMMInput.nativeElement.value = "";
   }
-  downloadFile(file: File) {
-    let filename = file.name as string;
-    // filename = filename.replace(" ", "_");
-    // filename = "fiiiiiiiile.pdf";
-    this.messagerieService.downloadFile(file.id as number).subscribe(resp => {
-      console.log("Downloaded file", file.name);
-      // console.log(resp);
-
-    }, err => {
-      console.error("Error downloading file", err);
-    })
-  }
-  // downloadFile(file: File) {
+  // downloadFile2(file: File) {
   //   let filename = file.name as string;
+  //   // filename = filename.replace(" ", "_");
+  //   // filename = "fiiiiiiiile.pdf";
+  //   this.messagerieService.downloadFile(file.id as number).subscribe(resp => {
+  //     console.log("Downloaded file", file.name);
+  //     // console.log(resp);
 
-  //   this.messagerieService.downloadFile(file.id as number, filename).subscribe(resp => {
-  //     console.log(resp);
-
-  //     const blob = new Blob([resp]);
-  //     var downloadURL = window.URL.createObjectURL(blob);
-  //     var link = document.createElement('a');
-  //     link.href = downloadURL;
-  //     link.download = filename;
-  //     link.click();
+  //   }, err => {
+  //     console.error("Error downloading file", err);
   //   })
   // }
+  // downloadFile(file: File) {
+  //   this.messagerieService.downloadFile(file.id as number).subscribe(data => {
+  //     const a = document.createElement('a');
+  //     const objectUrl = URL.createObjectURL(data);
+  //     a.href = objectUrl;
+  //     a.download = file.name!;//`file-${idElement}.xlsx`;
+  //     a.click();
+  //     URL.revokeObjectURL(objectUrl);
+  //   });
+  // }
+  fileDownloadLink(file: File) {
+    return this.messagerieService.url + "download-file/" + file.id + "/" + file.name;
+  }
 }

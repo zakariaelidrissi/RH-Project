@@ -19,8 +19,10 @@ public class DemandeAbsence {
     private Date dateFin;
     @Enumerated(EnumType.STRING)
     private NatureAbsence natureAbsence;
-    private String justificatif;
-    //private byte[] justificatif;
+//    private String justificatif;
+    @Lob
+    private byte[] justificatif;
+
     private String statut;
     private Long employeId;
 
