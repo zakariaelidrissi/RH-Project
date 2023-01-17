@@ -38,9 +38,9 @@ export class MessagerieService {
     return this.httpClient.get<User>(this.url + "users/email/" + email);
   }
 
-  downloadFile(id: number, filename: string): Observable<any> {
-    console.log(this.url + "download-file/" + filename + "/" + id);
+  downloadFile(id: number): Observable<any> {
+    // console.log(this.url + "download-file/" + filename + "/" + id);
 
-    return this.httpClient.get<any>(this.url + "download-file/" + filename + "/" + id);
+    return this.httpClient.get<any>(this.url + "download-file/" + id);
   }
 }

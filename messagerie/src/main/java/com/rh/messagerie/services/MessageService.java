@@ -157,9 +157,16 @@ public class MessageService {
                 .map(m-> {
                     Long otherId = m.getReceiver() == id ? m.getSender(): m.getReceiver();
                     User other = userService.getUserById(otherId);
+                    String text = m.getText();
+                    if(text == null || text.isEmpty()){
+                        List<File> files = new ArrayList<>(m.getFiles());
+                        File file = files.get(files.size() -1);
+                        if(file != null) text = file.getName();
+                        else text = "file";
+                    }
                     return new MiniMessage(
                         true,
-                            m.getText(),
+                            text,
                             m.getDate(),
                             other
                     );
@@ -210,6 +217,10 @@ public class MessageService {
 
     public Byte[] downloadFile(Long id) {
         return fileRepo.loadData(id);
+    }
+
+    public String filename(Long id) {
+        return fileRepo.findNameById(id);
     }
     /*
     public void delete(MessageRequest req) {

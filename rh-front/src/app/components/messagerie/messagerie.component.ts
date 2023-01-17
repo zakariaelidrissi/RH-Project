@@ -242,7 +242,12 @@ export class MessagerieComponent implements OnInit {
     const found = !!mm;
     if (!found) mm = new MiniMessage();
     mm!.hasUnseenMessage = true;
-    mm!.lastMessageText = message.text
+    let text = message.text;
+    if (!text || text === "") {
+      const file = message?.files![message.files!.length - 1];
+      text = file!.name;
+    }
+    mm!.lastMessageText = text
     mm!.date = message.date
     mm!.otherUser = this.otherUser
     if (!found) this.lastContacted!.push(mm!);
@@ -273,7 +278,7 @@ export class MessagerieComponent implements OnInit {
     let filename = file.name as string;
     // filename = filename.replace(" ", "_");
     // filename = "fiiiiiiiile.pdf";
-    this.messagerieService.downloadFile(file.id as number, filename).subscribe(resp => {
+    this.messagerieService.downloadFile(file.id as number).subscribe(resp => {
       console.log("Downloaded file", file.name);
       // console.log(resp);
 
