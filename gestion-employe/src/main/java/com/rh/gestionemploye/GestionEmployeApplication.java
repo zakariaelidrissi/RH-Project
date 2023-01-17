@@ -24,7 +24,7 @@ public class GestionEmployeApplication {
         restconfiguration.exposeIdsFor(Employe.class);
         return args -> {
 
-            employeRepo.save(new Employe(null, 3L, new Date("2020-04-15"), Employe.Departement.Informatique, Employe.Poste.Doyen, Employe.Etablissement.Fs));
+            employeRepo.save(new Employe(null, 3L, new Date("2020-04-15"), Employe.Departement.Informatique, Employe.Poste.Doyen, Employe.Etablissement.FS));
         };
     }
 
