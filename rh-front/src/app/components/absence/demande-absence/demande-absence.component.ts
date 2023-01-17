@@ -5,7 +5,7 @@ import { DemandeResponse } from 'src/app/models/demandeResponse';
 import { AbsenceService } from 'src/app/services/absence/absence.service';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 
-declare const $ : any;
+declare const $: any;
 
 @Component({
   selector: 'app-demande-absence',
@@ -14,28 +14,36 @@ declare const $ : any;
 })
 export class DemandeAbsencesComponent implements OnInit {
 
-  demandes : DemandeResponse[] = [];
+  demandes: DemandeResponse[] = [];
 
-  message : string = '';
+  message: string = '';
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
-  constructor(private absService : AbsenceService, private router : Router) { }
+  constructor(private absService: AbsenceService, private router: Router) { }
 
   ngOnInit(): void {
     this.getAllDemande();
   }
 
-  actions(demande : DemandeRequest, index: number) {
+  actions(demande: DemandeRequest, index: number) {
     var style = demande.statut === 'accepte' ? "style='cursor: not-allowed!important' disabled" : "";
-    return '<div dm_='+demande+' index_='+index+' class="me-auto d-flex">'+              
-              '<button type_="accepte" class="btn btn-primary me-2 btn-sm" '+style+' title="" >'+
-                  '<i class="bi bi-check-lg"></i>'+
-              '</button>'+
-              '<button type_="refuse" class="btn btn-danger btn-sm" '+style+'  title="supprimer une formation">'+
-                  '<i class="bi bi-trash3-fill"></i>'+
-              '</button>'+
-            '</div>';
+    return '<div dm_=' + demande + ' index_=' + index + ' class="me-auto d-flex">' +
+      '<button type_="accepte" class="btn btn-primary me-2 btn-sm" ' + style + ' title="" >' +
+      '<i class="bi bi-check-lg"></i>' +
+      '</button>' +
+      '<button type_="refuse" class="btn btn-danger btn-sm" ' + style + '  title="supprimer une formation">' +
+      '<i class="bi bi-trash3-fill"></i>' +
+      '</button>' +
+      '<a href="' + this.downloadLink(demande) + '" target="_blank" class="btn btn-success btn-sm ms-2" ' + style + '  title="télecharger le justificatif">' +
+      '<i class="bi bi-download""></i>' +
+      // '<a/>'+
+      '</a>' +
+      '</div>';
+  }
+
+  downloadLink(demande: DemandeRequest) {
+    return this.absService.urlDm + "/download/" + demande.id + "/" + demande.justificatifFilename;
   }
 
   onChangeDate() {
@@ -52,11 +60,13 @@ export class DemandeAbsencesComponent implements OnInit {
         var dtF: Date = new Date(dm.dateFin);
         var username = dm.employe.user.nom + ' ' + dm.employe.user.prenom;
         if (dm.statut !== "") {
-          this.dashboard.setItems([username, dtD.toLocaleDateString(), dtF.toLocaleDateString(), dm.natureAbsence, 
-            dm.statut, this.actions(dm, index)]);
+          this.dashboard.setItems(
+            [username, dtD.toLocaleDateString(), dtF.toLocaleDateString(), dm.natureAbsence,
+              dm.statut,
+              this.actions(dm, index)]);
         }
         else {
-          this.dashboard.setItems([username, dtD.toLocaleDateString(), dtF.toLocaleDateString(), dm.natureAbsence, 
+          this.dashboard.setItems([username, dtD.toLocaleDateString(), dtF.toLocaleDateString(), dm.natureAbsence,
             dm.statut, "...."]);
         }
       });
@@ -72,17 +82,17 @@ export class DemandeAbsencesComponent implements OnInit {
   handleButons = (button: any) => {
     const type = button.getAttribute("type_");
     const index_ = button.parentNode.getAttribute("index_");
-    const demande_ = this.demandes[index_ ];
-    console.log({demande_});
-    
-    if(type === "accepte"){
+    const demande_ = this.demandes[index_];
+    console.log({ demande_ });
+
+    if (type === "accepte") {
       this.updateDemande(demande_, "accepte");
     } else if (type === "refuse") {
       this.updateDemande(demande_, "refuse");
     }
   }
 
-  updateDemande(demande : DemandeRequest, statut : string) {
+  updateDemande(demande: DemandeRequest, statut: string) {
     demande.statut = statut;
     this.absService.updateDm(demande).subscribe((response) => {
       this.message = "Cette absence a été accepté avec succès!";

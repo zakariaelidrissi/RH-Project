@@ -106,16 +106,15 @@ public class MessageController {
         }
     }
 
-    @GetMapping(path="/download-file/{filename}/{id}")
+    @GetMapping(path="/download-file/{id}/{filename}")
     @ResponseBody
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id,@PathVariable String filename) throws IOException {
-//        return service.downloadFile(id);
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) throws IOException {
+        String filename = service.filename(id);
+        System.out.println("-------------------------");
+        System.out.println(filename);
         HttpHeaders headers = new HttpHeaders();
-        if(filename.isEmpty())
-            filename = "file.pdf";
-//        filename = filename.replace(' ','_');
-        headers.add("Content-Disposition","attachment; filename=\""+filename+"\"");
-//        ByteArrayInputStream array = new InputStreamResource(new ByteArrayInputStream(ArrayUtils.toPrimitive(service.downloadFile(id))));
+        if(filename == null || filename.isEmpty()) filename = "file.pdf";
+//        headers.add("Content-Disposition","attachment; filename=\""+filename+"\"");
         byte[] array = ArrayUtils.toPrimitive(service.downloadFile(id));
         return ResponseEntity
                 .ok()

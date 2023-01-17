@@ -89,8 +89,10 @@
                                         </div>
                                         <ng-template #thenBlock>
                                             <div *ngFor="let file of message.files">
-                                                <span class="file-message"
-                                                    (click)="downloadFile(file)">{{file.name}}</span>
+                                                <span class="file-message">
+                                                    <a class="file-message" [href]="fileDownloadLink(file)"
+                                                        target="_blank" [download]="file.name">{{file.name}}</a>
+                                                </span>
                                             </div>
                                         </ng-template>
                                         <ng-template #elseBlock>{{message!.text}}</ng-template>
@@ -104,7 +106,18 @@
                                         <img src="image" class="rounded-circle user_img_msg">
                                     </div>
                                     <div class="msg_cotainer pre_wrap">
-                                        {{message!.text}}
+                                        <div
+                                            *ngIf="message!.files && message!.files.length>0; then thenBlock else elseBlock">
+                                        </div>
+                                        <ng-template #thenBlock>
+                                            <div *ngFor="let file of message.files">
+                                                <span class="file-message">
+                                                    <a class="file-message" [href]="fileDownloadLink(file)"
+                                                        target="_blank" [download]="file.name">{{file.name}}</a>
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template #elseBlock>{{message!.text}}</ng-template>
                                         <span class="msg_time_send">{{message!.dateFormatted}}</span>
                                     </div>
                                 </div>

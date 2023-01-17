@@ -20,37 +20,41 @@ declare const $: any;
 })
 export class DemandeAbsenceComponent implements OnInit {
 
-  demandes : DemandeResponse[] = [];
-  newDemande : DemandeRequest = new DemandeRequest();
-  message : string = '';
-  
+  demandes: DemandeResponse[] = [];
+  newDemande: DemandeRequest = new DemandeRequest();
+  message: string = '';
+
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
+  @ViewChild("inputFile") inputFile!: any;
   profile?: Keycloak.KeycloakProfile;
   currentUser?: User;
-  emp? : Employe;
-  
-  constructor(private absService : AbsenceService, private empService : EmployeService
-    , kcService: KeycloakService, messagerieService: MessagerieService,userService : UserService) { 
-      this.newDemande.natureAbsence = 'NONJUSTIFIEE';
-      kcService.loadUserProfile().then(pr => {
-        this.profile = pr;
-        getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
-          this.currentUser = user as User;
-          this.empService.getEmpByUserId(this.currentUser!.id).subscribe((res) => {
-            this.emp = res;
-            this.getDmByEmpId(this.emp!.id);
-          }, err => {
-            console.error(err);            
-          });
+  emp?: Employe;
+
+  constructor(private absService: AbsenceService, private empService: EmployeService
+    , kcService: KeycloakService, messagerieService: MessagerieService, userService: UserService) {
+    this.newDemande.natureAbsence = 'NONJUSTIFIEE';
+    kcService.loadUserProfile().then(pr => {
+      this.profile = pr;
+      getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
+        this.currentUser = user as User;
+        this.empService.getEmpByUserId(this.currentUser!.id).subscribe((res) => {
+          this.emp = res;
+          this.getDmByEmpId(this.emp!.id);
+        }, err => {
+          console.error(err);
         });
-      })
+      }, err => {
+        console.error(err);
+
+      });
+    })
   }
 
   ngOnInit(): void {
-    
+
   }
 
-  getDmByEmpId(id : number){
+  getDmByEmpId(id: number) {
     this.absService.getDmByEmpId(id).subscribe((res) => {
       this.demandes = res;
       this.demandes.forEach(dm => {
@@ -64,13 +68,24 @@ export class DemandeAbsenceComponent implements OnInit {
   }
 
   addDemande() {
+
+    if (this.newDemande.natureAbsence === "NONJUSTIFIEE") return;
     this.newDemande.statut = 'Waiting';
+    console.log(this.emp);
+
     this.newDemande.employeId = this.emp!.id;
+    const file = this.inputFile.nativeElement.files[0] as File;
+    this.newDemande.justificatifFilename = file.name ? file.name : "justificatif.pdf";
     this.absService.addDemande(this.newDemande).subscribe((res) => {
       this.message = 'Successfuly!';
-      $('#addDemande').modal('hide');
-      this.dashboard.clear();
-      this.getDmByEmpId(this.emp!.id);
+      const form = new FormData();
+      form.append("just", file);
+      form.append("demId", "" + res.id);
+      this.absService.uploadJustficatif(form).subscribe(resp => {
+        $('#addDemande').modal('hide');
+        this.dashboard.clear();
+        this.getDmByEmpId(this.emp!.id);
+      })
     }, (error) => {
       console.log(error);
     })
