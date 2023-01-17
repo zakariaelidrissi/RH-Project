@@ -43,6 +43,9 @@ export class DemandeAbsenceComponent implements OnInit {
         }, err => {
           console.error(err);
         });
+      }, err => {
+        console.error(err);
+
       });
     })
   }
@@ -65,14 +68,24 @@ export class DemandeAbsenceComponent implements OnInit {
   }
 
   addDemande() {
+
+    if (this.newDemande.natureAbsence === "NONJUSTIFIEE") return;
     this.newDemande.statut = 'Waiting';
+    console.log(this.emp);
+
     this.newDemande.employeId = this.emp!.id;
-    const file = this.inputFile.nativeElement.value;
+    const file = this.inputFile.nativeElement.files[0] as File;
+    this.newDemande.justificatifFilename = file.name ? file.name : "justificatif.pdf";
     this.absService.addDemande(this.newDemande).subscribe((res) => {
       this.message = 'Successfuly!';
-      $('#addDemande').modal('hide');
-      this.dashboard.clear();
-      this.getDmByEmpId(this.emp!.id);
+      const form = new FormData();
+      form.append("just", file);
+      form.append("demId", "" + res.id);
+      this.absService.uploadJustficatif(form).subscribe(resp => {
+        $('#addDemande').modal('hide');
+        this.dashboard.clear();
+        this.getDmByEmpId(this.emp!.id);
+      })
     }, (error) => {
       console.log(error);
     })

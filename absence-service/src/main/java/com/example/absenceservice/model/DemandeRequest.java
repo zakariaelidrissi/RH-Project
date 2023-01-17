@@ -13,6 +13,7 @@ public class DemandeRequest {
     private Date dateFin;
     private NatureAbsence natureAbsence;
     private byte[] justificatif;
+    private String justificatifFilename;
     private String statut;
     private Long employeId;
 }

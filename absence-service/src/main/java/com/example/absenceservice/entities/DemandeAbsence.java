@@ -22,6 +22,7 @@ public class DemandeAbsence {
 //    private String justificatif;
     @Lob
     private byte[] justificatif;
+    private String justificatifFilename;
 
     private String statut;
     private Long employeId;

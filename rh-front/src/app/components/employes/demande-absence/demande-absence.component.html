@@ -8,25 +8,26 @@
                 <h1>List Demande Absence</h1>
                 <nav>
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
-                      <li class="breadcrumb-item">Absence</li>
-                      <li class="breadcrumb-item active">Demande</li>
+                        <li class="breadcrumb-item"><a routerLink="/dash">Dashboard</a></li>
+                        <li class="breadcrumb-item">Absence</li>
+                        <li class="breadcrumb-item active">Demande</li>
                     </ol>
                 </nav>
-            </div>   
+            </div>
             <div class="col-md-6 text-end">
-                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold"
-                    data-bs-toggle="modal" data-bs-target="#addDemande">
+                <button type="button" class="btn btn-primary btn-sm p-1 fw-bold" data-bs-toggle="modal"
+                    data-bs-target="#addDemande">
                     Demande Absence
                 </button>
-            </div>         
+            </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="alert alert-success" *ngIf="message != ''">
                     {{message}}
-                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>                    
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -46,13 +47,13 @@
                                     <th scope="col">Statut</th>
                                 </tr>
                             </thead>
-                            <tbody>                               
+                            <tbody>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 </main>
 <!-- main -->
@@ -65,7 +66,7 @@
                 <h5 class="modal-title fw-bold">Ajouter Demande</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <form method="post" enctype="multipart/form-data">
                     <div class="row mt-3">
                         <div class="col-md-12">
@@ -87,21 +88,22 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nature d'absence</label>
                             <!-- <input type="text" required placeholder="Nature d'absence" name="natureAbsence"
                                 [(ngModel)]="newDemande.natureAbsence" class="form-control"> -->
-                                <select name="natureAbsence" [(ngModel)]="newDemande.natureAbsence" class="form-select">
-                                    <option value="NONJUSTIFIEE">NONJUSTIFIEE</option>
-                                    <option value="NAISSANCE">NAISSANCE</option>
-                                    <option value="CIRCONCISION">CIRCONCISION</option>
-                                    <option value="MARIAGE">MARIAGE</option>
-                                    <option value="MALADIE">MALADIE</option>
-                                    <option value="DECES">DECES</option>
-                                </select>
+                            <select name="natureAbsence" [(ngModel)]="newDemande.natureAbsence" class="form-select">
+                                <option value="NONJUSTIFIEE">NONJUSTIFIEE</option>
+                                <option value="NAISSANCE">NAISSANCE</option>
+                                <option value="CIRCONCISION">CIRCONCISION</option>
+                                <option value="MARIAGE">MARIAGE</option>
+                                <option value="MALADIE">MALADIE</option>
+                                <option value="DECES">DECES</option>
+                            </select>
                             <!-- <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small> -->
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div *ngIf="newDemande.natureAbsence != 'NONJUSTIFIEE'" class="row mt-3">
                         <div class="col-md-12">
-                            <label for="formFile" class="mb-2 fw-bold text-secondary ms-2">Upload notificatif</label>
-                            <input class="form-control" type="file" id="formFile"> 
+                            <label for="formFile" class="mb-2 fw-bold text-secondary ms-2">Upload
+                                notificatif</label>
+                            <input class="form-control" type="file" id="formFile" #inputFile>
                         </div>
                     </div>
                 </form>
@@ -111,7 +113,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="addDemande()">Ajouter</button>
+                <button type="button" class="btn btn-primary"
+                    [disabled]="this.newDemande.natureAbsence === 'NONJUSTIFIEE'"
+                    (click)="addDemande()">Ajouter</button>
             </div>
         </div>
     </div>

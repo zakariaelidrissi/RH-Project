@@ -59,11 +59,11 @@ export class AbsenceService {
     return this.httpClient.get<DemandeResponse[]>(this.urlDm + '/abs/' + id);
   }
 
-  addDemande(newDm: DemandeRequest, file: any): Observable<DemandeRequest> {
-    const form = new FormData();
-    form.append("dmReq", newDm as any);
-    form.append("just", file);
-    return this.httpClient.post<DemandeRequest>(this.urlDm, newDm);
+  addDemande(newDm: DemandeRequest): Observable<DemandeResponse> {
+    return this.httpClient.post<DemandeResponse>(this.urlDm, newDm);
+  }
+  uploadJustficatif(data: FormData): Observable<DemandeResponse> {
+    return this.httpClient.post<DemandeResponse>(this.urlDm + "/upload-justficatif", data);
   }
 
   updateDm(updDm: DemandeRequest): Observable<DemandeRequest> {

@@ -7,6 +7,10 @@ import com.example.absenceservice.model.*;
 import com.example.absenceservice.service.AbsenceService;
 import com.netflix.servo.util.ThreadCpuStats;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang.ArrayUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -92,10 +96,17 @@ public class AbsenceController {
         absenceService.addStgAbs(stgReq);
     }
 
+    @PostMapping(path = "/demandes/upload-justficatif")
+    public DemandeAbsence uploadJustficatif(@RequestParam("just")MultipartFile c,@RequestParam("demId") Long demId) throws IOException {
+        System.out.println("-----------------");
+        System.out.println(demId);
+        return absenceService.uploadJustficatif(c.getBytes(),demId);
+    }
     @PostMapping(path = "/demandes")
-    public void saveDm(@RequestParam("dmReq") DemandeRequest dmReq, @RequestParam("just")MultipartFile justificatif) throws IOException {
-        dmReq.setJustificatif(justificatif.getBytes());
-        absenceService.addDmAbs(dmReq);
+    public DemandeAbsence saveDm(@RequestBody DemandeRequest dmReq) throws IOException {
+        System.out.println("-----------------");
+        System.out.println(dmReq);
+        return absenceService.addDmAbs(dmReq);
     }
 
     // TODO : ************************* PUT *************************
@@ -135,6 +146,16 @@ public class AbsenceController {
         absenceService.deleteDm(id);
     }
 
+    @GetMapping(path="/demandes/download/{id}/{filename}")
+    @ResponseBody
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) throws IOException {
+        byte[] array = ArrayUtils.toPrimitive(absenceService.downloadJustificatif(id));
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                .headers(headers)
+                .body(array);
+    }
 
 
 }
