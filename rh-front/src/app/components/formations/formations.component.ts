@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormationRequest } from 'src/app/models/formationRequest';
 import { FormationResponse } from 'src/app/models/formationResponse';
 import { PlanResponse } from 'src/app/models/planResponse';
@@ -119,18 +118,41 @@ export class FormationsComponent implements OnInit {
     return dateOut;
   };
 
-  addFormation() {
+  confirm(cas : string) {
+    this.errors = [];
+    if (this.newFormation.name == ''){
+      this.errors.push({key:'name', value:"le nom est obligatoire!"});
+    }
+
+    if (this.newFormation.duree == ''){
+      this.errors.push({key:'duree', value:"la duree est obligatoire!"});
+    }else if (this.newFormation.duree <= '0'){
+      this.errors.push({key:'duree', value:"la duree doit au moins superieur ou egale 1 jours"});
+    }
+
+    if (this.newFormation.objectif == ''){
+      this.errors.push({key:'objectif', value:"l'objectif est obligatoire!"});
+    }else if (this.newFormation.objectif.length < 10){
+      this.errors.push({key:'objectif', value:"l'objectif doit au moins contenir 10 caractères"});
+    }
+
+    if (formatDate(this.newFormation.formationDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
+      // this.saveFormation();
+      this.errors.push({key:'date', value:""});
+    } else {
+      this.errors.push({key:'date', value:"la date doit superieur ou egale à la date d'aujourd'hui!"});
+    }
 
     if (this.newFormation.name && this.newFormation.duree && this.newFormation.formationDate && this.newFormation.objectif) {
-      this.errors['full'] = "";
-      if (formatDate(this.newFormation.formationDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
-        this.saveFormation();
-        this.errors['date'] = '';
-      } else {
-        this.errors['date'] = "la date doit superieur ou egale à la date d'aujourd'hui!";
-      }
+      this.errors.push({key:'full', value:""});
+      
     } else {
-      this.errors['full'] = "tout les champs est obligatoire!";
+      this.errors.push({key:'full', value:"tout les champs est obligatoire!"});
+    }
+
+    if (this.errors == null){
+      if (cas == 'add') this.saveFormation();
+      if (cas == 'update') this.updateFormation();
     }
   }
 

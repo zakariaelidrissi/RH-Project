@@ -133,9 +133,11 @@ public class AbsenceService {
         return abs;
     }
 
-    public StagiaireAbsence getStgAbsById(Long id) {
-        StagiaireAbsence abs = stgAbsRepository.findStagiaireAbsenceById(id);
-        abs.setStagiaire(getStgById(abs.getStagiaireId()));
+    public List<StagiaireAbsence> getStgAbsById(Long id) {
+        List<StagiaireAbsence> abs = stgAbsRepository.findAllStagiaireAbsenceByStagiaireId(id);
+        abs.forEach(a -> {
+            a.setStagiaire(getStgById(a.getStagiaireId()));
+        });
         return abs;
     }
 

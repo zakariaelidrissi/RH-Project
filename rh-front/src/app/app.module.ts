@@ -39,6 +39,8 @@ import { OffreStageComponent } from './components/offre-stage/offre-stage.compon
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { DemandeAbsenceComponent } from './components/employes/demande-absence/demande-absence.component';
 import { PostulationComponent } from './components/postulation/postulation.component';
+import { StgDemandeAttestationComponent } from './components/stagiaire/stg-demande-attestation/stg-demande-attestation.component';
+import { StgabsencesComponent } from './components/stagiaire/stgabsences/stgabsences.component';
 
 
 function initializeKeycloak(keycloak: KeycloakService) {
@@ -71,6 +73,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     EmployeAttestationsComponent,
     OffreStageComponent,
     PostulationComponent,
+    StgDemandeAttestationComponent,
+    StgabsencesComponent,
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule,

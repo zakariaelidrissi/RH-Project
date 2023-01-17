@@ -19,7 +19,7 @@ public class AbsenceController {
 
     private AbsenceService absenceService;
 
-    // ************************* GET ************************
+    // TODO : ************************* GET ************************
 
     @GetMapping(path = "/getEmploye/{id}")
     public Employe getEmploye(@PathVariable Long id){
@@ -54,7 +54,7 @@ public class AbsenceController {
     }
 
     @GetMapping(path = "/absences/stg/{id}")
-    public StagiaireAbsence getStgAbsById(@PathVariable Long id) {
+    public List<StagiaireAbsence> getStgAbsById(@PathVariable Long id) {
         return absenceService.getStgAbsById(id);
     }
 
@@ -78,7 +78,7 @@ public class AbsenceController {
         return absenceService.getDemandeByEmpId(empid);
     }
 
-    // ************************* POST ************************
+    // TODO : ************************* POST ************************
 
     @PostMapping(path = "/absences")
     public void saveEmpAbs(@RequestBody EmpAbsRequest absReq){
@@ -95,7 +95,7 @@ public class AbsenceController {
         absenceService.addDmAbs(dmReq);
     }
 
-    // ************************* PUT *************************
+    // TODO : ************************* PUT *************************
 
     @PutMapping(path = "/demandes")
     public void updateDm(@RequestBody DemandeRequest dmres) { absenceService.updateDm(dmres); }

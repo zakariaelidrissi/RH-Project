@@ -1,23 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DemandeAttestationType } from 'src/app/models/demandeAttestationType';
-import { AdministrationService } from 'src/app/services/administration/administration.service';
-import { DemandeAttestationRequest } from 'src/app/models/demandeAttestationResquest';
-import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { DemandeAttestationEtat } from 'src/app/models/demandeAttestationEtat';
-import { User } from 'src/app/models/user';
-import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { KeycloakService } from 'keycloak-angular';
-import { getCurrentUserByEmail } from 'src/app/utils';
+import { DemandeAttestationEtat } from 'src/app/models/demandeAttestationEtat';
+import { DemandeAttestationRequest } from 'src/app/models/demandeAttestationResquest';
+import { DemandeAttestationType } from 'src/app/models/demandeAttestationType';
+import { User } from 'src/app/models/user';
+import { AdministrationService } from 'src/app/services/administration/administration.service';
+import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { getCurrentUserByEmail } from 'src/app/utils';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 declare const $: any;
 
 @Component({
-  selector: 'app-employe-attestations',
-  templateUrl: './employe-attestations.component.html',
-  styleUrls: ['./employe-attestations.component.css']
+  selector: 'app-stg-demande-attestation',
+  templateUrl: './stg-demande-attestation.component.html',
+  styleUrls: ['./stg-demande-attestation.component.css']
 })
-export class EmployeAttestationsComponent implements OnInit {
+export class StgDemandeAttestationComponent implements OnInit {
 
   currentUser?: User;
   profile?: Keycloak.KeycloakProfile;
@@ -41,9 +41,8 @@ export class EmployeAttestationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
-  
+
   actions(demandeId: number, etat: boolean) {
     const status = !etat ? "disabled" : "";
     if (etat) {
@@ -75,11 +74,7 @@ export class EmployeAttestationsComponent implements OnInit {
       const handleButons = this.handleButons;
       res.forEach(att => {
         var dt: Date = new Date(att.date);
-        // if (att.etat === DemandeAttestationEtat.Accepted) {
         this.dashboard.setItems([att.id.toString(), att.type, dt.toLocaleDateString(), att.etat, this.actions(att.id, att.etat === DemandeAttestationEtat.Accepted)]);
-        // }else {
-        // this.dashboard.setItems([att.id.toString(), att.type, dt.toLocaleDateString(), att.etat, '---']);
-        // }
       });
       $('#example tbody').on('click', 'button', function (this: any, event: any) {
         handleButons(this);
@@ -110,5 +105,6 @@ export class EmployeAttestationsComponent implements OnInit {
       console.log(error);
     });
   }
+
 
 }
