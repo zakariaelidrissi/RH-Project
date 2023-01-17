@@ -10,12 +10,12 @@ html {
 }
 
 .chat {
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: 10px;
+    /* margin-bottom: auto; */
 }
 
 .card {
-    height: 500px;
+    height: 540px;
     border-radius: 15px !important;
     background-color: rgba(0, 0, 0, 0.4) !important;
 }
@@ -115,7 +115,7 @@ html {
     margin-bottom: 15px !important;
 }
 
-.active {
+li .active {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -131,8 +131,8 @@ html {
 }
 
 .user_img {
-    height: 70px;
     width: 70px;
+    height: 70px;
     border: 1.5px solid #f5f6fa;
 
 }
@@ -314,4 +314,9 @@ i.hover:hover {
 .file-message {
     text-decoration: underline;
     cursor: pointer;
+    color: #000;
+}
+
+.file-message :hover {
+    color: rgb(119, 119, 119);
 }

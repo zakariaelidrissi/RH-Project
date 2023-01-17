@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Conversation } from 'src/app/models/conversation';
+import { Employe } from 'src/app/models/employe';
 import { File } from 'src/app/models/file';
 import { Message } from 'src/app/models/message';
 import { MessageRequest } from 'src/app/models/messageRequest';
 import { MiniMessage } from 'src/app/models/mini_message';
 import { User } from 'src/app/models/user';
+import { GestionEmployeService } from 'src/app/services/gestion-employe/gestion-employe.service';
 import { MessagerieService } from 'src/app/services/messagerie/messagerie.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { getCurrentUserByEmail } from 'src/app/utils';
+import { getCurrentUserByEmail, isCurrentUserAnAdmin } from 'src/app/utils';
 
 declare const $: any;
 @Component({
@@ -20,10 +22,15 @@ export class MessagerieComponent implements OnInit {
   @ViewChild('messageTextArea') messageTextArea: any;
   @ViewChild('searchMMInput') searchMMInput: any;
   @ViewChild('attached_file') attached_file: any;
+  files: File[] = [];
+
+  selectedEmployes: Set<Employe> = new Set();
+  allEmployes: Employe[] = [];
 
   profile?: Keycloak.KeycloakProfile;
   currentUser: User = new User();
   otherUser?: User;
+  isAdmin?: boolean;
 
 
   fullConversation?: Conversation;
@@ -31,9 +38,11 @@ export class MessagerieComponent implements OnInit {
   lastContacted?: MiniMessage[];
   sendingMessage: boolean = false;
 
-  constructor(private kcService: KeycloakService, private messagerieService: MessagerieService, private userService: UserService) {
-    kcService.loadUserProfile().then(pr => {
+  constructor(kcService: KeycloakService, private messagerieService: MessagerieService, private userService: UserService, private gestionEmploye: GestionEmployeService) {
+    kcService.loadUserProfile().then(async (pr) => {
       this.profile = pr;
+      this.isAdmin = await isCurrentUserAnAdmin(kcService);
+      // this.isAdmin = true;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
         this.currentUser = user as User;
         this.getLastContacted();
@@ -46,7 +55,6 @@ export class MessagerieComponent implements OnInit {
 
   }
   getLastContacted() {
-    console.log(this.currentUser.id);
     this.messagerieService.getLastContacted(this.currentUser!.id).subscribe(response => {
       this.lastContacted = response;
       this.updateFiltered();
@@ -63,6 +71,28 @@ export class MessagerieComponent implements OnInit {
       this.sendMessage();
     }
   }
+
+  @ViewChild("employeSelect") employeSelect: any;
+  onEmployeSelected(target: any) {
+    const id = target.value;
+
+    if (id === "-1") {
+      this.allEmployes.forEach(emp => {
+        this.selectedEmployes.add(emp);
+      })
+      this.employeSelect.nativeElement.value = "-2";
+      return;
+    }
+    const emp = this.allEmployes.find(e => e.id == target.value)
+    if (emp) this.selectedEmployes.add(emp);
+
+  }
+  onEmployeDeselected(employe: Employe) {
+    if (this.selectedEmployes.has(employe)) {
+      this.selectedEmployes.delete(employe);
+    }
+  }
+
   test() {
 
 
@@ -138,15 +168,9 @@ export class MessagerieComponent implements OnInit {
     this.updateFiltered();
 
   }
-  files: File[] = [];
   unAttachFile(idx: number) {
-    // console.log("deleting", this.files[idx].name);
     this.files.splice(idx, 1);
     this.attached_file.nativeElement.value = "";
-    // setTimeout(() => {
-    //   $("#attachFile").modal("show");
-    //   console.log(this.files);
-    // }, 1);
   }
   onFileAttached() {
     function readFile(file: any) {
@@ -242,7 +266,12 @@ export class MessagerieComponent implements OnInit {
     const found = !!mm;
     if (!found) mm = new MiniMessage();
     mm!.hasUnseenMessage = true;
-    mm!.lastMessageText = message.text
+    let text = message.text;
+    if (!text || text === "") {
+      const file = message?.files![message.files!.length - 1];
+      text = file!.name;
+    }
+    mm!.lastMessageText = text
     mm!.date = message.date
     mm!.otherUser = this.otherUser
     if (!found) this.lastContacted!.push(mm!);
@@ -269,30 +298,70 @@ export class MessagerieComponent implements OnInit {
     this.updateFiltered();
     this.searchMMInput.nativeElement.value = "";
   }
-  downloadFile(file: File) {
-    let filename = file.name as string;
-    // filename = filename.replace(" ", "_");
-    // filename = "fiiiiiiiile.pdf";
-    this.messagerieService.downloadFile(file.id as number, filename).subscribe(resp => {
-      console.log("Downloaded file", file.name);
-      // console.log(resp);
 
-    }, err => {
-      console.error("Error downloading file", err);
-    })
+  getAllEmployes() {
+    this.gestionEmploye.getAllEmploye().subscribe(employes => {
+      console.log("found", employes.length, "employés");
+      employes = employes.filter(em => em.userId !== this.currentUser.id)
+      console.log("found", employes.length, "employés");
+      this.allEmployes = employes;
+    });
   }
-  // downloadFile(file: File) {
+  clearSendMessageToAllCollabs() {
+    this.selectedEmployes.clear();
+    this.allMessageTextArea.nativeElement.value = "";
+  }
+  @ViewChild("allMessageTextArea") allMessageTextArea: any;
+  sendMessageToAllCollabs() {
+    if (this.sendingMessage) return;
+    const message: string = this.allMessageTextArea.nativeElement.value;
+    console.log({ message })
+    if (message.trim() == "") this.allMessageTextArea.nativeElement.value = "";
+    if (message.trim() === "") return;
+    const allPromises: Promise<any>[] = [];
+    this.selectedEmployes.forEach(e => {
+      const collabId = e.userId;
+      const messageRequest = new MessageRequest(
+        this.currentUser!.id,
+        collabId,
+        message.trim(),
+        []
+      );
+      allPromises.push(this.messagerieService.sendMessage(messageRequest).toPromise());
+    })
+    this.sendingMessage = true;
+    Promise.all(allPromises).then(() => {
+      console.log('Sent to all');
+      this.sendingMessage = false;
+      this.getLastContacted();
+      $('#sendToAllCollaborateurs').modal('hide');
+    }, err => {
+      this.sendingMessage = false;
+    });
+  }
+  // downloadFile2(file: File) {
   //   let filename = file.name as string;
+  //   // filename = filename.replace(" ", "_");
+  //   // filename = "fiiiiiiiile.pdf";
+  //   this.messagerieService.downloadFile(file.id as number).subscribe(resp => {
+  //     console.log("Downloaded file", file.name);
+  //     // console.log(resp);
 
-  //   this.messagerieService.downloadFile(file.id as number, filename).subscribe(resp => {
-  //     console.log(resp);
-
-  //     const blob = new Blob([resp]);
-  //     var downloadURL = window.URL.createObjectURL(blob);
-  //     var link = document.createElement('a');
-  //     link.href = downloadURL;
-  //     link.download = filename;
-  //     link.click();
+  //   }, err => {
+  //     console.error("Error downloading file", err);
   //   })
   // }
+  // downloadFile(file: File) {
+  //   this.messagerieService.downloadFile(file.id as number).subscribe(data => {
+  //     const a = document.createElement('a');
+  //     const objectUrl = URL.createObjectURL(data);
+  //     a.href = objectUrl;
+  //     a.download = file.name!;//`file-${idElement}.xlsx`;
+  //     a.click();
+  //     URL.revokeObjectURL(objectUrl);
+  //   });
+  // }
+  fileDownloadLink(file: File) {
+    return this.messagerieService.url + "download-file/" + file.id + "/" + file.name;
+  }
 }

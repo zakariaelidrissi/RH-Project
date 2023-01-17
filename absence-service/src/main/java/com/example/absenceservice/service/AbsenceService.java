@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -191,7 +192,7 @@ public class AbsenceService {
         stgAbsRepository.save(abs);
     }
 
-    public void addDmAbs(DemandeRequest dmReq){
+    public DemandeAbsence addDmAbs(DemandeRequest dmReq){
         DemandeAbsence dm = new DemandeAbsence();
 
         dm.setNatureAbsence(dmReq.getNatureAbsence());
@@ -200,8 +201,9 @@ public class AbsenceService {
         dm.setJustificatif(dmReq.getJustificatif());
         dm.setDateFin(dmReq.getDateFin());
         dm.setStatut(dmReq.getStatut());
+        dm.setJustificatifFilename(dmReq.getJustificatifFilename());
 
-        demandeRepository.save(dm);
+        return demandeRepository.save(dm);
     }
 
     // ************************* PUT *************************
@@ -260,5 +262,15 @@ public class AbsenceService {
         dm.setStatut(dmres.getStatut());
 
         demandeRepository.save(dm);
+    }
+
+    public DemandeAbsence uploadJustficatif(byte[] bytes,Long id) {
+        DemandeAbsence d = demandeRepository.findById(id).get();
+        d.setJustificatif(bytes);
+        return demandeRepository.save(d);
+    }
+
+    public Byte[] downloadJustificatif(Long id) {
+        return demandeRepository.loadFile(id);
     }
 }

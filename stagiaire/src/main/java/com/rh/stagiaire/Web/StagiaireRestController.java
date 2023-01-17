@@ -23,12 +23,11 @@ import java.util.List;
 public class StagiaireRestController {
 
     private StagiaireService stagiaireService;
-    @Autowired
     private StagiaireRepository stagiaireRepository;
     private UserClient userRestClient;
     private PostulationClient postulationClient;
 
-    // ************************ GET **************************
+    // TODO : ************************ GET **************************
     @GetMapping(path = "/stagiaires")
     public List<Stagiaire> getAllStagiaire() {
         return stagiaireService.getAllStagiaire();
@@ -44,19 +43,19 @@ public class StagiaireRestController {
         return stagiaireService.getStagiaireByUserId(id);
     }
 
-    // ************************ POST **************************
+    // TODO : ************************ POST **************************
     @PostMapping(path = "/stagiaires")
     public void addStagiaire(@RequestBody StagiareRequest stgReq) {
         stagiaireService.addStagiaire(stgReq);
     }
 
-    // ************************ PUT **************************
+    // TODO : ************************ PUT **************************
     @PutMapping(path = "/stagiaires")
     public void updateStagiaire(@RequestBody StagiareRequest stgReq) {
         stagiaireService.updateStagiaire(stgReq);
     }
 
-    // ************************ DELETE **************************
+    // TODO : ************************ DELETE **************************
     @DeleteMapping(path = "/stagiaires/{id}")
     public void deleteById(@PathVariable Long id) {
         stagiaireService.deleteById(id);

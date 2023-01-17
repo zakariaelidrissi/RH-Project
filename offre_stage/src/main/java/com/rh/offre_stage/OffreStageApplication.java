@@ -31,8 +31,7 @@ public class OffreStageApplication {
 			offrestageRepository.save(new OffreStage(null,"Administrateur 2eme Grade Data Analyst","stage d’observation",1,new Date("01/09/2023"),false,"BAC+5 MASTER",""));
 			offrestageRepository.findAll().forEach(System.out::println);
 
-			postulationRepository.save(new Postulation(null, 1L, 2L, new Date("01/07/2022"), "En cours", null, null));
-			postulationRepository.save(new Postulation(null,2L,1L,new Date("01/09/2022"), "Accepté", null, null));
+			postulationRepository.save(new Postulation(null, 5L, 2L, new Date("01/07/2022"), "En cours", null, null));
 			postulationRepository.findAll().forEach(System.out::println);
 		};
 	}
