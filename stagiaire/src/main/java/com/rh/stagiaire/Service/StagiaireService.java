@@ -64,7 +64,6 @@ public class StagiaireService {
         Stagiaire stg = new Stagiaire();
 
         stg.setCivilite(stgReq.getCivilite());
-        stg.setCv(stgReq.getCv());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
@@ -78,7 +77,6 @@ public class StagiaireService {
         Stagiaire stg = getStagiaireById(stgReq.getId());
 
         stg.setCivilite(stgReq.getCivilite());
-        stg.setCv(stgReq.getCv());
         stg.setNiveau_etudes(stgReq.getNiveau_etudes());
         stg.setUserId(stgReq.getUserId());
         stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
@@ -106,5 +104,11 @@ public class StagiaireService {
         } catch (MessagingException e) {
             // Traitement des erreurs
         }
+    }
+
+    public Stagiaire uploadCV(byte[] bytes, Long sid) {
+        Stagiaire s = stagiaireRepository.findStagiaireById(sid);
+        s.setCvData(bytes);
+        return stagiaireRepository.save(s);
     }
 }
