@@ -2,8 +2,10 @@ package com.rh.offre_stage.Web;
 
 import com.rh.offre_stage.Entities.OffreStage;
 import com.rh.offre_stage.Entities.Postulation;
+import com.rh.offre_stage.Feign.UserClient;
 import com.rh.offre_stage.Model.OffreStageRequest;
 import com.rh.offre_stage.Model.PostulationRequest;
+import com.rh.offre_stage.Model.User;
 import com.rh.offre_stage.Service.OffreStageService;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.*;
@@ -21,6 +23,7 @@ public class OffreStageRestController {
     private OffreStageService offreStageService;
     private JavaMailSender javaMailSender;
     private HttpServletRequest request;
+    private UserClient userClient;
 
     // TODO : ************************ GET **************************
 
@@ -75,6 +78,13 @@ public class OffreStageRestController {
     public void addPostulation(@RequestBody PostulationRequest PReq) {
 
         offreStageService.Postuler(PReq);
+    }
+    @PutMapping(path = "/postulations")
+    public void updatePostulation(@RequestBody PostulationRequest pReq) {
+
+        offreStageService.updatePostulation(pReq);
+        User u =  userClient.getUserById(pReq.getUserId());
+        acceptOrRejectApplication(pReq.getStatut(),u.getEmail());
     }
 
     // TODO : ************************ E m a i l *************************

@@ -79,7 +79,13 @@ public class OffreStageService {
         po.setUser(userRestClient.getUserById(po.getUserId()));
         return  po;
     }
+    public void updatePostulation(PostulationRequest PReq) {
+        Postulation P = getPostulationById(PReq.getId());
 
+        P.setStatut(PReq.getStatut());
+
+        postulationRepository.save(P);
+    }
     // ************************ PUT **************************
     public void updateOffreStage(OffreStageRequest stgReq) {
         OffreStage stg = getOffreStageById(stgReq.getId());
