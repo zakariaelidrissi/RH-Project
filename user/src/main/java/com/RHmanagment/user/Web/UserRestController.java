@@ -1,21 +1,13 @@
 package com.RHmanagment.user.Web;
 
-import com.RHmanagment.user.Entities.ConfirmationToken;
 import com.RHmanagment.user.Entities.User;
 import com.RHmanagment.user.Model.ChangePassword;
-import com.RHmanagment.user.Repositories.ConfirmationTokenRepository;
-import com.RHmanagment.user.Repositories.UserRepository;
-import com.RHmanagment.user.Service.EmailService;
 import com.RHmanagment.user.Service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.Base64;
 import java.util.List;
 
 @RestController @AllArgsConstructor
@@ -23,20 +15,6 @@ import java.util.List;
 public class UserRestController {
     private UserService userService;
 
-    // ****************** L O G I N *************************
-    //@RequestMapping("/login")
-  /*  @RequestMapping("/login")
-    public boolean login(@RequestBody org.springframework.security.core.userdetails.User user) {
-        return user.getUsername().equals("user") && user.getPassword().equals("password");
-    }
-
-    //@RequestMapping("/user")
-    public Principal user(HttpServletRequest request) {
-        String authToken = request.getHeader("Authorization")
-                .substring("Basic".length()).trim();
-        return () ->  new String(Base64.getDecoder()
-                .decode(authToken)).split(":")[0];
-    }*/
 
     // ************************ GET **************************
     @GetMapping(path = "/users")
@@ -45,14 +23,9 @@ public class UserRestController {
     }
 
     @GetMapping(path = "/users/{id}")
-    public User getUserById(@PathVariable Long id){
-        System.out.println("Id: "+id);
+    public User getUserById(@PathVariable Long id) {
+        System.out.println("Id: " + id);
         return userService.getUserById(id);
-    }
-
-    @GetMapping(path = "/users/email/{email}")
-    public User getUserByEmail(@PathVariable String email){
-        return userService.getUserByEmail(email);
     }
 
     // ************************ POST **************************
@@ -69,7 +42,7 @@ public class UserRestController {
     }
 
     @PutMapping(path = "/users/changePassword")
-    public void changePassword(@RequestBody ChangePassword change){
+    public void changePassword(@RequestBody ChangePassword change) {
         userService.changePassword(change);
     }
 
@@ -79,83 +52,4 @@ public class UserRestController {
         userService.deleteById(id);
     }
 
-
-    //************   M A I L   µµµµµµµµµµµµµµµµµµµ//
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ConfirmationTokenRepository confirmationTokenRepository;
-
-    @Autowired
-    private EmailService emailService;
-
-    @RequestMapping(value="/register", method = RequestMethod.GET)
-    public ModelAndView displayRegistration(ModelAndView modelAndView, User User)
-    {
-        modelAndView.addObject("User", User);
-        modelAndView.setViewName("register");
-        return modelAndView;
-    }
-
-
-
-    @RequestMapping(value="/register", method = RequestMethod.POST)
-    public ModelAndView registerUser(ModelAndView modelAndView, User User)
-    {
-
-        User existingUser = userRepository.findUserByEmail((User.getEmail()));
-        if(existingUser != null)
-        {
-            modelAndView.addObject("message","Cet Email existe déjà!");
-            modelAndView.setViewName("error");
-        }
-        else
-        {
-            userRepository.save(User);
-
-            ConfirmationToken confirmationToken = new ConfirmationToken(User);
-
-            confirmationTokenRepository.save(confirmationToken);
-
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(User.getEmail());
-            mailMessage.setSubject("Inscription Completée!");
-            mailMessage.setFrom("   K H T O U O T M A N @ G M A I L . C O M   ");
-            mailMessage.setText("Pour confirmer votre compte, veuillez cliquer ici : "+"http://localhost:8080/confirm-account?token="+confirmationToken.getConfirmationToken());
-
-            emailService.sendEmail(mailMessage);
-
-            modelAndView.addObject("emailId", User.getEmail());
-
-            modelAndView.setViewName("successfulRegisteration");
-        }
-
-        return modelAndView;
-    }
-
-
-    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
-    {
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-
-        if(token != null)
-        {
-            User user = userRepository.findUserByEmail(token.getUserEntity().getEmail());
-            user.setEnabled(true);
-            userRepository.save(user);
-            modelAndView.setViewName("accountVerified");
-        }
-        else
-        {
-            modelAndView.addObject("message","Erreur :Le lien est invalide!");
-            modelAndView.setViewName("error");
-        }
-
-        return modelAndView;
-    }
 }
-
-

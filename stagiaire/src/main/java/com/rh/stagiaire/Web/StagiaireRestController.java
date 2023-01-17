@@ -11,7 +11,9 @@ import com.rh.stagiaire.Service.StagiaireService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -70,7 +72,6 @@ public class StagiaireRestController {
             Stagiaire stg = new Stagiaire();
 
             stg.setCivilite(stgReq.getCivilite());
-            stg.setCv(stgReq.getCv());
             stg.setNiveau_etudes(stgReq.getNiveau_etudes());
             stg.setUserId(stgReq.getUserId());
             stg.setLinkedIn_URL(stgReq.getLinkedIn_URL());
@@ -84,5 +85,16 @@ public class StagiaireRestController {
             // Traitement des erreurs
         }
     }
+    @PostMapping("/upload-cv")
+    public Stagiaire uploadCV(@RequestParam("file") MultipartFile file, @RequestParam("sid") Long sid) throws IOException {
+        // Récupération du nom de fichier
+        String fileName = file.getOriginalFilename();
+        return stagiaireService.uploadCV(file.getBytes(),sid);
+    }
+
+
+
+
+
 
 }

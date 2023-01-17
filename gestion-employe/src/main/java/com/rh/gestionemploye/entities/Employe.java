@@ -20,6 +20,7 @@ public class Employe {
     @Enumerated(EnumType.STRING) Departement departement;
     @Enumerated(EnumType.STRING) Poste poste;
     @Enumerated(EnumType.STRING) Etablissement etablissement;
+
     public enum Etablissement{
         Fs("FS"),
         ENSAM("ENSAM"),

@@ -66,7 +66,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">                
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début</label>
@@ -96,6 +96,12 @@
                                     <option value="DECES">DECES</option>
                                 </select>
                             <!-- <small *ngIf="errors && errors['date']" class="form-text text-danger">{{errors['date']}}</small> -->
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="formFile" class="mb-2 fw-bold text-secondary ms-2">Upload notificatif</label>
+                            <input class="form-control" type="file" id="formFile"> 
                         </div>
                     </div>
                 </form>

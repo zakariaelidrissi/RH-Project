@@ -16,10 +16,12 @@ public class Stagiaire {
     private String civilite;
     private String niveau_etudes;
     private String ville;
-    private String cv;
     private String LinkedIn_URL;
     private Long userId;
     @Transient
     private User user;
+
+    @Lob
+    byte[] cvData;
 
 }
