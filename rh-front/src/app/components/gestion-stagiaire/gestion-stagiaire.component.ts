@@ -34,8 +34,8 @@ export class GestionStagiaireComponent implements OnInit {
                   'data-bs-toggle="modal" data-bs-target="#updateStagiaire">'+
                   '<i class="bi bi-pencil-square"></i>'+
               '</button>'+
-              '<button type_="confirmDeleteStgiaire" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteStagiaire"'+
-                  '(click)="confirmDeleteStgiaire(stg.id, i)">'+
+              '<button type_="confirmDeleteStgiaire" class="btn btn-danger btn-sm"'+ 
+                  'data-bs-toggle="modal" data-bs-target="#deleteStagiaire"'+
                   '<i class="bi bi-trash3-fill"></i>'+
               '</button>'+
           '</div>';
@@ -44,10 +44,10 @@ export class GestionStagiaireComponent implements OnInit {
   actions(stgId : number, index: number) {
     return '<div id_='+stgId+' index_='+index+' class="me-auto d-flex">'+              
               '<button type_="confirmDeleteStgiaire" class="btn btn-danger btn-sm" title="supprimer un stagiaire"'+
-              'data-bs-toggle="modal" data-bs-target="#deleteStagiaire">'+                  
+                  'data-bs-toggle="modal" data-bs-target="#deleteStagiaire">'+                  
                   '<i class="bi bi-trash3-fill"></i>'+
               '</button>'+
-          '</div>';
+            '</div>';
   }
 
   getAllStagiare() {
@@ -55,9 +55,10 @@ export class GestionStagiaireComponent implements OnInit {
       this.stagiaires = response;
       const handleButons = this.handleButons;
       this.stagiaires.forEach((stg,index) => {
-        this.dashboard.setItems([stg.user.nom+' '+stg.user.prenom, stg.user.email, stg.user.tel, stg.niveau_etudes, stg.ville, stg.civilite, this.actions(stg.id, index)]);
+        var fullName = stg.user.nom + ' ' + stg.user.prenom;
+        this.dashboard.setItems([fullName, stg.user.email, stg.user.tel, stg.niveau_etudes, stg.ville, stg.civilite, this.actions(stg.id, index)]);
       });
-      $('#example tbody').on('click', 'button', function (this:any,event:any) {
+      $('#example tbody').on('click', 'button', function (this:any, event:any) {
         handleButons(this);
       } );
     }, (error) => {

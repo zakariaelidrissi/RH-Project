@@ -11,4 +11,5 @@ public interface StgAbsRepository extends JpaRepository<StagiaireAbsence, Long> 
 
     StagiaireAbsence findStagiaireAbsenceById(Long id);
     List<StagiaireAbsence> findAllStagiaireAbsenceByDateAbs(Date date);
+    List<StagiaireAbsence> findAllStagiaireAbsenceByStagiaireId(Long id);
 }

@@ -72,6 +72,9 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom de formation</label>
                             <input type="text" required placeholder="Formation Name" name="name"
                                 [(ngModel)]="newFormation.name" class="form-control">
+                            <small *ngFor="let err of errors" class="form-text text-danger">
+                                <small *ngIf="err.key == 'name'">{{err.value}}</small>                                
+                            </small>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -79,6 +82,9 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Durée/jours</label>
                             <input type="number" required placeholder="Duration" name="duree" min="1"
                                 [(ngModel)]="newFormation.duree" class="form-control">
+                            <small *ngFor="let err of errors" class="form-text text-danger">
+                                <small *ngIf="err.key == 'duree'">{{err.value}}</small>
+                            </small>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -86,8 +92,9 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de début</label>
                             <input type="date" required placeholder="Start Date" name="formationDate"
                                 [(ngModel)]="newFormation.formationDate" class="form-control">
-                            <small *ngIf="errors && errors['date']"
-                                class="form-text text-danger">{{errors['date']}}</small>
+                            <small *ngFor="let err of errors" class="form-text text-danger">
+                                <small *ngIf="err.key == 'date'">{{err.value}}</small>
+                            </small>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -95,21 +102,26 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Objectif</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="objectif"
                                 [(ngModel)]="newFormation.objectif"></textarea>
+                            <small *ngFor="let err of errors" class="form-text text-danger">
+                                <small *ngIf="err.key == 'objectif'">{{err.value}}</small>
+                            </small>
                         </div>
                     </div>
                 </form>
                 <div>
-                    <small *ngIf="errors && errors['full']" class="form-text text-danger">{{errors['full']}}</small>
+                    <small *ngFor="let err of errors" class="form-text text-danger">
+                        <small *ngIf="err.key == 'full'">{{err.value}}</small>
+                    </small>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     *ngIf="case == 'add'">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="addFormation()"
+                <button type="button" class="btn btn-primary" (click)="confirm(case)"
                     *ngIf="case == 'add'">Ajouter</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     *ngIf="case == 'update'">Fermer</button>
-                <button type="button" class="btn btn-warning" (click)="updateFormation()"
+                <button type="button" class="btn btn-warning" (click)="confirm(case)"
                     *ngIf="case == 'update'">Modifier</button>
             </div>
         </div>
