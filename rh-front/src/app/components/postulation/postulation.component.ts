@@ -22,6 +22,7 @@ export class PostulationComponent implements OnInit {
   constructor(private stageService : StageService) { }
 
   ngOnInit(): void {
+    this.getAllPostulation();
   }
 
   actions(posId : number, index: number) {

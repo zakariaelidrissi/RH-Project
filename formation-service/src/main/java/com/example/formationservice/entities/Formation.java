@@ -23,14 +23,4 @@ public class Formation {
     @Temporal(TemporalType.DATE)
     private Date formationDate;
 
-    /*@ManyToMany(fetch = FetchType.EAGER)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Collaborateur> collaborateurs = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "formation", fetch = FetchType.EAGER)
-    private Set<Plan> plan = new HashSet<>();
-
-    @OneToMany(mappedBy = "formation", fetch = FetchType.LAZY)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Collection<Demande> demandes;*/
 }
