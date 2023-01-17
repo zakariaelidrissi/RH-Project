@@ -6,10 +6,18 @@ import com.rh.messagerie.entities.MiniMessage;
 import com.rh.messagerie.entities.User;
 import com.rh.messagerie.services.MessageService;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang.ArrayUtils;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -32,10 +40,32 @@ public class MessageController {
     public MessageResponse sendMessage(@RequestBody MessageRequest messageRequest){
         try {
             assertDifferentUser(messageRequest.getReceiver(), messageRequest.getSender());
+            System.out.println("New Message");
+            System.out.println(messageRequest);
             return service.sendMessage(messageRequest);
         } catch (Exception e) {
             System.out.println("************Error***********");
             System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+    @PostMapping(path = "/send-file/{from}/{to}")
+    public MessageResponse sendFile(
+            @PathVariable Long from,
+            @PathVariable Long to,
+            @RequestParam("files") List<MultipartFile> files
+            ){
+        try {
+            FileRequest fileRequest = new FileRequest(
+                    files,
+                    from,
+                    to
+            );
+            return service.sendFile(fileRequest);
+        } catch (Exception e) {
+            System.out.println("************Error***********");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
@@ -50,7 +80,7 @@ public class MessageController {
         }
     }
     private void assertDifferentUser(Long id1,Long id2) throws Exception {
-        if(id1==id2) throw new Exception("Same user");
+        if(id1==null || id2==null || id1==id2) throw new Exception("Same user, id: "+id1);
     }
     //TODO: l3iba f j3iba
     @GetMapping(path = "/users")
@@ -75,4 +105,42 @@ public class MessageController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
+
+    @GetMapping(path="/download-file/{filename}/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id,@PathVariable String filename) throws IOException {
+//        return service.downloadFile(id);
+        HttpHeaders headers = new HttpHeaders();
+        if(filename.isEmpty())
+            filename = "file.pdf";
+//        filename = filename.replace(' ','_');
+        headers.add("Content-Disposition","attachment; filename=\""+filename+"\"");
+//        ByteArrayInputStream array = new InputStreamResource(new ByteArrayInputStream(ArrayUtils.toPrimitive(service.downloadFile(id))));
+        byte[] array = ArrayUtils.toPrimitive(service.downloadFile(id));
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .headers(headers)
+                .body(array);
+    }
+
+//    @GetMapping(path="/download-file/{filename}/{id}")
+//    @ResponseBody
+//    public Byte[] downloadFile(@PathVariable Long id,@PathVariable String filename) throws IOException {
+////        return service.downloadFile(id);
+//        HttpHeaders headers = new HttpHeaders();
+//        if(filename.isEmpty())
+//            filename = "file.pdf";
+////        filename = filename.replace(' ','_');
+////        headers.add("Content-Disposition","attachment; filename=\""+filename+"\"");
+//        Byte[] array = (service.downloadFile(id));
+//        System.out.println("Downloading file: "+filename+" ,Length: "+array.length);;
+////        return ResponseEntity
+////                .ok()
+////                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+////                .headers(headers)
+////                .body(array);
+//        return array;
+//    }
+
 }

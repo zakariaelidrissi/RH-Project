@@ -1,16 +1,19 @@
 package com.rh.messagerie.services;
 
+import com.rh.messagerie.dto.FileRequest;
 import com.rh.messagerie.dto.MessageRequest;
 import com.rh.messagerie.dto.MessageResponse;
-import com.rh.messagerie.dto.SendMessageToAllRequest;
 import com.rh.messagerie.entities.*;
 import com.rh.messagerie.feign.UserService;
 import com.rh.messagerie.mappers.MessageMapper;
+import com.rh.messagerie.repos.FileRepo;
 import com.rh.messagerie.repos.LastMessageRepo;
 import com.rh.messagerie.repos.MessageRepo;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,6 +25,7 @@ public class MessageService {
     private MessageRepo repo;
     private MessageMapper mapper;
     LastMessageRepo lastMessageRepo;
+    FileRepo fileRepo;
     private UserService userService;
 
     public MessageResponse save(MessageRequest req) {
@@ -37,7 +41,9 @@ public class MessageService {
 
 
     private List<MessageResponse> mapMessages(List<Message> l){
-        return l.stream().map(p->mapper.messageToMessageResponse(p)).collect(Collectors.toList());
+        return l.stream().
+                map(p->mapper.messageToMessageResponse(p))
+                .collect(Collectors.toList());
     }
 
     /*
@@ -79,19 +85,19 @@ public class MessageService {
         return this.mapMessages(this.repo.findBySeenAndReceiver(false, senderId));
     }
 
-    public void saveToAll(SendMessageToAllRequest req) {
-        save(allMessageToMessage(req));
-    }
-    public Message allMessageToMessage(SendMessageToAllRequest req){
-        return new Message(
-                -1L,
-                req.getText(),
-                req.getSender(),
-                req.getDate(),
-                -1L,
-                false
-        );
-    }
+//    public void saveToAll(SendMessageToAllRequest req) {
+//        save(allMessageToMessage(req));
+//    }
+//    public Message allMessageToMessage(SendMessageToAllRequest req){
+//        return new Message(
+//                -1L,
+//                req.getText(),
+//                req.getSender(),
+//                req.getDate(),
+//                -1L,
+//                false
+//        );
+//    }
     private Message save(Message message){
         Message ret =  repo.save(message);
         LastMessage lastMessage = getLastMessage(message.getReceiver(), message.getSender());
@@ -115,16 +121,22 @@ public class MessageService {
         return ret;
     }
     public MessageResponse sendMessage(MessageRequest messageRequest) throws Exception {
-        if(userService.getUserById(messageRequest.getSender()) == null){throw new Exception("No User with id: "+messageRequest.getSender());}
-        if(userService.getUserById(messageRequest.getReceiver()) == null){throw new Exception("No User with id: "+messageRequest.getReceiver());}
-        Message message = save(new Message(
-                -1L,
+        return sendMessage(new Message(
+                null,
                 messageRequest.getText(),
                 messageRequest.getSender(),
                 Date.from(Instant.now()),
                 messageRequest.getReceiver(),
-                false
+                false,
+//               TODO messageRequest.getFiles(),
+                null
         ));
+    }
+    private MessageResponse sendMessage(Message message) throws Exception {
+        Long sender= message.getSender(),receiver= message.getReceiver();
+        if(userService.getUserById(sender) == null){throw new Exception("No User with id: "+sender);}
+        if(userService.getUserById(receiver) == null){throw new Exception("No User with id: "+receiver);}
+        message = save(message);
         return mapper.messageToMessageResponse(message);
     }
     private LastMessage getLastMessage(Long id1,Long id2){
@@ -160,6 +172,44 @@ public class MessageService {
 
     public User getUserByEmail(String email) {
         return userService.getUserByEmail(email);
+    }
+
+    public MessageResponse sendFile(FileRequest fileRequest) throws Exception {
+        List<File> files=new ArrayList<>();
+        Message message = new Message(
+                null,
+                "",
+                fileRequest.getSender(),
+                Date.from(Instant.now()),
+                fileRequest.getReceiver(),
+                false,
+                files
+        );
+        fileRequest.getFiles().forEach(f->{
+            Byte[] bytes = new Byte[0];
+            try {
+                bytes = ArrayUtils.toObject(f.getBytes());;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            files.add(new File(
+                    null,
+                    f.getOriginalFilename(),
+                    bytes,
+                    message
+            ));
+        });
+        System.out.println("message with " + files.size() + " files");
+        return sendMessage(message);
+//        return sendMessage(
+//                fileRequest.getSender(),
+//                fileRequest.getReceiver(),
+//                "",
+//                files);
+    }
+
+    public Byte[] downloadFile(Long id) {
+        return fileRepo.loadData(id);
     }
     /*
     public void delete(MessageRequest req) {

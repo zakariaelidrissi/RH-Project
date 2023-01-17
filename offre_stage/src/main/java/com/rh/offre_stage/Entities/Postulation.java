@@ -18,7 +18,7 @@ public class Postulation {
     private Long OffreStageId;
     @Temporal(TemporalType.DATE)
     private Date postulationDate;
-    private String Statut;
+    private String Statut="En attente";
 
     @Transient
     private User user;

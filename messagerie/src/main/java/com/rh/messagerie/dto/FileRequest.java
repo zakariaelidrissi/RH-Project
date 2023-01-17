@@ -1,16 +1,15 @@
 package com.rh.messagerie.dto;
 
-import com.rh.messagerie.entities.File;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
 @Data
-public class MessageRequest {
-    String text;
+public class FileRequest {
+    List<MultipartFile> files;
     Long sender;
     Long receiver;
 }

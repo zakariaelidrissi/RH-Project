@@ -305,3 +305,13 @@ i.notallowed {
 div.pre_wrap {
     white-space: pre;
 }
+
+i.hover:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.file-message {
+    text-decoration: underline;
+    cursor: pointer;
+}

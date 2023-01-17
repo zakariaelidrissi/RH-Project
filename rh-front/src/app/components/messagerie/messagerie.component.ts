@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Conversation } from 'src/app/models/conversation';
+import { File } from 'src/app/models/file';
 import { Message } from 'src/app/models/message';
 import { MessageRequest } from 'src/app/models/messageRequest';
 import { MiniMessage } from 'src/app/models/mini_message';
@@ -18,6 +19,7 @@ declare const $: any;
 export class MessagerieComponent implements OnInit {
   @ViewChild('messageTextArea') messageTextArea: any;
   @ViewChild('searchMMInput') searchMMInput: any;
+  @ViewChild('attached_file') attached_file: any;
 
   profile?: Keycloak.KeycloakProfile;
   currentUser: User = new User();
@@ -123,6 +125,8 @@ export class MessagerieComponent implements OnInit {
       this.fullConversation.messageList?.forEach(m => {
         m.dateFormatted = this.formatDate(new Date(m.date!));
       })
+      console.log(this.fullConversation);
+
     }, (err) => {
       console.error(err)
     });
@@ -134,6 +138,74 @@ export class MessagerieComponent implements OnInit {
     this.updateFiltered();
 
   }
+  files: File[] = [];
+  unAttachFile(idx: number) {
+    // console.log("deleting", this.files[idx].name);
+    this.files.splice(idx, 1);
+    this.attached_file.nativeElement.value = "";
+    // setTimeout(() => {
+    //   $("#attachFile").modal("show");
+    //   console.log(this.files);
+    // }, 1);
+  }
+  onFileAttached() {
+    function readFile(file: any) {
+      return new Promise((resolve, reject) => {
+        // Create file reader
+        let reader = new FileReader()
+
+        // Register event listeners
+        reader.addEventListener("loadend", (e: any) => resolve(e.target.result))
+        reader.addEventListener("error", reject)
+
+        // Read file
+        reader.readAsArrayBuffer(file)
+      })
+    }
+    async function getAsByteArray(file: any) {
+      return new Uint8Array(await readFile(file) as any);
+    }
+    Array.from(this.attached_file.nativeElement.files as FileList).forEach(async (f: any) => {
+      // const byteFile = await getAsByteArray(f);
+      this.files.push(f);
+      // this.files.push(new File(
+      //   f.name,
+      //   f
+      // ));
+      // console.log(byteFile);
+    });
+  }
+  clearAttachFile() {
+    this.files = [];
+    this.attached_file.nativeElement.value = "";
+  }
+  attachFile() {
+    if (this.sendingMessage) return;
+    console.log("sending message", this.files);
+    const messageRequest = new MessageRequest(
+      this.currentUser!.id,
+      this.otherUser!.id,
+      "",
+      []
+    );
+    console.log("sending message", messageRequest);
+
+    this.sendingMessage = true;
+    this.messagerieService.sendFile(
+      this.currentUser!.id,
+      this.otherUser!.id,
+      this.files as any
+    ).subscribe((response) => {
+      this.getConversation(this.currentUser!.id, this.otherUser!.id);
+      this.sendingMessage = false;
+      this.clearAttachFile();
+      this.updateMM(response);
+      $("#attachFile").modal("hide");
+    }, (err) => {
+      console.error('Message not sent', err)
+    });
+  }
+
   sendMessage() {
     if (this.sendingMessage) return;
     const message: string = this.messageTextArea.nativeElement.value;
@@ -144,7 +216,8 @@ export class MessagerieComponent implements OnInit {
     const messageRequest = new MessageRequest(
       this.currentUser!.id,
       this.otherUser!.id,
-      message.trim()
+      message.trim(),
+      []
     );
     this.sendingMessage = true;
     console.log("sending message");
@@ -158,6 +231,7 @@ export class MessagerieComponent implements OnInit {
       console.error('Message not sent')
     });
   }
+
   updateFiltered() {
     this.lastContactedFiltered = this.lastContacted?.filter(mm => {
       return mm!.otherUser?.nom.toLocaleLowerCase().startsWith(this.mmSearchValue);
@@ -195,5 +269,30 @@ export class MessagerieComponent implements OnInit {
     this.updateFiltered();
     this.searchMMInput.nativeElement.value = "";
   }
+  downloadFile(file: File) {
+    let filename = file.name as string;
+    // filename = filename.replace(" ", "_");
+    // filename = "fiiiiiiiile.pdf";
+    this.messagerieService.downloadFile(file.id as number, filename).subscribe(resp => {
+      console.log("Downloaded file", file.name);
+      // console.log(resp);
 
+    }, err => {
+      console.error("Error downloading file", err);
+    })
+  }
+  // downloadFile(file: File) {
+  //   let filename = file.name as string;
+
+  //   this.messagerieService.downloadFile(file.id as number, filename).subscribe(resp => {
+  //     console.log(resp);
+
+  //     const blob = new Blob([resp]);
+  //     var downloadURL = window.URL.createObjectURL(blob);
+  //     var link = document.createElement('a');
+  //     link.href = downloadURL;
+  //     link.download = filename;
+  //     link.click();
+  //   })
+  // }
 }
