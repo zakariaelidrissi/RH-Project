@@ -21,9 +21,11 @@ import { EmployeAttestationsComponent } from './components/employes/employe-atte
 import { MessagerieComponent } from './components/messagerie/messagerie.component';
 import { AuthGuard } from './guard/authGuard';
 import { OffreStageComponent } from './components/offre-stage/offre-stage.component';
-import { ADM, EMP, USR } from './utils';
+import { ADM, EMP, STG, USR } from './utils';
 import { DemandeAbsenceComponent } from './components/employes/demande-absence/demande-absence.component';
 import { PostulationComponent } from './components/postulation/postulation.component';
+import { StgDemandeAttestationComponent } from './components/stagiaire/stg-demande-attestation/stg-demande-attestation.component';
+import { StgabsencesComponent } from './components/stagiaire/stgabsences/stgabsences.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -42,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: "dash", component: DashBodyComponent,
-    canActivate: [AuthGuard], data: { role: [ADM, EMP] }
+    canActivate: [AuthGuard], data: { role: [ADM, EMP, STG] }
   },
   {
     path: "formations", component: FormationsComponent,
@@ -74,7 +76,7 @@ const routes: Routes = [
   },
   {
     path: "stages", component: StagesComponent,
-    canActivate: [AuthGuard], data: { role: USR }
+    // canActivate: [AuthGuard], data: { role: USR }
   },
   { 
     path: "offre-stage", component: OffreStageComponent,
@@ -107,6 +109,14 @@ const routes: Routes = [
   {
     path: "messagerie", component: MessagerieComponent,
     canActivate: [AuthGuard], data: { role: [EMP, ADM, USR] }
+  },
+  {
+    path: "stagiaire/demande/attestations", component: StgDemandeAttestationComponent,
+    canActivate: [AuthGuard], data: {role: STG}
+  },
+  {
+    path: "stagiaire/absences", component: StgabsencesComponent,
+    canActivate: [AuthGuard], data: {role: STG}
   },
   { path: "**", component: ErrorComponent }
 ];
