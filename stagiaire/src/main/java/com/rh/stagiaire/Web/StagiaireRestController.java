@@ -64,6 +64,7 @@ public class StagiaireRestController {
 
     //***  Ajouter les stagiaires ayant réussis l’entretien, et leurs envoyés un mail qui leur informe de la date de début de stage ***
     @PostMapping("/add_successful_applicant")
+
     public void addSuccessfulApplicant(StagiareRequest stgReq, OffreStage offre) {
         try {
             OffreStage offreStage = postulationClient.getOffreById(offre.getId());

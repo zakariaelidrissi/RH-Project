@@ -27,6 +27,10 @@ public class UserRestController {
         System.out.println("Id: " + id);
         return userService.getUserById(id);
     }
+    @GetMapping(path = "/users/email/{email}")
+    public User getUserByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email);
+    }
 
     // ************************ POST **************************
     @PostMapping(path = "/users")
