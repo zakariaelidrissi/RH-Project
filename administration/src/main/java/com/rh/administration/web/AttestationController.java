@@ -85,7 +85,7 @@ public class AttestationController {
         }
     }
 
-    @GetMapping(path="/attestations/pdf/{demandeId}")
+    @GetMapping(path="/attestations/pdf/{demandeId}/{filename}")
     @ResponseBody
     public ResponseEntity<InputStreamSource> pdf(@PathVariable Long demandeId){
         try{

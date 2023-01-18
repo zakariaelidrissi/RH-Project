@@ -30,7 +30,7 @@ export class EmployeAttestationsComponent implements OnInit {
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
   constructor(private kcService: KeycloakService, private adminService: AdministrationService, private messagerieService: MessagerieService,
-    userService : UserService) {
+    userService: UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
@@ -43,31 +43,25 @@ export class EmployeAttestationsComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  
+
   actions(demandeId: number, etat: boolean) {
     const status = !etat ? "disabled" : "";
-    if (etat) {
-      return '<div id_=' + demandeId + ' class="me-auto d-flex">' +
-        '<button  type_="download" class="btn btn-primary btn-sm ms-3">' +
-        '<i class="bi bi-download"></i>' +
-        '</button>' +
-        '</div>';
-    } else {
-      return '<div id_=' + demandeId + ' class="me-auto d-flex">' +
-        '<button  type_="download" class="btn btn-danger btn-sm ms-3" ' + status + '>' +
-        '<i class="bi bi-download"></i>' +
-        '</button>' +
-        '</div>';
-    }
+    return '<div id_=' + demandeId + ' class="me-auto d-flex">' +
+      '<a href="' + this.downloadLink(demandeId) + '" target="_blank" type_="download" class="btn btn-primary btn-sm ms-3 ' + status + '">' +
+      '<i class="bi bi-download"></i>' +
+      '</a>' +
+      '</div>';
   }
-
+  downloadLink(demandeId: number) {
+    return this.adminService.url + "attestations/pdf/" + demandeId + "/attestation.pdf";
+  }
   handleButons = (button: any) => {
     const type = button.getAttribute("type_");
     const id_ = button.parentNode.getAttribute("id_");
 
-    if (type === "download") {
-      this.downloadAtt(id_);
-    }
+    // if (type === "download") {
+    //   this.downloadAtt(id_);
+    // }
   }
 
   getAllAttByUserId(userId: number) {

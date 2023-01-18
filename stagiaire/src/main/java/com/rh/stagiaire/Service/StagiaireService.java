@@ -4,6 +4,7 @@ import com.rh.stagiaire.Entities.Stagiaire;
 import com.rh.stagiaire.Feign.PostulationClient;
 import com.rh.stagiaire.Feign.UserClient;
 import com.rh.stagiaire.Model.OffreStage;
+import com.rh.stagiaire.Model.Postulation;
 import com.rh.stagiaire.Model.StagiareRequest;
 import com.rh.stagiaire.Model.User;
 import com.rh.stagiaire.Repositories.StagiaireRepository;
@@ -101,11 +102,12 @@ public class StagiaireService {
             helper.setSubject("Confirmation de votre stage");
             helper.setText("Nous sommes heureux de vous informer que votre stage commencera le " + offreStage.getDate_debut_stage() + ".");
             javaMailSender.send(msg);
+            user.setUserRole("STAGIAIRE");
         } catch (MessagingException e) {
             // Traitement des erreurs
         }
     }
-
+    // *************** C V *****************************
     public Stagiaire uploadCV(byte[] bytes, Long sid) {
         Stagiaire s = stagiaireRepository.findStagiaireById(sid);
         s.setCvData(bytes);

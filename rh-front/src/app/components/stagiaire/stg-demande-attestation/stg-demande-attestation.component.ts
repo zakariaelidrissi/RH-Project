@@ -22,7 +22,7 @@ export class StgDemandeAttestationComponent implements OnInit {
   currentUser?: User;
   profile?: Keycloak.KeycloakProfile;
   selectedItem: string = '';
-  types: any = [DemandeAttestationType.Stage, DemandeAttestationType.Travail]
+  types: any = [DemandeAttestationType.Stage]
 
   newDemande?: DemandeAttestationRequest;
   message: string = '';
@@ -30,12 +30,16 @@ export class StgDemandeAttestationComponent implements OnInit {
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
   constructor(private kcService: KeycloakService, private adminService: AdministrationService, private messagerieService: MessagerieService,
-    userService : UserService) {
+    userService: UserService) {
     kcService.loadUserProfile().then(pr => {
       this.profile = pr;
       getCurrentUserByEmail(messagerieService, this.profile.email as string).then(user => {
+        console.log({ user });
+
         this.currentUser = user as User;
         this.getAllAttByUserId(this.currentUser!.id);
+      }, err => {
+        console.error(err);
       });
     })
   }
@@ -45,21 +49,15 @@ export class StgDemandeAttestationComponent implements OnInit {
 
   actions(demandeId: number, etat: boolean) {
     const status = !etat ? "disabled" : "";
-    if (etat) {
-      return '<div id_=' + demandeId + ' class="me-auto d-flex">' +
-        '<button  type_="download" class="btn btn-primary btn-sm ms-3">' +
-        '<i class="bi bi-download"></i>' +
-        '</button>' +
-        '</div>';
-    } else {
-      return '<div id_=' + demandeId + ' class="me-auto d-flex">' +
-        '<button  type_="download" class="btn btn-danger btn-sm ms-3" ' + status + '>' +
-        '<i class="bi bi-download"></i>' +
-        '</button>' +
-        '</div>';
-    }
+    return '<div id_=' + demandeId + ' class="me-auto d-flex">' +
+      '<a href="' + this.downloadLink(demandeId) + '" target="_blank" type_="download" class="btn btn-primary btn-sm ms-3 ' + status + '">' +
+      '<i class="bi bi-download"></i>' +
+      '</a>' +
+      '</div>';
   }
-
+  downloadLink(demandeId: number) {
+    return this.adminService.url + "attestations/pdf/" + demandeId + "/attestation.pdf";
+  }
   handleButons = (button: any) => {
     const type = button.getAttribute("type_");
     const id_ = button.parentNode.getAttribute("id_");
@@ -86,6 +84,8 @@ export class StgDemandeAttestationComponent implements OnInit {
 
   addDemande() {
     if (this.selectedItem !== '') {
+      console.log(this.currentUser);
+
       this.newDemande = new DemandeAttestationRequest();
       this.newDemande.userId = this.currentUser!.id;
       this.newDemande.type = this.types[this.selectedItem];

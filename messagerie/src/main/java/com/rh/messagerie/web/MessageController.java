@@ -123,23 +123,4 @@ public class MessageController {
                 .body(array);
     }
 
-//    @GetMapping(path="/download-file/{filename}/{id}")
-//    @ResponseBody
-//    public Byte[] downloadFile(@PathVariable Long id,@PathVariable String filename) throws IOException {
-////        return service.downloadFile(id);
-//        HttpHeaders headers = new HttpHeaders();
-//        if(filename.isEmpty())
-//            filename = "file.pdf";
-////        filename = filename.replace(' ','_');
-////        headers.add("Content-Disposition","attachment; filename=\""+filename+"\"");
-//        Byte[] array = (service.downloadFile(id));
-//        System.out.println("Downloading file: "+filename+" ,Length: "+array.length);;
-////        return ResponseEntity
-////                .ok()
-////                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-////                .headers(headers)
-////                .body(array);
-//        return array;
-//    }
-
 }
