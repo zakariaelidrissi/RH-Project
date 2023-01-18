@@ -51,6 +51,6 @@ export class StageService {
 
   deletePostulation(posId : number) : Observable<any> {
     return this.httpClient.delete<any>(this.urlPos + '/' + posId);
-  }
+  }  
 
 }

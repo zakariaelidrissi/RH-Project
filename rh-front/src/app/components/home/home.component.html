@@ -100,7 +100,8 @@
                     <h5 class="card-title">{{stage.intitule}}</h5>
                     <small class="card-title" style="color: red;">{{stage.type_stage}}</small>
                     <p class="card-text">{{ (stage.descriptif_mission.length>40)? (stage.descriptif_mission | slice:0:40)+'...':(stage.descriptif_mission)}}</p>
-                    <a href="#!" class="btn btn-primary">Show more</a>
+                    <button class="btn btn-primary btn-sm p-1 fw-bold" (click)="showMore(stage)"
+                        data-bs-target="#postuler" data-bs-toggle="modal">Show more</button>
                 </div>
             </div>
         </div>
@@ -110,3 +111,40 @@
 <!-- Footer -->
 <app-footer></app-footer>
 <!-- Footer -->
+
+<!-- Show more Modal -->
+<div class="modal fade" id="postuler" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" >Plus information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-center mb-4"> {{stage.intitule}} </h3>
+                <h4 class="mb-3 d-flex"><p class="h4">Type de stage </p> 
+                    <small class="text-secondary"> : {{stage.type_stage}}</small> 
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Durée de stage</p>
+                    <small class="text-secondary"> : {{stage.duree_stage_mois}}/Mois </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Date début de stage</p>
+                    <small class="text-secondary"> : {{stage.date_debut_stage}} </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Rémuneration</p>
+                    <small class="text-secondary"> : {{stage.remuneration ? "oui":"non"}} </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Diplôme demandé</p>
+                    <small class="text-secondary"> : {{stage.diplome_demande}} </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Descriptif de la mission</p> </h4>
+                <p class="lead ms-2 me-2">{{stage.descriptif_mission}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Postuler</button>                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- show more Modal -->
