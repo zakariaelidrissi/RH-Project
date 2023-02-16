@@ -16,11 +16,12 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @Service
 @Transactional
 @AllArgsConstructor
 public class OffreStageService {
+
     private OffreStageRepository offreStageRepository;
     private PostulationRepository postulationRepository;
     private UserClient userRestClient;

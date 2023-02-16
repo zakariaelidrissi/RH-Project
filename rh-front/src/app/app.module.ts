@@ -41,6 +41,7 @@ import { DemandeAbsenceComponent } from './components/employes/demande-absence/d
 import { PostulationComponent } from './components/postulation/postulation.component';
 import { StgDemandeAttestationComponent } from './components/stagiaire/stg-demande-attestation/stg-demande-attestation.component';
 import { StgabsencesComponent } from './components/stagiaire/stgabsences/stgabsences.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 function initializeKeycloak(keycloak: KeycloakService) {
@@ -75,6 +76,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PostulationComponent,
     StgDemandeAttestationComponent,
     StgabsencesComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule,

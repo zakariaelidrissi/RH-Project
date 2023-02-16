@@ -75,6 +75,9 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Nom de plan</label>
                             <input type="text" required placeholder="Plan Name" name="name" class="form-control"
                                 [(ngModel)]="newPlan.name">
+                            <small *ngFor="let err of errors" class="form-text text-danger">
+                                <small *ngIf="err.key == 'name'">{{err.value}}</small>                                
+                            </small>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -82,8 +85,9 @@
                             <label for="" class="mb-2 fw-bold text-secondary ms-2">Date de plan</label>
                             <input type="date" required placeholder="Date" name="planDate" class="form-control"
                                 [(ngModel)]="newPlan.planDate">
-                            <small *ngIf="errors && errors['date']"
-                                class="form-text text-danger">{{errors['date']}}</small>
+                            <small *ngFor="let err of errors" class="form-text text-danger">
+                                <small *ngIf="err.key == 'date'">{{err.value}}</small>                                
+                            </small>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -97,21 +101,23 @@
                                     {{emp.user.nom + ' ' + emp.user.prenom}} 
                                 </option>
                             </select>
+                            <small *ngFor="let err of errors" class="form-text text-danger">
+                                <small *ngIf="err.key == 'emp'">{{err.value}}</small>                                
+                            </small>
                         </div>
                     </div>
                 </form>
                 <div>
-                    <small *ngIf="errors && errors['full']" class="form-text text-danger">{{errors['full']}}</small>
+                    <small *ngFor="let err of errors" class="form-text text-danger">
+                        <small *ngIf="err.key == 'full'">{{err.value}}</small>
+                    </small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    *ngIf="case == 'add'">Fermer</button>
-                <button type="button" class="btn btn-primary" (click)="addPlan()" 
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="confirm(case)" 
                     *ngIf="case == 'add'">Ajouter</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    *ngIf="case == 'update'">Fermer</button>
-                <button type="button" class="btn btn-warning" (click)="updatePlan()"
+                <button type="button" class="btn btn-warning" (click)="confirm(case)"
                     *ngIf="case == 'update'">Modifier</button>
             </div>
         </div>

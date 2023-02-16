@@ -57,7 +57,7 @@
                                         <td *ngIf="absence.dateAbs == null">---</td>
                                         <!-- <td *ngIf="absence.natureAbsence != null">{{ absence.natureAbsence }}</td> -->
                                         <td>
-                                            <select name="natureAbsence" [(ngModel)]="absence.natureAbsence" class="form-select">
+                                            <select name="natureAbsence" [(ngModel)]="absence.natureAbsence">
                                                 <option value="NONJUSTIFIEE">NONJUSTIFIEE</option>
                                                 <option value="NAISSANCE">NAISSANCE</option>
                                                 <option value="CIRCONCISION">CIRCONCISION</option>

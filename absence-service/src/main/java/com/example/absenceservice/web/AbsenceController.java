@@ -97,7 +97,7 @@ public class AbsenceController {
     }
 
     @PostMapping(path = "/demandes/upload-justficatif")
-    public DemandeAbsence uploadJustficatif(@RequestParam("just")MultipartFile c,@RequestParam("demId") Long demId) throws IOException {
+    public DemandeAbsence uploadJustficatif(@RequestParam("just") MultipartFile c,@RequestParam("demId") Long demId) throws IOException {
         System.out.println("-----------------");
         System.out.println(demId);
         return absenceService.uploadJustficatif(c.getBytes(),demId);

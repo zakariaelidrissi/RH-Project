@@ -32,11 +32,6 @@ public class UserRestController {
         return userService.getUserByEmail(email);
     }
 
-    @GetMapping(path = "/users/email/{email}")
-    public User getUserByEmail(@PathVariable String email){
-        return userService.getUserByEmail(email);
-    }
-
     // ************************ POST **************************
     @PostMapping(path = "/users")
     public User addUser(@RequestBody User UsrReq) {

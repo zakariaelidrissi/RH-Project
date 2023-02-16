@@ -16,14 +16,16 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RestController @AllArgsConstructor
 @CrossOrigin("*")
+@RestController
+@AllArgsConstructor
 public class OffreStageRestController {
+
     private OffreStageService offreStageService;
     private JavaMailSender javaMailSender;
     private HttpServletRequest request;
     private UserClient userClient;
-    PostulationRepository postulationRepository;
+    private PostulationRepository postulationRepository;
 
     // TODO : ************************ GET **************************
 
@@ -93,7 +95,7 @@ public class OffreStageRestController {
         // Code pour enregistrer le statut de la demande de stage (Accepté ou Refusé) :
         // Récupération de la demande de stage correspondante à l'Email Id :
         User user = userClient.getUserByEmail(email);
-        Postulation P = postulationRepository.findPostulationByUser(user);
+        Postulation P = postulationRepository.findPostulationByUserId(user.getId());
         // Mise à jour de l'état de la demande de stage en fonction de la valeur de status
         if (status.equals("ACCEPTED")) {
             P.setStatut("ACCEPTED");

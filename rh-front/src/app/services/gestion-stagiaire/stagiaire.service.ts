@@ -18,6 +18,10 @@ export class StagiaireService {
     return this.httpClient.get<Stagiaire[]>(this.url + 'stagiaires');
   }
 
+  getByUserId(userId: number): Observable<Stagiaire> {
+    return this.httpClient.get<Stagiaire>(this.url + "/stagiaires/user/" + userId);
+  }
+
   addStagiaire(newStagiaire: Stagiaire): Observable<Stagiaire> {
     return this.httpClient.post<Stagiaire>(this.url + "stagiaires/", newStagiaire);
   }
