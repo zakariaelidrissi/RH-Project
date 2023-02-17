@@ -1,0 +1,19 @@
+FROM openjdk:8-jdk-alpine
+ENV MYSQL_HOST=mysqldb
+VOLUME /tmp
+# ARG JAR_FILE
+COPY ./absence-service/target/*.jar abscence.jar
+COPY ./administration/target/*.jar administration.jar
+COPY ./eureka-discovery/target/*.jar eureka.jar
+COPY ./employer-service/target/*.jar employer.jar
+COPY ./formation-service/target/*.jar formation.jar
+COPY ./gateway/target/*.jar gateway.jar
+COPY ./gestion-employe/target/*.jar gestion-employe.jar
+COPY ./messagerie/target/*.jar messagerie.jar
+COPY ./offre_stage/target/*.jar offre_stage.jar
+COPY ./stagiaire/target/*.jar stagiaire.jar
+COPY ./user/target/*.jar user.jar
+ADD start_all.sh .
+
+ENTRYPOINT ["./start_all.sh"]
+# ENTRYPOINT ["java","-Dspring.profiles.active=dockerembbed,oauth-security","-jar","/app.jar"]
