@@ -89,7 +89,7 @@
     </div>
 </div>
 
-<div class="container my-5">
+<!-- <div class="container my-5">
     <h1 class="text-center mb-5 wow fadeInUp">Our Stages</h1>
     <div class="row row-cols-1 row-cols-md-4 g-4">
         <div class="col" *ngFor="let stage of stages; let i = index">
@@ -100,13 +100,143 @@
                     <h5 class="card-title">{{stage.intitule}}</h5>
                     <small class="card-title" style="color: red;">{{stage.type_stage}}</small>
                     <p class="card-text">{{ (stage.descriptif_mission.length>40)? (stage.descriptif_mission | slice:0:40)+'...':(stage.descriptif_mission)}}</p>
-                    <a href="#!" class="btn btn-primary">Show more</a>
+                    <button class="btn btn-primary btn-sm p-1 fw-bold" (click)="showMore(stage)"
+                        data-bs-target="#postuler" data-bs-toggle="modal">Show more</button>
                 </div>
             </div>
         </div>
     </div>
+</div> -->
+
+<!-- Our stages -->
+<div class="container mb-5">
+    <div class="row text-center text-dark">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-4" >Our Stages</h1>
+            <p class="lead mb-0">Using Bootstrap 4 grid and utilities, create a nice team page.</p>
+            <p class="lead">Snippet by<a href="https://bootstrapious.com/snippets" class="text-dark">
+                <u>Bootstrapious</u></a>
+            </p>
+        </div>
+    </div>
 </div>
+
+<section id="gallery">
+    <div class="container">
+        <!-- <h1 class="text-center mb-5 wow fadeInUp">Our Stages</h1> -->
+        <div class="row">
+            <div class="col-lg-4 mb-4" *ngFor="let stage of stages; let i = index">
+                <div class="card bg-dark text-white">
+                    <img src="https://images.unsplash.com/photo-1477862096227-3a1bb3b08330?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60" alt="" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{stage.intitule}}</h5>
+                        <p class="card-text">{{ (stage.descriptif_mission.length>200)? (stage.descriptif_mission | slice:0:200)+'...':(stage.descriptif_mission)}}</p>
+                        <a class="btn btn-outline-success btn-sm me-2" (click)="showMore(stage)" 
+                            data-bs-target="#postuler" data-bs-toggle="modal">Read More</a>
+                        <a href="" class="btn btn-outline-danger btn-sm"><i class="fa fa-heart"></i></a>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</section>
+  
+
+<!-- Taem page -->
+<div class="container mb-5">
+    <div class="row text-center text-dark">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-4" >Team Page</h1>
+            <p class="lead mb-0">Using Bootstrap 4 grid and utilities, create a nice team page.</p>
+            <p class="lead">Snippet by<a href="https://bootstrapious.com/snippets" class="text-dark">
+                <u>Bootstrapious</u></a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row text-center text-white">
+        <!-- Team item -->
+        <div class="col-xl-4 col-sm-6 mb-5">
+            <div class="bg-dark rounded shadow-sm py-5 px-4"><img src="https://bootstrapious.com/i/snippets/sn-team/teacher-4.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <h5 class="mb-0">Manuella Nevoresky</h5><span class="small text-uppercase text-muted">CEO - Founder</span>
+                <ul class="social mb-0 list-inline mt-3">
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div><!-- End -->
+
+        <!-- Team item -->
+        <div class="col-xl-4 col-sm-6 mb-5">
+            <div class="bg-dark rounded shadow-sm py-5 px-4"><img src="https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <h5 class="mb-0">Samuel Hardy</h5><span class="small text-uppercase text-muted">CEO - Founder</span>
+                <ul class="social mb-0 list-inline mt-3">
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div><!-- End -->
+
+        <!-- Team item -->
+        <div class="col-xl-4 col-sm-6 mb-5">
+            <div class="bg-dark rounded shadow-sm py-5 px-4"><img src="https://bootstrapious.com/i/snippets/sn-team/teacher-1.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <h5 class="mb-0">Tom Sunderland</h5><span class="small text-uppercase text-muted">CEO - Founder</span>
+                <ul class="social mb-0 list-inline mt-3">
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div><!-- End -->
+
+    </div>
+</div>
+<!-- Taem page -->
 
 <!-- Footer -->
 <app-footer></app-footer>
 <!-- Footer -->
+
+<!-- Show more Modal -->
+<div class="modal fade" id="postuler" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" >Plus information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-center mb-4"> {{stage.intitule}} </h3>
+                <h4 class="mb-3 d-flex"><p class="h4">Type de stage </p> 
+                    <small class="text-secondary"> : {{stage.type_stage}}</small> 
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Durée de stage</p>
+                    <small class="text-secondary"> : {{stage.duree_stage_mois}}/Mois </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Date début de stage</p>
+                    <small class="text-secondary"> : {{stage.date_debut_stage}} </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Rémuneration</p>
+                    <small class="text-secondary"> : {{stage.remuneration ? "oui":"non"}} </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Diplôme demandé</p>
+                    <small class="text-secondary"> : {{stage.diplome_demande}} </small>
+                </h4>
+                <h4 class="mb-3 d-flex"><p class="h4">Descriptif de la mission</p> </h4>
+                <p class="lead ms-2 me-2">{{stage.descriptif_mission}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Postuler</button>                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- show more Modal -->

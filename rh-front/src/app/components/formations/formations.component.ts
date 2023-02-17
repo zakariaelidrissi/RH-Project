@@ -34,7 +34,7 @@ export class FormationsComponent implements OnInit {
   selectedItems: any = [];
   selectedItem: number = 0;
   dropdownEmpSettings: IDropdownSettings = {};
-  errors: any = [];
+  errors: any[] = [];
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
 
@@ -136,21 +136,17 @@ export class FormationsComponent implements OnInit {
       this.errors.push({key:'objectif', value:"l'objectif doit au moins contenir 10 caractères"});
     }
 
-    if (formatDate(this.newFormation.formationDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
-      // this.saveFormation();
-      this.errors.push({key:'date', value:""});
-    } else {
-      this.errors.push({key:'date', value:"la date doit superieur ou egale à la date d'aujourd'hui!"});
+    if (formatDate(this.newFormation.formationDate, 'yyyy/MM/dd', 'en') < formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
+      if (cas === 'add'){
+        this.errors.push({key:'date', value:"la date doit superieur ou egale à la date d'aujourd'hui!"});
+      }
     }
 
-    if (this.newFormation.name && this.newFormation.duree && this.newFormation.formationDate && this.newFormation.objectif) {
-      this.errors.push({key:'full', value:""});
-      
-    } else {
-      this.errors.push({key:'full', value:"tout les champs est obligatoire!"});
+    if (!this.newFormation.name && !this.newFormation.duree && !this.newFormation.formationDate && !this.newFormation.objectif) {
+      this.errors.push({key:'full', value:"tout les champs est obligatoire!"});      
     }
-
-    if (this.errors == null){
+    
+    if (this.errors.length == 0){
       if (cas == 'add') this.saveFormation();
       if (cas == 'update') this.updateFormation();
     }
@@ -174,6 +170,7 @@ export class FormationsComponent implements OnInit {
     this.newFormation = formation;
     this.index = index;
     this.case = 'update';
+    this.errors = [];
   }
 
   updateFormation() {

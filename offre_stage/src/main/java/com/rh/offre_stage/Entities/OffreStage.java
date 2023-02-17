@@ -20,6 +20,7 @@ public class OffreStage{
     private Date date_debut_stage;
     private Boolean remuneration;
     private String diplome_demande;
+    @Column(columnDefinition = "TEXT")
     private String descriptif_mission;
 
 }

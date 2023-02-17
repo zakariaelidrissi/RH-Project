@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.rh.offre_stage.Repositories.PostulationRepository;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @Service
 @Transactional
 @AllArgsConstructor
 public class OffreStageService {
+
     private OffreStageRepository offreStageRepository;
     private PostulationRepository postulationRepository;
     private UserClient userRestClient;
@@ -70,6 +72,7 @@ public class OffreStageService {
 
         po.setOffreStageId(req.getOffreStageId());
         po.setUserId(req.getUserId());
+        po.setPostulationDate(new Date());
 
         postulationRepository.save(po);
     }

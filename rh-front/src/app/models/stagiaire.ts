@@ -6,7 +6,7 @@ export class Stagiaire {
     niveau_etudes: string;
     ville: string;
     telephone: string;
-    cv: string;
+    cvData : any;
     LinkedIn_URL: string;
     userId: number;
     user: User;
@@ -17,7 +17,7 @@ export class Stagiaire {
         this.niveau_etudes = '';
         this.ville = '';
         this.telephone = '';
-        this.cv = '';
+        // this.cv = '';
         this.LinkedIn_URL = '';
         this.userId = 0;
         this.user = new User();

@@ -38,7 +38,7 @@ export class PlansComponent implements OnInit {
   selectedItems: any = [];
   selectedItem: number = 0;
   dropdownFormationSettings: IDropdownSettings = {};
-  errors: any = [];
+  errors: any[] = [];
 
 
   @ViewChild(DashboardComponent) dashboard!: DashboardComponent;
@@ -123,18 +123,30 @@ export class PlansComponent implements OnInit {
     this.getEmployes();
   }
 
-  addPlan() {
-    console.log('plan name : ' + this.newPlan.name);
-    if (this.newPlan.name && this.newPlan.planDate && this.newPlan.employe_id) {
-      this.errors['full'] = "";
-      if (formatDate(this.newPlan.planDate, 'yyyy/MM/dd', 'en') >= formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
-        this.savePlan();
-        this.errors['date'] = '';
-      } else {
-        this.errors['date'] = "la date doit superieur ou egale à la date d'aujourd'hui!";
+  confirm(cas : string) {
+    this.errors = [];
+    if (this.newPlan.name == ''){
+      this.errors.push({key:'name', value:"le nom est obligatoire!"});
+    }
+    if (formatDate(this.newPlan.planDate, 'yyyy/MM/dd', 'en') < formatDate(new Date(), 'yyyy/MM/dd', 'en')) {
+      if (cas === 'add'){
+        this.errors.push({key:'date', value:"la date doit superieur ou egale à la date d'aujourd'hui!"});
       }
-    } else {
-      this.errors['full'] = "tout les champs est obligatoire!";
+    }
+    if (this.newPlan.employe_id == 0){
+      this.errors.push({key:'emp', value:"le responsable est obligatoire!"});
+    }
+    if (!this.newPlan.name && !this.newPlan.planDate && !this.newPlan.employe_id) {   
+      this.errors.push({key:'full', value:"tout les champs est obligatoire!"});   
+    }
+
+    if (this.errors.length == 0){
+      if (cas == 'add'){
+        this.savePlan();
+      }
+      if (cas == 'update') {
+        this.updatePlan();
+      }
     }
   }
 
@@ -144,7 +156,7 @@ export class PlansComponent implements OnInit {
       $('#addPlan').modal("hide");
       this.dashboard.clear();
       this.getPlans();
-      this.cleanData();
+      // this.cleanData();
     }, (err) => {
       console.log(err);
     });
@@ -156,6 +168,7 @@ export class PlansComponent implements OnInit {
     this.newPlan.planDate = plan.planDate;
     this.newPlan.employe_id = plan.employe_id;
     this.case = 'update';
+    this.errors = [];
   }
 
   updatePlan() {
@@ -197,7 +210,6 @@ export class PlansComponent implements OnInit {
             if (fr.id == f.id) {k++; break;};
           }
           if ( k > 0) {
-            // this.dropdownListEmp.push(re);
             this.dropdownListFormation.splice(index, 1);
           }
         });
@@ -211,7 +223,6 @@ export class PlansComponent implements OnInit {
 
   dropDownFormation(selectedItem : number) {
 
-    // this.getFormations();
     this.planSelected(selectedItem);
 
     this.selectedItems = [];

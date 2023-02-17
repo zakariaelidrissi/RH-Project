@@ -97,7 +97,7 @@ public class AbsenceController {
     }
 
     @PostMapping(path = "/demandes/upload-justficatif")
-    public DemandeAbsence uploadJustficatif(@RequestParam("just")MultipartFile c,@RequestParam("demId") Long demId) throws IOException {
+    public DemandeAbsence uploadJustficatif(@RequestParam("just") MultipartFile c,@RequestParam("demId") Long demId) throws IOException {
         System.out.println("-----------------");
         System.out.println(demId);
         return absenceService.uploadJustficatif(c.getBytes(),demId);
@@ -114,22 +114,7 @@ public class AbsenceController {
     @PutMapping(path = "/demandes")
     public void updateDm(@RequestBody DemandeRequest dmres) { absenceService.updateDm(dmres); }
 
-    /*@PutMapping(path = "/absences")
-    public void updateEmpAbs(@RequestBody EmpAbsRequest absReq){
-        absenceService.updateEmpAbs(absReq);
-    }*/
-
-    /*@PutMapping(path = "/absences/stg")
-    public void updateStgAbs(@RequestBody StgAbsRequest stgReq) {
-        absenceService.updateStgAbs(stgReq);
-    }*/
-
-    /*@PutMapping(path = "/demandes")
-    public void updateDm(@RequestBody DemandeRequest dmReq){
-        absenceService.updateDm(dmReq);
-    }*/
-
-    // ************************* DELETE **********************
+    // TODO : ************************* DELETE **********************
 
     @DeleteMapping(path = "/absences/{id}")
     public void deleteEmpAbs(@PathVariable Long id){
@@ -145,6 +130,8 @@ public class AbsenceController {
     public void deleteDm(@PathVariable Long id){
         absenceService.deleteDm(id);
     }
+
+    // TODO : ************************* DOWNLOAD FILE **********************
 
     @GetMapping(path="/demandes/download/{id}/{filename}")
     @ResponseBody

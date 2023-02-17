@@ -26,6 +26,7 @@ import { DemandeAbsenceComponent } from './components/employes/demande-absence/d
 import { PostulationComponent } from './components/postulation/postulation.component';
 import { StgDemandeAttestationComponent } from './components/stagiaire/stg-demande-attestation/stg-demande-attestation.component';
 import { StgabsencesComponent } from './components/stagiaire/stgabsences/stgabsences.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -117,6 +118,10 @@ const routes: Routes = [
   {
     path: "stagiaire/absences", component: StgabsencesComponent,
     canActivate: [AuthGuard], data: {role: STG}
+  },
+  {
+    path: "profile", component: ProfileComponent,
+    canActivate: [AuthGuard], data: {role: [STG, EMP, ADM]}
   },
   { path: "**", component: ErrorComponent }
 ];

@@ -6,24 +6,26 @@ import com.rh.offre_stage.Feign.UserClient;
 import com.rh.offre_stage.Model.OffreStageRequest;
 import com.rh.offre_stage.Model.PostulationRequest;
 import com.rh.offre_stage.Model.User;
+import com.rh.offre_stage.Repositories.PostulationRepository;
 import com.rh.offre_stage.Service.OffreStageService;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.*;
 import org.springframework.web.bind.annotation.*;
-
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RestController @AllArgsConstructor
 @CrossOrigin("*")
+@RestController
+@AllArgsConstructor
 public class OffreStageRestController {
+
     private OffreStageService offreStageService;
     private JavaMailSender javaMailSender;
     private HttpServletRequest request;
     private UserClient userClient;
+    private PostulationRepository postulationRepository;
 
     // TODO : ************************ GET **************************
 
@@ -89,21 +91,45 @@ public class OffreStageRestController {
 
     // TODO : ************************ E m a i l *************************
     @PostMapping("/acceptRejectMail")
-    public void acceptOrRejectApplication(@RequestParam("status") String status, @RequestParam("email") String email) {
-        // Code pour enregistrer le statut de la demande de stage (Accepté ou Refusé)
+    public void acceptOrRejectApplication(@RequestParam("statut") String status, @RequestParam("email") String email) {
+        // Code pour enregistrer le statut de la demande de stage (Accepté ou Refusé) :
+        // Récupération de la demande de stage correspondante à l'Email Id :
+        User user = userClient.getUserByEmail(email);
+        Postulation P = postulationRepository.findPostulationByUserId(user.getId());
+        // Mise à jour de l'état de la demande de stage en fonction de la valeur de status
+        if (status.equals("ACCEPTED")) {
+            P.setStatut("ACCEPTED");
+            // Envoi d'un mail d'acceptation pour un éventuel entretien
+            sendAcceptanceMail(email);
+        } else if (status.equals("REJECTED")) {
+            P.setStatut("REJECTED");
+            // Envoi d'un mail de rejet de la candidature
+            sendRejectionMail(email);
+        }
+        // Enregistrement des mises à jour dans la base de données
+        postulationRepository.save(P);
 
+    }
+    private void sendAcceptanceMail(String emailId) {
         try {
-            MimeMessage msg = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-            helper.setTo(email);
-            if (status.equals("accepted")) {
+                MimeMessage message = javaMailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(message);
+                helper.setTo(emailId);
                 helper.setSubject("Acceptation de votre demande de stage");
-                helper.setText("Nous sommes heureux de vous informer que votre demande de stage a été acceptée.");
-            } else {
-                helper.setSubject("Refus de votre demande de stage");
-                helper.setText("Nous sommes désolés de vous informer que votre demande de stage a été refusée.");
-            }
-            javaMailSender.send(msg);
+                helper.setText("Nous sommes heureux de vous informer que votre demande de stage a été acceptée. Nous vous invitons à prendre contact avec nous pour fixer un entretien.");
+                javaMailSender.send(message);
+            } catch (MessagingException e) {
+                // Traitement des erreurs
+        }
+    }
+    private void sendRejectionMail(String emailId) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setTo(emailId);
+            helper.setSubject("Rejet de votre demande de stage");
+            helper.setText("Nous sommes désolés de vous informer que votre demande de stage a été rejetée. Nous vous remercions de votre intérêt pour notre entreprise.");
+            javaMailSender.send(message);
         } catch (MessagingException e) {
             // Traitement des erreurs
         }

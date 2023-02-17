@@ -10,6 +10,7 @@ import { StageService } from 'src/app/services/offre-stage/stage.service';
 export class HomeComponent implements OnInit {
 
   stages : OffreStage[] = [];
+  stage : OffreStage = new OffreStage();
 
   constructor(private offresStgService : StageService) { }
 
@@ -23,6 +24,10 @@ export class HomeComponent implements OnInit {
     }, (error) => {
       console.log(error);
     });
+  }
+
+  showMore(stage : OffreStage){
+    this.stage = stage;
   }
 
 }

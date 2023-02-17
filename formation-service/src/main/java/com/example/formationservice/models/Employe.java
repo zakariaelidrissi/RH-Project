@@ -22,7 +22,7 @@ public class Employe {
     User user;
 
     public enum Etablissement{
-        Fs("FS"),
+        FS("FS"),
         ENSAM("ENSAM"),
         FLSH("FLSH"),
         FST("FST"),
