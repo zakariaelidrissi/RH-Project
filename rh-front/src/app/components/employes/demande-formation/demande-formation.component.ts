@@ -42,12 +42,14 @@ export class DemandeFormationComponent implements OnInit {
         this.currentUser = user as User;
         this.gestionEmployeService.getByUserId(this.currentUser!.id).subscribe((res) => {
           this.emp = res;
+          console.log("current emp",this.emp);
+          
           this.getDemandesFormation(this.emp!.id);
           // this.getEmpFormations(this.emp!.id);
         }, err => {
           console.error(err);
         });
-      });
+      }).catch(console.error);
     })
   }
 
@@ -85,23 +87,26 @@ export class DemandeFormationComponent implements OnInit {
 
   getEmpFormations(id: number) {
     this.formations = [];
-    this.formationService.getFormationsByEmployeId(id).subscribe((res) => {
-      this.formationService.getFormations().subscribe((response) => {
-        this.formations = response;
+    this.formationService.getFormationsByEmployeId(id).subscribe((empForms) => {
+      this.formationService.getFormations().subscribe((allForms) => {
+        const ids = empForms.map(e=>e.id);
+        allForms = allForms.filter(emp=>!ids.includes(emp.id));
+        // this.dropdownListEmp = allForms;
+        this.formations = allForms;
         // for (let form of response)
-        response.forEach((form, index) => {
-          var k = 0;
-          for (var f of res) {
-            if (form.id === f.id) {k++; break;}
-          }
-          for (var dm of this.demandes){
-            if (form.id === dm.formation.id) {k++; break;}
-          }
-          if (k > 0) {
-            // this.formations.push(form);
-            this.formations.splice(index, 1);
-          }
-        });
+        // response.forEach((form, index) => {
+        //   var k = 0;
+        //   for (var f of res) {
+        //     if (form.id === f.id) {k++; break;}
+        //   }
+        //   for (var dm of this.demandes){
+        //     if (form.id === dm.formation.id) {k++; break;}
+        //   }
+        //   if (k > 0) {
+        //     // this.formations.push(form);
+        //     this.formations.splice(index, 1);
+        //   }
+        // });
       }, (error) => {
         console.log(error);
       });

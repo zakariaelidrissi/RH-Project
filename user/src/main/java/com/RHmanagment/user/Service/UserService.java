@@ -1,6 +1,7 @@
 package com.RHmanagment.user.Service;
 
 import com.RHmanagment.user.Entities.User;
+import com.RHmanagment.user.Entities.UserRole;
 import com.RHmanagment.user.Model.ChangePassword;
 import com.RHmanagment.user.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,11 @@ public class UserService {
     public User addUser(User UsrReq) {
         BCryptPasswordEncoder bcp = new BCryptPasswordEncoder();
         UsrReq.setMotDePasse(bcp.encode(UsrReq.getMotDePasse()));
+
+        if(userRepository.findUserByEmail(UsrReq.getEmail())!=null){
+            return null;
+        }
+        UsrReq.setId(-1L);
         return userRepository.save(UsrReq);
 
     }
@@ -60,6 +66,12 @@ public class UserService {
     // ************************ DELETE **************************
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public User changeRole(Long id, UserRole role) {
+        User usr = userRepository.findUserById(id);
+        usr.setUserRole(role);
+        return userRepository.save(usr);
     }
 }
 

@@ -42,7 +42,10 @@ public class EmployeController {
 
     @GetMapping(path = "/employes")
     public List<EmployeResponse> get(){
-        return service.getAll();
+        List<EmployeResponse> res = service.getAll();
+        System.out.println("---------------");
+        System.out.println(res);
+        return res;
     }
     @GetMapping(path = "/employes/userId/{id}")
     public EmployeResponse getByUserId(@PathVariable Long id){

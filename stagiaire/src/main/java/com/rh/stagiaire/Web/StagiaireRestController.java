@@ -27,7 +27,7 @@ public class StagiaireRestController {
     private UserClient userRestClient;
     private PostulationClient postulationClient;
 
-    // TODO : ************************ GET **************************
+    // TODO : ************************ GET ***************************
     @GetMapping(path = "/stagiaires")
     public List<Stagiaire> getAllStagiaire() {
         return stagiaireService.getAllStagiaire();

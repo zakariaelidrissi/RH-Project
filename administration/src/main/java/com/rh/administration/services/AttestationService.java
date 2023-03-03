@@ -45,7 +45,24 @@ public class AttestationService {
     }
 
     private List<AttestationResponse> collect(List<Attestation> l){
-        return l.stream().map(p->mapper.attestationToAttestationResponse(p)).collect(Collectors.toList());
+        return l.stream().map(p-> {
+            DemandeAttestation d = demandeRepo.getById(p.getDemandeId());
+            User user = userService.getById(d.getUserId());
+            Employe emp=null;
+            if(user.getUserRole()== User.UserRole.EMPLOYER){
+                emp = employeService.getByUserId(user.getId());
+            }
+            AttestationResponse ar =new AttestationResponse(
+                    p.getId(),
+                    d.getId(),
+                    d.getType(),
+                    user.getNom(),
+                    user.getCin(),
+                    (user.getUserRole()== User.UserRole.EMPLOYER && emp!=null)?emp.getEtablissement().toString():"",
+                    user);
+
+            return ar;
+        }).collect(Collectors.toList());
     }
 
     public void delete(Long id) {

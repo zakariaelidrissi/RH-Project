@@ -7,14 +7,21 @@ import { User } from 'src/app/models/user';
   providedIn: 'root'
 })
 export class UserService {
+  
+  
+  changeRole(id: number, role: string) : Observable<User> {
+    return this.httpClient.post<User>("http://localhost:8087/changerole/"+id+"/"+role,{});
+  }
 
-  // url: string = 'localhost:8081/users';
-  url: string = 'localhost:8888/USER-SERVICE/users';
+  url: string = 'localhost:8081/users';
+  // url: string = 'localhost:8888/USER-SERVICE/users';
 
   constructor(private httpClient: HttpClient) { }
 
   addUser(newUser: User): Observable<User> {
-    return this.httpClient.post<User>(this.url, newUser);
+    console.log({newUser});
+    
+    return this.httpClient.post<User>("http://localhost:8087/adduser", newUser);
   }
 
   updateUser(updUser: User): Observable<User> {

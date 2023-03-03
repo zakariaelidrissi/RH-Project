@@ -78,7 +78,7 @@ public class FormationsService {
         List<Formation_employe> formation_employes = formationEmployeRepository.findAllFormation_employeByFormationId(formationId);
 
         formation_employes.forEach(fe -> {
-            employes.add(employeRestClient.getEmployeById(fe.getEmployeId()));
+            employes.add    (employeRestClient.getEmployeById(fe.getEmployeId()));
         });
 
         return employes;
@@ -201,9 +201,9 @@ public class FormationsService {
 
     public void updateDemande(DemandeRequest dmReq) {
         Demande demande = demandeRepository.findDemandeById(dmReq.getId());
-        demande.setDateDemande(dmReq.getDateDemande());
-        demande.setEmployeId(dmReq.getEmployeId());
-        demande.setFormationId(dmReq.getFormationId());
+        //demande.setDateDemande(dmReq.getDateDemande());
+        //demande.setEmployeId(dmReq.getEmployeId());
+        //demande.setFormationId(dmReq.getFormationId());
         demande.setStatus(dmReq.getStatus());
 
         demandeRepository.save(demande);
@@ -222,8 +222,8 @@ public class FormationsService {
         demandeRepository.deleteById(id);
     }
 
-    public void deleteEmpFromForm(Long id) {
-        formationEmployeRepository.deleteFormation_employeByFormationId(id);
+    public void deleteEmpFromForm(Long idFrom,Long idEmp) {
+        formationEmployeRepository.deleteByFormationIdAndEmployeId(idFrom,idEmp);
     }
 
     public void deleteFormFromPlan(Long id) {

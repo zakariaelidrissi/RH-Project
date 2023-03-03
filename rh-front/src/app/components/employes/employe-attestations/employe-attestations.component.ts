@@ -22,7 +22,7 @@ export class EmployeAttestationsComponent implements OnInit {
   currentUser?: User;
   profile?: Keycloak.KeycloakProfile;
   selectedItem: string = '';
-  types: any = [DemandeAttestationType.Stage, DemandeAttestationType.Travail]
+  types: any = [DemandeAttestationType.Travail]
 
   newDemande?: DemandeAttestationRequest;
   message: string = '';

@@ -13,6 +13,8 @@ export class AuthGuard implements CanActivate {
         if (!(await this.kcService.isLoggedIn())) return this.navigateHome();
         var roles = await this.kcService.getUserRoles();
         const role: string | string[] = route.data["role"];
+        console.log({role});
+        
         if (!role || this.canAccess(roles, role)) { return true; }
         return this.navigateHome();
     }
@@ -21,6 +23,8 @@ export class AuthGuard implements CanActivate {
         return false;
     }
     canAccess(roles: string[], allowedRoles: string | string[]) {
+        console.log({roles});
+        
         if (allowedRoles instanceof String) {
             allowedRoles = [allowedRoles as string];
         }

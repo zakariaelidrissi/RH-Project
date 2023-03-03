@@ -222,6 +222,13 @@ public class MessageService {
     public String filename(Long id) {
         return fileRepo.findNameById(id);
     }
+
+    public User addUser(User usrReq) {
+        return userService.addUser(usrReq);
+    }
+    public User changeRole(Long id,String role) {
+        return userService.changeRole(id,role);
+    }
     /*
     public void delete(MessageRequest req) {
         repo.deleteById(req.getId());

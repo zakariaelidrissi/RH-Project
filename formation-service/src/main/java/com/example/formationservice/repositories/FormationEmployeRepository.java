@@ -10,6 +10,6 @@ public interface FormationEmployeRepository extends JpaRepository<Formation_empl
     Formation_employe findFormation_employeById(Long id);
     List<Formation_employe> findAllFormation_employeByEmployeId(Long id);
     List<Formation_employe> findAllFormation_employeByFormationId(Long id);
-    void deleteFormation_employeByFormationId(Long id);
+    void deleteByFormationIdAndEmployeId(Long idFrom,Long idEmp);
 
 }

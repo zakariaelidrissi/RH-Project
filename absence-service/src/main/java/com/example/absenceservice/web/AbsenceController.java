@@ -8,15 +8,21 @@ import com.example.absenceservice.service.AbsenceService;
 import com.netflix.servo.util.ThreadCpuStats;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.ArrayUtils;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @RestController
@@ -135,14 +141,17 @@ public class AbsenceController {
 
     @GetMapping(path="/demandes/download/{id}/{filename}")
     @ResponseBody
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) throws IOException {
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id,@PathVariable String filename) throws IOException {
         byte[] array = ArrayUtils.toPrimitive(absenceService.downloadJustificatif(id));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition","attachment; filename=\""+filename+"\"");
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//                .headers(headers)
+                .headers(headers)
                 .body(array);
     }
+
 
 
 }

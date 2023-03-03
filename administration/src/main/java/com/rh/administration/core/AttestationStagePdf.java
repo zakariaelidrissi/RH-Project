@@ -16,6 +16,7 @@ import java.net.MalformedURLException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class AttestationStagePdf implements IPDFCreator<Attestation,Stagiaire> {
@@ -55,7 +56,7 @@ public class AttestationStagePdf implements IPDFCreator<Attestation,Stagiaire> {
         String prenom = user.getPrenom();
         String cin = user.getCin();
         String ville = "";//user.getVille();
-        String sexe = user.getGenre();
+        String sexe = user.getGenre().toLowerCase(Locale.ROOT).equals("homme") ? "Mr" : "Mme";
         Date dateSignature_ = Date.from(Instant.now());//a.getDateSignature()
         String date = pdfUtils.formatDate(Date.from(Instant.now()));
         String dateNaissance = pdfUtils.formatDate(user.getDateNaissance());
@@ -70,13 +71,13 @@ public class AttestationStagePdf implements IPDFCreator<Attestation,Stagiaire> {
         map.put("CIN: ",cin);
         map.put("Né le: ",dateNaissance);
 
-
+        String nomResponsable = "'Nom_Responsable'";
         Table table = new Table(1);
         Image logo = new Image(ImageDataFactory.create("src/main/resources/download.png"));
 
         buildSimplePageHeader(table,logo,getTitre(),titreFont);
         table
-                .addCell(pdfUtils.textToParagraph(msg,"_","___","____",sexe))
+                .addCell(pdfUtils.textToParagraph(msg,"_",nomResponsable,"____",sexe))
                 .addCell(blackSpace(15))
                 .addCell(kvTable(map,font,font,20))
                 .addCell(blackSpace(20))

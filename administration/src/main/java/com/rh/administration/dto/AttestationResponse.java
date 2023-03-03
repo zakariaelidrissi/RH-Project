@@ -14,6 +14,8 @@ public class AttestationResponse {
     Long id;
     Long demandeId;
     DemandeAttestation.AttestationType type;
-
+    String nom;
+    String cin;
+    String etablissement;
     User user;
 }

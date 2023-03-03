@@ -116,7 +116,10 @@ export class PlansComponent implements OnInit {
       console.log(error);
     });
   }
-
+  clearDropdown(){
+    this.selectedItems = [];
+    this.selectedItem=-1;
+  }
   onAdd() {
     this.case = 'add';
     this.cleanData();

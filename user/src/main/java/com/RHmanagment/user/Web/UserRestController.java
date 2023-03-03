@@ -1,6 +1,7 @@
 package com.RHmanagment.user.Web;
 
 import com.RHmanagment.user.Entities.User;
+import com.RHmanagment.user.Entities.UserRole;
 import com.RHmanagment.user.Model.ChangePassword;
 import com.RHmanagment.user.Service.UserService;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,11 @@ public class UserRestController {
     public User addUser(@RequestBody User UsrReq) {
         System.out.println("Adding User: " + UsrReq);
         return userService.addUser(UsrReq);
+    }
+    @PostMapping(path = "/changerole/{id}/{role}")
+    User changeRole(@PathVariable Long id,@PathVariable UserRole role) {
+        System.out.println("Changing role: " + role);
+        return userService.changeRole(id,role);
     }
 
     // ************************ PUT **************************

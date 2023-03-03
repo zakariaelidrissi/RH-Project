@@ -214,19 +214,20 @@ export class FormationsComponent implements OnInit {
     this.formationService.getEmployesByFormationId(formationId).subscribe((response) => {
       this.employes = response;
       this.formationID = formationId;
+      console.log("emp",response);
     }, (error) => {
       console.log(error);
     });
   }
 
   confirmDeleteEmploye(i: number) {
-    this.index = i;
+    this.empId = i;
   }
-
+  empId:number=-1;
   deleteEmpFromFormation() {
-    this.formationService.deleteEmpFromFormation(this.formationID).subscribe((response) => {
+    this.formationService.deleteEmpFromFormation(this.formationID,this.empId).subscribe((response) => {
       this.message = "Successfuly!";
-      this.employes.splice(this.index, 1);
+      this.employes = this.employes.filter(emp=>emp.id!=this.empId);
       $('#deleteEmplFromForm').modal("hide");
     }, (error) => {
       console.log(error);
@@ -243,18 +244,12 @@ export class FormationsComponent implements OnInit {
 
   getEmployes(formationId : number) {
     this.dropdownListEmp = [];
-    this.gestionEmployeService.getAllEmploye().subscribe((response) => {
-      this.formationService.getEmployesByFormationId(formationId).subscribe((res) => {
-        this.dropdownListEmp = response;
-        response.forEach((re, index) => {
-          var k = 0;
-          for (var r of res){
-            if (re.id == r.id) {k++; break;};
-          }
-          if ( k > 0) {
-            this.dropdownListEmp.splice(index, 1);
-          }
-        });
+    this.gestionEmployeService.getAllEmploye().subscribe((allEmps) => {
+      this.formationService.getEmployesByFormationId(formationId).subscribe((formEmps) => {
+        console.log({ allemps:  allEmps.map(_=>_),formEmps});
+        const ids = formEmps.map(e=>e.id);
+        allEmps = allEmps.filter(emp=>!ids.includes(emp.id));
+        this.dropdownListEmp = allEmps;
       });
     }, (error) => {
       console.log(error);

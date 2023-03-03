@@ -52,7 +52,7 @@ public class AttestationTravailPdf implements IPDFCreator<Attestation,Employe> {
         return this.build(attestation,user);
     }
 
-    String nomResponsable = "Nom Responsable";
+    String nomResponsable = "'Nom_Responsable'";
 
     // TODO: add Employe as parameter
     @Override

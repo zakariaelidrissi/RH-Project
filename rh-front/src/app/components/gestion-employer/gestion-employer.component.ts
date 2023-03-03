@@ -130,7 +130,7 @@ export class GestionEmployerComponent implements OnInit {
         this.dashboard.clear();
         this.getAllEmployer();
         this.cleanData();
-        $('#addEmployer').modal("hide");
+        $('#addEmploye').modal("hide");
     }, err => {
       console.log(err);
     });
@@ -252,7 +252,7 @@ export class GestionEmployerComponent implements OnInit {
       addById.id2 = formationID.id;
       this.formationService.addEmpToFormation(addById).subscribe((response) => {
         this.message = "Successfuly!";
-        $('#addCollToFormation').modal("hide");
+        $('#addEmpToFormation').modal("hide");
       }, (error) => {
         console.log(error);
       });

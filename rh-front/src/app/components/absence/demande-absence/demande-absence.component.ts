@@ -43,6 +43,8 @@ export class DemandeAbsencesComponent implements OnInit {
   }
 
   downloadLink(demande: DemandeRequest) {
+    console.log({s:demande.justificatifFilename});
+    
     return this.absService.urlDm + "/download/" + demande.id + "/" + demande.justificatifFilename;
   }
 

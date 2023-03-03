@@ -58,7 +58,7 @@ public class Employe {
     public enum Poste{
         Doyen("Doyen"),
         ViceDoyen("Vice-Doyen"),
-        SecrétaireGeneral("SecretaireGeneral"),
+        SecretaireGeneral("SecretaireGeneral"),
         TechnicienSpécialisé("TechnicienSpécialisé"),
         ;
         //Dev("dev");

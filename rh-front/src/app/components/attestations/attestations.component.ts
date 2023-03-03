@@ -37,6 +37,8 @@ export class AttestationsComponent implements OnInit {
     })
   }
   itemToRow(att: AttestationResponse) {
-    return [att.nom, att.cin, att.poste, att.etablissement];
+    console.log({att});
+    
+    return [att.nom ?? " ", att.cin ?? " ", att.etablissement ?? " ", att.type ?? " "];
   }
 }

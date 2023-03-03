@@ -122,5 +122,14 @@ public class MessageController {
                 .headers(headers)
                 .body(array);
     }
-
+    @PostMapping(path = "/adduser")
+    public User addUser(@RequestBody User UsrReq) {
+        System.out.println("Adding User: " + UsrReq);
+        return service.addUser(UsrReq);
+    }
+    @PostMapping(path = "/changerole/{id}/{role}")
+    User changeRole(@PathVariable Long id,@PathVariable String role) {
+        System.out.println("Changing role: " + role);
+        return service.changeRole(id,role);
+    }
 }

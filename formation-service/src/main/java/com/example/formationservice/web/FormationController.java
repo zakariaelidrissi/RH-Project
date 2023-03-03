@@ -141,9 +141,9 @@ public class FormationController {
         formationService.deleteFormFromPlan(id);
     }
 
-    @DeleteMapping(path = "/deleteEmpFromFormation/{id}")
-    public void deleteEmpFromFormation(@PathVariable Long id){
-        formationService.deleteEmpFromForm(id);
+    @DeleteMapping(path = "/deleteEmpFromFormation/{idFrom}/{idEmp}")
+    public void deleteEmpFromFormation(@PathVariable Long idFrom,@PathVariable Long idEmp){
+        formationService.deleteEmpFromForm(idFrom, idEmp);
     }
 
     @DeleteMapping("/demandes/{id}")

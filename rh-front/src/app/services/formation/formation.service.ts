@@ -74,8 +74,8 @@ export class FormationService {
     return this.httpClient.delete<any>(this.url + "deleteFormationFromPlan/" + id);
   }
 
-  deleteEmpFromFormation(id: number): Observable<any> {
-    return this.httpClient.delete<any>(this.url + "deleteEmpFromFormation/" + id);
+  deleteEmpFromFormation(idFrom: number,idEmp: number): Observable<any> {
+    return this.httpClient.delete<any>(this.url + "deleteEmpFromFormation/" + idFrom+"/"+idEmp);
   }
 
   // **************** Emp To Formation ********************

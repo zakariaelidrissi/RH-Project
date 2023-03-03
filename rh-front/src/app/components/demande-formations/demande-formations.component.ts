@@ -67,7 +67,7 @@ export class DemandeFormationsComponent implements OnInit {
         var dtDemande: Date = new Date(dm.dateDemande);
         var act: string = '';
         var name = dm.employe.user.nom + ' ' + dm.employe.user.prenom;
-        if (dm.status === "encore") {
+        if (dm.status === "Waiting") {
           act = this.actions(dm.id, index, dm.employeId, dm.formationId);
         }
         else act = ' --- ';
@@ -100,6 +100,7 @@ export class DemandeFormationsComponent implements OnInit {
       // console.log(this.addEmpToForm);
       this.formationService.addEmpToFormation(this.addEmpToForm).subscribe((res) => {
         this.message = 'Successfuly!';
+        console.log("accepted",this.addEmpToForm);
         $('#demandeModal').modal('hide');
       }, (error) => {
         console.log(error);
