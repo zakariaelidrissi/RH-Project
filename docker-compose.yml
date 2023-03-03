@@ -1,0 +1,83 @@
+version: "3"
+networks:
+  all-mysql:
+services:
+  mysqldb:
+    container_name: mysqldb
+    build:
+      context: .
+      dockerfile: Dockerfile_MySQL
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    networks:
+      - all-mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ROOT_PASSWORD: root
+  all-services:
+    container_name: all-services
+    # restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile_all
+    image: all-services
+    ports:
+      - "8761:8761"
+      - "8086:8086" #ABSENCE-SERVICE
+      - "8088:8088" #ADMINISTRATION-SERVICE
+      - "8090:8090" #EMPLOYER-SERVICE
+      - "8085:8085" #FORMATION-SERVICE
+      - "8888:8888" #GATEWAY-SERVICE
+      - "8082:8082" #GESTION-EMPLOYE
+      - "8087:8087" #MESSAGERIE-SERVICE
+      - "8089:8089" #OFFRE-STAGE
+      - "8083:8083" #STAGIAIRE-SERVICE
+      - "8081:8081" #USER-SERVICE
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
+    expose:
+      - 8086 #ABSENCE-SERVICE
+      - 8088 #ADMINISTRATION-SERVICE
+      - 8090 #EMPLOYER-SERVICE
+      - 8085 #FORMATION-SERVICE
+      - 8888 #GATEWAY-SERVICE
+      - 8082 #GESTION-EMPLOYE
+      - 8087 #MESSAGERIE-SERVICE
+      - 8089 #OFFRE-STAGE
+      - 8083 #STAGIAIRE-SERVICE
+      - 8081 #USER-SERVICE
+    networks:
+      - all-mysql
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+  rh-front:
+    container_name: rh-front
+    build:
+      context: ./rh-front
+      dockerfile: Dockerfile
+    image: rh-front
+    networks:
+      - all-mysql
+    links:
+      - all-services
+    ports:
+      - "4200:80"
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    # expose:
+    #   - 4200
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - all-mysql
+    ports:
+      - 8880:8080

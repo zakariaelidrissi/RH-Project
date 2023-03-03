@@ -1,0 +1,345 @@
+version: "3"
+networks:
+  absence-mysql:
+  admin-mysql:
+  employe-mysql:
+  formation-mysql:
+  messagerie-mysql:
+  offre_stage-mysql:
+  gestion_employe-mysql:
+  stagiaire-mysql:
+  user-mysql:
+  adminer-mysql:
+  eureka-net:
+services:
+  mysqldb:
+    container_name: mysqldb
+    build:
+      context: .
+      dockerfile: Dockerfile_MySQL
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    networks:
+      - adminer-mysql
+      - absence-mysql
+      - admin-mysql
+      - employe-mysql
+      - formation-mysql
+      - messagerie-mysql
+      - offre_stage-mysql
+      - gestion_employe-mysql
+      - stagiaire-mysql
+      - user-mysql
+        # volumes:
+        #   - ./db.sql:/docker-entrypoint-initdb.d/schema.sql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ROOT_PASSWORD: root
+      # MYSQL_DATABASE: administration-db
+      ###############################################################
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - adminer-mysql
+    ports:
+      - 8880:8080
+  #########################
+  eureka:
+    container_name: eureka
+    # restart: on-failure
+    build:
+      context: ./eureka-discovery
+      dockerfile: ../Dockerfile
+    image: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - eureka-net
+    healthcheck:
+      test: [ "CMD", "wget", "http://localhost:8761" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    ###############################################################
+  administration:
+    container_name: administration
+    # restart: on-failure
+    build:
+      context: ./administration
+      dockerfile: ../Dockerfile
+    image: administration
+    networks:
+      - admin-mysql
+      - eureka-net
+    ports:
+      - "8088:8088"
+    depends_on:
+      eureka:
+        condition: service_started
+    links:
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: administration-db
+    ##########################
+  gateway-service:
+    container_name: gateway-service
+    # restart: on-failure
+    build:
+      context: ./gateway
+      dockerfile: ../Dockerfile
+    image: gateway-service
+    ports:
+      - "8888:8888"
+    networks:
+      - eureka-net
+    depends_on:
+      # administration:
+      #   condition: service_started
+      eureka:
+        condition: service_started
+    links:
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      # "SPRING_CLOUD_GATEWAY_ROUTES[0]_URI": http://administration:8088
+      # "SPRING_CLOUD_GATEWAY_ROUTES[0]_ID": vodaphone-service
+      # "SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[0]": Path= /vodaphone/*
+      # "SPRING_CLOUD_GATEWAY_ROUTES[0]_FILTERS[0]": StripPrefix=1
+      ##########################
+
+  absence-service:
+    container_name: absence-service
+    # restart: on-failure
+    build:
+      context: ./absence-service
+      dockerfile: ../Dockerfile
+    image: absence-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      eureka:
+        condition: service_started
+    networks:
+      - eureka-net
+      - absence-mysql
+    links:
+      - mysqldb
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: absence_db
+  ###############################################################
+  employer-service:
+    container_name: employer-service
+    # restart: on-failure
+    build:
+      context: ./employer-service
+      dockerfile: ../Dockerfile
+    image: employer-service
+    networks:
+      - eureka-net
+      - employe-mysql
+    ports:
+      - "8090:8090"
+    depends_on:
+      eureka:
+        condition: service_started
+    links:
+      - mysqldb
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: absence_db
+  ###############################################################
+  formation-service:
+    container_name: formation-service
+    # restart: on-failure
+    build:
+      context: ./formation-service
+      dockerfile: ../Dockerfile
+    image: formation-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      eureka:
+        condition: service_started
+    networks:
+      - formation-mysql
+      - eureka-net
+    links:
+      - mysqldb
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: formations_db
+  ###############################################################
+  messagerie-service:
+    container_name: messagerie-service
+    # restart: on-failure
+    build:
+      context: ./messagerie
+      dockerfile: ../Dockerfile
+    image: messagerie-service
+    ports:
+      - "8087:8087"
+    depends_on:
+      eureka:
+        condition: service_started
+    networks:
+      - messagerie-mysql
+      - eureka-net
+    links:
+      - eureka
+      - mysqldb
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: messagerie-db
+  ###############################################################
+  offre_stage-service:
+    container_name: offre_stage-service
+    # restart: on-failure
+    build:
+      context: ./offre_stage
+      dockerfile: ../Dockerfile
+    image: offre_stage-service
+    ports:
+      - "8089:8089"
+    depends_on:
+      eureka:
+        condition: service_started
+    networks:
+      - offre_stage-mysql
+      - eureka-net
+    links:
+      - mysqldb
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: gestion-offre_stage-db
+  ###############################################################
+  gestion-employe-service:
+    container_name: gestion-employe-service
+    # restart: on-failure
+    build:
+      context: ./gestion-employe
+      dockerfile: ../Dockerfile
+    image: gestion-employe-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      eureka:
+        condition: service_started
+    networks:
+      - gestion_employe-mysql
+      - eureka-net
+    links:
+      - mysqldb
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: gestion-employe-db
+  ###############################################################
+  stagiaire-service:
+    container_name: stagiaire-service
+    # restart: on-failure
+    build:
+      context: ./stagiaire
+      dockerfile: ../Dockerfile
+    image: stagiaire-service
+    networks:
+      - stagiaire-mysql
+      - eureka-net
+    ports:
+      - "8083:8083"
+    depends_on:
+      eureka:
+        condition: service_started
+    links:
+      - mysqldb
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: gestion-stagiaire-db
+  ###############################################################
+  user-service:
+    container_name: user-service
+    # restart: on-failure
+    build:
+      context: ./user
+      dockerfile: ../Dockerfile
+    image: user-service
+    networks:
+      - user-mysql
+      - eureka-net
+    ports:
+      - "8081:8081"
+    depends_on:
+      eureka:
+        condition: service_started
+    links:
+      - mysqldb
+      - eureka
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_DB: gestion-user-db
+      # ###############################################################
+      # # web:
+      # #   container_name: rh-front
+      # #   build:
+      # #     context: ./rh-front
+      # #     dockerfile: ../Dockerfile
+      # #   image: rh-front
+      # #   ports:
+      # #     - "4200:4200"
+      # ###############################################################
